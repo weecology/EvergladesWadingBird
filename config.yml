@@ -1,0 +1,9 @@
+---
+# GitHub username or organization and repo name
+repo: weecology/EvergladesWadingBird
+
+# Email address and user name that you want to associate with the automated deploys
+
+deploy_email: "weecologydeploy@weecology.org"
+deploy_username: "Weecology Deploy Bot"
+---
