@@ -370,46 +370,115 @@ summary {
 <p>Data are from <a href="https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ncdc:C00861/html#">NOAA Custom GHCN-Daily</a></p>
 <div id="stations" class="section level2">
 <h2>Stations</h2>
-<p>OASIS FLORIDA, FL US (GHCND:USR0000FOAS) TAMIAMI TRAIL 40 MI. BEND, FL US (GHCND:USC00088780) ROYAL PALM RANGER STATION, FL US (GHCND:USC00087760) PINECREST, FL US (GHCND:USC00087115) OASIS RANGER STATION, FL US (GHCND:USC00086406) RACCOON POINT FLORIDA, FL US (GHCND:USR0000FRAC) MONROE, FL US (GHCND:USC00085866)</p>
+<p>OASIS FLORIDA, FL US (GHCND:USR0000FOAS)</p>
+<p>TAMIAMI TRAIL 40 MI. BEND, FL US (GHCND:USC00088780)</p>
+<p>ROYAL PALM RANGER STATION, FL US (GHCND:USC00087760)</p>
+<p>PINECREST, FL US (GHCND:USC00087115)</p>
+<p>OASIS RANGER STATION, FL US (GHCND:USC00086406)</p>
+<p>RACCOON POINT FLORIDA, FL US (GHCND:USR0000FRAC)</p>
+<p>MONROE, FL US (GHCND:USC00085866)</p>
 </div>
 <div id="values" class="section level2">
 <h2>Values</h2>
-<p>STATION NAME<br />
-LATITUDE<br />
-LONGITUDE<br />
-ELEVATION<br />
-DATE<br />
-DAEV - Number of days included in the multiday evaporation total (MDEV) DAEV_ATTRIBUTES DAPR - Number of days included in the multiday precipitation total (MDPR) DAPR_ATTRIBUTES DAWM - Number of days included in the multiday wind movement (MDWM) DAWM_ATTRIBUTES EVAP - Evaporation of water from evaporation pan EVAP_ATTRIBUTES MDEV - Multiday evaporation total (use with DAEV)<br />
-MDEV_ATTRIBUTES MDPR - Multiday precipitation total (use with DAPR and DWPR, if available) MDPR_ATTRIBUTES MDWM - Multiday wind movement MDWM_ATTRIBUTES MNPN - Daily minimum temperature of water in an evaporation pan MNPN_ATTRIBUTES MXPN - Daily maximum temperature of water in an evaporation pan MXPN_ATTRIBUTES PRCP - Precipitation (mm)<br />
-PRCP_ATTRIBUTES TAVG - Average temperature (C) TAVG_ATTRIBUTES TMAX - Maximum temperature (C) TMAX_ATTRIBUTES TMIN - Minimum temperature (C) TMIN_ATTRIBUTES TOBS - Temperature at the time of observation (C)<br />
-TOBS_ATTRIBUTES WDMV - Total wind movement WDMV_ATTRIBUTES WT01 - Fog, ice fog, or freezing fog (may include heavy fog)<br />
-WT01_ATTRIBUTES WT03 - Thunder WT03_ATTRIBUTES WT05 - Hail (may include small hail) WT05_ATTRIBUTES WT06 - Glaze or rime WT06_ATTRIBUTES WT08 - Smoke or haze WT08_ATTRIBUTES WT11 - High or damaging winds WT11_ATTRIBUTES WT14 - Drizzle WT14_ATTRIBUTES WT16 - Rain (may include freezing rain, drizzle, and freezing drizzle)</p>
+<p>STATION - station ID</p>
+<p>NAME - station name</p>
+<p>LATITUDE - latitude</p>
+<p>LONGITUDE - longitude</p>
+<p>ELEVATION - meters</p>
+<p>DATE - yyyy-mm-dd</p>
+<p>DAEV - Number of days included in the multiday evaporation total (MDEV)</p>
+<p>DAPR - Number of days included in the multiday precipitation total (MDPR)</p>
+<p>DAWM - Number of days included in the multiday wind movement (MDWM)</p>
+<p>EVAP - Evaporation of water from evaporation pan</p>
+<p>MDEV - Multiday evaporation total (use with DAEV)</p>
+<p>MDPR - Multiday precipitation total (use with DAPR and DWPR, if available)</p>
+<p>MDWM - Multiday wind movement</p>
+<p>MNPN - Daily minimum temperature of water in an evaporation pan</p>
+<p>MXPN - Daily maximum temperature of water in an evaporation pan</p>
+<p>PRCP - Precipitation (mm)</p>
+<p>TAVG - Average temperature (C)</p>
+<p>TMAX - Maximum temperature (C)</p>
+<p>TMIN - Minimum temperature (C)</p>
+<p>TOBS - Temperature at the time of observation (C)</p>
+<p>WDMV - Total wind movement</p>
+<p>WT01 - Fog, ice fog, or freezing fog (may include heavy fog)</p>
+<p>WT03 - Thunder</p>
+<p>WT05 - Hail (may include small hail)</p>
+<p>WT06 - Glaze or rime</p>
+<p>WT08 - Smoke or haze</p>
+<p>WT11 - High or damaging winds</p>
+<p>WT14 - Drizzle</p>
+<p>WT16 - Rain (may include freezing rain, drizzle, and freezing drizzle)</p>
 <div id="attributes-columns" class="section level3">
 <h3>_ATTRIBUTES Columns</h3>
 <p>All _ATTRIBUTES columns list data flags for that value. When applicable, flags are listed as MFLAG, QFLAG, SFLAG (not all flags always apply).</p>
 <div id="mflag" class="section level4">
 <h4>MFLAG</h4>
 <p>Measurement flag. There are ten possible values:</p>
-<p>Blank = no measurement information applicable B = precipitation total formed from two 12-hour totals D = precipitation total formed from four six-hour totals H = represents highest or lowest hourly temperature (TMAX or TMIN) or the average of hourly values (TAVG) K = converted from knots L = temperature appears to be lagged with respect to reported hour of observation O = converted from oktas P = identified as “missing presumed zero” in DSI 3200 and 3206 T = trace of precipitation, snowfall, or snow depth W = converted from 16-point WBAN code (for wind direction)</p>
+<p>Blank = no measurement information applicable</p>
+<p>B = precipitation total formed from two 12-hour totals</p>
+<p>D = precipitation total formed from four six-hour totals</p>
+<p>H = represents highest or lowest hourly temperature (TMAX or TMIN) or the average of hourly values (TAVG)</p>
+<p>K = converted from knots</p>
+<p>L = temperature appears to be lagged with respect to reported hour of observation</p>
+<p>O = converted from oktas</p>
+<p>P = identified as “missing presumed zero” in DSI 3200 and 3206</p>
+<p>T = trace of precipitation, snowfall, or snow depth</p>
+<p>W = converted from 16-point WBAN code (for wind direction)</p>
 </div>
 <div id="qflag" class="section level4">
 <h4>QFLAG</h4>
 <p>Quality flag. There are fourteen possible values:</p>
-<p>Blank = did not fail any quality assurance check D = failed duplicate check G = failed gap check I = failed internal consistency check K = failed streak/frequent-value check L = failed check on length of multiday period M = failed megaconsistency check N = failed naught check O = failed climatological outlier check R = failed lagged range check S = failed spatial consistency check T = failed temporal consistency check W = temperature too warm for snow X = failed bounds check Z = flagged as a result of an official Datzilla investigation</p>
+<p>Blank = did not fail any quality assurance check</p>
+<p>D = failed duplicate check</p>
+<p>G = failed gap check</p>
+<p>I = failed internal consistency check</p>
+<p>K = failed streak/frequent-value check</p>
+<p>L = failed check on length of multiday period</p>
+<p>M = failed megaconsistency check</p>
+<p>N = failed naught check</p>
+<p>O = failed climatological outlier check</p>
+<p>R = failed lagged range check</p>
+<p>S = failed spatial consistency check</p>
+<p>T = failed temporal consistency check</p>
+<p>W = temperature too warm for snow</p>
+<p>X = failed bounds check</p>
+<p>Z = flagged as a result of an official Datzilla investigation</p>
 </div>
 <div id="sflag" class="section level4">
 <h4>SFLAG</h4>
 <p>Source flag. There are thirty possible values (including numbers, upper and lower case letters):</p>
-<p>Blank = No source (i.e., data value missing) 0 = U.S. Cooperative Summary of the Day (NCDC DSI-3200) 6 = CDMP Cooperative Summary of the Day (NCDC DSI-3206) 7 = U.S. Cooperative Summary of the Day – Transmitted via WxCoder3 (NCDC DSI-3207) A = U.S. Automated Surface Observing System (ASOS) real-time data (since January 1, 2006) a = Australian data from the Australian Bureau of Meteorology B = U.S. ASOS data for October 2000-December 2005 (NCDC DSI-3211)<br />
-b = Belarus update C = Environment Canada D = Short time delay US National Weather Service CF6 daily summaries provided by the High Plains Regional Climate Center E = European Climate Assessment and Dataset (Klein Tank et al., 2002)<br />
-F = U.S. Fort data G = Official Global Climate Observing System (GCOS) or other government-supplied data H = High Plains Regional Climate Center real-time data I = International collection (non U.S. data received through personal contacts) K = U.S. Cooperative Summary of the Day data digitized from paper observer forms (from 2011 to present) M = Monthly METAR Extract (additional ASOS data) m = Data from the Mexican National Water Commission (Comision National del Agua – CONAGUA) N = Community Collaborative Rain, Hail,and Snow (CoCoRaHS) Q = Data from several African countries that had been “quarantined”, that is, withheld from public release until permission was granted from the respective meteorological services R = NCEI Reference Network Database (Climate Reference Network and Regional Climate Reference Network) r = All-Russian Research Institute of Hydrometeorological Information-World Data Center S = Global Summary of the Day (NCDC DSI-9618) NOTE: “S” values are derived from hourly synoptic reports exchanged on the Global Telecommunications System (GTS). Daily values derived in this fashion may differ significantly from “true” daily data, particularly for precipitation (i.e., use with caution). s = China Meteorological Administration/National Meteorological Information Center/Climatic Data Center (<a href="http://cdc.cma.gov.cn" class="uri">http://cdc.cma.gov.cn</a>) T = SNOwpack TELemtry (SNOTEL) data obtained from the U.S. Department of Agriculture’s Natural Resources Conservation Service U = Remote Automatic Weather Station (RAWS) data obtained from the Western Regional Climate Center<br />
-u = Ukraine update<br />
-W = WBAN/ASOS Summary of the Day from NCDC’s Integrated Surface Data (ISD).<br />
-X = U.S. First-Order Summary of the Day (NCDC DSI-3210) Z = Datzilla official additions or replacements z = Uzbekistan update</p>
-<pre><code>   When data are available for the same time from more than one source,
-   the highest priority source is chosen according to the following
-   priority order (from highest to lowest):
-   Z,R,D,0,6,C,X,W,K,7,F,B,M,m,r,E,z,u,b,s,a,G,Q,I,A,N,T,U,H,S</code></pre>
+<p>Blank = No source (i.e., data value missing)</p>
+<p>0 = U.S. Cooperative Summary of the Day (NCDC DSI-3200)</p>
+<p>6 = CDMP Cooperative Summary of the Day (NCDC DSI-3206)</p>
+<p>7 = U.S. Cooperative Summary of the Day – Transmitted via WxCoder3 (NCDC DSI-3207)</p>
+<p>A = U.S. Automated Surface Observing System (ASOS) real-time data (since January 1, 2006)</p>
+<p>a = Australian data from the Australian Bureau of Meteorology</p>
+<p>B = U.S. ASOS data for October 2000-December 2005 (NCDC DSI-3211)</p>
+<p>b = Belarus update</p>
+<p>C = Environment Canada</p>
+<p>D = Short time delay US National Weather Service CF6 daily summaries provided by the High Plains Regional Climate Center</p>
+<p>E = European Climate Assessment and Dataset (Klein Tank et al., 2002)</p>
+<p>F = U.S. Fort data</p>
+<p>G = Official Global Climate Observing System (GCOS) or other government-supplied data</p>
+<p>H = High Plains Regional Climate Center real-time data</p>
+<p>I = International collection (non U.S. data received through personal contacts)</p>
+<p>K = U.S. Cooperative Summary of the Day data digitized from paper observer forms (from 2011 to present)</p>
+<p>M = Monthly METAR Extract (additional ASOS data)</p>
+<p>m = Data from the Mexican National Water Commission (Comision National del Agua – CONAGUA)</p>
+<p>N = Community Collaborative Rain, Hail,and Snow (CoCoRaHS)</p>
+<p>Q = Data from several African countries that had been “quarantined”, that is, withheld from public release until permission was granted from the respective meteorological services</p>
+<p>R = NCEI Reference Network Database (Climate Reference Network and Regional Climate Reference Network)</p>
+<p>r = All-Russian Research Institute of Hydrometeorological Information-World Data Center</p>
+<p>S = Global Summary of the Day (NCDC DSI-9618) NOTE: “S” values are derived from hourly synoptic reports exchanged on the Global Telecommunications System (GTS). Daily values derived in this fashion may differ significantly from “true” daily data, particularly for precipitation (i.e., use with caution).</p>
+<p>s = China Meteorological Administration/National Meteorological Information Center/Climatic Data Center (<a href="http://cdc.cma.gov.cn" class="uri">http://cdc.cma.gov.cn</a>)</p>
+<p>T = SNOwpack TELemtry (SNOTEL) data obtained from the U.S. Department of Agriculture’s Natural Resources Conservation Service</p>
+<p>U = Remote Automatic Weather Station (RAWS) data obtained from the Western Regional Climate Center</p>
+<p>u = Ukraine update</p>
+<p>W = WBAN/ASOS Summary of the Day from NCDC’s Integrated Surface Data (ISD).</p>
+<p>X = U.S. First-Order Summary of the Day (NCDC DSI-3210)</p>
+<p>Z = Datzilla official additions or replacements</p>
+<p>z = Uzbekistan update When data are available for the same time from more than one source, the highest priority source is chosen according to the following priority order (from highest to lowest): Z,R,D,0,6,C,X,W,K,7,F,B,M,m,r,E,z,u,b,s,a,G,Q,I,A,N,T,U,H,S</p>
 </div>
 </div>
 </div>
