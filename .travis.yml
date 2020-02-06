@@ -10,6 +10,7 @@ install:
 script:
   - Rscript update-data.R
   - Rscript testthat.R
+  - Rscript archive.R
   
 after_success:
 
