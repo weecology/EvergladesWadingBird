@@ -25,14 +25,20 @@ new_met_data <- function() {
     header = TRUE, sep = ",", stringsAsFactors = FALSE)  %>% 
     dplyr::rename_all(. %>% tolower) %>%
     dplyr::select(-c(latitude, longitude, name, elevation)) %>%
-    dplyr::mutate(date = lubridate::ymd(date))
+    dplyr::mutate(date = lubridate::ymd(date),
+                  tmax = tmax/10,
+                  tmin = tmin/10, 
+                  tavg = tavg/10)
   
   raccoon <- read.csv(url(
     'http://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/USR0000FRAC.csv'),
     header = TRUE, sep = ",", stringsAsFactors = FALSE)  %>% 
     dplyr::rename_all(. %>% tolower) %>%
     dplyr::select(-c(latitude, longitude, name, elevation)) %>%
-    dplyr::mutate(date = lubridate::ymd(date))
+    dplyr::mutate(date = lubridate::ymd(date),
+                  tmax = tmax/10,
+                  tmin = tmin/10, 
+                  tavg = tavg/10)
   
   # Load existing data for comparison
   weather <- read.csv("Weather/weather.csv") %>%
