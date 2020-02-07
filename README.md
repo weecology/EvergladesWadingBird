@@ -5,6 +5,4 @@
 
 Data from the Everglades breeding bird monitoring project
 
-[Methods.md](SiteandMethods/Methods.md) contains a full decription of the methods for all data.
-
 Detailed descriptions of individual data components are located in README.md files in the individual data folders.
