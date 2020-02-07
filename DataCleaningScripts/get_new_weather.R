@@ -48,17 +48,16 @@ new_met_data <- function() {
   oasis_latest <- max(weather$date[weather$station=="USR0000FOAS"])
   raccoon_latest <- max(weather$date[weather$station=="USR0000FRAC"])
   
+  oasis[,setdiff(weather_cols, names(oasis))] <- NA
+  raccoon[,setdiff(weather_cols, names(raccoon))] <- NA
+  
   # Keep only new data
   new_oasis <- oasis %>%
-    dplyr::filter(date > oasis_latest)
-  new_oasis[,setdiff(weather_cols, names(oasis))] <- NA
-  new_oasis <- new_oasis %>%
+    dplyr::filter(date > oasis_latest) %>%
     dplyr::select(weather_cols)
   
   new_raccoon <- raccoon %>%
-    dplyr::filter(date > raccoon_latest)
-  new_raccoon[,setdiff(weather_cols, names(raccoon))] <- NA
-  new_raccoon <- new_raccoon %>%
+    dplyr::filter(date > raccoon_latest) %>%
     dplyr::select(weather_cols)
     
   # Set up dataframe to append
