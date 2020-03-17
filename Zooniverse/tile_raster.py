@@ -8,6 +8,7 @@ def parse_args():
         description='Simple script for cutting tif into tiles')
     parser.add_argument("--path")
     parser.add_argument("--save_dir",default=".")
+    parser.add_argument("--patch_size",default=1000)
     
     return(parser.parse_args())
 
@@ -21,7 +22,7 @@ def writeImageAsGeoTIFF(img, transform, metadata, crs, filename):
     with rasterio.open(filename+".tif", "w", **metadata) as dest:
         dest.write(img)
 
-def run(path,save_dir):
+def run(path,save_dir, patch_size=1000):
     """Read in raster, split into pieces and write to dir"""
     
     #Read image
@@ -29,7 +30,7 @@ def run(path,save_dir):
     basename = os.path.splitext(os.path.basename(path))[0]
     
     #Find windows
-    windows = preprocess.compute_windows(img, patch_size=600,patch_overlap=0.05)
+    windows = preprocess.compute_windows(img, patch_size=patch_size,patch_overlap=0.05)
     for window in windows:
         crop, cropTransform = mask(img, window.getIndices(), crop=True)        
         filename = "{}/{}".format(save_dir, basename)
@@ -40,5 +41,7 @@ def run(path,save_dir):
                             filename+"_"+str(count))    
     
 if __name__ == "__main__":
+    #Parse args and run
     args = parse_args()
-    run(args.path,args.save_dir)
+    
+    run(args.path,args.save_dir,args.patch_size)
