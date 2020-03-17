@@ -6,3 +6,5 @@
 Supplemental data for the Everglades breeding bird monitoring project
 
 Detailed descriptions of individual data components are located in README.md files in the individual data folders.
+
+Additional data to complement the wading bird data can be found at [Florida Coastal Everglades LTER](http://fcelter.fiu.edu/).
