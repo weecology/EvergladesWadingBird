@@ -1,4 +1,5 @@
 import pytest
+import os
 from .. import tile_raster
 
 def test_run():

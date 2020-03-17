@@ -11,4 +11,12 @@
 #SBATCH --error=/home/b.weinstein/logs/rclone_%j.err
 
 #comet debug
+
+#Sync data
 rclone sync everglades:"Wading Bird 2020 (1)/Deliverables" /orange/ewhite/everglades/WadingBirds2020/
+
+#Find cut tiles
+python tile_raster.py
+
+#Upload
+python manifest.py
