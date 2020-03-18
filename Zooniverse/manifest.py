@@ -41,6 +41,8 @@ def create_subject_set(everglades_watch, name="demo"):
     subject_set.links.project = everglades_watch
     subject_set.display_name = name
     subject_set.save()    
+    
+    return subject_set
 
 def upload(subject_set, images, everglades_watch):
     """Assign images to projecti"""
