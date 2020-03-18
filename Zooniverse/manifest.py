@@ -1,5 +1,6 @@
 #Zooniverse upload module
 import glob
+import os
 import pandas as pd
 from panoptes_client import Panoptes, Project, SubjectSet, Subject
 import tile_raster
@@ -43,11 +44,22 @@ def upload(subject_set, images):
     subject_set.add(new_subjects)
 
 def main(path):
-    """paths: a list of paths to run"""
+    """Args:
+        path: a .tif to run
+    """
+    
+    #Crop tif
     saved_file = tile_raster.run(path, save_dir)
+    
+    #Generate metadata
     images = find_files(saved_file)
+    
+    #Create a new subject set
     subject_set = create_subject_set()
+    
+    #Upload
     upload(subject_set, images)
+    
     return saved_file
 
 if __name__ == "__main__":
@@ -59,7 +71,9 @@ if __name__ == "__main__":
     
     #Compare names of completed tiles
     uploaded["basename"] = uploaded.path.apply(lambda x: os.path.basename(x))
-    file_pool = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=T)
+    
+    #Files to process
+    file_pool = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
     file_pool = [os.path.basename(x) for x in file_pool]
     paths = [x for x in file_pool if not x in uploaded.basename.values]
     
