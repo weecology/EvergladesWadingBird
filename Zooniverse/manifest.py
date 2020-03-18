@@ -75,7 +75,7 @@ def main(path, everglades_watch, save_dir="/orange/ewhite/everglades/Zooniverse/
         raise ValueError("dirname: {} exists)".format(dirname))
     
     #Crop tif
-    saved_file = tile_raster.run(path, dirname)
+    saved_file = tile_raster.run(path=path, save_dir=dirname)
     print("Created cropped files at {}".format(saved_file))
     
     #Generate metadata
