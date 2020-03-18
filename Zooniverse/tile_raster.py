@@ -69,4 +69,4 @@ def run(path,save_dir, patch_size=1000):
     filename = os.path.join(save_dir,basename)
     splitImageIntoCells(img, filename, patch_size)
     
-    return filename
+    return save_dir
