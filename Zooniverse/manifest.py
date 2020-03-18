@@ -4,6 +4,8 @@ import os
 import pandas as pd
 from panoptes_client import Panoptes, Project, SubjectSet, Subject
 import tile_raster
+import rasterio
+from PIL import Image
 
 #Detect new files since last run
 def find_files(path):
@@ -11,7 +13,18 @@ def find_files(path):
     image_paths = glob.glob(os.path.join(path, "*.tif"))
     counter = 1
     for i in image_paths:
-        images[i] = {"subject_reference":counter}
+        #Load and get metadata
+        d = rasterio.open(i)
+        left,bottom, right, top = d.bounds 
+        
+        #Write as a png
+        img = Image.open(i)
+        basename = os.path.splitext(i)[0]
+        png_name = "{}.png".format(basename)
+        img.save(png_name)
+        
+        #Create dict
+        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg()}
         counter +=1
     
     return images
