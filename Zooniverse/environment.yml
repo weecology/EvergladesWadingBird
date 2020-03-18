@@ -1,0 +1,15 @@
+name: Zooniverse
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - rasterio
+  - shapely
+  - pandas
+  - pytest
+  - pip:
+    - panoptes
+    - DeepForest
+
+
+

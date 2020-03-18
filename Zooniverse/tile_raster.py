@@ -56,7 +56,10 @@ def getCellFromGeom(img, geom, filename, count):
                         filename+"_"+str(count))
     
 def run(path,save_dir, patch_size=1000):
-    """Read in raster, split into pieces and write to dir"""
+    """Read in raster, split into pieces and write to dir
+    Returns:
+        filename: path to directory of images
+    """
     
     #Read image
     img = rasterio.open(path)
@@ -65,6 +68,8 @@ def run(path,save_dir, patch_size=1000):
     #Find windows
     filename = os.path.join(save_dir,basename)
     splitImageIntoCells(img, filename, patch_size)
+    
+    return filename
 
 if __name__ == "__main__":
     #Parse args and run
