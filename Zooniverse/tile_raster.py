@@ -70,9 +70,3 @@ def run(path,save_dir, patch_size=1000):
     splitImageIntoCells(img, filename, patch_size)
     
     return filename
-
-if __name__ == "__main__":
-    #Parse args and run
-    args = parse_args()
-    
-    run(args.path,args.save_dir,args.patch_size)
