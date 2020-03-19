@@ -18,9 +18,9 @@ def find_files(path):
         left,bottom, right, top = d.bounds 
         
         #Write as a png
-        img = Image.open(i)
         basename = os.path.splitext(i)[0]
         png_name = "{}.png".format(basename)
+        img = Image.open(i)        
         img.save(png_name)
         
         #Create dict
