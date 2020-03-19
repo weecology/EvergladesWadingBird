@@ -24,7 +24,7 @@ def find_files(path):
         img.save(png_name)
         
         #Create dict
-        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg()}
+        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg(),"site":basename}
         counter +=1
     
     return images
