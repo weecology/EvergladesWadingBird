@@ -114,7 +114,7 @@ if __name__ == "__main__":
         
         #Confirm it exists and write to the csv file
         assert os.path.exists(saved_file)
-        uploaded.path.append(saved_file)
+        uploaded = uploaded.path.append({"path":saved_file},ignore_index=True)
     
     #Overwrite uploaded manifest
     uploaded.to_csv("uploaded.csv")
