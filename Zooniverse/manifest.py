@@ -110,11 +110,13 @@ if __name__ == "__main__":
     print("Running files:{}".format(paths))
     for path in paths:
         #Run .tif
-        saved_file = main(path, everglades_watch)
-        
-        #Confirm it exists and write to the csv file
-        assert os.path.exists(saved_file)
-        uploaded = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
-    
+        try:
+            saved_file = main(path, everglades_watch)
+            #Confirm it exists and write to the csv file
+            assert os.path.exists(saved_file)
+            uploaded = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
+        except Exception as e:
+            print("{} failed with exception".format(path))
+            
     #Overwrite uploaded manifest
     uploaded.to_csv("uploaded.csv")
