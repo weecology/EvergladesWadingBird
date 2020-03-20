@@ -116,7 +116,7 @@ if __name__ == "__main__":
             assert os.path.exists(saved_file)
             uploaded = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
         except Exception as e:
-            print("{} failed with exception".format(path))
+            print("{} failed with exception {e}".format(path, e))
             
     #Overwrite uploaded manifest
     uploaded.to_csv("uploaded.csv")

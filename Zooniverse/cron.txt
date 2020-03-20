@@ -1,0 +1,14 @@
+# Cron job for weekly runs on the HiPerGator
+# This is currently running under ethanwhite's account on daemon2
+# To recreate copy, paste, and modify this text into the editor resulting
+# from `crontab -e`
+# WEECOLOGYDEPLOYGITHUBPAT needs to be replaced with the appropriate GITHUB
+# Personal Access Token
+# cron jobs on HiPerGator run from a blank environment so we need to set both
+# basic environmental variables (HOME and PATH) and also the GitHub tokens
+# because they are not loaded into the cronjob environment
+
+HOME=/home/b.weinstein/
+PATH=/opt/slurm/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/home/b.weinstein/bin
+MAILTO=ben.weinstein@weecology.org
+15 15 * * * sbatch ${HOME}/EvergladesWadingBird/Zooniverse/submit_job.sbatch >> ${HOME}/logs/cron.log 2>&1
