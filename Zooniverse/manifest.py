@@ -20,9 +20,9 @@ def find_files(path):
         
         #Check if image is all white
         numpy_image = np.array(d)
-        is_white =np.sum(np.all(numpy_image == [255,255,255], axis=-1))/numpy_image.size
+        is_white = np.sum(np.all(numpy_image == [255,255,255], axis=2))/(numpy_image.shape[0] * numpy_image.shape[1])
         
-        if is_white > 0.5:
+        if is_white > 0.25:
             print("{} is an edge tile, {number:.{digits}f}% white pixels".format(tile_path,number=is_white*100,digits=1))
             continue       
         
