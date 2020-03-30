@@ -127,4 +127,4 @@ if __name__ == "__main__":
             print("{} failed with exception {e}".format(path, e))
             
     #Overwrite uploaded manifest
-    uploaded.to_csv("uploaded.csv")
+    uploaded.to_csv("uploaded.csv",index=False)
