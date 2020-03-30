@@ -6,6 +6,7 @@ from panoptes_client import Panoptes, Project, SubjectSet, Subject
 import tile_raster
 import rasterio
 from PIL import Image
+import numpy as np
 
 #Detect new files since last run
 def find_files(path):
@@ -124,7 +125,7 @@ if __name__ == "__main__":
             assert os.path.exists(saved_file)
             uploaded = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
         except Exception as e:
-            print("{} failed with exception {e}".format(path, e))
+            print("{} failed with exception {}".format(path, e))
             
     #Overwrite uploaded manifest
     uploaded.to_csv("uploaded.csv",index=False)
