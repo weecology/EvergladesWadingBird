@@ -16,11 +16,12 @@ def find_files(path):
     for i in image_paths:
         #Load and get metadata
         d = rasterio.open(i)
+        numpy_image = d.read()
         left,bottom, right, top = d.bounds 
         
         #Check if image is all white
-        numpy_image = np.array(d)
-        is_white = np.sum(np.all(numpy_image == [255,255,255], axis=2))/(numpy_image.shape[0] * numpy_image.shape[1])
+        img_reshaped = numpy_image.reshape(-1, 3)
+        is_white = np.sum(img_reshaped == [255,255,255])/img_reshaped.size
         
         if is_white > 0.25:
             print("{} is an edge tile, {number:.{digits}f}% white pixels".format(tile_path,number=is_white*100,digits=1))
