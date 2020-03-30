@@ -24,7 +24,7 @@ def find_files(path):
         is_white = np.sum(img_reshaped == [255,255,255])/img_reshaped.size
         
         if is_white > 0.25:
-            print("{} is an edge tile, {number:.{digits}f}% white pixels".format(tile_path,number=is_white*100,digits=1))
+            print("{} is an edge tile, {number:.{digits}f}% white pixels".format(i,number=is_white*100,digits=1))
             continue       
         
         #Write as a png
