@@ -17,6 +17,14 @@ def find_files(path):
         d = rasterio.open(i)
         left,bottom, right, top = d.bounds 
         
+        #Check if image is all white
+        numpy_image = np.array(d)
+        is_white =np.sum(np.all(numpy_image == [255,255,255], axis=-1))/numpy_image.size
+        
+        if is_white > 0.5:
+            print("{} is an edge tile, {number:.{digits}f}% white pixels".format(tile_path,number=is_white*100,digits=1))
+            continue       
+        
         #Write as a png
         basename = os.path.splitext(i)[0]
         png_name = "{}.png".format(basename)
