@@ -124,7 +124,7 @@ if __name__ == "__main__":
             saved_file = main(path, everglades_watch)
             #Confirm it exists and write to the csv file
             assert os.path.exists(saved_file)
-            uploaded = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
+            uploaded["path"] = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
         except Exception as e:
             print("{} failed with exception {}".format(path, e))
             

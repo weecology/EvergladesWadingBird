@@ -11,4 +11,4 @@
 HOME=/home/b.weinstein/
 PATH=/opt/slurm/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/bin:/home/b.weinstein/bin
 MAILTO=ben.weinstein@weecology.org
-15 15 * * * sbatch ${HOME}/EvergladesWadingBird/Zooniverse/submit_job.sbatch >> ${HOME}/logs/cron.log 2>&1
+12 15 * * * sbatch ${HOME}/EvergladesWadingBird/Zooniverse/submit_job.sbatch >> ${HOME}/logs/cron.log 2>&1

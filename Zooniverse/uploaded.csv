@@ -1,44 +1,51 @@
-,path
-0,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-0.tif
-1,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-1.tif
-2,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-2.tif
-3,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-3.tif
-4,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-0.tif
-5,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-1.tif
-6,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-2.tif
-7,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-3.tif
-8,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-0.tif
-9,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-1.tif
-10,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-2.tif
-11,/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-3.tif
-12,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-0.tif
-13,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-1.tif
-14,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-2.tif
-15,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-3.tif
-16,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-4.tif
-17,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-5.tif
-18,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-6.tif
-19,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-7.tif
-20,/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-8.tif
-21,/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_02182020.tif
-22,/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_02242020.tif
-23,/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_03032020.tif
-24,/orange/ewhite/everglades/WadingBirds2020/Jetport/Jetport_03092020/Jetport_03092020-0-0.tif
-25,/orange/ewhite/everglades/WadingBirds2020/Jetport/Jetport_03092020/Jetport_03092020-0-1.tif
-26,/orange/ewhite/everglades/WadingBirds2020/Jetport/Jetport_03162020.tif
-27,/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-0.tif
-28,/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-1.tif
-29,/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-2.tif
-30,/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-3.tif
-31,/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-4.tif
-32,/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-5.tif
-33,/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_02242020.tif
-34,/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03032020-0-0.tif
-35,/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03032020-0-1.tif
-36,/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_02172020.tif
-37,/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_02252020.tif
-38,/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_03042020.tif
-39,/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_03122020.tif
-40,/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_02172020.tif
-41,/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_02252020.tif
-42,/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03122020.tif
+path
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-0.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-1.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-2.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_11_2020/6thBridge_02112020-0-3.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-0.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-1.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-2.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/02_21_2020/6thBridge_02212020-0-3.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-0.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-1.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-2.tif
+/orange/ewhite/everglades/WadingBirds2020/6th Bridge/03_11_2020/6thBridge_03112020-0-3.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-0.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-1.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-2.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-3.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-4.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-5.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-6.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-7.tif
+/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-8.tif
+/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_02182020.tif
+/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_02242020.tif
+/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_03032020.tif
+/orange/ewhite/everglades/WadingBirds2020/Jetport/Jetport_03092020/Jetport_03092020-0-0.tif
+/orange/ewhite/everglades/WadingBirds2020/Jetport/Jetport_03092020/Jetport_03092020-0-1.tif
+/orange/ewhite/everglades/WadingBirds2020/Jetport/Jetport_03162020.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-0.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-1.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-2.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-3.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-4.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/03_10_2020/Joule_03102020-0-5.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_02242020.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03032020-0-0.tif
+/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03032020-0-1.tif
+/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_02172020.tif
+/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_02252020.tif
+/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_03042020.tif
+/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_03122020.tif
+/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_02172020.tif
+/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_02252020.tif
+/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03122020.tif
+/orange/ewhite/everglades/Zooniverse/CypressCity_02042020
+/orange/ewhite/everglades/Zooniverse/CypressCity_02282020
+/orange/ewhite/everglades/Zooniverse/CypressCity_03062020
+/orange/ewhite/everglades/Zooniverse/CypressCity_03112020
+/orange/ewhite/everglades/Zooniverse/Jerrod_03192020
+/orange/ewhite/everglades/Zooniverse/Joule_03192020
+/orange/ewhite/everglades/Zooniverse/Vacation_03192020
