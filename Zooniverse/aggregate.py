@@ -1,6 +1,8 @@
 #aggregation script
 import pandas as pd
 import json
+import numpy as np
+import os
 
 #TODO
 def download_data():
@@ -12,26 +14,41 @@ def load_classifications(classifications_file, version):
     version: minimum version workflow
     """
     df = pd.read_csv(classifications_file)
-    df  = df[df.workflow_version > version]     
+    df  = df[df.workflow_version > version]  
+    
+    df = df[~(df.annotations == '[{"task":"T0","task_label":"Species","value":[]}]')]
+    
     return df
 
 def parse_annotations(x):
+    #Extract and parse json
     annotation_dict = json.loads(x)[0]
     boxes = annotation_dict["value"]
     boxes = pd.DataFrame(boxes)
     boxes.rename(columns = {"tool_label": "Species"})
     
-    box_list = [ ]
-    #Loop through each box and create a dataframe
+    #Loop through each box and create a dataframe    
+    box_df = pd.DataFrame()
     for index, box in boxes.iterrows():
-        box_list.append(pd.DataFrame(box))
-    
-    #Combine rows 
-    box_df = pd.concat(box_list)
+        box_df = box_df.append(box,ignore_index=True)
+        
     return box_df 
 
-def parse_subject_data():
-    example = '{"41752799":{"retired":null,"crs":4326,"site":"/orange/ewhite/everglades/Zooniverse//Vacation_03192020/Vacation_03192020_501","bounds":[-80.6292373808215,25.9139206378957,-80.62913053182149,25.9140172671957],"subject_reference":30}}'
+def parse_subject_data(x):
+    """Parse image metadata"""
+    annotation_dict = json.loads(x)
+    assert len(annotation_dict.keys()) == 1
+    
+    for key in annotation_dict:
+        data = annotation_dict[key]
+        utm_left, utm_bottom, utm_right, utm_top = data["bounds"]
+        try:
+            site = os.path.splitext(os.path.basename(data["site"]))[0]
+        except:
+            site = np.nan
+        bounds = pd.DataFrame({"utm_left": [utm_left], "utm_bottom":[utm_bottom],"utm_right":[utm_right],"utm_top":[utm_right],"site":site})
+    
+    return bounds
 
 def parse_file(classifications_file, version):
     
@@ -39,17 +56,24 @@ def parse_file(classifications_file, version):
     df = load_classifications(classifications_file, version)
     
     #remove empty annotations
-    df = df[~(df.annotations == '[{"task":"T0","task_label":"Species","value":[]}]')]
-    
-    annotation_df = [ ]
+    results = [ ]
     for index, row in df.iterrows(): 
         #Extract annotations for each image
-        annotations = extract_bbox(df)  
+        annotations = parse_annotations(row.annotations)  
         
         #Extract subject data
-        parse_subject_data(row)
+        bounds = parse_subject_data(row.subject_data)
         
-        #Merge the key columns
-        row["classification_id","user_name","created_at"]
+        #Ugly, but works.
+        annotations["classification_id"] = row["classification_id"]
+        annotations["user_name"] = row["user_name"]
+        annotations["created_at"] = row["created_at"]
+        for col_name in bounds:
+            annotations[col_name] = bounds[col_name].values[0]
+            
+        results.append(annotations)
+    
+    results = pd.concat(results)
         
+    return results
     
