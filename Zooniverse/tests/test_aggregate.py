@@ -29,3 +29,15 @@ def test_parse_subject_data(csv_data):
 def test_parse_file():
     df = aggregate.parse_file("data/species-classifications.csv",min_version)
     df.head()
+
+def test_project():
+    df = aggregate.parse_file("data/species-classifications.csv",min_version)
+    project_df = aggregate.project(df)
+    project_df.head()
+    colnames= ["box_utm_left","box_utm_bottom","box_utm_right","box_utm_top"]
+    assert all([x in project_df.columns for x in colnames])
+
+def test_spatial_join():
+    df = aggregate.parse_file("data/species-classifications.csv",min_version)
+    project_df = aggregate.project(df)
+    aggregate.spatial_join(project_df)

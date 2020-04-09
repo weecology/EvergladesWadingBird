@@ -8,16 +8,48 @@ import rasterio
 from PIL import Image
 import numpy as np
 
+def utm_project(path):
+    
+    dst_crs = 'EPSG:32617'
+    
+    with rasterio.open(path) as src:
+        transform, width, height = calculate_default_transform(
+            src.crs, dst_crs, src.width, src.height, *src.bounds)
+        kwargs = src.meta.copy()
+        kwargs.update({
+            'crs': dst_crs,
+            'transform': transform,
+            'width': width,
+            'height': height
+        })
+    
+    dest_name = "{}_projected.tif".format(os.path.splitext(path)[0])
+    
+    with rasterio.open(dest_name, 'w', **kwargs) as dst:
+        for i in range(1, src.count + 1):
+            reproject(
+                source=rasterio.band(src, i),
+                destination=rasterio.band(dst, i),
+                src_transform=src.transform,
+                src_crs=src.crs,
+                dst_transform=transform,
+                dst_crs=dst_crs,
+                resampling=Resampling.nearest)
+    
+    return dest_name
+    
 #Detect new files since last run
 def find_files(path):
+    """Search and project tifs"""
     images = {}
     image_paths = glob.glob(os.path.join(path, "*.tif"))
     counter = 1
+    
     for i in image_paths:
         #Load and get metadata
         d = rasterio.open(i)
-        numpy_image = d.read()
-        left,bottom, right, top = d.bounds 
+        numpy_image = d.read()        
+        left, bottom, right, top = d.bounds 
         
         #Check if image is all white
         img_reshaped = numpy_image.reshape(-1, 3)
@@ -34,7 +66,7 @@ def find_files(path):
         img.save(png_name)
         
         #Create dict
-        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg(),"site":basename}
+        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg(),"site":basename,"resolution":d.res}
         counter +=1
     
     return images
@@ -76,7 +108,6 @@ def main(path, everglades_watch, save_dir="/orange/ewhite/everglades/Zooniverse/
     """Args:
         path: a .tif to run
     """
-    
     #Create new directory in save_dir
     basename = os.path.splitext(os.path.basename(path))[0]
     dirname = "{}/{}".format(save_dir,basename)
@@ -87,7 +118,9 @@ def main(path, everglades_watch, save_dir="/orange/ewhite/everglades/Zooniverse/
         raise ValueError("dirname: {} exists)".format(dirname))
     
     #Crop tif
-    saved_file = tile_raster.run(path=path, save_dir=dirname)
+    #Project from longlat to utm
+    projected_raster_path = utm_project(path)    
+    saved_file = tile_raster.run(path=projected_raster_path, save_dir=dirname)
     print("Created cropped files at {}".format(saved_file))
     
     #Generate metadata
