@@ -25,18 +25,18 @@ def utm_project(path):
             'height': height
         })
     
-    dest_name = "{}_projected.tif".format(os.path.splitext(path)[0])
-    
-    with rasterio.open(dest_name, 'w', **kwargs) as dst:
-        for i in range(1, src.count + 1):
-            reproject(
-                source=rasterio.band(src, i),
-                destination=rasterio.band(dst, i),
-                src_transform=src.transform,
-                src_crs=src.crs,
-                dst_transform=transform,
-                dst_crs=dst_crs,
-                resampling=Resampling.nearest)
+        dest_name = "{}_projected.tif".format(os.path.splitext(path)[0])
+        
+        with rasterio.open(dest_name, 'w', **kwargs) as dst:
+            for i in range(1, src.count + 1):
+                reproject(
+                    source=rasterio.band(src, i),
+                    destination=rasterio.band(dst, i),
+                    src_transform=src.transform,
+                    src_crs=src.crs,
+                    dst_transform=transform,
+                    dst_crs=dst_crs,
+                    resampling=Resampling.nearest)
     
     return dest_name
     
