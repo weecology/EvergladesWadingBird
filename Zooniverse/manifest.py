@@ -3,10 +3,12 @@ import glob
 import os
 import pandas as pd
 from panoptes_client import Panoptes, Project, SubjectSet, Subject
-import tile_raster
 import rasterio
+from rasterio.warp import calculate_default_transform, reproject, Resampling
 from PIL import Image
 import numpy as np
+
+import tile_raster
 
 def utm_project(path):
     
