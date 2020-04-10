@@ -6,7 +6,7 @@ import pandas as pd
 sys.path.append(os.path.dirname(os.getcwd()))
 
 import aggregate
-
+import utils
 min_version = 91.122
 
 @pytest.fixture()
@@ -40,4 +40,14 @@ def test_project():
 def test_spatial_join():
     df = aggregate.parse_file("data/species-classifications.csv",min_version)
     project_df = aggregate.project(df)
-    aggregate.spatial_join(project_df)
+    gdf = aggregate.spatial_join(project_df)
+    assert gdf["selected_index"].loc[0]
+    
+def test_run():
+    aggregate.run("data/species-classifications.csv",min_version)
+    assert os.path.exists("output/species-classifications.shp")
+    
+def test_download_data():
+    everglades_watch = utils.connect()
+    df = aggregate.download_data(everglades_watch)
+    assert not df.empty

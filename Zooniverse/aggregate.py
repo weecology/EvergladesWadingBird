@@ -1,14 +1,21 @@
 #aggregation script
 import pandas as pd
 import geopandas as gpd
+from panoptes_client import Panoptes
 from shapely.geometry import box
 import json
 import numpy as np
 import os
-
-#TODO
-def download_data():
-    pass
+import utils
+    
+def download_data(everglades_watch):
+    #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
+    classification_export = everglades_watch.get_export('classifications', generate=True)
+    rows = []
+    for row in classification_export.csv_dictreader():
+        rows.append(row)    
+    
+    return pd.DataFrame(rows)
 
 def load_classifications(classifications_file, version):
     """Load classifications from Zooniverse
@@ -84,7 +91,8 @@ def parse_file(classifications_file, version):
         results.append(annotations)
     
     results = pd.concat(results)
-        
+    results = results.reset_index(drop=True)
+    
     return results
 
 def project(df):
@@ -108,46 +116,41 @@ def spatial_join(gdf, IoU_threshold = 0.2):
     spatial_index = gdf.sindex
     
     filtered_boxes = [ ]
-    data = [ ]
     for index, row in gdf.iterrows():
         geom = row["geometry"]
         #Spatial clip to window using spatial index for faster querying
         possible_matches_index = list(spatial_index.intersection(geom.bounds))
         possible_matches = gdf.iloc[possible_matches_index]
         
-        boxes_to_merge = []
+        boxes_to_merge = { }
         labels = [ ]
         
         #Add target box to consider
-        boxes_to_merge.append(geom)
+        boxes_to_merge[index] = geom
         labels.append(row["tool_label"])
         
         #Find intersection over union
         for match_index, match_row in possible_matches.iterrows():
             match_geom = match_row["geometry"]
-            IoU = calculate_IoU(geom,match_geom)
+            IoU = calculate_IoU(geom, match_geom)
             
             if IoU > IoU_threshold:
-                boxes_to_merge.append(match_geom)
+                boxes_to_merge[match_index] = match_geom
                 labels.append(match_row["tool_label"])
         
         #Choose final box and labels
-        selected_box = choose_box(boxes_to_merge)
-        species_class = majority_vote(labels)
-        filtered_boxes.append(selected_box)
-        data.append({"label":species_class})
+        selected_key = choose_box(boxes_to_merge)
+        gdf.loc[index, "selected_index"] = selected_key
     
-    filtered_df = gpd.GeoDataFrame(data, geometry=filtered_boxes)
     #remove duplicates
-    filtered_df
-    return filtered_boxes
+    return gdf
         
 def choose_box(boxes_to_merge):
     """Choose the smallest box of a set to mantain"""
-    smaller_box_index = np.argmin([x.area for x in boxes_to_merge])
-    smallest_box = boxes_to_merge[smaller_box_index]
+    smallest_box_index = np.argmin([boxes_to_merge[x].area for x in boxes_to_merge])
+    key=list(boxes_to_merge.keys())[smallest_box_index]
     
-    return smallest_box
+    return key
     
 def calculate_IoU(geom, match):
     """Calculate intersection-over-union scores for a pair of boxes"""
@@ -157,23 +160,23 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def majority_vote(labels):
-    """Vote on classes of overlapping boxes
-    TODO tie breaks?
-    """
-    return pd.Series(labels).value_counts().idxmax()    
-
-def run(classifications_file, version, savedir="."):
-    #Read file from zooniverse
-    df = parse_file(classifications_file, version)
+def run(classifications_file=None, version=None, savedir=".", download=False):
+    
+    #Authenticate
+    if download:
+        everglades_watch = utils.connect()    
+        df = download_data(everglades_watch)
+    
+    if classifications_file:
+        #Read file from zooniverse
+        df = parse_file(classifications_file, version)
     
     #Get spatial coordinates
     gdf = project(df)
     
     #Find overlapping annotations and select annotations. Vote on best class for final box
-    selected_annotations = reduce_annotations(gdf)
-    
+    selected_annotations = spatial_join(gdf)
     basename = os.path.splitext(os.path.basename(classifications_file))[0]
     
     #write shapefile
-    selected_annotations.to_file("{}/{}.shp".format(savedir,basename))
+    selected_annotations.to_file("{}/{}.shp".format(savedir, basename))

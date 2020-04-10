@@ -9,9 +9,11 @@ from PIL import Image
 import numpy as np
 
 import tile_raster
+import utils
 
 def utm_project(path):
     
+    #Everglades UTM Zone 
     dst_crs = 'EPSG:32617'
     
     with rasterio.open(path) as src:
@@ -72,12 +74,6 @@ def find_files(path):
         counter +=1
     
     return images
-    
-def connect():
-    #TODO hash this password.    
-    Panoptes.connect(username='bw4sz', password='D!2utNBno8;b')
-    everglades_watch = Project.find(10951)
-    return everglades_watch
 
 #Create manifests
 def create_subject_set(everglades_watch, name="demo"):
@@ -139,7 +135,7 @@ def main(path, everglades_watch, save_dir="/orange/ewhite/everglades/Zooniverse/
 
 if __name__ == "__main__":
     #auth
-    everglades_watch = connect()    
+    everglades_watch = utils.connect()    
     
     #Which files have already been run
     uploaded = pd.read_csv("uploaded.csv")
