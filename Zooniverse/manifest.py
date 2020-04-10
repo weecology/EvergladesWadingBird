@@ -49,6 +49,9 @@ def find_files(path):
     image_paths = glob.glob(os.path.join(path, "*.tif"))
     counter = 1
     
+    #extract site name
+    site_name = os.path.basename(path)
+    
     for i in image_paths:
         #Load and get metadata
         d = rasterio.open(i)
@@ -70,7 +73,7 @@ def find_files(path):
         img.save(png_name)
         
         #Create dict
-        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg(),"site":basename,"resolution":d.res}
+        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg(),"site":site_name,"resolution":d.res}
         counter +=1
     
     return images

@@ -8,24 +8,22 @@ import numpy as np
 import os
 import utils
     
-def download_data(everglades_watch):
+def download_data(everglades_watch, generate=False):
     #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
-    classification_export = everglades_watch.get_export('classifications', generate=True)
+    classification_export = everglades_watch.get_export('classifications', generate=generate)
     rows = []
     for row in classification_export.csv_dictreader():
         rows.append(row)    
     
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    df["workflow_version"] = df.workflow_version.astype(float)
+    return df
 
-def load_classifications(classifications_file, version):
+def load_classifications(classifications_file):
     """Load classifications from Zooniverse
     classifications_file: path to .csv
-    version: minimum version workflow
     """
     df = pd.read_csv(classifications_file)
-    df  = df[df.workflow_version > version]  
-    
-    df = df[~(df.annotations == '[{"task":"T0","task_label":"Species","value":[]}]')]
     
     return df
 
@@ -66,10 +64,11 @@ def parse_subject_data(x):
     
     return bounds
 
-def parse_file(classifications_file, version):
+def parse_file(df, version):
     
-    #Load Classifications
-    df = load_classifications(classifications_file, version)
+    #Load Classifications    
+    df  = df[df.workflow_version > version]  
+    df = df[~(df.annotations == '[{"task":"T0","task_label":"Species","value":[]}]')]
     
     #remove empty annotations
     results = [ ]
@@ -160,16 +159,18 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def run(classifications_file=None, version=None, savedir=".", download=False):
+def run(classifications_file=None, version=None, savedir=".", download=False, generate=False):
     
     #Authenticate
     if download:
         everglades_watch = utils.connect()    
-        df = download_data(everglades_watch)
-    
-    if classifications_file:
+        df = download_data(everglades_watch, generate=False)
+    else:
         #Read file from zooniverse
-        df = parse_file(classifications_file, version)
+        df = load_classifications(classifications_file)        
+    
+    #Parse JSON and filter
+    df = parse_file(df, version)
     
     #Get spatial coordinates
     gdf = project(df)
@@ -178,5 +179,8 @@ def run(classifications_file=None, version=None, savedir=".", download=False):
     selected_annotations = spatial_join(gdf)
     basename = os.path.splitext(os.path.basename(classifications_file))[0]
     
+    #TODO what is the details column? Drop since its a list.
+    selected_annotations = selected_annotations.drop(columns="details")
+    
     #write shapefile
-    selected_annotations.to_file("{}/{}.shp".format(savedir, basename))
+    selected_annotations.to_file("{}/{}.shp".format(savedir, basename),index=True)

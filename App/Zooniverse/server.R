@@ -24,6 +24,11 @@ shinyServer(function(input, output) {
   output$species<-species_page()
   output$about<-about_page()
 
-  #Field site maps
+  ####Landing page###
   output$map <- create_map()
+  raw_data <- load_classifications()
+  selected_boxes<-filter_annotations(raw_data)
+  
+  output$summary <- renderText(paste("There have been",nrow(raw_data),"classications on",length(unique(raw_data$frame)),"frames by", length(unique(raw_data$user_name)),"users at",length(unique(raw_data$site)),"sites"))
+  output$totals_plot<-renderPlot(totals_plot(selected_boxes))
 })
