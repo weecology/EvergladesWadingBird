@@ -5,6 +5,8 @@ landing_page<-function(){
       leafletOutput("map"),
       h1("Zooniverse Summary"),
       p(textOutput("summary")),
-      plotOutput("totals_plot")
+      plotOutput("totals_plot"),
+      h1("Site Summary"),
+      plotOutput("site_totals_plot")
     )})
 }

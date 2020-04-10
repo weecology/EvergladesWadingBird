@@ -26,7 +26,8 @@ def test_parse_annotations(csv_data):
 
 def test_parse_subject_data(csv_data):
     subject_data = aggregate.parse_subject_data(csv_data.subject_data.iloc[40])
-    assert subject_data.site.iloc[0] == "CypressCity_02282020_292"
+    assert subject_data.site.iloc[0] == "CypressCity"
+    assert  subject_data.event.iloc[0]  == "02282020_292"
     
 def test_parse_file(csv_data):
     df = aggregate.parse_file(csv_data,min_version)

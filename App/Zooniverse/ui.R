@@ -15,7 +15,8 @@ shinyUI(fluidPage(theme = shinytheme("readable"),
                   #Navbar to each page
                   navbarPage("Everglades Wading Birds",
                              tabPanel("Landing",uiOutput('landing')),
-                             tabPanel("Sites",uiOutput('site')),
+                             tabPanel("Time Series",uiOutput('time')),
                              tabPanel("Species",uiOutput('species')),
+                             tabPanel("Colony Interactive",uiOutput('colony')),
                              tabPanel("About",uiOutput('about'))
                   )))

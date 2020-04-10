@@ -17,6 +17,7 @@ def download_data(everglades_watch, generate=False):
     
     df = pd.DataFrame(rows)
     df["workflow_version"] = df.workflow_version.astype(float)
+    
     return df
 
 def load_classifications(classifications_file):
@@ -57,10 +58,15 @@ def parse_subject_data(x):
             resolution = 0.01
             
         try:
-            site = os.path.splitext(os.path.basename(data["site"]))[0]
+            site_data = os.path.splitext(os.path.basename(data["site"]))[0]
+            site = site_data.split("_", maxsplit=1)[0]
+            event = site_data.split("_", maxsplit=1)[1]
+        
         except:
             site = np.nan
-        bounds = pd.DataFrame({"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_right],"site":site,"resolution":[resolution]})
+            event = np.nan
+            
+        bounds = pd.DataFrame({"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_right],"site":site,"event":event,"resolution":[resolution]})
     
     return bounds
 
@@ -181,6 +187,6 @@ def run(classifications_file=None, version=None, savedir=".", download=False, ge
     
     #TODO what is the details column? Drop since its a list.
     selected_annotations = selected_annotations.drop(columns="details")
-    
+        
     #write shapefile
     selected_annotations.to_file("{}/{}.shp".format(savedir, basename),index=True)
