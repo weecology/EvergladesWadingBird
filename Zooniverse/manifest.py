@@ -146,7 +146,7 @@ if __name__ == "__main__":
     
     #Currently debugging with just one path
     if TESTING:
-        path = ["/orange/ewhite/everglades/WadingBirds2020/6th Bridge/6thBridge_03112020.tif"]
+        path = "/orange/ewhite/everglades/WadingBirds2020/6th Bridge/6thBridge_03112020.tif"
         saved_file = main(path, everglades_watch)
         
     else:
