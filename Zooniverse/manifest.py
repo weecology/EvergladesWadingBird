@@ -144,7 +144,6 @@ if __name__ == "__main__":
     #auth
     everglades_watch = utils.connect()    
     
-
     #Currently debugging with just one path
     if TESTING:
         path = ["/orange/ewhite/everglades/WadingBirds2020/6th Bridge/6thBridge_03112020.tif"]
