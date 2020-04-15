@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
   output$colony<-colony_page(selected_boxes)
   
   ####Landing page###
-  output$map <- create_map()
+  output$map <- create_map(selected_boxes)
   raw_data <- load_classifications()
   
   output$summary <- renderText(paste("There have been",nrow(raw_data),"classications on",length(unique(raw_data$frame)),"frames by", length(unique(raw_data$user_name)),"users at",length(unique(raw_data$site)),"sites"))

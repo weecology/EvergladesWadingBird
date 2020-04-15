@@ -7,8 +7,9 @@ library(gridExtra)
 library(stringr)
 
 #Site map
-create_map<-function(){
-  m <- leaflet() %>% addTiles() %>% setView(-80.581699, 25.396143, zoom=10) 
+create_map<-function(selected_boxes){
+  site_coords<-selected_boxes %>% group_by(site) %>% slice(1) %>% st_centroid() 
+  m <- leaflet(data=site_coords) %>% addTiles() %>% addMarkers() %>% setView(-80.581699, 25.396143, zoom=10) 
   return(renderLeaflet(m))
 }
 
@@ -34,19 +35,22 @@ filter_annotations<-function(raw_data){
 }
 
 totals_plot<-function(selected_boxes){
-  ggplot(selected_boxes) + geom_bar(aes(x=majority_class)) + coord_flip() + ggtitle("Project Total")
+  ggplot(selected_boxes) + geom_bar(aes(x=majority_class)) + coord_flip() + ggtitle("Project Total") + labs(x="Label") + theme(text = element_text(size=20))
 }
 
+#TODO columns should be thinner.
 site_totals<-function(selected_boxes){
   #Site totals
   selected_sites <-selected_boxes %>% group_by(site) %>% summarize(n=n()) %>% filter(n>2)
   to_plot<-selected_boxes %>% group_by(site,majority_class) %>% summarize(n=n()) %>% filter(site %in% selected_sites$site)
-  ggplot(to_plot) + geom_col(aes(x=majority_class,y=n,fill=site),position = position_dodge()) + coord_flip() + ggtitle("Site Totals") + labs(x="Label",y="Count")
+  ggplot(to_plot) + geom_col(aes(x=majority_class,y=n,fill=site),position = position_dodge()) + coord_flip() + labs(x="Label",y="Count") +
+    theme(text = element_text(size=20))
 }
 
 site_phenology<-function(selected_boxes){
   to_plot<-selected_boxes %>% group_by(event,majority_class) %>% summarize(n=n()) 
-  ggplot(to_plot,aes(x=event,y=n,col=majority_class)) + geom_point() + geom_line(linetype="dashed",aes(group=majority_class)) + labs(x="Event",y="Count",col="label") + stat_smooth()
+  ggplot(to_plot,aes(x=event,y=n,col=majority_class)) + geom_point(size=4) + geom_line(linetype="dashed",aes(group=majority_class)) + labs(x="Event",y="Count",col="label") + stat_smooth() +
+    theme(text = element_text(size=20))
 }
 
 plot_annotations<-function(selected_boxes){

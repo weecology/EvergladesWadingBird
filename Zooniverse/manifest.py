@@ -137,30 +137,41 @@ def main(path, everglades_watch, save_dir="/orange/ewhite/everglades/Zooniverse/
     return saved_file
 
 if __name__ == "__main__":
+    
+    #Testing flag to just upload one example file
+    TESTING = True
+    
     #auth
     everglades_watch = utils.connect()    
     
-    #Which files have already been run
-    uploaded = pd.read_csv("uploaded.csv")
-    
-    #Compare names of completed tiles
-    uploaded["basename"] = uploaded.path.apply(lambda x: os.path.basename(x))
-    
-    #Files to process
-    file_pool = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
-    file_pool_basenames = [os.path.basename(x) for x in file_pool]
-    paths = [file_pool[index] for index, x in enumerate(file_pool_basenames) if not x in uploaded.basename.values]
+
+    #Currently debugging with just one path
+    if TESTING:
+        path = ["/orange/ewhite/everglades/WadingBirds2020/6th Bridge/6thBridge_03112020.tif"]
+        saved_file = main(path, everglades_watch)
         
-    print("Running files:{}".format(paths))
-    for path in paths:
-        #Run .tif
-        try:
-            saved_file = main(path, everglades_watch)
-            #Confirm it exists and write to the csv file
-            assert os.path.exists(saved_file)
-            uploaded["path"] = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
-        except Exception as e:
-            print("{} failed with exception {}".format(path, e))
-            
-    #Overwrite uploaded manifest
-    uploaded.to_csv("uploaded.csv",index=False)
+    else:
+        #Which files have already been run
+        uploaded = pd.read_csv("uploaded.csv")
+        
+        #Compare names of completed tiles
+        uploaded["basename"] = uploaded.path.apply(lambda x: os.path.basename(x))
+        
+        #Files to process
+        file_pool = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
+        file_pool_basenames = [os.path.basename(x) for x in file_pool]
+        paths = [file_pool[index] for index, x in enumerate(file_pool_basenames) if not x in uploaded.basename.values]
+                
+        print("Running files:{}".format(paths))
+        for path in paths:
+            #Run .tif
+            try:
+                saved_file = main(path, everglades_watch)
+                #Confirm it exists and write to the csv file
+                assert os.path.exists(saved_file)
+                uploaded["path"] = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
+            except Exception as e:
+                print("{} failed with exception {}".format(path, e))
+                
+        #Overwrite uploaded manifest
+        uploaded.to_csv("uploaded.csv",index=False)

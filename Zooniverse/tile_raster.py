@@ -11,7 +11,7 @@ def parse_args():
         description='Simple script for cutting tif into tiles')
     parser.add_argument("--path")
     parser.add_argument("--save_dir",default=".")
-    parser.add_argument("--patch_size",default=2000)
+    parser.add_argument("--patch_size",default=4000)
     
     return(parser.parse_args())
 
@@ -55,7 +55,7 @@ def getCellFromGeom(img, geom, filename, count):
                         img.crs,
                         filename+"_"+str(count))
     
-def run(path,save_dir, patch_size=2000):
+def run(path,save_dir, patch_size=4000):
     """Read in raster, split into pieces and write to dir
     Returns:
         filename: path to directory of images
