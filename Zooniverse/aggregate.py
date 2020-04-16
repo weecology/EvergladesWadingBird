@@ -35,9 +35,15 @@ def parse_annotations(x):
     boxes = pd.DataFrame(boxes)
     boxes.rename(columns = {"tool_label": "Species"})
     
+    #subtask labels - it is critical this matches the current workflow, since Zooniverse returns the original 0 index position
+    subtask_label = ["Roosting", "Nesting","Flying","Courting","Roosting/Nesting","Unknown"]
+    
     #Loop through each box and create a dataframe    
     box_df = pd.DataFrame()
     for index, box in boxes.iterrows():
+        #Lookup subtask
+        subtask = subtask_label[box.details[0]["value"][0]]
+        box["subtask"] = subtask
         box_df = box_df.append(box,ignore_index=True)
         
     return box_df 
@@ -50,9 +56,10 @@ def parse_subject_data(x):
     for key in annotation_dict:
         data = annotation_dict[key]
         utm_left, utm_bottom, utm_right, utm_top = data["bounds"]
+        subject_reference = data["subject_reference"]
         
         try:
-            resolution = data["resolution"]
+            resolution = data["resolution"][0]
         except:
             print("Resolution not known, assigning 1cm. THIS IS TEMPORARY!!!!")
             resolution = 0.01
@@ -66,7 +73,7 @@ def parse_subject_data(x):
             site = np.nan
             event = np.nan
             
-        bounds = pd.DataFrame({"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_right],"site":site,"event":event,"resolution":[resolution]})
+        bounds = pd.DataFrame({"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_right],"site":site,"event":event,"resolution":[resolution],"subject_reference":[subject_reference]})
     
     return bounds
 

@@ -57,14 +57,14 @@ shinyServer(function(input, output) {
   }) 
   
   observe({
-    leafletProxy("map", data=landing_map_select()) %>% clearMarkers() %>% addMarkers()
+    leafletProxy("map", data=landing_map_select()) %>% clearMarkers() %>% addMarkers(popup=~colony)
   })
   
   observe({
     output$site_totals_plot<-renderPlot(site_totals(selected_boxes=landing_filter()))
   })
 
-  output$summary <- renderText(paste("There have been",nrow(raw_data),"classications on",length(unique(raw_data$frame)),"frames by", length(unique(raw_data$user_name)),"users at",length(unique(raw_data$site)),"sites"))
+  output$summary <- renderText(paste("There have been",nrow(raw_data),"classications on",length(unique(raw_data$subject_re)),"frames by", length(unique(raw_data$user_name)),"users at",length(unique(raw_data$site)),"sites"))
   output$totals_plot<-renderPlot(totals_plot(selected_boxes))
 
   ###Time page###
@@ -80,6 +80,7 @@ shinyServer(function(input, output) {
   })
   
   ###Species page###
+  output$label_heatmap<-renderPlot(behavior_heatmap(selected_boxes))
   
   ###Colony page###
   colony_filter<-reactive({

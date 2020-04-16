@@ -22,7 +22,7 @@ def test_load_classifications():
 
 def test_parse_annotations(csv_data):  
     annotations = aggregate.parse_annotations(csv_data.annotations.iloc[0])  
-    assert annotations.shape == (6,8) 
+    assert annotations.shape == (6,9) 
 
 def test_parse_subject_data(csv_data):
     subject_data = aggregate.parse_subject_data(csv_data.subject_data.iloc[40])
@@ -52,7 +52,7 @@ def test_run(download):
     aggregate.run("data/species-classifications.csv",min_version, download=download, savedir="output")
     assert os.path.exists("output/species-classifications.shp")
 
-@pytest.mark.parametrize("generate", [True, False])
+@pytest.mark.parametrize("generate", [False])
 def test_download_data(generate):
     everglades_watch = utils.connect()
     df = aggregate.download_data(everglades_watch, generate=generate)
