@@ -1,13 +1,17 @@
-landing_page<-function(){
+landing_page<-function(selected_boxes){
+  
+  image_list<-c("All",selected_boxes$site)
   
   #TODO plots must be larger fonts
   renderUI({
     fluidPage(
-      leafletOutput("map"),
-      h1("Zooniverse Summary"),
+      sidebarPanel(leafletOutput("map",height=900)),
+      mainPanel(h1("Zooniverse Summary"),
       p(textOutput("summary")),
       plotOutput("totals_plot",height=400),
-      h1("Site Summary"),
+      h1("Select Sites Summary"),
+      selectizeInput("landing_site", "Site", image_list, selected = "All", multiple = TRUE,options = NULL),
       plotOutput("site_totals_plot",height=400)
+      )
     )})
 }

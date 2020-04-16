@@ -7,9 +7,8 @@ library(gridExtra)
 library(stringr)
 
 #Site map
-create_map<-function(selected_boxes){
-  site_coords<-selected_boxes %>% group_by(site) %>% slice(1) %>% st_centroid() 
-  m <- leaflet(data=site_coords) %>% addTiles() %>% addMarkers() %>% setView(-80.581699, 25.396143, zoom=10) 
+create_map<-function(colonies){
+  m <- leaflet(data=colonies) %>% addTiles() %>% addMarkers(popup = ~colony) %>% setView(-80.59513, 26.49511, zoom=9) 
   return(renderLeaflet(m))
 }
 
@@ -38,7 +37,6 @@ totals_plot<-function(selected_boxes){
   ggplot(selected_boxes) + geom_bar(aes(x=majority_class)) + coord_flip() + ggtitle("Project Total") + labs(x="Label") + theme(text = element_text(size=20))
 }
 
-#TODO columns should be thinner.
 site_totals<-function(selected_boxes){
   #Site totals
   selected_sites <-selected_boxes %>% group_by(site) %>% summarize(n=n()) %>% filter(n>2)
@@ -49,7 +47,7 @@ site_totals<-function(selected_boxes){
 
 site_phenology<-function(selected_boxes){
   to_plot<-selected_boxes %>% group_by(event,majority_class) %>% summarize(n=n()) 
-  ggplot(to_plot,aes(x=event,y=n,col=majority_class)) + geom_point(size=4) + geom_line(linetype="dashed",aes(group=majority_class)) + labs(x="Event",y="Count",col="label") + stat_smooth() +
+  ggplot(to_plot,aes(x=event,y=n,col=majority_class)) + geom_point(size=7) + geom_line(linetype="dashed",aes(group=majority_class),size=3) + labs(x="Event",y="Count",col="label") + stat_smooth() +
     theme(text = element_text(size=20))
 }
 
