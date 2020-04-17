@@ -118,6 +118,9 @@ def project(df):
     geoms = [box(left, bottom, right, top) for left, bottom, right, top in zip(df.box_utm_left, df.box_utm_bottom, df.box_utm_right, df.box_utm_top)]
     gdf = gpd.GeoDataFrame(df, geometry=geoms)
     
+    #set CRS
+    gdf.crs = 'epsg:32617'
+    
     return gdf
     
 def spatial_join(gdf, IoU_threshold = 0.2):

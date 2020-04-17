@@ -60,8 +60,15 @@ site_phenology<-function(selected_boxes){
     theme(text = element_text(size=20))
 }
 
+pal <- colorFactor(
+  palette = 'Dark2',
+  domain = selected_boxes$majority_class
+)
+
 plot_annotations<-function(selected_boxes){
-  m<-leaflet(data=selected_boxes) %>% addTiles() %>% addPolygons()
+  st_crs(selected_boxes)<-32617
+  selected_centroids<-st_transform(selected_boxes,4326) %>% st_centroid()
+  m<-leaflet(data=selected_centroids) %>% addTiles() %>% addCircles(color=~pal(majority_class),opacity = 0.5,radius = 2)
   return(m)
 }
 
