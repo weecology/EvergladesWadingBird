@@ -12,4 +12,5 @@
 
 source activate mapbox
 
-mapbox --access-token sk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJjazk0bDBneXUwMmxkM2dtdTN5cDZxcW5sIn0.BhTra6gIBUM_buIPNXqxUA upload /orange/ewhite/everglades/WadingBirds2020/6th\ Bridge/6thBridge_03182020.tif
+cd /orange/ewhite/everglades/WadingBirds2020/6th\ Bridge/
+mapbox --access-token sk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJjazk0bDBneXUwMmxkM2dtdTN5cDZxcW5sIn0.BhTra6gIBUM_buIPNXqxUA upload 6thBridge_03182020.tif
