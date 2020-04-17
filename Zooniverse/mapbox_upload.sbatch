@@ -10,7 +10,7 @@
 #SBATCH --output=/home/b.weinstein/logs/mapbox_upload.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/mapbox_upload.err
 
-source activate mapbox
+conda activate mapbox
 
 #Get key
 bash  ~/miniconda3/envs/mapbox/etc/activate.d
