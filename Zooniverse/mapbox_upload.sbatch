@@ -10,11 +10,11 @@
 #SBATCH --output=/home/b.weinstein/logs/mapbox_upload.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/mapbox_upload.err
 
-conda activate mapbox
+source activate mapbox
 
 #Get key
-bash  ~/miniconda3/envs/mapbox/etc/activate.d
+source  ~/miniconda3/envs/mapbox/etc/activate.d
 
 cd /orange/ewhite/everglades/WadingBirds2020/6th\ Bridge/
 
-mapbox upload 6thBridge_03182020.tif
+mapbox upload bweinstein.6thBridge_03182020 6thBridge_03182020.tif
