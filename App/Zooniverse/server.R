@@ -90,6 +90,10 @@ shinyServer(function(input, output) {
   })
   
   observe({
+    print(input$colony_map_zoom)
+  })
+  
+  observe({
     output$colony_map<-renderLeaflet(plot_annotations(selected_boxes =colony_filter()))
   })
   

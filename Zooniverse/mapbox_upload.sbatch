@@ -13,8 +13,18 @@
 source activate mapbox
 
 #Get key
-source  ~/miniconda3/envs/mapbox/etc/activate.d
+source  /orange/ewhite/everglades/mapbox/source_token.txt
 
 cd /orange/ewhite/everglades/WadingBirds2020/6th\ Bridge/
+
+#Generate tiles
+
+#Project to web mercator
+gdalwarp 6thBridge_03182020.tif  6thBridge_03182020_webmercator.tif -t_srs "EPSG:3857" 
+
+rio mbtiles 6thBridge_03182020_webmercator.tif -o /orange/ewhite/everglades/mapbox/riotest.mbtiles --zoom-levels 17..22 -j 4 -f PNG --overwrite
+mapbox upload bweinstein.6thBridge_03182020_riotiles /orange/ewhite/everglades/mapbox/riotest.mbtiles
+
+echo "done"
 
 mapbox upload bweinstein.6thBridge_03182020 6thBridge_03182020.tif
