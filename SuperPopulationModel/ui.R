@@ -12,22 +12,17 @@ library(shiny)
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
   
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-  
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       plotOutput("distPlot")
-    )
-  )
+ h1("Superpopulation simulation"),
+ inputPanel(h2("Parameters"),
+            actionButton("simulate","Simulate"),
+            textInput("N", "Population Size", value="10"),
+            textInput("Weeks", "Weeks", value="10"),
+            textInput("samples_per_week", "Samples per Week", value="1"),
+            textInput("entry_rate", "Nesting Start Probability", value="0.8"),
+            textInput("survivial_rate", "Survival Probability", value="0.8"),
+            textInput("detection_rate", "Detection Probability ", value="0.7")
+            ),
+ #simulate data
+ h2("Data"),
+ plotOutput("time_plot",height=400,width=800)
 ))

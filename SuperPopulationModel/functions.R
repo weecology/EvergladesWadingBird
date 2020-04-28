@@ -5,13 +5,16 @@
 #survival_rate the probability of a nest being active per sample
 
 simulate<-function(N=100,weeks=10,samples_per_week=1,detection_rate=0.8, survival_rate=0.95, entry_rate=0.5){
+  result<-list()
+  
   true_state<-simulate_true_state(N)
   observed_data<-simulate_data(N, weeks, samples_per_week,detection_rate, survival_rate, entry_rate)
-  parameters<-extract_parameters()
-  fited_model<-fit_model()
-  estimate_state<-predict()
+  #parameters<-extract_parameters(observed_data)
+  #fited_model<-fit_model()
+  #estimate_state<-predict()
   
-  result<-data.frame(true_state,estimate_state)
+  result[["observed_data"]]<-observed_data
+  
   return(result)
 }
 
