@@ -7,17 +7,19 @@ sys.path.append(os.path.dirname(os.getcwd()))
 
 import aggregate
 import utils
-min_version = 91.122
+min_version = 107.133
 
 @pytest.fixture()
 def csv_data():
-    df = aggregate.load_classifications("data/species-classifications.csv")
+    df = aggregate.load_classifications("data/old_workflow.csv")
     df  = df[df.workflow_version > min_version]  
+    df  = df[df.workflow_id ==14231]      
     df = df[~(df.annotations == '[{"task":"T0","task_label":"Species","value":[]}]')]        
+
     return df
 
 def test_load_classifications():
-    df = aggregate.load_classifications("data/species-classifications.csv")
+    df = aggregate.load_classifications("data/old_workflow.csv")
     assert not df.empty
 
 def test_parse_annotations(csv_data):  
@@ -34,7 +36,7 @@ def test_parse_file(csv_data):
     assert not df.empty
 
 def test_project():
-    df = aggregate.load_classifications("data/species-classifications.csv")
+    df = aggregate.load_classifications("data/old_workflow.csv")
     df = aggregate.parse_file(df, min_version)
     project_df = aggregate.project(df)
     project_df.head()
@@ -49,8 +51,8 @@ def test_spatial_join(csv_data):
 
 @pytest.mark.parametrize("download", [True, False])
 def test_run(download):
-    aggregate.run("data/species-classifications.csv",min_version, download=download, savedir="output")
-    assert os.path.exists("output/species-classifications.shp")
+    aggregate.run("data/old_workflow.csv",min_version, download=download, savedir="output")
+    assert os.path.exists("output/old_workflow.shp")
 
 @pytest.mark.parametrize("generate", [False])
 def test_download_data(generate):

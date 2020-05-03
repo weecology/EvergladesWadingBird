@@ -8,23 +8,40 @@
 #
 
 library(shiny)
-library(reshape2)
-library(ggplot2)
-library(dplyr)
-
 source("functions.R")
-source("plotting_functions.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-  observeEvent(input$simulate,{
-    results<-simulate(N=as.numeric(input$N),weeks=as.numeric(input$Weeks),
+  output$Status<-renderText("Status: Ready")
+  
+    observeEvent(input$simulate,{
+    
+    #Simulate data
+    true_state<-simulate_true_state(as.numeric(input$N))
+    output$Status<-renderText("Status: Simulating Data")
+    
+    observed_data<-simulate_data(true_state=true_state,weeks=as.numeric(input$Weeks),
                             samples_per_week = as.numeric(input$samples_per_week),
                             detection_rate = as.numeric(input$detection_rate),
                             survival_rate = as.numeric(input$survivial_rate),
                             entry_rate = as.numeric(input$entry_rate))
     
-    output$time_plot<-renderPlot(create_time_plot(results$observed_data))
+    output$time_plot<-renderPlot(create_time_plot(observed_data))
+    
+    output$Status<-renderText("Status: Fiting Model")
+    withProgress(message = 'Calculation in progress', {
+      model<-fitModel(observed_data)
+    })
+    
+    #Get chains
+    output$Status<-renderText("Status: Drawing posterior")
+    chains<-getChains(model)
+    
+    output$posterior_plot<-renderPlot(posterior_plot_state(chains,
+                                                           entry_rate = as.numeric(input$entry_rate),
+                                                           detection_rate = as.numeric(input$detection_rate),
+                                                           survival_rate = as.numeric(input$survivial_rate)))
+    output$popplot<-renderPlot(population_plot(chains = chains, observed_data = observed_data, true_state = true_state))
+    output$Nstarplot<-renerPlot(estimate_NStar(chains = chains,true_value = true_state))
   })
-
 })

@@ -70,7 +70,7 @@ plot_annotations<-function(selected_boxes){
   st_crs(selected_boxes)<-32617
   selected_centroids<-st_transform(selected_boxes,4326) %>% st_centroid()
   mapbox_url = "https://api.mapbox.com/styles/v1/bweinstein/ck94nmzn20an31imrz6ffplun/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJ2THJ4dWRNIn0.5Pius_0u0NxydUzkY9pkWA"
-  m<-leaflet(data=selected_centroids,options = leafletOptions(minZoom = 7, maxZoom = 22, maxNativeZoom=22)) %>% addTiles(mapbox_url) %>% addCircles(color=~pal(majority_class),opacity = 0.5,radius = 0.1)
+  m<-leaflet(data=selected_centroids,options = tileOptions(minZoom = 7, maxZoom = 22)) %>% addTiles(mapbox_url) %>% addCircles(color=~pal(majority_class),opacity = 0.5,radius = 0.1)
   return(m)
 }
 

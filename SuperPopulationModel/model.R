@@ -1,0 +1,58 @@
+sink("model.jags")
+cat("
+    model {
+    
+    #### Process Model
+    for(i in 1:Nests){
+
+      #First week is initialized
+      present[i,1] ~ dbern(state[1,2])
+
+      for(w in 2:Weeks){
+        #Effective presence state | conditional on survival from last week
+        #jags has 1 based index, so add one to transform 0-1 state to 1-2 coding.
+        present[i,w] ~ dbern(state[present[i,w-1]+1,2])
+      }
+    }
+    
+    ### Observation Model
+    for (i in 1:Nests){
+    for(w in 1:Weeks){
+      for(s in 1:Samples){
+        z[i,w,s] <- omega * present[i,w]
+        Y[i,w,s] ~ dbern(z[i,w,s])
+      }
+    }
+    }
+
+    ##Derived quantity##
+    
+    #Total nests per week
+    for(w in 1:Weeks){  
+      N[w] <- sum(present[,w])
+    }
+    
+    #Entering the populations
+    for(w in 1:(Weeks-1)){
+      Beta[w] = N[w+1] - (N[w] * state[2,2])
+      BetaStar[w] = (Beta[w] * log(state[2,2]))/(state[2,2]-1)
+    }
+
+    ### Priors
+    #Detection rate
+    omega ~ dbeta(1,1)
+    
+    #Hidden State Matrix
+    #P(surviving)
+    state[2,2]  ~ dbeta(1,1)
+    #P(Nest Failure) is the inverse of survival
+    state[2,1]  = 1 - state[2,2]
+    #P(Nest Initation)
+    state[1,2] ~ dbeta(1,1)
+    
+    #Probably of staying dead is the inverse of nest initiation. 
+    state[1,1] = 1 - state[1,2]
+
+    }",fill=TRUE)
+
+sink()

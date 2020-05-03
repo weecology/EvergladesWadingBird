@@ -1,0 +1,112 @@
+---
+title: "Simulation"
+author: "Ben Weinstein"
+date: "5/1/2020"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+editor_options: 
+  chunk_output_type: console
+---
+
+Williams KA, Frederick P. Use of the superpopulation approach to estimate breeding population size : an example in asynchronously breeding birds. Ecology. 2011;92: 821–828. 
+
+# Overview
+The goal of this document was to replicate the proposed model, simulate a few reasonable scenerios and evaluate whether the model could recover the known true state. This will help make sense of what kinds of data we need and the sampling intensity. During this I recognized some nice aspects of the approach, as well as some areas of potential growth specific to our data collection and long-term aims. The general logic of the model is:
+
+A nest (i) on week (w) with observtion (s) is considered either active (Y=1) or inactive (Y=0). The observation of each nest depends on our ability to detect them ($\omega$) conditional on their presence at each observation period. The presence of a nest is a function of the probability of either surviving from the previous week (state_{2,2}) or nest initiation (state_{1,2}). All probabilities are expressed as a per week interval. Renesting of the same nesting pair is not allowed. The total superpopulation is therefore the estimated number of nests which were present over the entire study period given the detection rate and the rate of new birds starting nests. The simulations below are not a perfect copy of the paper, but follow it closely. For example, I am simplfying that nests don't both start/stop between a detection period. 
+
+$$Y_{i,w,s} \sim Bernoulli(z_{i,w,s})$$
+$$z_{i,w,s} = \omega * present_{i,w} $$
+$$present_{i,w} \sim Bernoulli(State_{i,w-1})$$
+This simulation uses flat priors for the detetion rate, the nest initiation rate, and the nest survival rate. It would be much better to use data from the literature to inform prior knowledge, since there will be tradeoffs in estimating each of these parameters. See Foley et al. 2020.
+
+```{r setup, include=FALSE}
+source("functions.R")
+library(knitr)
+opts_chunk$set(fig.height = 8,fig.width = 9,warning = F,message = F, cache.path = "Cache/",cache=TRUE)
+opts_chunk$set()
+```
+
+For each simulation, there will be four plots.
+
+1. The posterior estimate of each of the markov states (black). In red dashed line is the true value of the parameter used to generate the data. 
+2. The time-series of observed nesting counts over time (black), the predicted latent count of nests at each observation is shown in the shaded region (blue).  The true total population nest count across all time periods is the red dashed line.
+3. The posterior prediction of total nest count (black) and the true total population nest count.
+4. Nest starts as well as unseed nest failures. The late are not currently included in the total population count.
+
+# Proof of concept - perfect detection/survival/simultaneous nesting
+
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=1,detection_rate=1,survival_rate=1, entry_rate=1)
+```
+
+# Asynchronous nesting, complete survival and detection
+
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=1,detection_rate=1,survival_rate=1, entry_rate=0.6)
+```
+
+# Synchronous Nesting, complete detection with incomplete survival
+
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=1,detection_rate=1,survival_rate=0.6, entry_rate=1)
+```
+
+Note that we are able to capture the true nest count, despite not being able to correctly infer all parameters. This highlights the tradeoffs in the model. In this particular case, because there is no renesting of failed nests, and all birds start nesting at the same time, there is almost no data on nest initiation. This is why field-validated prior bounds are incredibly important.
+
+# Asynchronous Nesting, incomplete detection with incomplete survival
+
+This is the expected scenerio we will encounter.
+
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=1,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
+```
+
+## Intense sampling
+
+To accurtely capture the detection bias, we need atleast one repeat sample during the time in which the nesting state does not change. 
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=2,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
+```
+
+# Large colony
+```{r}
+result<-simulate(true_state=5000,weeks=11,samples_per_week=1,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
+```
+
+# Slow Build in Nesting Intensity
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=1,detection_rate=0.8,survival_rate=0.95, entry_rate=0.05)
+```
+
+## Slow Build in Nesting Intensity - Intense Sampling
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=2,detection_rate=0.8,survival_rate=0.95, entry_rate=0.05)
+```
+
+# Extensions and areas of opportunity
+
+This model fits broadly within the general class of hierarchical Bayesian models with hidden markov states. There have been many examples of how to add more realistic biology. Each requires more data collection and field validation, but with the potential of improving population level counts. 
+
+* Time dependent functions. Any of the parameters might change over time to seasonal phenology. The caveat here is that it easy to overparameterize.
+* Environmental dependent functions. Birds may initiate nesting based on both climate and the environmental conditions of a colony, such as water level. Long term, we can even use the water levels as an explicit measure of change in the estimated parameters.
+* Biotic dependent functions. Competition among individuals and among species could effect both the timing of nest initiation as well as nest success. The current model makes no allowances for renesting of failed pairs. We should look in the literature to get a sense for which species this is reasonable. This could make a large difference and is noted in the discussion.
+* Nested or non-mutual exclusive behaviors. Birds may flexibly choose strategies that change over time. I wrote a similiar paper on hidden-markov movement with whales (Weinstein et al. 2018).
+
+The achilles heel of all of these models is always that the thing we want to predict is unknowable and unmeasurable. That's why we use a latent markov state. That means that we enter the murky space of quantitative ecology where people publish all sorts of models because they cannot be proved wrong. I paused on doing this kind of work for this reason. Some guiding hopes might be.
+
+1. Above all, everything we can do to field validate model results will be huge. Start with field validated priors and reasonable bounds on nest success. The scale of our data collection is potentially novel in trying to use large parts of the colony as testing and training splits for parameter estimation. Normally ecological models have so few data points that you need every last one to estimate the posterior. The virtue of the airborne work + machine learning is to escape the trap of needing AIC to choose models.
+
+2. Simulation. Lots of models could be useful, good models are tractable and identifiable within reasonable sampling regimes. Williams et al. is a bit coy in places about under what conditions this model might give wildly inaccurate results. Dorazio once called this 'the carpet sweeping of ecology'.
+
+3. Generalizable. Williams et al. note "[The proposed approach]...population estimation cannot be easily generalized, and populations may need to be estimated for individual colonies and seasons, as we have done here.". Especially because the target quantity is unknowable, we really want to aim for methods that make sense across colonies. The risk of overfitting is extreme.
+
+Lastly, I think it should be noted that I think the concept of detection bias in the paper is a good start, but is probably undercounting the true number of nests. They use multiple observers to estimate the detection of finding nests within an image. To me the hard part is seeing the nest to take a picture of it. Taking multiple images over a time period in which the nest state should not change is critical. I know we will not be able to do this systemically, but either repeat flights, or better yet, exhaustive ground count of nests in some fixed location will improve estimates of detection bias. Clearly this is hard.
+
+# Cited
+
+Foley CM, H F, Lynch H. Correcting for within ‑ season demographic turnover to estimate the island ‑ wide population of King Penguins ( Aptenodytes patagonicus ) on South Georgia. Polar Biol.
+
+Weinstein BG, Irvine L, Friedlaender AS. Capturing foraging and resting behavior using nested multivariate Markov models in an air-breathing marine vertebrate. Mov Ecol. Movement Ecology; 2018;6: 1–10. doi:10.1186/s40462-018-0134-4

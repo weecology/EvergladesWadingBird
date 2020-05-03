@@ -73,14 +73,16 @@ def parse_subject_data(x):
             site = np.nan
             event = np.nan
             
-        bounds = pd.DataFrame({"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_right],"site":site,"event":event,"resolution":[resolution],"subject_reference":[subject_reference]})
+        bounds = pd.DataFrame({"subject_ids":[key],"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_right],"site":site,"event":event,"resolution":[resolution],"subject_reference":[subject_reference]})
     
     return bounds
 
-def parse_file(df, version):
+def parse_file(df, version, workflow=14231):
     
     #Load Classifications    
     df  = df[df.workflow_version > version]  
+    df  = df[df.workflow_id ==14231]  
+    
     df = df[~(df.annotations == '[{"task":"T0","task_label":"Species","value":[]}]')]
     
     #remove empty annotations

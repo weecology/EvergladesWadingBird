@@ -23,6 +23,9 @@ shinyUI(fluidPage(
             textInput("detection_rate", "Detection Probability ", value="0.7")
             ),
  #simulate data
+ textOutput("Status"),
  h2("Data"),
- plotOutput("time_plot",height=400,width=800)
+ plotOutput("time_plot",height=400,width=800),
+ plotOutput("posterior_plot",height=400,width=800),
+ plotOutput("popplot",height=300,width=900)
 ))
