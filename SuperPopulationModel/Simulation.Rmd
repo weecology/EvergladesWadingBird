@@ -71,20 +71,18 @@ To accurtely capture the detection bias, we need atleast one repeat sample durin
 result<-simulate(true_state=500,weeks=11,samples_per_week=2,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
 ```
 
+### HyperIntense sampling
+
+To accurtely capture the detection bias, we need atleast one repeat sample during the time in which the nesting state does not change. 
+```{r}
+result<-simulate(true_state=500,weeks=11,samples_per_week=3,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
+```
+
 # Large colony
 ```{r}
 result<-simulate(true_state=5000,weeks=11,samples_per_week=1,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
 ```
 
-# Slow Build in Nesting Intensity
-```{r}
-result<-simulate(true_state=500,weeks=11,samples_per_week=1,detection_rate=0.8,survival_rate=0.95, entry_rate=0.05)
-```
-
-## Slow Build in Nesting Intensity - Intense Sampling
-```{r}
-result<-simulate(true_state=500,weeks=11,samples_per_week=2,detection_rate=0.8,survival_rate=0.95, entry_rate=0.05)
-```
 
 # Extensions and areas of opportunity
 
