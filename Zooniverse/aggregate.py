@@ -2,12 +2,13 @@
 import pandas as pd
 import geopandas as gpd
 from panoptes_client import Panoptes
-from shapely.geometry import box
+from shapely.geometry import box, Point
 import json
 import numpy as np
 import os
+import datetime
 import utils
-    
+
 def download_data(everglades_watch, generate=False):
     #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
     classification_export = everglades_watch.get_export('classifications', generate=generate)
@@ -20,33 +21,100 @@ def download_data(everglades_watch, generate=False):
     
     return df
 
-def load_classifications(classifications_file):
+def load_classifications(classifications_file, min_version):
     """Load classifications from Zooniverse
     classifications_file: path to .csv
     """
     df = pd.read_csv(classifications_file)
-    
+    df  = df[df.workflow_version > min_version]  
+    df  = df[df.workflow_name =="Counts and Nests"]          
     return df
+    
+def parse_additional_response(x):
+    annotation_dict = json.loads(x)[1]
+    response = annotation_dict["value"]
+    return response
 
-def parse_annotations(x):
+def parse_front_screen(x):
     #Extract and parse json
     annotation_dict = json.loads(x)[0]
     boxes = annotation_dict["value"]
-    boxes = pd.DataFrame(boxes)
-    boxes.rename(columns = {"tool_label": "Species"})
     
-    #subtask labels - it is critical this matches the current workflow, since Zooniverse returns the original 0 index position
-    subtask_label = ["Roosting", "Nesting","Flying","Courting","Roosting/Nesting","Unknown"]
+    if len(boxes) == 0:
+        return pd.DataFrame({"species":[None],"x":[None],"y":[None],"additional_observations":[None]})
+    
+    boxes = pd.DataFrame(boxes)
+    boxes = boxes.rename(columns = {"tool_label": "label"})
+            
+    #Loop through each box and create a dataframe    
+    box_df = pd.DataFrame()
+    for index, box in boxes.iterrows():
+        box_df = box_df.append(box,ignore_index=True)
+    
+    #Split label into Species and Behavior
+    new_columns = box_df.label.str.split("-",n=1,expand=True)
+    box_df["species"] = new_columns[0]
+    box_df["behavior"] = new_columns[1]
+    
+    return box_df[["label","species","behavior","x","y"]]
+
+def parse_uncommon_labels(x):
+    boxes = pd.DataFrame(x)
+    
+    #This needs to be done carefully, as Zooniverse only returns the ordinal sublabel position
+    sublabels= {0:"Flying",1:"Courting",2:"Roosting/Nesting",3:"Unknown"}
     
     #Loop through each box and create a dataframe    
     box_df = pd.DataFrame()
     for index, box in boxes.iterrows():
-        #Lookup subtask
-        subtask = subtask_label[box.details[0]["value"][0]]
-        box["subtask"] = subtask
-        box_df = box_df.append(box,ignore_index=True)
+        #we used to allow multiples
+        value = box.details[0]["value"]
+        if type(value) is list:
+            value = value[0]
         
-    return box_df 
+        #If unknown class assign it to species, else its a behavior
+        if box.tool_label == "Other":
+            box["WriteInSpecies"] = value
+            box["behavior"] = None
+        else:
+            box["behavior"] = sublabels[value]
+        box_df = box_df.append(box,ignore_index=True)
+    
+    box_df = box_df.rename(columns = {"tool_label": "species"})
+    box_df = box_df[["species","behavior","x","y"]]
+    
+    return box_df
+
+def parse_additional_observations(x):
+    """Parse the optional second screen of less common labels and nest labels"""
+    uncommon_annotation_dict = json.loads(x)[2]
+    nest_annotation_dict = json.loads(x)[3]
+    
+    results = [ ]
+    
+    if len(uncommon_annotation_dict["value"]) > 0:
+        results.append(parse_uncommon_labels(uncommon_annotation_dict["value"]))
+        #combine results into a single dataframe
+        results = pd.concat(results)
+        return results
+    else:  
+        return None
+    
+def parse_annotations(x):
+    #Parse each piece of the workflow
+    front_screen = parse_front_screen(x)
+    response = parse_additional_response(x)
+    front_screen["additional_observations"] = response
+    
+    if response == 'Yes':
+        additional_screen = parse_additional_observations(x)
+        if additional_screen is None:
+            #Sometime a user selects yes, but there is no data - they were just curious
+            return pd.concat([front_screen, additional_screen])
+        else:
+            return front_screen 
+    else:
+        return front_screen
 
 def parse_subject_data(x):
     """Parse image metadata"""
@@ -57,12 +125,7 @@ def parse_subject_data(x):
         data = annotation_dict[key]
         utm_left, utm_bottom, utm_right, utm_top = data["bounds"]
         subject_reference = data["subject_reference"]
-        
-        try:
-            resolution = data["resolution"][0]
-        except:
-            print("Resolution not known, assigning 1cm. THIS IS TEMPORARY!!!!")
-            resolution = 0.01
+        resolution = data["resolution"][0]
             
         try:
             site_data = os.path.splitext(os.path.basename(data["site"]))[0]
@@ -77,14 +140,7 @@ def parse_subject_data(x):
     
     return bounds
 
-def parse_file(df, version, workflow=14231):
-    
-    #Load Classifications    
-    df  = df[df.workflow_version > version]  
-    df  = df[df.workflow_id ==14231]  
-    
-    df = df[~(df.annotations == '[{"task":"T0","task_label":"Species","value":[]}]')]
-    
+def parse_birds(df):
     #remove empty annotations
     results = [ ]
     for index, row in df.iterrows(): 
@@ -109,8 +165,8 @@ def parse_file(df, version, workflow=14231):
     
     return results
 
-def project(df):
-    """Convert bounding boxes to utm coordinates"""
+def project_box(df):
+    """Convert points into utm coordinates"""
     df["box_utm_left"] = df.image_utm_left + (df.resolution * df.x)
     df["box_utm_bottom"] = df.image_utm_bottom + (df.resolution * df.y)
     df["box_utm_right"] = df.image_utm_left + (df.resolution * (df.x + df.width))
@@ -125,6 +181,20 @@ def project(df):
     
     return gdf
     
+def project_point(df):
+    """Convert points into utm coordinates"""
+    df["point_utm_x"] = df.image_utm_left + (df.resolution * df.x)
+    df["point_utm_y"] = df.image_utm_bottom + (df.resolution * df.y)
+
+    #Create geopandas
+    geoms = [Point(x,y) for x,y in zip(df.point_utm_x, df.point_utm_y)]
+    gdf = gpd.GeoDataFrame(df, geometry=geoms)
+    
+    #set CRS
+    gdf.crs = 'epsg:32617'
+    
+    return gdf
+
 def spatial_join(gdf, IoU_threshold = 0.2):
     """Find overlapping predictions in a geodataframe
     IoU_threshold: float threshold [0-1] for degree of overlap to merge annotations and vote on class
@@ -132,9 +202,12 @@ def spatial_join(gdf, IoU_threshold = 0.2):
     #Create spatial index
     spatial_index = gdf.sindex
     
+    #Turn points into boxes
+    gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.bounds]
+    
     filtered_boxes = [ ]
     for index, row in gdf.iterrows():
-        geom = row["geometry"]
+        geom = row["bbox"]
         #Spatial clip to window using spatial index for faster querying
         possible_matches_index = list(spatial_index.intersection(geom.bounds))
         possible_matches = gdf.iloc[possible_matches_index]
@@ -144,7 +217,7 @@ def spatial_join(gdf, IoU_threshold = 0.2):
         
         #Add target box to consider
         boxes_to_merge[index] = geom
-        labels.append(row["tool_label"])
+        labels.append(row["species"])
         
         #Find intersection over union
         for match_index, match_row in possible_matches.iterrows():
@@ -153,7 +226,7 @@ def spatial_join(gdf, IoU_threshold = 0.2):
             
             if IoU > IoU_threshold:
                 boxes_to_merge[match_index] = match_geom
-                labels.append(match_row["tool_label"])
+                labels.append(match_row["species"])
         
         #Choose final box and labels
         selected_key = choose_box(boxes_to_merge)
@@ -183,22 +256,24 @@ def run(classifications_file=None, version=None, savedir=".", download=False, ge
     if download:
         everglades_watch = utils.connect()    
         df = download_data(everglades_watch, generate=False)
+        basename = datetime.datetime()
     else:
         #Read file from zooniverse
         df = load_classifications(classifications_file)        
+        basename = os.path.splitext(os.path.basename(classifications_file))[0]
     
     #Parse JSON and filter
-    df = parse_file(df, version)
+    df = parse_birds(df, version)
     
-    #Get spatial coordinates
-    gdf = project(df)
+    #Write parsed data
+    df.to_csv("{}/{}.csv".format(savedir, basename),index=True)
+    
+    #Remove blank frames and fet spatial coordinates of bird points
+    df = df[df.species is not None]
+    gdf = project_point(df)
     
     #Find overlapping annotations and select annotations. Vote on best class for final box
     selected_annotations = spatial_join(gdf)
-    basename = os.path.splitext(os.path.basename(classifications_file))[0]
-    
-    #TODO what is the details column? Drop since its a list.
-    selected_annotations = selected_annotations.drop(columns="details")
-        
+            
     #write shapefile
     selected_annotations.to_file("{}/{}.shp".format(savedir, basename),index=True)

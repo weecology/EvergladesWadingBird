@@ -66,14 +66,13 @@ result<-simulate(true_state=500,weeks=11,samples_per_week=1,detection_rate=0.8,s
 
 ## Intense sampling
 
-To accurtely capture the detection bias, we need atleast one repeat sample during the time in which the nesting state does not change. 
+To accurately capture the detection bias, we need atleast one repeat sample during the time in which the nesting state does not change. 
 ```{r}
 result<-simulate(true_state=500,weeks=11,samples_per_week=2,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
 ```
 
 ### HyperIntense sampling
 
-To accurtely capture the detection bias, we need atleast one repeat sample during the time in which the nesting state does not change. 
 ```{r}
 result<-simulate(true_state=500,weeks=11,samples_per_week=3,detection_rate=0.8,survival_rate=0.8, entry_rate=0.6)
 ```
