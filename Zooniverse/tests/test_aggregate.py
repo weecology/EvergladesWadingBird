@@ -48,7 +48,7 @@ def test_project_point(csv_data):
     df = aggregate.parse_birds(csv_data.iloc[0:100])
     df = df[df.species.notna()]
     project_df = aggregate.project_point(df)
-    colnames= ["point_utm_x","point_utm_y"]
+    colnames= ["utm_x","utm_y"]
     assert all([x in project_df.columns for x in colnames])
 
 def test_spatial_join(csv_data):
@@ -56,12 +56,12 @@ def test_spatial_join(csv_data):
     project_df = aggregate.project_point(df)
     project_df = project_df[df.species.notna()]    
     gdf = aggregate.spatial_join(project_df)
-    assert gdf["selected_index"].loc[0]
+    assert gdf["selected_index"].iloc[0]
 
 @pytest.mark.parametrize("download", [True, False])
 def test_run(download):
-    aggregate.run("data/data/everglades-watch-classifications.csv",min_version, download=download, savedir="output")
-    assert os.path.exists("output/data/everglades-watch-classifications.shp")
+    aggregate.run("data/everglades-watch-classifications.csv",min_version, download=download, savedir="output")
+    assert os.path.exists("output/everglades-watch-classifications.shp")
 
 @pytest.mark.parametrize("generate", [False])
 def test_download_data(generate):

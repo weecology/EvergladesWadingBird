@@ -12,7 +12,6 @@ library(shiny)
 #Source page UIs
 source("landing_page.R")
 source("time_page.R")
-source("species_page.R")
 source("colony_page.R")
 source("about_page.R")
 source("functions.R")
@@ -27,7 +26,6 @@ shinyServer(function(input, output) {
   #Create pages
   output$landing<-landing_page(selected_boxes)
   output$time<-time_page(selected_boxes)
-  output$species<-species_page()
   output$about<-about_page()
   output$colony<-colony_page(selected_boxes)
   
@@ -71,7 +69,7 @@ shinyServer(function(input, output) {
   ###Colony page###
   time_series_filter<-reactive({
     #filter based on selection
-    to_plot <- selected_boxes %>% filter(site %in% input$timeseries_site, majority_class %in% input$timeseries_label) 
+    to_plot <- selected_boxes %>% filter(site %in% input$timeseries_site, species %in% input$timeseries_species,behavior %in% input$timeseries_behavior) 
     return(to_plot)
   }) 
   

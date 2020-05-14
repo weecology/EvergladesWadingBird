@@ -183,8 +183,8 @@ def project_box(df):
     
 def project_point(df):
     """Convert points into utm coordinates"""
-    df["point_utm_x"] = df.image_utm_left + (df.resolution * df.x)
-    df["point_utm_y"] = df.image_utm_bottom + (df.resolution * df.y)
+    df["utm_x"] = df.image_utm_left + (df.resolution * df.x)
+    df["utm_y"] = df.image_utm_bottom + (df.resolution * df.y)
 
     #Create geopandas
     geoms = [Point(x,y) for x,y in zip(df.point_utm_x, df.point_utm_y)]
@@ -203,7 +203,7 @@ def spatial_join(gdf, IoU_threshold = 0.2):
     spatial_index = gdf.sindex
     
     #Turn points into boxes
-    gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.bounds]
+    gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(1).bounds.values]
     
     filtered_boxes = [ ]
     for index, row in gdf.iterrows():
@@ -221,7 +221,7 @@ def spatial_join(gdf, IoU_threshold = 0.2):
         
         #Find intersection over union
         for match_index, match_row in possible_matches.iterrows():
-            match_geom = match_row["geometry"]
+            match_geom = match_row["bbox"]
             IoU = calculate_IoU(geom, match_geom)
             
             if IoU > IoU_threshold:
@@ -250,7 +250,7 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def run(classifications_file=None, version=None, savedir=".", download=False, generate=False):
+def run(classifications_file=None, version=None, savedir=".", download=False, generate=False,min_version=272.359):
     
     #Authenticate
     if download:
@@ -259,21 +259,22 @@ def run(classifications_file=None, version=None, savedir=".", download=False, ge
         basename = datetime.datetime()
     else:
         #Read file from zooniverse
-        df = load_classifications(classifications_file)        
+        df = load_classifications(classifications_file, min_version=min_version)        
         basename = os.path.splitext(os.path.basename(classifications_file))[0]
     
     #Parse JSON and filter
-    df = parse_birds(df, version)
+    df = parse_birds(df)
     
     #Write parsed data
     df.to_csv("{}/{}.csv".format(savedir, basename),index=True)
     
     #Remove blank frames and fet spatial coordinates of bird points
-    df = df[df.species is not None]
+    df = df[df.species.notna()]
     gdf = project_point(df)
     
     #Find overlapping annotations and select annotations. Vote on best class for final box
     selected_annotations = spatial_join(gdf)
             
     #write shapefile
+    selected_annotations=selected_annotations.drop(columns=["bbox"])
     selected_annotations.to_file("{}/{}.shp".format(savedir, basename),index=True)
