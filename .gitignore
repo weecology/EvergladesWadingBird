@@ -1,7 +1,9 @@
 # History files
 .Rhistory
 .Rapp.history
-
+.DS_Store
+Zooniverse/tests/output/*
+*pycache*
 # Session Data files
 .RData
 
