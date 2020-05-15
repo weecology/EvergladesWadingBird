@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(htmltools)
 
 #Source page UIs
 source("landing_page.R")

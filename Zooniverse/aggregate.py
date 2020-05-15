@@ -136,7 +136,7 @@ def parse_subject_data(x):
             site = np.nan
             event = np.nan
             
-        bounds = pd.DataFrame({"subject_ids":[key],"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_right],"site":site,"event":event,"resolution":[resolution],"subject_reference":[subject_reference]})
+        bounds = pd.DataFrame({"subject_ids":[key],"image_utm_left": [utm_left], "image_utm_bottom":[utm_bottom],"image_utm_right":[utm_right],"image_utm_top":[utm_top],"site":site,"event":event,"resolution":[resolution],"subject_reference":[subject_reference]})
     
     return bounds
 
@@ -184,10 +184,10 @@ def project_box(df):
 def project_point(df):
     """Convert points into utm coordinates"""
     df["utm_x"] = df.image_utm_left + (df.resolution * df.x)
-    df["utm_y"] = df.image_utm_bottom + (df.resolution * df.y)
+    df["utm_y"] = df.image_utm_top - (df.resolution * df.y)
 
     #Create geopandas
-    geoms = [Point(x,y) for x,y in zip(df.point_utm_x, df.point_utm_y)]
+    geoms = [Point(x,y) for x,y in zip(df.utm_x, df.utm_y)]
     gdf = gpd.GeoDataFrame(df, geometry=geoms)
     
     #set CRS
