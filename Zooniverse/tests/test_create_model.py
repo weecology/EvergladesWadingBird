@@ -1,7 +1,20 @@
 #test deepforest development
+import os
+import sys
+sys.path.append(os.path.dirname(os.getcwd()))
+
 from .. import create_model
+from .. import extract
 import pytest
 import rasterio
+
+#Setup method
+@pytest.fixture(scope="session", autouse=True)
+def extract_images():
+    #create an output image folder is needed
+    if not os.path.exists("output/images/"):
+        os.mkdir("output/images/")
+    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir="output/images/")
 
 @pytest.fixture()
 def shp_dir():
@@ -24,7 +37,7 @@ def test_shapefile_to_annotations():
     assert (df.iloc[0].xmin >= 0) & (df.iloc[0].xmax <= width)
     assert (df.iloc[0].ymin >= 0) & (df.iloc[0].ymax <= height)
     
-def test_format_shapefiles(shp_dir):
+def test_format_shapefiles(extract_images, shp_dir):
     results = create_model.format_shapefiles(shp_dir=shp_dir)
     assert all(results.columns == ["image_path","xmin","ymin","xmax","ymax","label"])
     assert results.xmin.dtype == int
