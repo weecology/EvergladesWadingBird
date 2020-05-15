@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from .. import extract_old
+from .. import extract
 
 def test_run():
-    extract_old.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/old_workflow.shp")
+    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir="output/images/")
