@@ -40,8 +40,4 @@ def test_split_test_train(annotations):
     assert all(test.label == "Bird")
     assert all(train.label == "Bird")
     assert test[test.image_path.isin(train.image_path.unique())].empty
-
-def test_run(shp_dir):
-    create_model.run(shp_dir, save_dir="output/")
-    assert len(glob.glob("output/*.h5"))==1
     
