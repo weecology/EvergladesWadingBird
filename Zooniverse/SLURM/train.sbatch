@@ -15,7 +15,7 @@
 module load tensorflow/1.14.0
 
 export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/everglades/bin/
-export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/everglades/lib/python3.6/site-packages/
+export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/everglades/lib/python3.7/site-packages/
 export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/everglades/lib/:${LD_LIBRARY_PATH}
 
 cd /home/b.weinstein/EvergladesWadingBird/Zooniverse

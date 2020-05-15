@@ -1,7 +1,7 @@
 name: Zooniverse
-channels:
-  - conda-forge
 dependencies:
+  - python==3.7
+  - geopandas
   - rasterio
   - shapely
   - pandas
