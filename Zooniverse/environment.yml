@@ -10,6 +10,7 @@ dependencies:
     - panoptes-aggregation
     - panoptes
     - DeepForest
+    - comet_ml
 
 
 

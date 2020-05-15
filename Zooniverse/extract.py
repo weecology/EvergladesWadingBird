@@ -46,7 +46,9 @@ def run(classification_shp, image_data ,savedir="."):
     image_df = pandas.read_csv(image_data)
     image_df = image_df[["subject_id","locations"]]
     joined_df = df.merge(image_df,on="subject_id")
-        
+    
+    #buffer the points by 1m
+    joined_df = joined_df.buffer(1)    
     joined_df["url"] = joined_df.locations.apply(lambda x: json.loads(x)['0'])
     grouped_df = joined_df.groupby("url")
     

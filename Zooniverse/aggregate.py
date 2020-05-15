@@ -202,7 +202,7 @@ def spatial_join(gdf, IoU_threshold = 0.2):
     #Create spatial index
     spatial_index = gdf.sindex
     
-    #Turn points into boxes
+    #Turn buffered points into boxes
     gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(1).bounds.values]
     
     filtered_boxes = [ ]
