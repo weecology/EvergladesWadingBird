@@ -256,7 +256,7 @@ def run(classifications_file=None, version=None, savedir=".", download=False, ge
     if download:
         everglades_watch = utils.connect()    
         df = download_data(everglades_watch, generate=False)
-        basename = datetime.datetime()
+        basename = datetime.now().strftime("%Y%m%d_%H%M%S")
     else:
         #Read file from zooniverse
         df = load_classifications(classifications_file, min_version=min_version)        

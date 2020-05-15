@@ -19,18 +19,19 @@ def hipergator_auth():
     return client
 
 def download_from_zooniverse(name, url):
-    
-    with open(name, 'wb') as handle:
-        response = requests.get(url, stream=True)
-    
-        if not response.ok:
-            print(response)
-    
-        for block in response.iter_content(1024):
-            if not block:
-                break
-    
-            handle.write(block)
+    #check first if it exists
+    if not os.path.exists(name):
+        with open(name, 'wb') as handle:
+            response = requests.get(url, stream=True)
+        
+            if not response.ok:
+                print(response)
+        
+            for block in response.iter_content(1024):
+                if not block:
+                    break
+        
+                handle.write(block)
             
 def run(classification_shp, image_data ,savedir="."):
     """
@@ -48,7 +49,6 @@ def run(classification_shp, image_data ,savedir="."):
     joined_df = df.merge(image_df,on="subject_id")
     
     #buffer the points by 1m
-    joined_df = joined_df.buffer(1)    
     joined_df["url"] = joined_df.locations.apply(lambda x: json.loads(x)['0'])
     grouped_df = joined_df.groupby("url")
     

@@ -58,7 +58,7 @@ def test_spatial_join(csv_data):
     gdf = aggregate.spatial_join(project_df)
     assert gdf["selected_index"].iloc[0]
 
-@pytest.mark.parametrize("download", [True, False])
+@pytest.mark.parametrize("download", [False])
 def test_run(download):
     aggregate.run("data/everglades-watch-classifications.csv",min_version, download=download, savedir="output")
     assert os.path.exists("output/everglades-watch-classifications.shp")
