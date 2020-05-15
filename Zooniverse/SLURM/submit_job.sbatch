@@ -10,7 +10,7 @@
 #SBATCH --output=/home/b.weinstein/logs/rclone_%j.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/rclone_%j.err
 
-source activate everglades
+source activate Zooniverse
 
 #Sync data
 rclone sync everglades:"WadingBird2020Deliverables" /orange/ewhite/everglades/WadingBirds2020/

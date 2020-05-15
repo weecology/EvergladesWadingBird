@@ -15,7 +15,7 @@ image-min-side: 800
 ##Number of GPUs to train
 multi-gpu: 1
 #Number of full cycles of the input data to train
-epochs: 1
+epochs: 4
 #Validation annotations. If training using fit_generator, these will be evaluated as a callback at the end of each epoch.
 validation_annotations: None
 ###Freeze layers. Used for model finetuning, freeze the bottom n layers.
