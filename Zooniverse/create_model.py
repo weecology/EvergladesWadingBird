@@ -123,5 +123,5 @@ def run(shp_dir, save_dir="."):
     model.prediction_model.save("{}/{}.h5".format(save_dir,timestamp))
     
 if __name__ == "__main__":
-    run(shp_dir="tests/output/images/", save_dir="tests/output/images/")
+    run(shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/", save_dir="/orange/ewhite/everglades/Zooniverse/predictions/")
     
