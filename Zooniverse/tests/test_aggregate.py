@@ -68,3 +68,10 @@ def test_download_data(generate):
     everglades_watch = utils.connect()
     df = aggregate.download_data(everglades_watch, generate=generate, min_version=min_version)
     assert not df.empty
+    
+def test_download_subject_data():
+    everglades_watch = utils.connect()
+    aggregate.download_subject_data(everglades_watch, savedir="output/", generate=False)
+    assert os.path.exists("output/everglades-watch-subjects.csv")
+    df = pd.read_csv("output/everglades-watch-subjects.csv")
+    assert not df.empty

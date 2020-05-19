@@ -8,6 +8,7 @@ import numpy as np
 import os
 from datetime import datetime
 import utils
+import extract
 
 def download_data(everglades_watch, min_version, generate=False):
     #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
@@ -23,14 +24,19 @@ def download_data(everglades_watch, min_version, generate=False):
     
     return df
 
-def download_subject_data(everglades_watch, generate=False):
+def download_subject_data(everglades_watch, savedir, generate=False):
     #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
-    classification_export = everglades_watch.get_export('subject', generate=generate)
+    classification_export = everglades_watch.get_export('subjects', generate=generate)
     rows = []
     for row in classification_export.csv_dictreader():
         rows.append(row)    
     
     df = pd.DataFrame(rows)    
+    fname = "{}/{}.csv".format(savedir,"everglades-watch-subjects")
+    
+    #Overwrite subject set
+    df.to_csv(fname)
+    
     return df
 
 def load_classifications(classifications_file, min_version):
@@ -269,6 +275,9 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         everglades_watch = utils.connect()    
         df = download_data(everglades_watch, min_version, generate=generate)
         basename = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        #add subject data to dir
+        download_subject_data(everglades_watch, savedir=savedir)
 
     else:
         #Read file from zooniverse download
@@ -296,8 +305,21 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     selected_annotations=selected_annotations.drop(columns=["bbox"])
     
     #Connect to index
-    selected_annotations.to_file("{}/{}.shp".format(savedir, basename))
+    fname = "{}/{}.shp".format(savedir, basename)
+    selected_annotations.to_file(fname)
+    
+    return fname
 
 if __name__ == "__main__":
-    run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/annotations/", download=True, 
+    #Download from Zooniverse and parse
+    fname = run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/annotations/", download=True, 
        generate=False, min_version=272.359) 
+    
+    #Download images
+    extract.run(
+        classification_shp=fname,
+        image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv",
+        savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
+    ) 
+    
+    
