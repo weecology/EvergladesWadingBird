@@ -9,7 +9,7 @@ import os
 from datetime import datetime
 import utils
 
-def download_data(everglades_watch, generate=False):
+def download_data(everglades_watch, min_version, generate=False):
     #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
     classification_export = everglades_watch.get_export('classifications', generate=generate)
     rows = []
@@ -18,6 +18,8 @@ def download_data(everglades_watch, generate=False):
     
     df = pd.DataFrame(rows)
     df["workflow_version"] = df.workflow_version.astype(float)
+    df  = df[df.workflow_version > min_version]  
+    df  = df[df.workflow_name =="Counts and Nests"]     
     
     return df
 
@@ -250,17 +252,23 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=272.359):
+def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=272.359, debug=False):
     
     #Authenticate
     if download:
         everglades_watch = utils.connect()    
-        df = download_data(everglades_watch, generate=False)
+        df = download_data(everglades_watch, min_version, generate=generate)
         basename = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+
     else:
-        #Read file from zooniverse
+        #Read file from zooniverse download
         df = load_classifications(classifications_file, min_version=min_version)        
         basename = os.path.splitext(os.path.basename(classifications_file))[0]
+    
+    #if debug for testing, just sample 100 rows    
+    if debug:
+        df = df.sample(n=100)    
     
     #Parse JSON and filter
     df = parse_birds(df)
