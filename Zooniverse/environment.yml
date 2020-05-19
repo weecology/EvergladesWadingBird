@@ -9,8 +9,7 @@ dependencies:
   - pandas
   - pytest
   - pip:
-    - panoptes-aggregation
-    - panoptes
+    - panoptescli
     - DeepForest
     - comet_ml
     - paramiko

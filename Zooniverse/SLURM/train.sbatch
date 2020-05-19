@@ -21,4 +21,6 @@ export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LI
 cd /home/b.weinstein/EvergladesWadingBird/Zooniverse
 
 #comet debug
+python aggregate.py
+python extract.py
 python create_model.py

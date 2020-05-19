@@ -250,7 +250,7 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def run(classifications_file=None, version=None, savedir=".", download=False, generate=False,min_version=272.359):
+def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=272.359):
     
     #Authenticate
     if download:
@@ -278,3 +278,7 @@ def run(classifications_file=None, version=None, savedir=".", download=False, ge
     #write shapefile
     selected_annotations=selected_annotations.drop(columns=["bbox"])
     selected_annotations.to_file("{}/{}.shp".format(savedir, basename),index=True)
+
+if __name__ == "__main__":
+    run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/", download=True, 
+       generate=True, min_version=272.359) 

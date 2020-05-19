@@ -68,4 +68,4 @@ def run(classification_shp, image_data ,savedir="."):
         
         #Create a shapefile
         shpname = "{}.shp".format(os.path.join(savedir,basename))
-        group.to_file(shpname)    
+        group.to_file(shpname) 

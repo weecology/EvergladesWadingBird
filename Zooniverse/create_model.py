@@ -118,7 +118,7 @@ def run(shp_dir, save_dir="."):
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
     
-    model = train_model(train_path, test_path)
+    model = train_model(train_path, test_path, save_dir)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model.prediction_model.save("{}/{}.h5".format(save_dir,timestamp))
     
