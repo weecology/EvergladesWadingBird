@@ -6,7 +6,7 @@ from shapely.geometry import box, Point
 import json
 import numpy as np
 import os
-import datetime
+from datetime import datetime
 import utils
 
 def download_data(everglades_watch, generate=False):
