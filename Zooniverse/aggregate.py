@@ -294,7 +294,9 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
             
     #write shapefile
     selected_annotations=selected_annotations.drop(columns=["bbox"])
-    selected_annotations.to_file("{}/{}.shp".format(savedir, basename),index=True)
+    
+    #Connect to index
+    selected_annotations.to_file("{}/{}.shp".format(savedir, basename))
 
 if __name__ == "__main__":
     run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/annotations/", download=True, 

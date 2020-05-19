@@ -60,7 +60,7 @@ def test_spatial_join(csv_data):
 
 @pytest.mark.parametrize("download", [True, False])
 def test_run(download):
-    aggregate.run("data/everglades-watch-classifications.csv",min_version=min_version, download=download, generate=False, savedir="output",debug=True)
+    aggregate.run("data/everglades-watch-classifications.csv", min_version=min_version, download=download, generate=False, savedir="output",debug=True)
     assert os.path.exists("output/everglades-watch-classifications.shp")
 
 @pytest.mark.parametrize("generate", [False])
