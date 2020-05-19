@@ -99,6 +99,13 @@ def train_model(train_path, test_path, save_dir="."):
     comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
     comet_experiment.log_parameters(model.config)
+    
+    #Log the number of training and test
+    train = pd.read_csv(train_path)
+    test = pd.read_csv(test_path)
+    comet_experiment.log_parameter("Training_Annotations",train.shape[0])    
+    comet_experiment.log_parameter("Testing_Annotations",test.shape[0])
+    
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
     model.train(train_path, comet_experiment=comet_experiment)
