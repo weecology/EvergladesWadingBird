@@ -23,6 +23,16 @@ def download_data(everglades_watch, min_version, generate=False):
     
     return df
 
+def download_subject_data(everglades_watch, generate=False):
+    #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
+    classification_export = everglades_watch.get_export('subject', generate=generate)
+    rows = []
+    for row in classification_export.csv_dictreader():
+        rows.append(row)    
+    
+    df = pd.DataFrame(rows)    
+    return df
+
 def load_classifications(classifications_file, min_version):
     """Load classifications from Zooniverse
     classifications_file: path to .csv
@@ -259,7 +269,6 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         everglades_watch = utils.connect()    
         df = download_data(everglades_watch, min_version, generate=generate)
         basename = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
 
     else:
         #Read file from zooniverse download
@@ -288,5 +297,5 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     selected_annotations.to_file("{}/{}.shp".format(savedir, basename),index=True)
 
 if __name__ == "__main__":
-    run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/", download=True, 
-       generate=True, min_version=272.359) 
+    run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/annotations/", download=True, 
+       generate=False, min_version=272.359) 

@@ -68,4 +68,7 @@ def run(classification_shp, image_data ,savedir="."):
         
         #Create a shapefile
         shpname = "{}.shp".format(os.path.join(savedir,basename))
-        group.to_file(shpname) 
+        group.to_file(shpname)
+
+if __name__=="__main__":
+    run(classification_shp="/orange/ewhite/everglades/Zooniverse/annotations/", image_data)

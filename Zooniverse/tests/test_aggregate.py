@@ -63,8 +63,8 @@ def test_run(download):
     aggregate.run("data/everglades-watch-classifications.csv",min_version=min_version, download=download, generate=False, savedir="output",debug=True)
     assert os.path.exists("output/everglades-watch-classifications.shp")
 
-@pytest.mark.parametrize("generate", [True, False])
+@pytest.mark.parametrize("generate", [False])
 def test_download_data(generate):
     everglades_watch = utils.connect()
-    df = aggregate.download_data(everglades_watch, generate=generate)
+    df = aggregate.download_data(everglades_watch, generate=generate, min_version=min_version)
     assert not df.empty
