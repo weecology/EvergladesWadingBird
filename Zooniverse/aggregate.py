@@ -322,7 +322,7 @@ if __name__ == "__main__":
     
     #Optionally download and format empty frames
     extract.extract_empty(
-        parsed_data="/orange/ewhite/everglades/Zooniverse/annotations/parsed_data.csv",
+        parsed_data="/orange/ewhite/everglades/Zooniverse/annotations/parsed_annotations.csv",
         image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv"
     )
     
