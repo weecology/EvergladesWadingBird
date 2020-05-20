@@ -14,7 +14,8 @@ create_map<-function(colonies){
 
 #Load data
 load_classifications<-function(){
-  raw_data<-read_sf("data/everglades-watch-classifications.shp")
+  shp<-list.files("data/",pattern = ".shp",full.names = T)
+  raw_data<-read_sf(shp)
   return(raw_data)
 }
 
@@ -68,7 +69,8 @@ plot_annotations<-function(selected_boxes){
   
   selected_centroids<-st_transform(selected_boxes,4326)
   mapbox_url = "https://api.mapbox.com/styles/v1/bweinstein/ck94nmzn20an31imrz6ffplun/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJ2THJ4dWRNIn0.5Pius_0u0NxydUzkY9pkWA"
-  m<-leaflet(data=selected_centroids,options=tileOptions(maxNativeZoom =22, maxZoom = 24)) %>% addTiles(mapbox_url,options=providerTileOptions(minZoom = 8, maxNativeZoom=22, maxZoom = 24)) %>% addCircles(color=~pal(species),opacity = 0.25,radius = 0.25,popup = ~htmlEscape(label))
+  m<-leaflet(data=selected_centroids,options=tileOptions(maxNativeZoom =22, maxZoom = 24)) %>% addTiles(mapbox_url,options=providerTileOptions(minZoom = 8, maxNativeZoom=22, maxZoom = 24)) %>%
+    addCircles(stroke = T,color=~pal(species),fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(label))
   return(m)
 }
 

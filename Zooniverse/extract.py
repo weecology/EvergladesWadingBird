@@ -1,5 +1,5 @@
 #Extract old zooniverse annotations. We had a test workflow on bounding boxes, let's salvage what we an
-import pandas
+import pandas as pd
 import paramiko
 import os
 import geopandas as gp
@@ -32,7 +32,44 @@ def download_from_zooniverse(name, url):
                     break
         
                 handle.write(block)
-            
+
+def extract_empty(parsed_data, image_data,save_dir="."):
+    
+    df = pd.read_csv(parsed_data)
+    
+    #get empty frames
+    df = df[df.species.isna()]
+    df["subject_id"] = df.subject_ids.astype(int)
+        
+    #Read in image location data
+    image_df = pd.read_csv(image_data)
+    image_df = image_df[["subject_id","locations"]]
+    joined_df = df.merge(image_df,on="subject_id")    
+    
+    #buffer the points by 1m
+    joined_df["url"] = joined_df.locations.apply(lambda x: json.loads(x)['0'])
+    grouped_df = joined_df.groupby("url")
+    
+    #Split into image groups and download the image and write a shapefile
+    group_data = [grouped_df.get_group(x) for x in grouped_df.groups]
+
+    empty_paths = []
+    for group in group_data:
+        
+        #Format for download
+        download_url = group.url.unique()[0]
+        
+        #Download image
+        basename = "{}".format(group.subject_id.unique()[0])
+        name = "{}.png".format(os.path.join(os.path.abspath(save_dir),basename))
+        download_from_zooniverse(name=name, url=download_url)    
+        empty_paths.append(name)
+        
+    #Write dict in retinanet format
+    empty_frame_df = pd.DataFrame({"image_path":empty_paths})
+    csv_name = "{}.csv".format(os.path.join(save_dir,"empty_frames"))
+    empty_frame_df.to_csv(csv_name)
+    
 def run(classification_shp, image_data ,savedir="."):
     """
     classification_shp: path to a processed .shp, see aggregate.py
@@ -44,7 +81,7 @@ def run(classification_shp, image_data ,savedir="."):
     df.subject_id = df.subject_id.astype(int)
     
     #Read in image location data
-    image_df = pandas.read_csv(image_data)
+    image_df = pd.read_csv(image_data)
     image_df = image_df[["subject_id","locations"]]
     joined_df = df.merge(image_df,on="subject_id")
     

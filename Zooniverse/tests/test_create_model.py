@@ -5,6 +5,8 @@ sys.path.append(os.path.dirname(os.getcwd()))
 
 from .. import create_model
 from .. import extract
+from .. import aggregate
+
 import pytest
 import rasterio
 
@@ -53,4 +55,5 @@ def test_split_test_train(annotations):
     assert all(test.label == "Bird")
     assert all(train.label == "Bird")
     assert test[test.image_path.isin(train.image_path.unique())].empty
+    
     

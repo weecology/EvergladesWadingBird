@@ -92,7 +92,25 @@ def split_test_train(annotations):
     
     return train, test
 
-def train_model(train_path, test_path, save_dir="."):
+def predict_empty_frames(model, empty_images_path, comet_experiment):
+    """Optionally read a set of empty frames and predict"""
+    empty_frame_df = pd.read_csv(empty_images_path)
+    empty_images = empty_frame_df.image_path.unique()
+    
+    empty_true_positives = 0
+    empty_false_negatives = 0
+    for path in empty_images:
+        boxes = model.predict_image(return_plot=False)
+        if boxes.empty:
+            empty_true_positives +=1
+        else:
+            empty_false_negatives +=1
+    
+    empty_recall = empty_true_positives/float(empty_true_positives + empty_false_negatives)
+    comet_experiment.log_metric("empty_recall", empty_recall)
+    print("Empty frame recall is {}".format(empty_recall))
+    
+def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     """Train a DeepForest model"""
     model = deepforest.deepforest()
     model.use_release()
@@ -106,16 +124,23 @@ def train_model(train_path, test_path, save_dir="."):
     comet_experiment.log_parameter("Training_Annotations",train.shape[0])    
     comet_experiment.log_parameter("Testing_Annotations",test.shape[0])
     
+    #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
     model.train(train_path, comet_experiment=comet_experiment)
     
+    #Test on empy frames
+    if empty_images_path:
+        predict_empty_frames(model, empty_images_path, comet_experiment)
+    
     return model
     
-def run(shp_dir, save_dir="."):
+def run(shp_dir, empty_frames_path=None, save_dir="."):
     """Parse annotations, create a test split and train a model"""
     annotations = format_shapefiles(shp_dir)
     random.seed(2)
+    
+    #Split train and test
     train, test = split_test_train(annotations)
     
     #write paths to headerless files alongside data
@@ -125,10 +150,17 @@ def run(shp_dir, save_dir="."):
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
     
-    model = train_model(train_path, test_path, save_dir)
+    model = train_model(train_path, test_path, empty_frames_path, save_dir)
+    
+    #Save
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model.prediction_model.save("{}/{}.h5".format(save_dir,timestamp))
     
 if __name__ == "__main__":
-    run(shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/", save_dir="/orange/ewhite/everglades/Zooniverse/predictions/")
+    run(
+        shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
+        parsed_data="/orange/ewhite/everglades/Zooniverse/annotation/parsed_annotations.csv",
+        empty_frames_path="/orange/ewhite/everglades/Zooniverse/annotation/empty_frames.csv",
+        save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
+    )
     

@@ -274,7 +274,6 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     if download:
         everglades_watch = utils.connect()    
         df = download_data(everglades_watch, min_version, generate=generate)
-        basename = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         #add subject data to dir
         download_subject_data(everglades_watch, savedir=savedir)
@@ -282,7 +281,6 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     else:
         #Read file from zooniverse download
         df = load_classifications(classifications_file, min_version=min_version)        
-        basename = os.path.splitext(os.path.basename(classifications_file))[0]
     
     #if debug for testing, just sample 100 rows    
     if debug:
@@ -292,9 +290,9 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     df = parse_birds(df)
     
     #Write parsed data
-    df.to_csv("{}/{}.csv".format(savedir, basename),index=True)
+    df.to_csv("{}/{}.csv".format(savedir, "parsed_annotations"),index=True)
     
-    #Remove blank frames and fet spatial coordinates of bird points
+    #Remove blank frames and spatial coordinates of bird points
     df = df[df.species.notna()]
     gdf = project_point(df)
     
@@ -305,7 +303,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     selected_annotations=selected_annotations.drop(columns=["bbox"])
     
     #Connect to index
-    fname = "{}/{}.shp".format(savedir, basename)
+    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications")
     selected_annotations.to_file(fname)
     
     return fname
@@ -321,5 +319,11 @@ if __name__ == "__main__":
         image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv",
         savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
     ) 
+    
+    #Optionally download and format empty frames
+    extract.extract_empty(
+        parsed_data="/orange/ewhite/everglades/Zooniverse/annotations/parsed_data.csv",
+        image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv"
+    )
     
     
