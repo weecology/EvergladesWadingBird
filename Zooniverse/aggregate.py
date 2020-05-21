@@ -294,6 +294,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     
     #Remove blank frames and spatial coordinates of bird points
     df = df[df.species.notna()]
+    
     gdf = project_point(df)
     
     #Find overlapping annotations and select annotations. Vote on best class for final box

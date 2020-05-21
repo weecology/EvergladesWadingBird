@@ -31,6 +31,10 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
         
     #extent bounds
     df = gdf.bounds
+    
+    #Assert size mantained
+    assert df.shape[0] == gdf.shape[0]
+    
     df = df.rename(columns={"minx":"xmin","miny":"ymin","maxx":"xmax","maxy":"ymax"})
     
     #cut off on borders
@@ -73,6 +77,9 @@ def format_shapefiles(shp_dir,image_dir=None):
         image_dir = shp_dir
         
     shapefiles = glob.glob(os.path.join(shp_dir,"*.shp"))
+    
+    #Assert all are unique
+    assert len(shapefiles) == len(np.unique(shapefiles))
     
     annotations = [ ]
     for shapefile in shapefiles:

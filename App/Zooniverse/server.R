@@ -63,7 +63,7 @@ shinyServer(function(input, output) {
     output$site_totals_plot<-renderPlot(site_totals(selected_boxes=landing_filter()))
   })
 
-  output$summary <- renderText(paste("There have been",nrow(raw_data),"classications on",length(unique(raw_data$subject_re)),"frames by", length(unique(raw_data$user_name)),"users at",length(unique(raw_data$site)),"sites"))
+  output$summary <- renderText(paste("There have been",nrow(raw_data),"classifications on",length(unique(raw_data$subject_re)),"non-empty frames by", length(unique(raw_data$user_name)),"users at",length(unique(raw_data$site)),"sites"))
   output$totals_plot<-renderPlot(totals_plot(selected_boxes))
 
   ###Time page###

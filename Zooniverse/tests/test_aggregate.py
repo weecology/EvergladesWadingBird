@@ -43,6 +43,9 @@ def test_parse_subject_data(csv_data):
 def test_parse_birds(csv_data):
     df = aggregate.parse_birds(csv_data.iloc[0:100])
     assert not df.empty
+    
+    #assert size is mantained
+    assert len(df.classification_id.unique()) == 100
 
 def test_project_point(csv_data):
     df = aggregate.parse_birds(csv_data.iloc[0:100])
@@ -52,17 +55,24 @@ def test_project_point(csv_data):
     assert all([x in project_df.columns for x in colnames])
 
 def test_spatial_join(csv_data):
-    df = aggregate.parse_birds(csv_data.iloc[0:100])
+    debug_data = csv_data.iloc[0:100]
+    df = aggregate.parse_birds(debug_data)
     project_df = aggregate.project_point(df)
-    project_df = project_df[df.species.notna()]    
+    project_df = project_df[df.species.notna()] 
     gdf = aggregate.spatial_join(project_df)
     assert gdf["selected_index"].iloc[0]
+    
+    #assert the shape size is mantained
+    print("{} non-empty frames".format(len(gdf.classification_id.unique())))
+    assert len(gdf.classification_id.unique()) < debug_data.shape[0]
 
 @pytest.mark.parametrize("download", [True, False])
 def test_run(download):
     aggregate.run("data/everglades-watch-classifications.csv", min_version=min_version, download=download, generate=False, savedir="output",debug=True)
     assert os.path.exists("output/everglades-watch-classifications.shp")
     assert os.path.exists("output/parsed_annotations.csv")
+    
+    df = pd.read_csv("output/parsed_annotations.csv")
 
 @pytest.mark.parametrize("generate", [False])
 def test_download_data(generate):
