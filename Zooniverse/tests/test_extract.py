@@ -19,4 +19,4 @@ def test_run(run_aggregate):
 def test_extract_empty(run_aggregate):
     if not os.path.exists("output/images/"):
         os.mkdir("output/images/")    
-    extract.extract_empty("output/parsed_annotations.csv", image_data="data/everglades-watch-subjects.csv")
+    extract.extract_empty("output/parsed_annotations.csv", image_data="data/everglades-watch-subjects.csv", save_dir="output/images/")

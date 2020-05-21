@@ -44,6 +44,8 @@ def extract_empty(parsed_data, image_data,save_dir="."):
     #Read in image location data
     image_df = pd.read_csv(image_data)
     image_df = image_df[["subject_id","locations"]]
+    image_df = image_df.drop_duplicates()
+    
     joined_df = df.merge(image_df,on="subject_id")    
     
     #buffer the points by 1m

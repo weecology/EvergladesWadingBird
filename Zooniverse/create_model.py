@@ -58,8 +58,14 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     
     #select columns
     result = df[["image_path","xmin","ymin","xmax","ymax","label"]]
+    
+    #assert no duplicates
+    dropped= result.drop_duplicates()
+    assert dropped.shape[0] == result.shape[0]
+    
     image_name = os.path.splitext(os.path.basename(rgb_path))[0]
     csv_filename = os.path.join(savedir, "{}.csv".format(image_name))
+    
     return result
 
 def find_rgb_path(shp_path, image_dir):
@@ -87,6 +93,10 @@ def format_shapefiles(shp_dir,image_dir=None):
         result = shapefile_to_annotations(shapefile, rgb_path)
         annotations.append(result)
     annotations = pd.concat(annotations)
+    
+    #Assert no duplication
+    dropped = annotations.drop_duplicates()
+    assert dropped.shape[0] == annotations.shape[0]
     
     return annotations
 
