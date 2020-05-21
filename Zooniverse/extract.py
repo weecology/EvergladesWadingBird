@@ -89,7 +89,7 @@ def run(classification_shp, image_data ,savedir="."):
     joined_df = df.merge(image_df,on="subject_id")
     
     #assert single matches
-    assert joined_df.shape[0] == image_df.shape[0]
+    assert joined_df.shape[0] == df.shape[0]
     
     #buffer the points by 1m
     joined_df["url"] = joined_df.locations.apply(lambda x: json.loads(x)['0'])
