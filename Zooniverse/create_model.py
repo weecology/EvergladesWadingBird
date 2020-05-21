@@ -159,7 +159,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
 if __name__ == "__main__":
     run(
         shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
-        empty_frames_path="/orange/ewhite/everglades/Zooniverse/annotation/empty_frames.csv",
+        empty_frames_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_frames.csv",
         save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
     )
     
