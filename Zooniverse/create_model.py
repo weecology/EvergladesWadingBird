@@ -100,7 +100,7 @@ def predict_empty_frames(model, empty_images_path, comet_experiment):
     empty_true_positives = 0
     empty_false_negatives = 0
     for path in empty_images:
-        boxes = model.predict_image(return_plot=False)
+        boxes = model.predict_image(path, return_plot=False)
         if boxes.empty:
             empty_true_positives +=1
         else:
