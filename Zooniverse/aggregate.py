@@ -311,20 +311,5 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 if __name__ == "__main__":
     #Download from Zooniverse and parse
     fname = run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/annotations/", download=True, 
-       generate=False, min_version=272.359) 
-    
-    #Download images
-    extract.run(
-        classification_shp=fname,
-        image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv",
-        savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
-    ) 
-    
-    #Optionally download and format empty frames
-    extract.extract_empty(
-        parsed_data="/orange/ewhite/everglades/Zooniverse/annotations/parsed_annotations.csv",
-        image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv",
-        save_dir= "/orange/ewhite/everglades/Zooniverse/parsed_images/"
-    )
-    
+       generate=False, min_version=272.359)
     

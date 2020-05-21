@@ -106,3 +106,19 @@ def run(classification_shp, image_data ,savedir="."):
         #Create a shapefile
         shpname = "{}.shp".format(os.path.join(savedir,basename))
         group.to_file(shpname)
+        
+if __name__=="__main__":
+    #Download images
+    extract.run(
+        classification_shp=fname,
+        image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv",
+        savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
+    ) 
+    
+    #Optionally download and format empty frames
+    extract.extract_empty(
+        parsed_data="/orange/ewhite/everglades/Zooniverse/annotations/parsed_annotations.csv",
+        image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv",
+        save_dir= "/orange/ewhite/everglades/Zooniverse/parsed_images/"
+    )
+        
