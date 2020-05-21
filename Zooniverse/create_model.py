@@ -90,10 +90,6 @@ def format_shapefiles(shp_dir,image_dir=None):
         annotations.append(result)
     annotations = pd.concat(annotations)
     
-    #Assert no duplication
-    dropped = annotations.drop_duplicates()
-    assert dropped.shape[0] == annotations.shape[0]
-    
     return annotations
 
 def split_test_train(annotations):
