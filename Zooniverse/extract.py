@@ -110,7 +110,7 @@ def run(classification_shp, image_data ,savedir="."):
 if __name__=="__main__":
     #Download images
     run(
-        classification_shp=fname,
+        classification_shp="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-classifications.shp",
         image_data="/orange/ewhite/everglades/Zooniverse/annotations/everglades-watch-subjects.csv",
         savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
     ) 
