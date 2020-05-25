@@ -171,7 +171,7 @@ if __name__ == "__main__":
     #Currently debugging with just one site
     if TESTING:
         paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-        for path in paths[0]:
+        for path in paths[:1]:
             print(path)
             saved_file = main(path, everglades_watch, model)
         

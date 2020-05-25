@@ -10,10 +10,17 @@
 #SBATCH --output=/home/b.weinstein/logs/rclone_%j.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/rclone_%j.err
 
-source activate Zooniverse
+
+module load tensorflow/1.14.0
+
+export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
+export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
+export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
+
+cd /home/b.weinstein/EvergladesWadingBird/Zooniverse
 
 #Sync data
-rclone sync everglades:"WadingBird2020Deliverables" /orange/ewhite/everglades/WadingBirds2020/
+#rclone sync everglades:"WadingBird2020Deliverables" /orange/ewhite/everglades/WadingBirds2020/
 
 #Upload
 python /home/b.weinstein/EvergladesWadingBird/Zooniverse/manifest.py
