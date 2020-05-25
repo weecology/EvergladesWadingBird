@@ -17,6 +17,7 @@ def extract_images():
     #create an output image folder is needed
     if not os.path.exists("output/images/"):
         os.mkdir("output/images/")
+    aggregate.run("data/everglades-watch-classifications.csv", min_version=272.359, download=False, generate=False, savedir="output",debug=False)
     extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir="output/images/")
 
 @pytest.fixture()

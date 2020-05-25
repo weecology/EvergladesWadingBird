@@ -16,6 +16,7 @@ create_map<-function(colonies){
 load_classifications<-function(){
   shp<-list.files("data/",pattern = ".shp",full.names = T)
   raw_data<-read_sf(shp)
+  st_crs(raw_data)<-32617
   return(raw_data)
 }
 

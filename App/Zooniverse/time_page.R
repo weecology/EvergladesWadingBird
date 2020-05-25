@@ -2,7 +2,7 @@ time_page<-function(selected_boxes){
   #Selector options
   site_list<-unique(selected_boxes$site)
   species_list<-unique(selected_boxes$species)
-  behavior_list<-unique(selected_boxes$species)
+  behavior_list<-unique(selected_boxes$behavior)
   
   renderUI({
     fluidPage(

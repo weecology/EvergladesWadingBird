@@ -7,6 +7,7 @@ import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from PIL import Image
 import numpy as np
+from deepforest import deepforest
 
 import tile_raster
 import utils
@@ -105,7 +106,21 @@ def upload(subject_set, images, everglades_watch):
         new_subjects.append(subject)    
     subject_set.add(new_subjects)
 
-def main(path, everglades_watch, save_dir="/orange/ewhite/everglades/Zooniverse/"):
+def screen_blanks(images, model):
+    #Load bird detection model
+    model = deepforest.deepforest(saved_model=model)
+    screened_images = [ ]
+    for path in images:
+        boxes = model.predict_image(path, return_plot=False)
+        if not boxes.empty:
+            screened_images.append(path)
+        else:
+            print("Remove {}, screened empty".format(path))
+    
+    return screened_images
+        
+    
+def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades/Zooniverse/"):
     """Args:
         path: a .tif to run
     """
@@ -126,13 +141,19 @@ def main(path, everglades_watch, save_dir="/orange/ewhite/everglades/Zooniverse/
     
     #Generate metadata
     images = find_files(saved_file)
-    print("{} images ready for upload".format(len(images)))
+    
+    #Screen for blanks
+    if model:
+        screened_images = screen_blanks(images, model)
+        print("{} images ready for upload".format(len(screened_images)))
+    else:
+        screened_images = images
     
     #Create a new subject set
     subject_set = create_subject_set(name=basename, everglades_watch=everglades_watch)
     
     #Upload
-    upload(subject_set, images, everglades_watch)
+    upload(subject_set, screened_images, everglades_watch)
     
     return saved_file
 
@@ -144,10 +165,15 @@ if __name__ == "__main__":
     #auth
     everglades_watch = utils.connect()    
     
-    #Currently debugging with just one path
+    #set model 
+    model = "/orange/ewhite/everglades/Zooniverse/20200525_173758.h5"
+    
+    #Currently debugging with just one site
     if TESTING:
-        path = "/orange/ewhite/everglades/WadingBirds2020/6th Bridge/6thBridge_03112020.tif"
-        saved_file = main(path, everglades_watch)
+        paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
+        for path in paths[0]:
+            print(path)
+            saved_file = main(path, everglades_watch, model)
         
     else:
         #Which files have already been run
@@ -165,7 +191,7 @@ if __name__ == "__main__":
         for path in paths:
             #Run .tif
             try:
-                saved_file = main(path, everglades_watch)
+                saved_file = main(path, everglades_watch, model)
                 #Confirm it exists and write to the csv file
                 assert os.path.exists(saved_file)
                 uploaded["path"] = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)

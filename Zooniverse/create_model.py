@@ -59,8 +59,8 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     #select columns
     result = df[["image_path","xmin","ymin","xmax","ymax","label"]]
     
-    image_name = os.path.splitext(os.path.basename(rgb_path))[0]
-    csv_filename = os.path.join(savedir, "{}.csv".format(image_name))
+    #Drop any rounding errors duplicated
+    result = result.drop_duplicates()
     
     return result
 
