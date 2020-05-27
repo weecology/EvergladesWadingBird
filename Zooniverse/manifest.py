@@ -107,7 +107,7 @@ def upload(subject_set, images, everglades_watch):
 
 def screen_blanks(images, model):
     #Load bird detection model
-    model = deepforest.deepforest(saved_model=model)
+    model = deepforest.deepforest( weights=model)
     screened_images = [ ]
     for path in images:
         boxes = model.predict_image(path, return_plot=False)
