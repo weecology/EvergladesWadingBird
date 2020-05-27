@@ -135,8 +135,12 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
     
     #Crop tif
     #Project from longlat to utm
-    projected_raster_path = utm_project(path)    
-    saved_file = tile_raster.run(path=projected_raster_path, save_dir=dirname)
+    #check if exists
+    projected_raster_path = "{}_projected.tif".format(os.path.splitext(path)[0])    
+    if not os.path.exists(projected_raster_path):
+        projected_raster_path = utm_project(path)    
+    
+    saved_file = tile_raster.run(path=projected_raster_path, save_dir=dirname,)
     print("Created cropped files at {}".format(saved_file))
     
     #Generate metadata

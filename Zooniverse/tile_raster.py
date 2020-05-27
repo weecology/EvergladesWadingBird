@@ -31,7 +31,13 @@ def splitImageIntoCells(img, filename, squareDim):
 
 # Generate a bounding box from the pixel-wise coordinates using the original datasets transform property
 def getTileGeom(transform, x, y, squareDim):
-    corner1 = (x, y) * transform
+    
+    try:
+        corner1 = (x, y) * transform
+    except Exception as e:
+        print(e)
+        raise ValueError("x = {}, y={}, transfrom={}".formt(x,y,transform))
+        
     corner2 = (x + squareDim, y + squareDim) * transform
     return box(corner1[0], corner1[1],
                         corner2[0], corner2[1])
