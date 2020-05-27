@@ -169,14 +169,11 @@ if __name__ == "__main__":
     model = "/orange/ewhite/everglades/Zooniverse/20200525_173758.h5"
     
     #Currently debugging with just one site
-    if TESTING:
-        path = "/orange/ewhite/everglades/WadingBirds2020/6th Bridge/6thBridge_03112020.tif"
-        saved_file = main(path, everglades_watch, model)
-        
-        #paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-        #for path in paths[:1]:
-            #print(path)
-            #saved_file = main(path, everglades_watch, model)
+    if TESTING:        
+        paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
+        for path in paths[:1]:
+            print(path)
+            saved_file = main(path, everglades_watch, model)
         
     else:
         #Which files have already been run
