@@ -43,9 +43,8 @@ def utm_project(path):
     
     return dest_name
     
-#Detect new files since last run
 def find_files(path):
-    """Search and project tifs"""
+    """Search and filter images"""
     images = {}
     image_paths = glob.glob(os.path.join(path, "*.tif"))
     counter = 1
@@ -131,7 +130,8 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
     try:
         os.mkdir(dirname)
     except:
-        raise ValueError("dirname: {} exists)".format(dirname))
+        pass
+        #raise ValueError("dirname: {} exists)".format(dirname))
     
     #Crop tif
     #Project from longlat to utm
@@ -170,10 +170,13 @@ if __name__ == "__main__":
     
     #Currently debugging with just one site
     if TESTING:
-        paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-        for path in paths[:1]:
-            print(path)
-            saved_file = main(path, everglades_watch, model)
+        path = "/orange/ewhite/everglades/WadingBirds2020/6th Bridge/6thBridge_03112020.tif"
+        saved_file = main(path, everglades_watch, model)
+        
+        #paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
+        #for path in paths[:1]:
+            #print(path)
+            #saved_file = main(path, everglades_watch, model)
         
     else:
         #Which files have already been run
