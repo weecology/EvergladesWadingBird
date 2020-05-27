@@ -36,7 +36,7 @@ def getTileGeom(transform, x, y, squareDim):
         corner1 = (x, y) * transform
     except Exception as e:
         print(e)
-        raise ValueError("x = {}, y={}, transfrom={}".formt(x,y,transform))
+        raise ValueError("x = {}, y={}, transfrom={}".format(x,y,transform))
         
     corner2 = (x + squareDim, y + squareDim) * transform
     return box(corner1[0], corner1[1],
