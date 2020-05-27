@@ -4,15 +4,16 @@ channels:
 dependencies:
   - python==3.7
   - geopandas
-  - rasterio
   - shapely
   - pandas
   - pytest
+  - pip
   - pip:
     - panoptescli
     - DeepForest
     - comet_ml
     - paramiko
+    - rasterio > 1.0
 
 
 

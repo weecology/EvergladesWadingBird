@@ -170,7 +170,7 @@ if __name__ == "__main__":
     everglades_watch = utils.connect()    
     
     #set model 
-    model = "/orange/ewhite/everglades/Zooniverse/20200525_173758.h5"
+    model = "/orange/ewhite/everglades/Zooniverse/predictions/20200525_173758.h5"
     
     #Currently debugging with just one site
     if TESTING:        
