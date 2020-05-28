@@ -62,7 +62,7 @@ def find_files(path):
         img_reshaped = numpy_image.reshape(-1, 3)
         is_white = np.sum(img_reshaped == [255,255,255])/img_reshaped.size
         
-        if is_white > 0.25:
+        if is_white > 0.15:
             print("{} is an edge tile, {number:.{digits}f}% white pixels".format(i,number=is_white*100,digits=1))
             continue       
         
@@ -111,6 +111,10 @@ def screen_blanks(images, model):
     screened_images = {}
     for filename, metadata in images.items():
         boxes = model.predict_image(filename, return_plot=False)
+        
+        #small score filter
+        boxes = boxes[boxes.score > 0.4]
+        
         if not boxes.empty:
             screened_images[filename] = metadata
         else:
@@ -158,7 +162,7 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
     subject_set = create_subject_set(name=basename, everglades_watch=everglades_watch)
     
     #Upload
-    upload(subject_set, screened_images, everglades_watch)
+    #upload(subject_set, screened_images, everglades_watch)
     
     return saved_file
 
@@ -176,7 +180,7 @@ if __name__ == "__main__":
     #Currently debugging with just one site
     if TESTING:        
         paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-        for path in paths[1:]:
+        for path in paths:
             print(path)
             saved_file = main(path, everglades_watch, model)
         
