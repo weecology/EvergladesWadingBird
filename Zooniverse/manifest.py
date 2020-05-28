@@ -108,18 +108,18 @@ def upload(subject_set, images, everglades_watch):
 def screen_blanks(images, model):
     #Load bird detection model
     model = deepforest.deepforest(weights=model)
-    
-    screened_images = { }
+    screened_images = [ ]
     for path in images:
         boxes = model.predict_image(path, return_plot=False)
         if not boxes.empty:
-            screened_images[path] = path
+            screened_images.append(path)
         else:
             print("Remove {}, screened empty".format(path))
     
-    return screened_images
+    #return keys for dict
+    final_images = [x for x in images if x in screened_images]
+    return final_images
         
-    
 def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades/Zooniverse/"):
     """Args:
         path: a .tif to run
