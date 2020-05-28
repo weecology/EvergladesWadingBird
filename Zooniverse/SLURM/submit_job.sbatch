@@ -9,7 +9,8 @@
 #SBATCH --time=72:00:00       #Time limit hrs:min:sec
 #SBATCH --output=/home/b.weinstein/logs/rclone_%j.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/rclone_%j.err
-
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
 
 module load tensorflow/1.14.0
 

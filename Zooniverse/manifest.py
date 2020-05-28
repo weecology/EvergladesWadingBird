@@ -107,12 +107,13 @@ def upload(subject_set, images, everglades_watch):
 
 def screen_blanks(images, model):
     #Load bird detection model
-    model = deepforest.deepforest( weights=model)
-    screened_images = [ ]
+    model = deepforest.deepforest(weights=model)
+    
+    screened_images = { }
     for path in images:
         boxes = model.predict_image(path, return_plot=False)
         if not boxes.empty:
-            screened_images.append(path)
+            screened_images[path] = path
         else:
             print("Remove {}, screened empty".format(path))
     
@@ -175,7 +176,7 @@ if __name__ == "__main__":
     #Currently debugging with just one site
     if TESTING:        
         paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-        for path in paths[:1]:
+        for path in paths[1:]:
             print(path)
             saved_file = main(path, everglades_watch, model)
         
