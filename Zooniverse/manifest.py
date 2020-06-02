@@ -42,6 +42,22 @@ def utm_project(path):
                     resampling=Resampling.nearest)
     
     return dest_name
+
+def is_white(path):
+    d = rasterio.open(path)
+    numpy_image = d.read()        
+    left, bottom, right, top = d.bounds 
+    
+    assert numpy_image.shape[0] == 3
+    
+    #Check if image is all white
+    img_reshaped = numpy_image.reshape(-1, 3)
+    white = np.sum(img_reshaped == [255,255,255])/img_reshaped.size
+    
+    if white > 0.55:
+        return True
+    else:
+        return False
     
 def find_files(path):
     """Search and filter images"""
@@ -59,12 +75,10 @@ def find_files(path):
         left, bottom, right, top = d.bounds 
         
         #Check if image is all white
-        img_reshaped = numpy_image.reshape(-1, 3)
-        is_white = np.sum(img_reshaped == [255,255,255])/img_reshaped.size
+        #white_flag = is_white(i)
         
-        if is_white > 0.15:
-            print("{} is an edge tile, {number:.{digits}f}% white pixels".format(i,number=is_white*100,digits=1))
-            continue       
+        #if white_flag:
+        #    continue
         
         #Write as a png
         basename = os.path.splitext(i)[0]
@@ -168,9 +182,6 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
 
 if __name__ == "__main__":
     
-    #Testing flag to just upload one example file
-    TESTING = True
-    
     #auth
     everglades_watch = utils.connect()    
     
@@ -178,34 +189,41 @@ if __name__ == "__main__":
     model = "/orange/ewhite/everglades/Zooniverse/predictions/20200525_173758.h5"
     
     #Currently debugging with just one site
-    if TESTING:        
-        paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-        for path in paths:
-            print(path)
-            saved_file = main(path, everglades_watch, model)
+    paths = [
+        "/orange/ewhite/everglades/WadingBirds2020/CypressCity/CypressCity_03_25_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_03_24_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/JetportSouth/JetportSouth_03_23_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03_24_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/StartMe/StartMe 03_24_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03_24_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/6thbridge/6thbridge_03_25_2020.tif"
+        ]
+    
+    for path in paths[0]:
+        print(path)
+        saved_file = main(path, everglades_watch, model)
         
-    else:
-        #Which files have already been run
-        uploaded = pd.read_csv("uploaded.csv")
+        ##Which files have already been run
+        #uploaded = pd.read_csv("uploaded.csv")
         
-        #Compare names of completed tiles
-        uploaded["basename"] = uploaded.path.apply(lambda x: os.path.basename(x))
+        ##Compare names of completed tiles
+        #uploaded["basename"] = uploaded.path.apply(lambda x: os.path.basename(x))
         
-        #Files to process
-        file_pool = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
-        file_pool_basenames = [os.path.basename(x) for x in file_pool]
-        paths = [file_pool[index] for index, x in enumerate(file_pool_basenames) if not x in uploaded.basename.values]
+        ##Files to process
+        #file_pool = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
+        #file_pool_basenames = [os.path.basename(x) for x in file_pool]
+        #paths = [file_pool[index] for index, x in enumerate(file_pool_basenames) if not x in uploaded.basename.values]
                 
-        print("Running files:{}".format(paths))
-        for path in paths:
-            #Run .tif
-            try:
-                saved_file = main(path, everglades_watch, model)
-                #Confirm it exists and write to the csv file
-                assert os.path.exists(saved_file)
-                uploaded["path"] = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
-            except Exception as e:
-                print("{} failed with exception {}".format(path, e))
+        #print("Running files:{}".format(paths))
+        #for path in paths:
+            ##Run .tif
+            #try:
+                #saved_file = main(path, everglades_watch, model)
+                ##Confirm it exists and write to the csv file
+                #assert os.path.exists(saved_file)
+                #uploaded["path"] = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
+            #except Exception as e:
+                #print("{} failed with exception {}".format(path, e))
                 
         #Overwrite uploaded manifest
-        uploaded.to_csv("uploaded.csv",index=False)
+        #uploaded.to_csv("uploaded.csv",index=False)
