@@ -199,7 +199,7 @@ if __name__ == "__main__":
         "/orange/ewhite/everglades/WadingBirds2020/6th\ Bridge/6thBridge_03_25_2020.tif"
         ]
 
-    for path in paths[0]:
+    for path in paths[:0]:
         print(path)
         saved_file = main(path, everglades_watch, model)
 
