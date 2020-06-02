@@ -132,7 +132,7 @@ def screen_blanks(images, model):
         if not boxes.empty:
             screened_images[filename] = metadata
         else:
-            print("Remove {}, screened empty".format(path))
+            print("Remove {}, screened empty".format(filename))
 
     #return keys for dict
 
@@ -176,7 +176,7 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
     subject_set = create_subject_set(name=basename, everglades_watch=everglades_watch)
 
     #Upload
-    #upload(subject_set, screened_images, everglades_watch)
+    upload(subject_set, screened_images, everglades_watch)
 
     return saved_file
 
