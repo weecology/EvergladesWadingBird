@@ -20,7 +20,7 @@ def download_data(everglades_watch, min_version, generate=False):
     df = pd.DataFrame(rows)
     df["workflow_version"] = df.workflow_version.astype(float)
     df  = df[df.workflow_version > min_version]  
-    df  = df[df.workflow_name =="Counts and Nests"]     
+    df  = df[df.workflow_name =="Counts and Behavior"]     
     
     return df
 
@@ -45,11 +45,11 @@ def load_classifications(classifications_file, min_version):
     """
     df = pd.read_csv(classifications_file)
     df  = df[df.workflow_version > min_version]  
-    df  = df[df.workflow_name =="Counts and Nests"]          
+    df  = df[df.workflow_name =="Counts and Behavior"]          
     return df
     
 def parse_additional_response(x):
-    annotation_dict = json.loads(x)[1]
+    annotation_dict = json.loads(x)[0]
     response = annotation_dict["value"]
     return response
 
@@ -104,9 +104,8 @@ def parse_uncommon_labels(x):
     return box_df
 
 def parse_additional_observations(x):
-    """Parse the optional second screen of less common labels and nest labels"""
+    """Parse the optional second screen of less common labels"""
     uncommon_annotation_dict = json.loads(x)[2]
-    nest_annotation_dict = json.loads(x)[3]
     
     results = [ ]
     
@@ -122,7 +121,11 @@ def parse_annotations(x):
     #Parse each piece of the workflow
     front_screen = parse_front_screen(x)
     response = parse_additional_response(x)
-    front_screen["additional_observations"] = response
+    #TODO parse response and add to species class
+    if response:
+        front_screen["additional_observations"] = None
+    else:
+        front_screen["additional_observations"] = None
     
     if response == 'Yes':
         additional_screen = parse_additional_observations(x)
@@ -311,6 +314,6 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 
 if __name__ == "__main__":
     #Download from Zooniverse and parse
-    fname = run(classifications_file=None, savedir="/orange/ewhite/everglades/Zooniverse/annotations/", download=True, 
+    fname = run(savedir="../App/Zooniverse/data/", download=True, 
        generate=False, min_version=272.359)
     
