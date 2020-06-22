@@ -12,4 +12,4 @@
 
 source activate mapbox
 
-bash upload_mapbox.sh
+python upload_mapbox.py

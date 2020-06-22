@@ -31,17 +31,20 @@ check_events<-function(x){
   }
 }
 filter_annotations<-function(raw_data){
+  
   selected_ids<-unique(raw_data$selected_i)
   
   #Majority rule for labels
   majority_rule<-raw_data %>% group_by(selected_i, label) %>% summarize(n=n()) %>% arrange(desc(n)) %>% slice(1) %>% as.data.frame() %>% mutate(majority_class=label) %>%
     dplyr::select(selected_i,majority_class)
-  selected_boxes<-raw_data %>% filter(selected_i %in% selected_ids) %>% inner_join(majority_rule)
+  
+  selected_boxes<-raw_data %>% filter(selected_i %in% selected_ids) %>% inner_join(majority_rule) %>% filter(!is.na(event))
   
   #!!Temp hotfix!!! until events are seperated from dates
+  #selected_boxes$event<-sapply(selected_boxes$event,check_events)
+  selected_boxes$event[selected_boxes$event %in% "03112020"]<-gsub(x=selected_boxes$event[selected_boxes$event %in% "03112020"],pattern="03112020",replacement="03_11_2020")
   
-  selected_boxes$event<-sapply(selected_boxes$event,check_events)
-  selected_boxes$event<-as.Date(selected_boxes$event,"%m%d%Y")
+  selected_boxes$event<-as.Date(selected_boxes$event,"%m_%d_%Y")
   return(selected_boxes)
 }
 
