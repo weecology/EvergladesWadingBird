@@ -315,5 +315,5 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 if __name__ == "__main__":
     #Download from Zooniverse and parse
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=272.359)
+       generate=False, min_version=279.365)
     

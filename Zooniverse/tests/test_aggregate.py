@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 
 import aggregate
 import utils
-min_version = 272.359
+min_version = 279.365
 
 @pytest.fixture()
 def csv_data():
