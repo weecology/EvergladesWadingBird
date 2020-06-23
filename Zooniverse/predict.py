@@ -53,7 +53,7 @@ def run(model_path, tile_path, savedir="."):
     return fn
 
 def find_files():
-    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif")
+    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
     
     #remove UTM projected for the moment, unsure.
     paths = [x for x in paths if not "projected" in x]
