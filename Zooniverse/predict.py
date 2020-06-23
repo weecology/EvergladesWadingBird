@@ -60,16 +60,18 @@ def find_files():
     return paths
 
 if __name__ == "__main__":
-    client = start(gpus=2)
+    #client = start(gpus=2)
     
     model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200525_173758.h5"
     
     paths = find_files()
+    print("Found {} files".format(len(paths)))
     futures = []
     for path in paths:
-        future = client.map(run, path, model_path=model_path,savedir="/orange/ewhite/everglades/predictions")
-        futures.append(future)
+        run(model_path=model_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
+        #future = client.map(run, path, model_path=model_path,savedir="/orange/ewhite/everglades/predictions")
+        #futures.append(future)
     
-    wait(futures)
+    #wait(futures)
     
     
