@@ -1,6 +1,6 @@
 name: Zooniverse
 channels: 
-  - conda-forge
+  - defaults
 dependencies:
   - python==3.7
   - geopandas
@@ -8,9 +8,12 @@ dependencies:
   - pandas
   - pytest
   - pip
+  - dask
+  - distributed
   - pip:
     - panoptescli
-    - DeepForest
+    - mapboxcli
+    - deepforest
     - comet_ml
     - paramiko
 
