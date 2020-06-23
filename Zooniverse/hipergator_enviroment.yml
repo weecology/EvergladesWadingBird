@@ -1,0 +1,22 @@
+name: Zooniverse
+channels: 
+  - defaults
+dependencies:
+  - python==3.7
+  - geopandas
+  - shapely
+  - pandas
+  - pytest
+  - rasterio
+  - pip
+  - pip:
+    - panoptescli
+    - comet_ml
+    - paramiko
+    - rio-mbtiles
+    - mapboxcli
+    - slidingwindow
+    - xmltodict
+
+
+

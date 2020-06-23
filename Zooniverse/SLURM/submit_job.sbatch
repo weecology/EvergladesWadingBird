@@ -23,7 +23,7 @@ export GDAL_DATA=/home/b.weinstein/miniconda3/envs/Zooniverse/share/gdal
 cd /home/b.weinstein/EvergladesWadingBird/Zooniverse
 
 #Sync data
-#rclone sync everglades:"WadingBird2020Deliverables" /orange/ewhite/everglades/WadingBirds2020/
+rclone sync everglades:"WadingBird2020Deliverables" /orange/ewhite/everglades/WadingBirds2020/
 
 #Upload
 python /home/b.weinstein/EvergladesWadingBird/Zooniverse/manifest.py
