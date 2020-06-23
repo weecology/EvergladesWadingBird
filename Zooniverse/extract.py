@@ -119,15 +119,15 @@ def run(classification_shp, image_data ,savedir="."):
 if __name__=="__main__":
     #Download images
     run(
-        classification_shp="/home/b.weinstein/EvergladesWadingBird/App/data/everglades-watch-classifications.shp",
-        image_data="/home/b.weinstein/EvergladesWadingBird/App/data/everglades-watch-subjects.csv",
+        classification_shp="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-classifications.shp",
+        image_data="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-subjects.csv",
         savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
     ) 
     
     #Optionally download and format empty frames
     extract_empty(
-        parsed_data="/home/b.weinstein/EvergladesWadingBird/App/data/parsed_annotations.csv",
-        image_data="/home/b.weinstein/EvergladesWadingBird/App/data/everglades-watch-subjects.csv",
+        parsed_data="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/parsed_annotations.csv",
+        image_data="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-subjects.csv",
         save_dir= "/orange/ewhite/everglades/Zooniverse/parsed_images/"
     )
         
