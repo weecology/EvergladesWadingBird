@@ -13,10 +13,13 @@ dependencies:
     - panoptescli
     - comet_ml
     - paramiko
+    - panoptes_client
     - rio-mbtiles
     - mapboxcli
     - slidingwindow
     - xmltodict
+    - Panoptes
+    - PyYAML
 
 
 
