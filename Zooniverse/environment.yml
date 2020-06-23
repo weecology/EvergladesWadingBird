@@ -13,7 +13,5 @@ dependencies:
     - DeepForest
     - comet_ml
     - paramiko
-    - rasterio > 1.0
-
 
 

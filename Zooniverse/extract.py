@@ -85,6 +85,7 @@ def run(classification_shp, image_data ,savedir="."):
     #Read in image location data
     image_df = pd.read_csv(image_data)
     image_df = image_df[["subject_id","locations"]]
+    
     #drop duplicates
     image_df = image_df.drop_duplicates()
     
