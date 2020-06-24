@@ -128,13 +128,10 @@ def plot_recall_curve(precision_curve):
     
     return ax1
     
-def predict_empty_frames(model, empty_images_path, comet_experiment, invert=False):
+def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
     """Optionally read a set of empty frames and predict
         Args:
             invert: whether the recall should be relative to empty images (default) or non-empty images (1-value)"""
-    
-    empty_frame_df = pd.read_csv(empty_images_path)
-    empty_images = empty_frame_df.image_path.unique()
     
     #Create PR curve
     precision_curve = [ ]
@@ -179,10 +176,14 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     model.train(train_path, comet_experiment=comet_experiment)
     
     #Create a positive bird recall curve
-    predict_empty_frames(model, test_path, comet_experiment, invert=True)
+    empty_frame_df = pd.read_csv(test_path, names=["image_path","xmin","ymin","xmax","ymax","label"])
+    empty_images = empty_frame_df.image_path.unique()    
+    predict_empty_frames(model, empty_images, comet_experiment, invert=True)
     
     #Test on empy frames
     if empty_images_path:
+        empty_frame_df = pd.read_csv(empty_images_path)
+        empty_images = empty_frame_df.image_path.unique()    
         predict_empty_frames(model, empty_images_path, comet_experiment)
     
     return model
