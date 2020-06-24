@@ -1,0 +1,32 @@
+---
+title: "Find Nests"
+author: "Ben Weinstein"
+date: "6/24/2020"
+output: html_document
+---
+
+# Aim
+
+The goal of this document is to read predictions ffrom the deep learning detection model and assess the number of bird detections per site and overtime. By comparing the location of detected birds among flights, we can assess potential nest success and create data for a meta-population model.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
+library(ggplot2)
+library(sf)
+```
+
+```{r}
+PATH_TO_DATA = "/Users/Ben/Weecology/Everglades/predictions/"
+files<-list.files(PATH_TO_DATA,full.names=T,pattern=".shp")
+shapefiles<-lapply(files,function(x){
+  df<-read_sf(x)
+  df$site <- get_site(x)
+  df$event <-  get_event(x)
+  })
+df<-do.call(shapefiles,bind)
+```
+
+
+
+```
