@@ -128,8 +128,11 @@ def plot_recall_curve(precision_curve):
     
     return ax1
     
-def predict_empty_frames(model, empty_images_path, comet_experiment):
-    """Optionally read a set of empty frames and predict"""
+def predict_empty_frames(model, empty_images_path, comet_experiment, invert=False):
+    """Optionally read a set of empty frames and predict
+        Args:
+            invert: whether the recall should be relative to empty images (default) or non-empty images (1-value)"""
+    
     empty_frame_df = pd.read_csv(empty_images_path)
     empty_images = empty_frame_df.image_path.unique()
     
@@ -142,11 +145,19 @@ def predict_empty_frames(model, empty_images_path, comet_experiment):
     
     precision_curve = pd.concat(precision_curve)
     
-    ax1 = plot_recall_curve(precision_curve)
-    comet_experiment.log_figure(ax1)
-    
+    recall_plot = plot_recall_curve(precision_curve, invert=invert)
     value = empty_image(precision_curve, threshold=0.4)
-    comet_experiment.log_parameter("Recall@0.4",value)
+    
+    if invert:
+        value = 1 - value
+        metric_name = "BirdRecall_at_0.4"
+        recall_plot.title("Bird Recall")
+    else:
+        metric_name = "EmptyRecall_at_0.4"
+        recall_plot.title("Empty Recall")        
+        
+    comet_experiment.log_metric(metric_name,value)
+    comet_experiment.log_figure(recall_plot)    
     
 def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     """Train a DeepForest model"""
@@ -166,6 +177,9 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
     model.train(train_path, comet_experiment=comet_experiment)
+    
+    #Create a positive bird recall curve
+    predict_empty_frames(model, test_path, comet_experiment, invert=True)
     
     #Test on empy frames
     if empty_images_path:
