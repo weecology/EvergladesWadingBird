@@ -86,7 +86,7 @@ def run(model_path, tile_path, savedir="."):
     #Read bigtiff using rasterio and rollaxis and set to BGR
     src = rasterio.open(tile_path)
     numpy_array = src.read()
-    numpy_array_rgb = numpy_array.rollaxis(0,-1)
+    numpy_array_rgb = np.rollaxis(numpy_array, 0,-1)
     numpy_array_bgr = numpy_array_rgb[:,:,::-1]
     boxes = model.predict_tile(numpy_image=numpy_array_bgr, patch_overlap=0, patch_size=1500)
     
