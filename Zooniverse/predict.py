@@ -121,4 +121,5 @@ if __name__ == "__main__":
     
     wait(futures)
     
+    print(futures)
     
