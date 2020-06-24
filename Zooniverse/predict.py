@@ -5,6 +5,7 @@ from deepforest import deepforest
 from deepforest import preprocess
 import geopandas
 import rasterio
+from rasterio.warp import calculate_default_transform, reproject, Resampling
 from start_cluster import start
 from distributed import wait
 
