@@ -117,13 +117,17 @@ def empty_image(precision_curve, threshold):
     empty_recall = empty_true_positives/float(empty_true_positives + empty_false_negatives)
     return empty_recall
 
-def plot_recall_curve(precision_curve):
+def plot_recall_curve(precision_curve, invert=False):
     """Plot recall at fixed interval 0:1"""
     recalls = {}
     for i in np.linspace(0,1,11):
         recalls[i] = empty_image(precision_curve=precision_curve, threshold=i)
     
     recalls = pd.DataFrame(list(recalls.items()), columns=["threshold","recall"])
+    
+    if invert:
+        recalls["recall"] = 1 - recalls["recall"].astype(float)
+    
     ax1 = recalls.plot.scatter("threshold","recall")
     
     return ax1
@@ -141,8 +145,7 @@ def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
         precision_curve.append(boxes)
     
     precision_curve = pd.concat(precision_curve)
-    
-    recall_plot = plot_recall_curve(precision_curve)
+    recall_plot = plot_recall_curve(precision_curve, invert=invert)
     value = empty_image(precision_curve, threshold=0.4)
     
     if invert:
