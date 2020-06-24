@@ -48,14 +48,14 @@ def utm_project_raster(path):
         return dest_name
     
     #Everglades UTM Zone
-    dst_crs = 'EPSG:32617'
+    dst_crs = 32617
 
     with rasterio.open(path) as src:
         transform, width, height = calculate_default_transform(
             src.crs, dst_crs, src.width, src.height, *src.bounds)
         kwargs = src.meta.copy()
         kwargs.update({
-            'crs': dst_crs,
+            'crs': rasterio.crs.CRS.from_epsg(dst_crs),
             'transform': transform,
             'width': width,
             'height': height
