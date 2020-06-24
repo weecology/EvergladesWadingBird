@@ -1,14 +1,15 @@
 #Predict birds in imagery
 import os
 import glob
-import numpy as np
+from distributed import wait
 from deepforest import deepforest
 from deepforest import preprocess
 import geopandas
+import numpy as np
 import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
+import shapely
 from start_cluster import start
-from distributed import wait
 
 def project(raster_path, boxes):
     """
@@ -107,7 +108,7 @@ def find_files():
     return paths
 
 if __name__ == "__main__":
-    #client = start(gpus=2)
+    client = start(gpus=2)
     
     model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200525_173758.h5"
     
@@ -116,9 +117,9 @@ if __name__ == "__main__":
     futures = []
     for path in paths:
         run(model_path=model_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
-        #future = client.map(run, path, model_path=model_path,savedir="/orange/ewhite/everglades/predictions")
-        #futures.append(future)
+        future = client.map(run, path, model_path=model_path,savedir="/orange/ewhite/everglades/predictions")
+        futures.append(future)
     
-    #wait(futures)
+    wait(futures)
     
     
