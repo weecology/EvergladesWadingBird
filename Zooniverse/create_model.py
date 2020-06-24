@@ -100,24 +100,53 @@ def split_test_train(annotations):
     test = annotations[~(annotations.image_path.isin(train_names))]
     
     return train, test
+    
+def is_empty(precision_curve, threshold):
+    precision_curve.score = precision_curve.score.astype(float)
+    precision_curve = precision_curve[precision_curve.score > threshold]
+    return precision_curve.empty
 
+def empty_image(precision_curve, threshold):
+    empty_true_positives = 0
+    empty_false_negatives = 0
+    for name, group in precision_curve.groupby('image'): 
+        if is_empty(group, threshold):
+            empty_true_positives +=1
+        else:
+            empty_false_negatives+=1
+    empty_recall = empty_true_positives/float(empty_true_positives + empty_false_negatives)
+    return empty_recall
+
+def plot_recall_curve(precision_curve):
+    """Plot recall at fixed interval 0:1"""
+    recalls = {}
+    for i in np.linspace(0,1,11):
+        recalls[i] = empty_image(precision_curve=precision_curve, threshold=i)
+    
+    recalls = pd.DataFrame(list(recalls.items()), columns=["threshold","recall"])
+    ax1 = recalls.plot.scatter("threshold","recall")
+    
+    return ax1
+    
 def predict_empty_frames(model, empty_images_path, comet_experiment):
     """Optionally read a set of empty frames and predict"""
     empty_frame_df = pd.read_csv(empty_images_path)
     empty_images = empty_frame_df.image_path.unique()
     
-    empty_true_positives = 0
-    empty_false_negatives = 0
+    #Create PR curve
+    precision_curve = [ ]
     for path in empty_images:
         boxes = model.predict_image(path, return_plot=False)
-        if boxes.empty:
-            empty_true_positives +=1
-        else:
-            empty_false_negatives +=1
+        boxes["image"] = path
+        precision_curve.append(boxes)
     
-    empty_recall = empty_true_positives/float(empty_true_positives + empty_false_negatives)
-    comet_experiment.log_metric("empty_recall", empty_recall)
-    print("Empty frame recall is {}".format(empty_recall))
+    precision_curve = pd.concat(precision_curve)
+    
+    ax1 = plot_recall_curve(precision_curve)
+    comet_experiment.log_figure(ax1)
+    
+    value = empty_image(precision_curve, threshold=0.4)
+    comet_experiment.log_parameter("Recall@0.4",value)
     
 def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     """Train a DeepForest model"""

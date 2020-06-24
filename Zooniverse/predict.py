@@ -1,4 +1,5 @@
 #Predict birds in imagery
+import os
 import glob
 from deepforest import deepforest
 from deepforest import preprocess
@@ -36,17 +37,57 @@ def project(raster_path, boxes):
     
     return boxes
 
+def utm_project_raster(path):
+    
+    dest_name = "{}_projected.tif".format(os.path.splitext(path)[0])
+    
+    #don't overwrite
+    if os.path.exists(dest_name):
+        print("{} exists, skipping")
+        return dest_name
+    
+    #Everglades UTM Zone
+    dst_crs = 'EPSG:32617'
+
+    with rasterio.open(path) as src:
+        transform, width, height = calculate_default_transform(
+            src.crs, dst_crs, src.width, src.height, *src.bounds)
+        kwargs = src.meta.copy()
+        kwargs.update({
+            'crs': dst_crs,
+            'transform': transform,
+            'width': width,
+            'height': height
+        })
+
+
+        with rasterio.open(dest_name, 'w', **kwargs) as dst:
+            for i in range(1, src.count + 1):
+                reproject(
+                    source=rasterio.band(src, i),
+                    destination=rasterio.band(dst, i),
+                    src_transform=src.transform,
+                    src_crs=src.crs,
+                    dst_transform=transform,
+                    dst_crs=dst_crs,
+                    resampling=Resampling.nearest)
+
+    return dest_name
+
 def run(model_path, tile_path, savedir="."):
     """Apply trained model to a drone tile"""
     
+    #optionally project
+    projected_path = utm_project_raster(path)
+    
     model = deepforest.deepforest(weights=model_path)
-    boxes = model.predict_tile(raster_path=tile_path, patch_overlap=0, patch_size=1500)
+    boxes = model.predict_tile(raster_path=projected_path, patch_overlap=0, patch_size=1500)
     
     #Project
-    projected_boxes = project(tile_path, boxes)
+    projected_boxes = project(projected_path, boxes)
     
     #Get filename
-    basename = os.path.splitext(os.path.basename(tile_path))[0]
+    basename = os.path.splitext(os.path.basename(projected_path))[0]
     fn = "{}/{}.shp".format(savedir,basename)
     projected_boxes.to_file(fn)
     
@@ -55,8 +96,6 @@ def run(model_path, tile_path, savedir="."):
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
     
-    #remove UTM projected for the moment, unsure.
-    paths = [x for x in paths if not "projected" in x]
     return paths
 
 if __name__ == "__main__":

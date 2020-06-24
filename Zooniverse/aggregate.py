@@ -45,7 +45,7 @@ def load_classifications(classifications_file, min_version):
     """
     df = pd.read_csv(classifications_file)
     df  = df[df.workflow_version > min_version]  
-    df  = df[df.workflow_name =="Counts and Behavior"]          
+    df  = df[df.workflow_name =="Counts and Nests"]          
     return df
     
 def parse_additional_response(x):

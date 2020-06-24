@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 
 import aggregate
 import utils
-min_version = 279.365
+min_version = 272
 
 @pytest.fixture()
 def csv_data():
@@ -32,7 +32,6 @@ def test_parse_additional_observations(csv_data):
 def test_parse_annotations(csv_data):  
     #No additional data
     annotations = aggregate.parse_annotations(csv_data.loc[csv_data["classification_id"]==236402602].annotations.iloc[0])  
-    assert annotations["additional_observations"].unique()[0] == "No"
     assert annotations.shape == (3,6) 
 
 def test_parse_subject_data(csv_data):

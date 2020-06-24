@@ -10,14 +10,15 @@ from .. import aggregate
 import pytest
 import rasterio
 import geopandas as gp
+import pandas as pd
 
 #Setup method
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture()
 def extract_images():
     #create an output image folder is needed
     if not os.path.exists("output/images/"):
         os.mkdir("output/images/")
-    aggregate.run("data/everglades-watch-classifications.csv", min_version=272.359, download=False, generate=False, savedir="output",debug=False)
+    aggregate.run("data/everglades-watch-classifications.csv", min_version=272.359, download=False, generate=False, savedir="output",debug=True)
     extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir="output/images/")
 
 @pytest.fixture()
@@ -25,11 +26,11 @@ def shp_dir():
     return "output/images"
 
 @pytest.fixture()
-def annotations(shp_dir):
+def annotations(extract_images, shp_dir):
     annotations = create_model.format_shapefiles(shp_dir=shp_dir)    
     return annotations
 
-def test_shapefile_to_annotations():
+def test_shapefile_to_annotations(extract_images):
     rgb_path="output/images/43845552.png"
     df = create_model.shapefile_to_annotations(shapefile="output/images/43845552.shp", rgb_path=rgb_path)
     assert all(df.columns == ["image_path","xmin","ymin","xmax","ymax","label"])
@@ -48,7 +49,21 @@ def test_shapefile_to_annotations():
     #Assert no duplicates
     gdf_dropped_duplicates = gdf.drop_duplicates()
     assert gdf_dropped_duplicates.shape[0] == gdf.shape[0]    
+
+def test_empty_image():
+    image = ["a","a","a","b","b"]
+    scores = ["0.1","0.1","0.1","0.2","0.9"]
+    precision_curve = pd.DataFrame({"image":image,"score":scores})
+    empty_recall = create_model.empty_image(precision_curve, threshold=0.15)
+    assert empty_recall == 0.5
+
+def test_plot_recall_curve():
+    image = ["a","a","a","b","b"]
+    scores = ["0.1","0.1","0.1","0.2","0.9"]
+    precision_curve = pd.DataFrame({"image":image,"score":scores})
     
+    ax1 = create_model.plot_recall_curve(precision_curve)
+
 def test_format_shapefiles(extract_images, shp_dir):
     results = create_model.format_shapefiles(shp_dir=shp_dir)
     assert all(results.columns == ["image_path","xmin","ymin","xmax","ymax","label"])
@@ -58,7 +73,7 @@ def test_format_shapefiles(extract_images, shp_dir):
     results_dropped_duplicates = results.drop_duplicates()
     assert results_dropped_duplicates.shape[0] == results.shape[0]
     
-def test_split_test_train(annotations):
+def test_split_test_train(extract_images, annotations):
     
     train, test = create_model.split_test_train(annotations)
     

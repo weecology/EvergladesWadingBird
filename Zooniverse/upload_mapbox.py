@@ -19,7 +19,6 @@ dst_crs = rio.crs.CRS.from_epsg("3857")
 for path in files_to_upload:
      src = rio.open(path)
      
-     dst_crs
      with rio.open(path) as src:
           transform, width, height = calculate_default_transform(
               src.crs, dst_crs, src.width, src.height, *src.bounds)
