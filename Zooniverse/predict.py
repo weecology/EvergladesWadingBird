@@ -1,6 +1,7 @@
 #Predict birds in imagery
 import os
 import glob
+import numpy as np
 from deepforest import deepforest
 from deepforest import preprocess
 import geopandas
