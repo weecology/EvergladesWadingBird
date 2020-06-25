@@ -24,7 +24,7 @@ shinyServer(function(input, output) {
   raw_data <- load_classifications()
   selected_boxes<-filter_annotations(raw_data)
   colonies<-st_read("data/colonies.csv", options=c("X_POSSIBLE_NAMES=longitude","Y_POSSIBLE_NAMES=latitude"))
-  df<-read.csv("data/PredictedBirds.csv")
+  df<-st_read("data/PredictedBirds.shp")
   df$event<-as.Date(df$event)
   
   #Create pages
@@ -102,4 +102,5 @@ shinyServer(function(input, output) {
   
   ##Prediction page
   output$predicted_time_plot<-renderPlot(time_predictions(df))
+  output$sample_prediction_map<-renderLeaflet(plot_predictions(df))
 })

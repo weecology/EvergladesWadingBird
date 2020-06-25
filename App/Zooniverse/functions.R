@@ -5,6 +5,8 @@ library(leaflet)
 library(sf)
 library(gridExtra)
 library(stringr)
+library(htmltools)
+
 
 #Site map
 create_map<-function(colonies){
@@ -14,8 +16,7 @@ create_map<-function(colonies){
 
 #Load data
 load_classifications<-function(){
-  shp<-list.files("data/",pattern = ".shp",full.names = T)
-  raw_data<-read_sf(shp)
+  raw_data<-read_sf("data/everglades-watch-classifications.shp")
   st_crs(raw_data)<-32617
   return(raw_data)
 }
@@ -79,6 +80,15 @@ plot_annotations<-function(selected_boxes){
   return(m)
 }
 
+plot_predictions<-function(df){
+  df<-df %>% filter(site=="CypressCity",event=="2020-03-25")
+  df<-st_transform(df,4326)
+  mapbox_url = "https://api.mapbox.com/styles/v1/bweinstein/ck94nmzn20an31imrz6ffplun/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJ2THJ4dWRNIn0.5Pius_0u0NxydUzkY9pkWA"
+  m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% addTiles(mapbox_url,options=providerTileOptions(minZoom = 8, maxNativeZoom=22, maxZoom = 24)) %>%
+    addCircles(stroke = T,fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(label))
+  return(m)
+}
+
 behavior_heatmap<-function(selected_boxes){
   
   class_totals<-selected_boxes %>% group_by(majority_class) %>% summarize(total=n())
@@ -91,5 +101,5 @@ behavior_heatmap<-function(selected_boxes){
 }
 
 time_predictions<-function(df){
-  df %>% group_by(site,event) %>% filter(score>0.4) %>% summarize(n=n()) %>% ggplot(.,aes(x=event,y=n,color=site)) + geom_point() + geom_line() + facet_wrap(~site,ncol=1,scales="free") + labs(y="Predicted Birds",x="Date") + theme(text = element_text(size=20))
+  df %>% group_by(site,event) %>% filter(score) %>% summarize(n=n()) %>% ggplot(.,aes(x=event,y=n,color=site)) + geom_point() + geom_line() + facet_wrap(~site,ncol=1,scales="free") + labs(y="Predicted Birds",x="Date") + theme(text = element_text(size=20))
 }

@@ -38,6 +38,8 @@ df<-df %>% filter(score>0.3)
 
 Write a copy to the shiny app
 ```{r}
-st_write(df,"../App/Zooniverse/data/PredictedBirds.csv",delete_dsn=T)
+#Write centroids 
+df_centroid<-st_centroid(df) %>% select(-xmin,-xmax,-ymin,-ymax)
+st_write(df_centroid,"../App/Zooniverse/data/PredictedBirds.shp",delete_layer=T)
 ```
 

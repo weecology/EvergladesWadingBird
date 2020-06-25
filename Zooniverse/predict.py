@@ -82,12 +82,12 @@ def run(model_path, tile_path, savedir="."):
     """Apply trained model to a drone tile"""
     
     #optionally project
-    projected_path = utm_project_raster(path)
+    projected_path = utm_project_raster(tile_path)
     
     model = deepforest.deepforest(weights=model_path)
     
     #Read bigtiff using rasterio and rollaxis and set to BGR
-    src = rasterio.open(tile_path)
+    src = rasterio.open(projected_path)
     numpy_array = src.read()
     numpy_array_rgb = np.rollaxis(numpy_array, 0,3)    
     numpy_array_bgr = numpy_array_rgb[:,:,::-1]
@@ -104,7 +104,10 @@ def run(model_path, tile_path, savedir="."):
     return fn
 
 def find_files():
-    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Vacation/*.tif")
+    paths1 = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Vacation/*.tif")
+    paths2 = glob.glob("/orange/ewhite/everglades/WadingBirds2020/CypressCity/*.tif")
+    paths3 = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
+    paths = paths1 + paths2 + paths3
     paths = [x for x in paths if not "projected" in x]
     return paths
 
