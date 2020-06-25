@@ -31,10 +31,13 @@ shapefiles<-lapply(files,function(x){
 df<-do.call(rbind,shapefiles)
 df$label<-"Bird"
 head(df)
+
+#layer filter
+df<-df %>% filter(score>0.3)
 ```
 
 Write a copy to the shiny app
 ```{r}
-st_write(df,"../App/Zooniverse/data/PredictedBirds.csv",layer_options = "GEOMETRY=AS_XY",delete_dsn=T)
+st_write(df,"../App/Zooniverse/data/PredictedBirds.csv",delete_dsn=T)
 ```
 
