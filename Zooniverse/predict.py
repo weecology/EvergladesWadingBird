@@ -126,5 +126,6 @@ if __name__ == "__main__":
         futures.append(future)
     
     wait(futures)
+    print([x.result() for x in futures])
     
     

@@ -81,7 +81,7 @@ plot_annotations<-function(selected_boxes){
 }
 
 plot_predictions<-function(df){
-  df<-df %>% filter(site=="CypressCity",event=="2020-03-25",score>0.40)
+  df<-df %>% filter(score>0.40)
   df<-st_transform(df,4326)
   mapbox_url = "https://api.mapbox.com/styles/v1/bweinstein/ck94nmzn20an31imrz6ffplun/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJ2THJ4dWRNIn0.5Pius_0u0NxydUzkY9pkWA"
   m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% addTiles(mapbox_url,options=providerTileOptions(minZoom = 8, maxNativeZoom=22, maxZoom = 24)) %>%

@@ -32,7 +32,7 @@ shinyServer(function(input, output) {
   output$time<-time_page(selected_boxes)
   output$about<-about_page()
   output$colony<-colony_page(selected_boxes)
-  output$predicted<-predicted_page()
+  output$predicted<-predicted_page(df, selected_boxes)
   
   ####Landing page###
   output$map <- create_map(colonies)
@@ -101,7 +101,17 @@ shinyServer(function(input, output) {
   })
   
   ##Prediction page
+  prediction_filter<-reactive({
+    #filter based on selection
+    
+    #This could be improved
+    available_images<-selected_boxes %>% as.data.frame() %>% select(site,event) %>% distinct()
+    selected_event<- available_images %>% filter(site==input$prediction_site) %>% .$event
+    to_plot <- df %>% filter(site==input$prediction_site,event==selected_event) 
+    return(to_plot)
+  })
+  
   output$predicted_time_plot<-renderPlot(time_predictions(df))
-  output$sample_prediction_map<-renderLeaflet(plot_predictions(df))
+  output$sample_prediction_map<-renderLeaflet(plot_predictions(df=prediction_filter()))
   output$Zooniverse_Predicted_Table<-renderTable(compare_counts(df, selected_boxes))
 })
