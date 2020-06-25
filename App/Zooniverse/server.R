@@ -103,4 +103,5 @@ shinyServer(function(input, output) {
   ##Prediction page
   output$predicted_time_plot<-renderPlot(time_predictions(df))
   output$sample_prediction_map<-renderLeaflet(plot_predictions(df))
+  output$Zooniverse_Predicted_Table<-renderTable(compare_counts(df, selected_boxes))
 })

@@ -112,13 +112,12 @@ def find_files():
     return paths
 
 if __name__ == "__main__":
-    #client = start(gpus=3,mem_size="20GB")
+    client = start(gpus=3,mem_size="30GB")
     
     model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200525_173758.h5"
     
     paths = find_files()
     print("Found {} files".format(len(paths)))
-    
     
     #futures = []
     for path in paths:
