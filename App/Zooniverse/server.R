@@ -15,20 +15,24 @@ source("landing_page.R")
 source("time_page.R")
 source("colony_page.R")
 source("about_page.R")
+source("prediction_page.R")
 source("functions.R")
 
 shinyServer(function(input, output) {
    
-  #create pages
+  #Load data
   raw_data <- load_classifications()
   selected_boxes<-filter_annotations(raw_data)
   colonies<-st_read("data/colonies.csv", options=c("X_POSSIBLE_NAMES=longitude","Y_POSSIBLE_NAMES=latitude"))
+  df<-read.csv("data/PredictedBirds.csv")
+  df$event<-as.Date(df$event)
   
   #Create pages
   output$landing<-landing_page(selected_boxes)
   output$time<-time_page(selected_boxes)
   output$about<-about_page()
   output$colony<-colony_page(selected_boxes)
+  output$predicted<-predicted_page()
   
   ####Landing page###
   output$map <- create_map(colonies)
@@ -96,5 +100,6 @@ shinyServer(function(input, output) {
     output$colony_map<-renderLeaflet(plot_annotations(selected_boxes =colony_filter()))
   })
   
-  
+  ##Prediction page
+  output$predicted_time_plot<-renderPlot(time_predictions(df))
 })

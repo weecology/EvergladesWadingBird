@@ -3,6 +3,8 @@ title: "Find Nests"
 author: "Ben Weinstein"
 date: "6/24/2020"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Aim
@@ -14,19 +16,25 @@ knitr::opts_chunk$set(echo = FALSE)
 library(dplyr)
 library(ggplot2)
 library(sf)
+source("nesting_functions.R")
 ```
 
 ```{r}
-PATH_TO_DATA = "/Users/Ben/Weecology/Everglades/predictions/"
+PATH_TO_DATA = "/Users/Ben/Dropbox/Everglades/predictions/"
 files<-list.files(PATH_TO_DATA,full.names=T,pattern=".shp")
 shapefiles<-lapply(files,function(x){
   df<-read_sf(x)
   df$site <- get_site(x)
   df$event <-  get_event(x)
+  return(df)
   })
-df<-do.call(shapefiles,bind)
+df<-do.call(rbind,shapefiles)
+df$label<-"Bird"
+head(df)
 ```
 
-
-
+Write a copy to the shiny app
+```{r}
+st_write(df,"../App/Zooniverse/data/PredictedBirds.csv",layer_options = "GEOMETRY=AS_XY",delete_dsn=T)
 ```
+

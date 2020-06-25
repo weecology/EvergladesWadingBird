@@ -190,14 +190,4 @@ entering_nests<-function(chains){
 view_sample <- function(chains){
   chains %>% filter(Draw==1,chain==1)%>% filter(Week==2,parameter %in% c("Beta","N")) %>% select(Draw,chain,Week,parameter,value) %>% tidyr::spread(parameter,value)
 }
-
-get_site<-function(x){
-  site<-str_match(x,"(\\w+)_\\d+_\\d+_\\d+_projected")[,2]
-  return(site)
-}
-
-get_event<-function(x){
-  event<-str_match(x,"\\w+(_\\d+_\\d+_\\d+)_projected")[,2]
-  event<-as.Date(event,"%m_%d_%Y")
-  return(event)
 }

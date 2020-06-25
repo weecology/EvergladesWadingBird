@@ -17,5 +17,6 @@ shinyUI(fluidPage(theme = shinytheme("readable"),
                              tabPanel("Dashboard",uiOutput('landing')),
                              tabPanel("Time Series",uiOutput('time')),
                              tabPanel("Colony Interactive",uiOutput('colony')),
+                             tabPanel("Predicted Counts",uiOutput('predicted')),
                              tabPanel("About",uiOutput('about'))
                   )))

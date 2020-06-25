@@ -89,3 +89,7 @@ behavior_heatmap<-function(selected_boxes){
     labs(x="Label",y="Behavior",fill="% of Label Total") + theme(axis.text.x  = element_text(angle = -90),text = element_text(size=20))
   plot(p)
 }
+
+time_predictions<-function(df){
+  df %>% group_by(site,event) %>% summarize(n=n()) %>% ggplot(.,aes(x=event,y=n,color=site)) + geom_point() + geom_line() + facet_wrap(~site,ncol=1,scales="free") + labs(y="Predicted Birds") + theme(text = element_text(size=20))
+}

@@ -40,9 +40,10 @@ def project(raster_path, boxes):
     
     return boxes
 
-def utm_project_raster(path):
+def utm_project_raster(path, savedir="/orange/ewhite/everglades/utm_projected/"):
     
-    dest_name = "{}_projected.tif".format(os.path.splitext(path)[0])
+    basename = os.path.basename(os.path.splitext(path)[0])
+    dest_name = "{}/{}_projected.tif".format(savedir,basename)
     
     #don't overwrite
     if os.path.exists(dest_name):
