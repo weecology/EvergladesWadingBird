@@ -104,7 +104,7 @@ def run(model_path, tile_path, savedir="."):
 
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-    
+    paths = [x for x in paths if not "projected" in x]
     return paths
 
 if __name__ == "__main__":
