@@ -46,7 +46,7 @@ def utm_project_raster(path):
     
     #don't overwrite
     if os.path.exists(dest_name):
-        print("{} exists, skipping")
+        print("{} exists, skipping".format(dest_name))
         return dest_name
     
     #Everglades UTM Zone
@@ -103,7 +103,7 @@ def run(model_path, tile_path, savedir="."):
     return fn
 
 def find_files():
-    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
+    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Vacation/*.tif")
     paths = [x for x in paths if not "projected" in x]
     return paths
 
