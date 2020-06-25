@@ -107,6 +107,6 @@ time_predictions<-function(df){
 compare_counts<-function(df, selected_boxes){
   automated_count<-data.frame(df) %>% filter(score>0.40) %>% select(site,event) %>% group_by(site,event) %>% summarize(predicted=n())
   zooniverse_count<-data.frame(selected_boxes) %>% select(site,event) %>% group_by(site,event) %>% summarize(observed=n())
-  comparison_table<-automated_count %>% inner_join(zooniverse_count)
+  comparison_table<-automated_count %>% inner_join(zooniverse_count) %>% mutate(event=as.character(event))
   return(comparison_table)
 }

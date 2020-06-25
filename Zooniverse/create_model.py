@@ -159,12 +159,10 @@ def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
     comet_experiment.log_metric(metric_name,value)
     comet_experiment.log_figure(recall_plot)    
     
-def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
+def train_model(train_path, test_path, empty_images_path=None, save_dir=".", comet_experiment=None):
     """Train a DeepForest model"""
     model = deepforest.deepforest()
     model.use_release()
-    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                  project_name="everglades", workspace="bw4sz")
     comet_experiment.log_parameters(model.config)
     
     #Log the number of training and test
@@ -198,6 +196,9 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     annotations = format_shapefiles(shp_dir)
     random.seed(2)
     
+    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                           project_name="everglades", workspace="bw4sz")
+    
     #Split train and test
     train, test = split_test_train(annotations)
     
@@ -208,10 +209,11 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
     
-    model = train_model(train_path, test_path, empty_frames_path, save_dir)
+    model = train_model(train_path, test_path, empty_frames_path, save_dir, comet_experiment)
     
     #Save
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    comet_experiment.log_parameter("timestamp",timestamp)
     model.prediction_model.save("{}/{}.h5".format(save_dir,timestamp))
     
 if __name__ == "__main__":
