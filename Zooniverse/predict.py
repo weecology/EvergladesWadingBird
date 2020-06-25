@@ -78,7 +78,7 @@ def utm_project_raster(path, savedir="/orange/ewhite/everglades/utm_projected/")
 
     return dest_name
 
-def run(model_path, tile_path, savedir="."):
+def run(tile_path, model_path, savedir="."):
     """Apply trained model to a drone tile"""
     
     #optionally project
@@ -122,7 +122,7 @@ if __name__ == "__main__":
     #for path in paths:
         #run(model_path=model_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
         
-    futures = client.map(run, paths, model_path=model_path,savedir="/orange/ewhite/everglades/predictions")
+    futures = client.map(run, paths, model_path=model_path, savedir="/orange/ewhite/everglades/predictions")
     wait(futures)
     print([x.result() for x in futures])
     
