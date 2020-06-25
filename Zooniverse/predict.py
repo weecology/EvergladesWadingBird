@@ -119,12 +119,10 @@ if __name__ == "__main__":
     paths = find_files()
     print("Found {} files".format(len(paths)))
     
-    futures = []
-    for path in paths:
+    #for path in paths:
         #run(model_path=model_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
-        future = client.map(run, path, model_path=model_path,savedir="/orange/ewhite/everglades/predictions")
-        futures.append(future)
-    
+        
+    futures = client.map(run, path, model_path=model_path,savedir="/orange/ewhite/everglades/predictions")
     wait(futures)
     print([x.result() for x in futures])
     
