@@ -91,5 +91,5 @@ behavior_heatmap<-function(selected_boxes){
 }
 
 time_predictions<-function(df){
-  df %>% group_by(site,event) %>% summarize(n=n()) %>% ggplot(.,aes(x=event,y=n,color=site)) + geom_point() + geom_line() + facet_wrap(~site,ncol=1,scales="free") + labs(y="Predicted Birds") + theme(text = element_text(size=20))
+  df %>% group_by(site,event) %>% filter(score>0.4) %>% summarize(n=n()) %>% ggplot(.,aes(x=event,y=n,color=site)) + geom_point() + geom_line() + facet_wrap(~site,ncol=1,scales="free") + labs(y="Predicted Birds",x="Date") + theme(text = element_text(size=20))
 }
