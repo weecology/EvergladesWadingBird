@@ -104,16 +104,15 @@ def run(tile_path, model_path, savedir="."):
     return fn
 
 def find_files():
-    paths1 = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Vacation/*.tif")
-    paths2 = glob.glob("/orange/ewhite/everglades/WadingBirds2020/CypressCity/*.tif")
-    paths3 = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
-    paths = paths1 + paths2 + paths3
+    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
+    sites = ["Joule","CypressCity","Vacation","JetPort","Jerrod","StartMel","OtherColonies","6th Bridge"]
+    paths = [x for x in paths if any(w in x for w in sites)]
     paths = [x for x in paths if not "projected" in x]
+    
     return paths
 
 if __name__ == "__main__":
-    client = start(gpus=6,mem_size="40GB")
-    
+    client = start(gpus=8,mem_size="40GB")    
     model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200625_230822.h5"
     
     paths = find_files()

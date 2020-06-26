@@ -102,11 +102,12 @@ shinyServer(function(input, output) {
   
   ##Prediction page
   prediction_filter<-reactive({
-    #filter based on selection
     
-    #This could be improved
-    available_images<-selected_boxes %>% as.data.frame() %>% select(site,event) %>% distinct()
-    selected_event<- available_images %>% filter(site==input$prediction_site) %>% .$event
+    available_list<-data.frame(site=c("CypressCity","Joule","Vacation"),
+                               event=as.Date(c("2020-03-25","2020-03-24","2020-03-24")))
+    
+    selected_event = available_list %>% filter(site==input$prediction_site) %>% .$event
+    #filter based on selection
     to_plot <- df %>% filter(site==input$prediction_site,event==selected_event) 
     return(to_plot)
   })
