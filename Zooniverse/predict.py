@@ -112,9 +112,9 @@ def find_files():
     return paths
 
 if __name__ == "__main__":
-    client = start(gpus=5,mem_size="30GB")
+    client = start(gpus=6,mem_size="40GB")
     
-    model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200624_134308.h5"
+    model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200625_230822.h5"
     
     paths = find_files()
     print("Found {} files".format(len(paths)))
