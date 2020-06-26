@@ -202,14 +202,31 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     #Split train and test
     train, test = split_test_train(annotations)
     
-    #write paths to headerless files alongside data
+    #Add some empty images to train and test
+    empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
+    
+    #add some blank annotations
+    empty_frames_df["xmin"] = pd.Series(dtype="int")
+    empty_frames_df["ymin"] = pd.Series(dtype="int")
+    empty_frames_df["xmax"] = pd.Series(dtype="int")
+    empty_frames_df["ymax"] = pd.Series(dtype="int")
+    empty_frames_df["label"] = pd.Series(dtype="str")
+    
+    empty_train, empty_test = split_test_train(empty_frames_df)
+    
+    train = pd.concat([train, empty_train])
+    test = pd.concat([test, empty_test])
+    
+    #write paths to headerless files alongside data, add a seperate test empty file
     train_path = "{}/train.csv".format(shp_dir)
     test_path = "{}/test.csv".format(shp_dir)
+    empty_test_path = "{}/empty_test.csv".format(shp_dir)
     
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
+    empty_test.to_csv(empty_test_path, index=False,header=False)
     
-    model = train_model(train_path, test_path, empty_frames_path, save_dir, comet_experiment)
+    model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
     
     #Save
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
