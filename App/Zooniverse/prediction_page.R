@@ -1,5 +1,7 @@
 predicted_page<-function(df, selected_boxes){
-    #Note, precompute the totals before shiny.
+  available_list<-data.frame(site=c("CypressCity","Joule","Vacation","6thBridge","JetPort","Jerrod","Enlil","Aerie","Hidden","Yonteau","Frodo","Nanse","StartMel","Vulture"),
+                             event=as.Date(c("2020-03-25","2020-03-24","2020-03-24","2020-03-18","2020-03-23","2020-03-24","2020-04-27","2020-04-27","2020-04-06","2020-04-27","2020-04-27","2020-04-08","2020-03-24","2020-04-14")))
+  
   renderUI({
     fluidPage(
       titlePanel("Predicted Counts"),
