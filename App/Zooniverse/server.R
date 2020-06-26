@@ -28,8 +28,8 @@ shinyServer(function(input, output) {
   df$event<-as.Date(df$event)
   
   #Mapbox tiles
-  available_list<-data.frame(site=c("CypressCity","Joule","Vacation","6thBridge","JetPortSouth","Jerrod"),
-                             event=as.Date(c("2020-03-25","2020-03-24","2020-03-24","2020-03-18","2020-03-23","2020-03-24")))
+  available_list<-data.frame(site=c("CypressCity","Joule","Vacation","6thBridge","JetPort","Jerrod","Enlil","Aerie","Hidden","Yonteau","Frodo","Nanse","StartMel","Vulture"),
+                             event=as.Date(c("2020-03-25","2020-03-24","2020-03-24","2020-03-18","2020-03-23","2020-03-24","2020-04-27","2020-04-27","2020-04-06","2020-04-27","2020-04-27","2020-04-08","2020-03-24","2020-04-14")))
   
   #Create pages
   output$landing<-landing_page(selected_boxes)
