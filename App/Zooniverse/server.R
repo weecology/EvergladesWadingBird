@@ -27,6 +27,10 @@ shinyServer(function(input, output) {
   df<-st_read("data/PredictedBirds.shp")
   df$event<-as.Date(df$event)
   
+  #Mapbox tiles
+  available_list<-data.frame(site=c("CypressCity","Joule","Vacation","6thBridge","JetPortSouth","Jerrod"),
+                             event=as.Date(c("2020-03-25","2020-03-24","2020-03-24","2020-03-18","2020-03-23","2020-03-24")))
+  
   #Create pages
   output$landing<-landing_page(selected_boxes)
   output$time<-time_page(selected_boxes)
@@ -102,10 +106,6 @@ shinyServer(function(input, output) {
   
   ##Prediction page
   prediction_filter<-reactive({
-    
-    available_list<-data.frame(site=c("CypressCity","Joule","Vacation"),
-                               event=as.Date(c("2020-03-25","2020-03-24","2020-03-24")))
-    
     selected_event = available_list %>% filter(site==input$prediction_site) %>% .$event
     #filter based on selection
     to_plot <- df %>% filter(site==input$prediction_site,event==selected_event) 
