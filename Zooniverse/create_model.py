@@ -206,27 +206,27 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
     
     #add some blank annotations
-    empty_frames_df["xmin"] = pd.Series(dtype="int")
-    empty_frames_df["ymin"] = pd.Series(dtype="int")
-    empty_frames_df["xmax"] = pd.Series(dtype="int")
-    empty_frames_df["ymax"] = pd.Series(dtype="int")
-    empty_frames_df["label"] = pd.Series(dtype="str")
+    empty_frames_df["xmin"] = pd.array(dtype="Int64")
+    empty_frames_df["ymin"] = pd.array(dtype="Int64")
+    empty_frames_df["xmax"] = pd.array(dtype="Int64")
+    empty_frames_df["ymax"] = pd.array(dtype="Int64")
+    empty_frames_df["label"] = pd.array(dtype="Int64")
     
     empty_train, empty_test = split_test_train(empty_frames_df)
     
     train = pd.concat([train, empty_train])
     test = pd.concat([test, empty_test])
     
-    #Enforce rounding to pixels
-    train.xmin = train.xmin.astype(int)
-    train.ymin = train.ymin.astype(int)
-    train.xmax = train.xmax.astype(int)
-    train.ymax = train.ymax.astype(int)
+    #Enforce rounding to pixels, pandas "Int64" dtype for nullable arrays https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html
+    train.xmin = train.xmin.astype("Int64")
+    train.ymin = train.ymin.astype("Int64")
+    train.xmax = train.xmax.astype("Int64")
+    train.ymax = train.ymax.astype("Int64")
     
-    test.xmin = test.xmin.astype(int)
-    test.ymin = test.ymin.astype(int)
-    test.xmax = test.xmax.astype(int)
-    test.ymax = test.ymax.astype(int)
+    test.xmin = test.xmin.astype("Int64")
+    test.ymin = test.ymin.astype("Int64")
+    test.xmax = test.xmax.astype("Int64")
+    test.ymax = test.ymax.astype("Int64")
             
     #ensure int types
     
