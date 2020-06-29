@@ -237,7 +237,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
-    empty_test.to_csv(empty_test_path, index=False,header=False)
+    empty_test.to_csv(empty_test_path, index=False)
     
     model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
     
