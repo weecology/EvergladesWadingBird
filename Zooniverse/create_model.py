@@ -7,7 +7,6 @@ import pandas as pd
 import rasterio
 import os
 import numpy as np
-import random
 import glob
 from datetime import datetime
 
@@ -94,6 +93,8 @@ def format_shapefiles(shp_dir,image_dir=None):
 
 def split_test_train(annotations):
     """Split annotation in train and test by image"""
+    #Currently want to mantain the random split
+    np.random.seed(0)
     image_names = annotations.image_path.unique()
     train_names = np.random.choice(image_names, int(len(image_names) * 0.9))
     train = annotations[annotations.image_path.isin(train_names)]
@@ -193,9 +194,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     
 def run(shp_dir, empty_frames_path=None, save_dir="."):
     """Parse annotations, create a test split and train a model"""
-    annotations = format_shapefiles(shp_dir)
-    random.seed(2)
-    
+    annotations = format_shapefiles(shp_dir)    
     comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                            project_name="everglades", workspace="bw4sz")
     
