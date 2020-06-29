@@ -105,6 +105,7 @@ def split_test_train(annotations):
 def is_empty(precision_curve, threshold):
     precision_curve.score = precision_curve.score.astype(float)
     precision_curve = precision_curve[precision_curve.score > threshold]
+    
     return precision_curve.empty
 
 def empty_image(precision_curve, threshold):
@@ -116,6 +117,7 @@ def empty_image(precision_curve, threshold):
         else:
             empty_false_negatives+=1
     empty_recall = empty_true_positives/float(empty_true_positives + empty_false_negatives)
+    
     return empty_recall
 
 def plot_recall_curve(precision_curve, invert=False):
@@ -226,9 +228,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     test.ymin = test.ymin.astype("Int64")
     test.xmax = test.xmax.astype("Int64")
     test.ymax = test.ymax.astype("Int64")
-            
-    #ensure int types
-    
+                
     #write paths to headerless files alongside data, add a seperate test empty file
     train_path = "{}/train.csv".format(shp_dir)
     test_path = "{}/test.csv".format(shp_dir)
