@@ -217,6 +217,19 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     train = pd.concat([train, empty_train])
     test = pd.concat([test, empty_test])
     
+    #Enforce rounding to pixels
+    train.xmin = train.xmin.astype(int)
+    train.ymin = train.ymin.astype(int)
+    train.xmax = train.xmax.astype(int)
+    train.ymax = train.ymax.astype(int)
+    
+    test.xmin = test.xmin.astype(int)
+    test.ymin = test.ymin.astype(int)
+    test.xmax = test.xmax.astype(int)
+    test.ymax = test.ymax.astype(int)
+            
+    #ensure int types
+    
     #write paths to headerless files alongside data, add a seperate test empty file
     train_path = "{}/train.csv".format(shp_dir)
     test_path = "{}/test.csv".format(shp_dir)
