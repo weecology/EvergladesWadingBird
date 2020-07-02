@@ -63,8 +63,8 @@ site_totals<-function(selected_boxes){
 
 site_phenology<-function(selected_boxes){
   to_plot<-selected_boxes %>% group_by(event,species,behavior) %>% summarize(n=n()) 
-  ggplot(to_plot,aes(x=event,y=n,col=species,shape=behavior)) + geom_point(size=3) + geom_line(linetype="dashed",aes(group=species),size=3) + labs(x="Event",y="Count",col="label") + stat_smooth() +
-    theme(text = element_text(size=30))
+  ggplot(to_plot,aes(x=event,y=n,col=species,shape=behavior)) + geom_point(size=5) + geom_line(size=1) + labs(x="Event",y="Count",col="label") + stat_smooth() +
+    theme(text = element_text(size=20))
 }
 
 plot_annotations<-function(selected_boxes){
