@@ -91,8 +91,11 @@ def run(tile_path, model_path, savedir="."):
     numpy_array = src.read()
     numpy_array_rgb = np.rollaxis(numpy_array, 0,3)    
     numpy_array_bgr = numpy_array_rgb[:,:,::-1]
-    boxes = model.predict_tile(numpy_image=numpy_array_bgr, patch_overlap=0, patch_size=1500)
-    
+    try:
+        boxes = model.predict_tile(numpy_image=numpy_array_bgr, patch_overlap=0, patch_size=1500)
+    except Exception as e:
+        return "Tile {} returned {}".format(tile_path, e)
+        
     #Project
     projected_boxes = project(projected_path, boxes)
     

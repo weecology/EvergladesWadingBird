@@ -20,7 +20,7 @@ source("nesting_functions.R")
 ```
 
 ```{r}
-PATH_TO_DATA = "/Users/Ben/Dropbox/Everglades/predictions/20200629_171635/"
+PATH_TO_DATA = "/Users/Ben/Dropbox/Everglades/predictions/"
 files<-list.files(PATH_TO_DATA,full.names=T,pattern=".shp")
 shapefiles<-lapply(files,function(x){
   df<-read_sf(x)
