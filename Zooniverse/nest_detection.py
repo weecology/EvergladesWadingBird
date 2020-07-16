@@ -107,4 +107,4 @@ def detect_nests(dirname, savedir):
     return filename
 
 if __name__=="__main__":
-    detect_nests("/orange/ewhite/everglades/predictions/20200714_184132/", savedir="/orange/ewhite/everglades/predictions/20200714_184132/")
+    detect_nests("/orange/ewhite/everglades/predictions/20200714_184132/", savedir="../App/Zooniverse/data/")

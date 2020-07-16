@@ -21,5 +21,6 @@ export GDAL_DATA=/home/b.weinstein/miniconda3/envs/Zooniverse/share/gdal
 
 cd /home/b.weinstein/EvergladesWadingBird/Zooniverse
 
-#comet debug
+#Predict birds and run nest detections
 python predict.py
+python nest_detection.py

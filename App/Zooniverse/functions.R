@@ -113,3 +113,10 @@ compare_counts<-function(df, selected_boxes){
   comparison_table<-comparison_table %>% filter(!site=="6thBridge")
   return(comparison_table)
 }
+
+##Nest detection
+nest_summary_table<-function(nestdf){
+  nest_table <- nestdf %>% as.data.frame() %>% group_by(Site, target_ind) %>% 
+    summarize(n=n()) %>% filter(n>3) %>% group_by(Site) %>% summarize(Nests=n()) 
+  return(nest_table)
+}
