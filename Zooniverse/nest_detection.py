@@ -18,6 +18,7 @@ def load_files(dirname):
         df.append(eventdf)
     
     df = geopandas.GeoDataFrame(pd.concat(df, ignore_index=True))
+    df.crs = eventdf.crs
     
     return df
     
@@ -97,14 +98,12 @@ def detect_nests(dirname, savedir):
             site_results["Site"] = name
             results.append(site_results)
         
-    
     result_shp = geopandas.GeoDataFrame(pd.concat(results, ignore_index=True))
+    result_shp.crs = df.crs
     
     filename = "{}/nest_detections.shp".format(savedir)
-    result_shp.to_file(filename, crs=df.crs)
-    
-    #ADD CRS
-    
+    result_shp.to_file(filename)
+        
     return filename
 
 if __name__=="__main__":
