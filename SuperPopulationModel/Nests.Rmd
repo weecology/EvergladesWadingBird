@@ -20,20 +20,7 @@ source("nesting_functions.R")
 ```
 
 ```{r}
-PATH_TO_DATA = "/Users/Ben/Dropbox/Everglades/predictions/"
-files<-list.files(PATH_TO_DATA,full.names=T,pattern=".shp")
-shapefiles<-lapply(files,function(x){
-  df<-read_sf(x)
-  df$site <- get_site(x)
-  df$event <-  get_event(x)
-  return(df)
-  })
-df<-do.call(rbind,shapefiles)
-df$label<-"Bird"
-head(df)
-
-#layer filter
-df<-df %>% filter(score>0.3)
+df<-load_predictions("/Users/Ben/Dropbox/Everglades/predictions/")
 ```
 
 Write a copy to the shiny app
@@ -42,4 +29,3 @@ Write a copy to the shiny app
 df_centroid<-st_centroid(df) %>% select(-xmin,-xmax,-ymin,-ymax)
 st_write(df_centroid,"../App/Zooniverse/data/PredictedBirds.shp",delete_layer=T)
 ```
-

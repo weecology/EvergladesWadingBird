@@ -215,7 +215,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     empty_train, empty_test = split_test_train(empty_frames_df)
     
-    #train = pd.concat([train, empty_train])
+    train = pd.concat([train, empty_train])
     test = pd.concat([test, empty_test])
     
     #Enforce rounding to pixels, pandas "Int64" dtype for nullable arrays https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html
