@@ -71,6 +71,9 @@ def compare_site(gdf):
 
         results.append(matches)
     
+    if len(results) == 0:
+        return None
+        
     results = pd.concat(results)
     
     return results
@@ -90,14 +93,17 @@ def detect_nests(dirname, savedir):
     results = []
     for name, group in grouped:
         site_results = compare_site(group)
-        site_results["Site"] = name
-        results.append(site_results)
+        if site_results is not None:
+            site_results["Site"] = name
+            results.append(site_results)
         
     
     result_shp = geopandas.GeoDataFrame(pd.concat(results, ignore_index=True))
     
     filename = "{}/nest_detections.shp".format(savedir)
-    result_shp.to_file(filename)
+    result_shp.to_file(filename, crs=df.crs)
+    
+    #ADD CRS
     
     return filename
 
