@@ -119,4 +119,6 @@ shinyServer(function(input, output) {
   
   #Nest summary
   output$nest_summary_table <- renderTable(nest_summary_table(nestdf))
+  output$nest_history_plot <- renderPlot(nest_history(nestdf))
+  
 })

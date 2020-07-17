@@ -117,6 +117,20 @@ compare_counts<-function(df, selected_boxes){
 ##Nest detection
 nest_summary_table<-function(nestdf){
   nest_table <- nestdf %>% as.data.frame() %>% group_by(Site, target_ind) %>% 
-    summarize(n=n()) %>% filter(n>3) %>% group_by(Site) %>% summarize(Nests=n()) 
+    summarize(n=n()) %>% filter(n>3) %>% group_by(Site) %>% summarize(Nests=n(), Average_Detections = mean(n)) 
   return(nest_table)
+}
+
+#TODO create array table
+nest_history<-function(nestdf){
+  as_df <- nestdf %>% as.data.frame()
+  dat<-as_df %>% group_by(Site, target_ind) %>% 
+    summarize(n=n()) %>% filter(n>3) %>% group_by(Site) %>% inner_join(as_df) %>% droplevels() %>% group_by(Site) %>%
+    mutate(reindex=as.character(as.numeric(as.factor(target_ind))),Date=as.Date(Date,"%m_%d_%Y"))
+  
+  date_order<-data.frame(o=unique(dat$Date),j=format(unique(dat$Date),format="%j")) %>% arrange(j)
+  dat$factorDate<-factor(dat$Date,labels=format(date_order$o,format="%b-%d"),ordered = T)
+  #set order
+  ggplot(dat, aes(x=reindex,y=factorDate)) + facet_wrap(~Site,scales="free",ncol=2) + geom_tile() + coord_flip() + theme(axis.text.y = element_blank()) + labs(y="Nest") +
+    theme(axis.text.x  = element_text(angle = -90),text = element_text(size=20))
 }
