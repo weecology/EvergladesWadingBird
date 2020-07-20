@@ -186,14 +186,14 @@ if __name__ == "__main__":
     everglades_watch = utils.connect()
 
     #set model
-    model = "/orange/ewhite/everglades/Zooniverse/predictions/20200525_173758.h5"
+    model = "/orange/ewhite/everglades/Zooniverse/predictions/20200714_184132.h5"
 
     #Currently debugging with just one site
     paths = [
-        "/orange/ewhite/everglades/WadingBirds2020/CypressCity/CypressCity_03_18_2020.tif",
-        "/orange/ewhite/everglades/WadingBirds2020/CypressCity/CypressCity_04_01_2020.tif",
-        "/orange/ewhite/everglades/WadingBirds2020/CypressCity/CypressCity_04_08_2020.tif",
-        "/orange/ewhite/everglades/WadingBirds2020/CypressCity/CypressCity_04_22_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03_31_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_04_07_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_04_21_2020.tif",
+        "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03_19_2020.tif",
         ]
 
     for path in paths[1:]:
