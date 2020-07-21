@@ -6,6 +6,7 @@ Zooniverse/tests/output/*
 *pycache*
 # Session Data files
 .RData
+source_token.txt
 
 # User-specific files
 .Ruserdata

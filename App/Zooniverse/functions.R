@@ -74,8 +74,12 @@ plot_annotations<-function(selected_boxes){
   )
   
   selected_centroids<-st_transform(selected_boxes,4326)
-  mapbox_url = "https://api.mapbox.com/styles/v1/bweinstein/ck94nmzn20an31imrz6ffplun/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJ2THJ4dWRNIn0.5Pius_0u0NxydUzkY9pkWA"
-  m<-leaflet(data=selected_centroids,options=tileOptions(maxNativeZoom =22, maxZoom = 24)) %>% addTiles(mapbox_url,options=providerTileOptions(minZoom = 8, maxNativeZoom=22, maxZoom = 24)) %>%
+  
+  #Create mapbox tileset
+  mapbox_tileset<-construct_id(unique(selected_centroids$site),unique(selected_centroids$event))
+  
+  m<-leaflet(data=selected_centroids,options=tileOptions(maxNativeZoom =22, maxZoom = 24)) %>%
+    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
     addCircles(stroke = T,color=~pal(species),fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(label))
   return(m)
 }
@@ -83,8 +87,11 @@ plot_annotations<-function(selected_boxes){
 plot_predictions<-function(df){
   df<-df %>% filter(score>0.40)
   df<-st_transform(df,4326)
-  mapbox_url = "https://api.mapbox.com/styles/v1/bweinstein/ck94nmzn20an31imrz6ffplun/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYndlaW5zdGVpbiIsImEiOiJ2THJ4dWRNIn0.5Pius_0u0NxydUzkY9pkWA"
-  m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% addTiles(mapbox_url,options=providerTileOptions(minZoom = 8, maxNativeZoom=22, maxZoom = 24)) %>%
+  
+  mapbox_tileset<-construct_id(unique(df$site),unique(df$event))
+  
+  m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% 
+    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
     addCircles(stroke = T,fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(paste(label,round(score,2),sep=":")))
   return(m)
 }
@@ -133,4 +140,11 @@ nest_history<-function(nestdf){
   #set order
   ggplot(dat, aes(x=reindex,y=factorDate)) + facet_wrap(~Site,scales="free",ncol=2) + geom_tile() + coord_flip() + theme(axis.text.y = element_blank()) + labs(y="Nest") +
     theme(axis.text.x  = element_text(angle = -90),text = element_text(size=20))
+}
+
+#Construct mapbox url
+construct_id<-function(site,event){
+  event_formatted<-format(event, "%m_%d_%Y")
+  tileset_id <- paste("bweinstein",".",site,"_",event_formatted,sep="")
+  return(tileset_id)
 }

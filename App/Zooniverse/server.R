@@ -8,7 +8,6 @@ library(htmltools)
 #Source page UIs
 source("landing_page.R")
 source("time_page.R")
-source("colony_page.R")
 source("about_page.R")
 source("prediction_page.R")
 source("predicted_nest_page.R")
@@ -21,13 +20,15 @@ shinyServer(function(input, output) {
   selected_boxes<-filter_annotations(raw_data)
   colonies<-st_read("data/colonies.csv", options=c("X_POSSIBLE_NAMES=longitude","Y_POSSIBLE_NAMES=latitude"))
   
+  #Setmapbox key
+  readRenviron("source_token.txt")
+  MAPBOX_ACCESS_TOKEN=Sys.getenv("MAPBOX_ACCESS_TOKEN")
+  
   #Predictions
   df<-st_read("data/PredictedBirds.shp")
   df$event<-as.Date(df$event)
+  df$tileset_id<-construct_id(df$site,df$event)
   
-  #Mapbox tiles
-  available_list<-data.frame(site=c("CypressCity","Joule","Vacation","6thBridge","JetPort","Jerrod","Enlil","Aerie","Hidden","Yonteau","Frodo","Nanse","StartMel","Vulture"),
-                             event=as.Date(c("2020-03-25","2020-03-24","2020-03-24","2020-03-18","2020-03-23","2020-03-24","2020-04-27","2020-04-27","2020-04-06","2020-04-27","2020-04-27","2020-04-08","2020-03-24","2020-04-14")))
   #Nest predictions
   nestdf<-st_read("data/nest_detections.shp")
   
@@ -36,7 +37,7 @@ shinyServer(function(input, output) {
   output$time<-time_page(selected_boxes)
   output$about<-about_page()
   output$colony<-colony_page(selected_boxes)
-  output$predicted<-predicted_page(df, selected_boxes)
+  output$predicted<-predicted_page(df)
   output$predicted_nests<-predicted_nest_page()
   
   ####Landing page###
@@ -74,8 +75,8 @@ shinyServer(function(input, output) {
 
   output$summary <- renderText(paste("There have been",nrow(raw_data),"classifications on",length(unique(raw_data$subject_id)),"non-empty frames by", length(unique(raw_data$user_name)),"users at",length(unique(raw_data$site)),"sites"))
   output$totals_plot<-renderPlot(totals_plot(selected_boxes))
-
-  ###Time page###
+  
+  # View Zooniverse annotations
   ###Colony page###
   time_series_filter<-reactive({
     #filter based on selection
@@ -107,9 +108,8 @@ shinyServer(function(input, output) {
   
   ##Prediction page
   prediction_filter<-reactive({
-    selected_event = available_list %>% filter(site==input$prediction_site) %>% .$event
     #filter based on selection
-    to_plot <- df %>% filter(site==input$prediction_site,event==selected_event) 
+    to_plot <- df %>% filter(tileset_id==input$prediction_tileset) 
     return(to_plot)
   })
   

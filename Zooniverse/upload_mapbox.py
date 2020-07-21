@@ -15,7 +15,7 @@ subprocess.call("/orange/ewhite/everglades/mapbox/source_token.txt", shell =True
 #'/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_03_24_2020.tif',
 #"/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03_24_2020.tif"]
 
-files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/OtherColonies/*.tif")
+files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
 
 dst_crs = rio.crs.CRS.from_epsg("3857")
 
