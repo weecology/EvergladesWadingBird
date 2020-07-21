@@ -77,7 +77,6 @@ shinyServer(function(input, output) {
   output$totals_plot<-renderPlot(totals_plot(selected_boxes))
   
   # View Zooniverse annotations
-  ###Colony page###
   time_series_filter<-reactive({
     #filter based on selection
     to_plot <- selected_boxes %>% filter(site %in% input$timeseries_site, species %in% input$timeseries_species,behavior %in% input$timeseries_behavior) 
@@ -91,10 +90,9 @@ shinyServer(function(input, output) {
   ###Species page###
   output$label_heatmap<-renderPlot(behavior_heatmap(selected_boxes))
   
-  ###Colony page###
   colony_filter<-reactive({
   #filter based on selection
-    to_plot <- selected_boxes %>% mutate(image=paste(site,event)) %>% filter(image==input$selected_image) 
+    to_plot <- selected_boxes %>% filter(tileset_id==input$selected_image) 
     return(to_plot)
   })
   

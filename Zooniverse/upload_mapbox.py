@@ -15,7 +15,7 @@ subprocess.call("/orange/ewhite/everglades/mapbox/source_token.txt", shell =True
 #'/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_03_24_2020.tif',
 #"/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03_24_2020.tif"]
 
-files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Joule/*.tif")
+files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif", recursive=True)
 
 dst_crs = rio.crs.CRS.from_epsg("3857")
 
@@ -36,24 +36,27 @@ for path in files_to_upload:
           #create output filename
           out_filename = "{}_projected.tif".format(os.path.splitext(path)[0])
           
-          with rio.open(out_filename, 'w', **kwargs) as dst:
-               for i in range(1, src.count + 1):
-                    reproject(
-                     source=rio.band(src, i),
-                     destination=rio.band(dst, i),
-                     src_transform=src.transform,
-                     src_crs=src.crs,
-                     dst_transform=transform,
-                     dst_crs=dst_crs,
-                     resampling=Resampling.nearest)
-                        
+          if not os.path.exists(out_filename):
+               with rio.open(out_filename, 'w', **kwargs) as dst:
+                    for i in range(1, src.count + 1):
+                         reproject(
+                          source=rio.band(src, i),
+                          destination=rio.band(dst, i),
+                          src_transform=src.transform,
+                          src_crs=src.crs,
+                          dst_transform=transform,
+                          dst_crs=dst_crs,
+                          resampling=Resampling.nearest)
+                             
     ##Project to web mercator
     #create output filename
      basename = os.path.splitext(os.path.basename(path))[0]
      mbtiles_filename = "/orange/ewhite/everglades/mapbox/{}.mbtiles".format(basename)
-     subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..22 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
+     
+     if not os.path.exists(mbtiles_filename):
+          subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..22 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
     
-     ##Generate tiles
-     subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
+          ##Generate tiles
+          subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
 
 

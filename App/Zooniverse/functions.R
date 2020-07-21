@@ -46,6 +46,8 @@ filter_annotations<-function(raw_data){
   selected_boxes$event[selected_boxes$event %in% "03112020"]<-gsub(x=selected_boxes$event[selected_boxes$event %in% "03112020"],pattern="03112020",replacement="03_11_2020")
   
   selected_boxes$event<-as.Date(selected_boxes$event,"%m_%d_%Y")
+  selected_boxes$tileset_id<-construct_id(selected_boxes$site,selected_boxes$event)
+    
   return(selected_boxes)
 }
 
@@ -76,7 +78,8 @@ plot_annotations<-function(selected_boxes){
   selected_centroids<-st_transform(selected_boxes,4326)
   
   #Create mapbox tileset
-  mapbox_tileset<-construct_id(unique(selected_centroids$site),unique(selected_centroids$event))
+  mapbox_tileset<-unique(selected_centroids$tileset_id)
+  mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
   m<-leaflet(data=selected_centroids,options=tileOptions(maxNativeZoom =22, maxZoom = 24)) %>%
     addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
@@ -145,6 +148,6 @@ nest_history<-function(nestdf){
 #Construct mapbox url
 construct_id<-function(site,event){
   event_formatted<-format(event, "%m_%d_%Y")
-  tileset_id <- paste("bweinstein",".",site,"_",event_formatted,sep="")
+  tileset_id <- paste(site,"_",event_formatted,sep="")
   return(tileset_id)
 }
