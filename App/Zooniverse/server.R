@@ -3,6 +3,7 @@
 # application by clicking 'Run App' above.
 
 library(shiny)
+library(shinyWidgets)
 library(htmltools)
 
 #Source page UIs
@@ -31,14 +32,16 @@ shinyServer(function(input, output) {
   
   #Nest predictions
   nestdf<-st_read("data/nest_detections.shp")
+  nestdf$Date<-as.Date(nestdf$Date,"%m_%d_%Y")
+  nestdf$tileset_id<-construct_id(nestdf$Site,nestdf$Date)
+  nestdf<-st_centroid(nestdf)
   
   #Create pages
   output$landing<-landing_page(selected_boxes)
   output$time<-time_page(selected_boxes)
   output$about<-about_page()
-  output$colony<-colony_page(selected_boxes)
   output$predicted<-predicted_page(df)
-  output$predicted_nests<-predicted_nest_page()
+  output$predicted_nests<-predicted_nest_page(nestdf)
   
   ####Landing page###
   output$map <- create_map(colonies)
@@ -115,8 +118,28 @@ shinyServer(function(input, output) {
   output$sample_prediction_map<-renderLeaflet(plot_predictions(df=prediction_filter()))
   output$Zooniverse_Predicted_Table<-renderTable(compare_counts(df, selected_boxes))
   
-  #Nest summary
+  ###Nest Page###
+  nest_filter<-reactive({
+    #filter based on selection
+    to_plot <- nestdf %>% filter(Site==input$nest_site) 
+    return(to_plot)
+  })
   output$nest_summary_table <- renderTable(nest_summary_table(nestdf))
-  output$nest_history_plot <- renderPlot(nest_history(nestdf))
+  output$nest_history_plot <- renderPlot(nest_history(nest_filter()))
+  
+  #Reactive UI slider for dates
+  output$nestdate = renderUI({
+    selected_site <- as.character(input$nest_site)
+    selected_df <- nestdf %>% filter(Site==selected_site)
+    sliderTextInput(inputId = "nestdate","Select Date",choices=sort(unique(selected_df$Date)))
+  })
+  
+  nest_map_filter<-reactive({
+    #filter based on selection
+    to_plot <- nestdf %>% filter(Site==input$nest_site, Date==input$nestdate) 
+    return(to_plot)
+  })
+  #Plot just the selected site and date
+  output$nest_map<-renderLeaflet(plot_nests(df=nest_map_filter()))
   
 })

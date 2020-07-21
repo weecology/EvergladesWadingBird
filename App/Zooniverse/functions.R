@@ -90,8 +90,9 @@ plot_annotations<-function(selected_boxes){
 plot_predictions<-function(df){
   df<-df %>% filter(score>0.40)
   df<-st_transform(df,4326)
-  
-  mapbox_tileset<-construct_id(unique(df$site),unique(df$event))
+
+  mapbox_tileset<-unique(df$tileset_id)
+  mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
   m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% 
     addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
@@ -131,7 +132,6 @@ nest_summary_table<-function(nestdf){
   return(nest_table)
 }
 
-#TODO create array table
 nest_history<-function(nestdf){
   as_df <- nestdf %>% as.data.frame()
   dat<-as_df %>% group_by(Site, target_ind) %>% 
@@ -139,10 +139,27 @@ nest_history<-function(nestdf){
     mutate(reindex=as.character(as.numeric(as.factor(target_ind))),Date=as.Date(Date,"%m_%d_%Y"))
   
   date_order<-data.frame(o=unique(dat$Date),j=format(unique(dat$Date),format="%j")) %>% arrange(j)
+  
+  #don't plot if there aren't multiple dates
+  if(nrow(date_order)==0){return(NA)}
+  
   dat$factorDate<-factor(dat$Date,labels=format(date_order$o,format="%b-%d"),ordered = T)
   #set order
-  ggplot(dat, aes(x=reindex,y=factorDate)) + facet_wrap(~Site,scales="free",ncol=2) + geom_tile() + coord_flip() + theme(axis.text.y = element_blank()) + labs(y="Nest") +
-    theme(axis.text.x  = element_text(angle = -90),text = element_text(size=20))
+  ggplot(dat, aes(x=reindex,y=factorDate)) + facet_wrap(~Site,scales="free",ncol=2) + geom_tile() + coord_flip() + theme(axis.text.y = element_blank()) + labs(x="Nest",y="Date") +
+    theme(axis.text.x  = element_text(angle = -90),text = element_text(size=20)) 
+}
+
+plot_nests<-function(df){
+  df<-df %>% filter(score>0.40)
+  df<-st_transform(df,4326)
+  
+  mapbox_tileset<-unique(df$tileset_id)
+  mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
+  
+  m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% 
+    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
+    addCircles(stroke = T,fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(paste(Date,round(score,2),sep=":")))
+  return(m)
 }
 
 #Construct mapbox url
