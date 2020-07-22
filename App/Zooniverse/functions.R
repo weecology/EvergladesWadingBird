@@ -81,21 +81,18 @@ plot_annotations<-function(selected_boxes){
   mapbox_tileset<-unique(selected_centroids$tileset_id)
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
-  m<-leaflet(data=selected_centroids,options=tileOptions(maxNativeZoom =22, maxZoom = 24)) %>%
-    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
+  m<-leaflet(data=selected_centroids) %>%
+    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=24, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
     addCircles(stroke = T,color=~pal(species),fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(label))
   return(m)
 }
 
 plot_predictions<-function(df){
-  df<-df %>% filter(score>0.40)
-  df<-st_transform(df,4326)
-
   mapbox_tileset<-unique(df$tileset_id)
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
-  m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% 
-    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
+  m<-leaflet(data=df) %>% 
+    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=24, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
     addCircles(stroke = T,fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(paste(label,round(score,2),sep=":")))
   return(m)
 }
@@ -151,8 +148,8 @@ plot_nests<-function(df){
   mapbox_tileset<-unique(df$tileset_id)[1]
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
-  m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% 
-    addProviderTiles("MapBox", layerId = "mapbox_id",options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
+  m<-leaflet(data=df) %>% 
+    addProviderTiles("MapBox", layerId = "mapbox_id",options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=24, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
     addCircles(stroke = T,fillOpacity = 0.1,radius = 0.4,popup = ~htmlEscape(paste(Date,round(score,2),sep=":")))
   return(m)
 }
@@ -161,7 +158,7 @@ update_nests<-function(df){
   mapbox_tileset<-unique(df$tileset_id)[1]
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
     leafletProxy("nest_map")  %>% clearShapes() %>%
-     addProviderTiles("MapBox", layerId = "mapbox_id",options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
+     addProviderTiles("MapBox", layerId = "mapbox_id",options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=24, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
       addCircles(data=df,stroke = T,fillOpacity = 0.1,radius = 0.4,popup = ~htmlEscape(paste(Date,round(score,2),sep=", ")))
 }
 
