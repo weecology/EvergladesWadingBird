@@ -14,7 +14,7 @@ source("prediction_page.R")
 source("predicted_nest_page.R")
 source("functions.R")
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
    
   #Load data
   raw_data <- load_classifications()
@@ -35,6 +35,10 @@ shinyServer(function(input, output) {
   nestdf$Date<-as.Date(nestdf$Date,"%m_%d_%Y")
   nestdf$tileset_id<-construct_id(nestdf$Site,nestdf$Date)
   nestdf<-st_centroid(nestdf)
+  nestdf<-st_transform(nestdf,4326)
+  selected_indices<-nestdf %>% as.data.frame() %>% group_by(Site, target_ind) %>% 
+    summarize(n=n()) %>% filter(n>2) %>% mutate(site_index=paste(Site,target_ind)) 
+  nestdf<-nestdf %>% mutate(site_index=paste(Site,target_ind)) %>% inner_join(selected_indices)
   
   #Create pages
   output$landing<-landing_page(selected_boxes)
@@ -99,9 +103,6 @@ shinyServer(function(input, output) {
     return(to_plot)
   })
   
-  observe({
-    print(input$colony_map_zoom)
-  })
   
   observe({
     output$colony_map<-renderLeaflet(plot_annotations(selected_boxes =colony_filter()))
@@ -128,18 +129,35 @@ shinyServer(function(input, output) {
   output$nest_history_plot <- renderPlot(nest_history(nest_filter()))
   
   #Reactive UI slider for dates
-  output$nestdate = renderUI({
+  output$nest_date_slider = renderUI({
     selected_site <- as.character(input$nest_site)
     selected_df <- nestdf %>% filter(Site==selected_site)
-    sliderTextInput(inputId = "nestdate","Select Date",choices=sort(unique(selected_df$Date)))
+    available_dates<-sort(unique(selected_df$Date))
+    sliderTextInput(inputId = "nest_date","Select Date",choices=available_dates)
   })
   
-  nest_map_filter<-reactive({
-    #filter based on selection
-    to_plot <- nestdf %>% filter(Site==input$nest_site, Date==input$nestdate) 
-    return(to_plot)
+  #Default plot
+  output$nest_map<-renderLeaflet(plot_nests(nestdf %>% filter(Site=="Joule",Date==min(Date))))
+  
+  nest_map_site_filter<-reactive({
+    selected_nests<-nestdf %>% filter(Site == input$nest_site)
+    return(selected_nests)
   })
-  #Plot just the selected site and date
-  output$nest_map<-renderLeaflet(plot_nests(df=nest_map_filter()))
+  
+  nest_map_date_filter<-reactive({
+    selected_nests<-nestdf %>% filter(Date == input$nest_date)
+    return(selected_nests)
+  })
+
+  observeEvent(input$nest_site,{
+    selected_nests<-nest_map_site_filter()
+    output$nest_map<-renderLeaflet(plot_nests(selected_nests %>% filter(Date==min(Date))))
+  })
+  
+  observeEvent(input$nest_date,{
+    selected_nests<-nest_map_date_filter()
+    selected_nests<-selected_nests %>% filter(Site==input$nest_site)
+    update_nests(selected_nests)
+  })
   
 })

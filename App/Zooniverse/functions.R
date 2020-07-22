@@ -132,10 +132,8 @@ nest_summary_table<-function(nestdf){
   return(nest_table)
 }
 
-nest_history<-function(nestdf){
-  as_df <- nestdf %>% as.data.frame()
-  dat<-as_df %>% group_by(Site, target_ind) %>% 
-    summarize(n=n()) %>% filter(n>3) %>% group_by(Site) %>% inner_join(as_df) %>% droplevels() %>% group_by(Site) %>%
+nest_history<-function(dat){
+  dat<-dat %>% group_by(Site) %>%
     mutate(reindex=as.character(as.numeric(as.factor(target_ind))),Date=as.Date(Date,"%m_%d_%Y"))
   
   date_order<-data.frame(o=unique(dat$Date),j=format(unique(dat$Date),format="%j")) %>% arrange(j)
@@ -150,16 +148,21 @@ nest_history<-function(nestdf){
 }
 
 plot_nests<-function(df){
-  df<-df %>% filter(score>0.40)
-  df<-st_transform(df,4326)
-  
-  mapbox_tileset<-unique(df$tileset_id)
+  mapbox_tileset<-unique(df$tileset_id)[1]
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
   m<-leaflet(data=df,options=tileOptions(maxNativeZoom = 22, maxZoom = 24)) %>% 
-    addProviderTiles("MapBox", options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
-    addCircles(stroke = T,fillOpacity = 0.1,radius = 0.25,popup = ~htmlEscape(paste(Date,round(score,2),sep=":")))
+    addProviderTiles("MapBox", layerId = "mapbox_id",options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
+    addCircles(stroke = T,fillOpacity = 0.1,radius = 0.4,popup = ~htmlEscape(paste(Date,round(score,2),sep=":")))
   return(m)
+}
+
+update_nests<-function(df){
+  mapbox_tileset<-unique(df$tileset_id)[1]
+  mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
+    leafletProxy("nest_map")  %>% clearShapes() %>%
+     addProviderTiles("MapBox", layerId = "mapbox_id",options = providerTileOptions(id = mapbox_tileset, minZoom = 8, maxNativeZoom=22, maxZoom = 24, accessToken = MAPBOX_ACCESS_TOKEN)) %>%
+      addCircles(data=df,stroke = T,fillOpacity = 0.1,radius = 0.4,popup = ~htmlEscape(paste(Date,round(score,2),sep=", ")))
 }
 
 #Construct mapbox url

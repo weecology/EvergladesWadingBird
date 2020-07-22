@@ -15,7 +15,8 @@ subprocess.call("/orange/ewhite/everglades/mapbox/source_token.txt", shell =True
 #'/orange/ewhite/everglades/WadingBirds2020/StartMel/StartMel_03_24_2020.tif',
 #"/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03_24_2020.tif"]
 
-files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif", recursive=True)
+files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/6thBridge/*.tif")
+files_to_upload = [x for x in files_to_upload if "projected" not in x]
 
 dst_crs = rio.crs.CRS.from_epsg("3857")
 
@@ -54,7 +55,7 @@ for path in files_to_upload:
      mbtiles_filename = "/orange/ewhite/everglades/mapbox/{}.mbtiles".format(basename)
      
      if not os.path.exists(mbtiles_filename):
-          subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..22 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
+          subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..24 -j 4 -f PNG --overwrite --resampling cubic".format(out_filename, mbtiles_filename), shell=True)
     
           ##Generate tiles
           subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
