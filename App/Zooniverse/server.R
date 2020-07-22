@@ -21,6 +21,8 @@ shinyServer(function(input, output, session) {
   selected_boxes<-filter_annotations(raw_data)
   colonies<-st_read("data/colonies.csv", options=c("X_POSSIBLE_NAMES=longitude","Y_POSSIBLE_NAMES=latitude"))
   
+  output$zooniverse_anotation<-renderPlot(zooniverse_complete())
+
   #Setmapbox key
   readRenviron("source_token.txt")
   MAPBOX_ACCESS_TOKEN=Sys.getenv("MAPBOX_ACCESS_TOKEN")

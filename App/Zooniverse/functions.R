@@ -98,7 +98,6 @@ plot_predictions<-function(df){
 }
 
 behavior_heatmap<-function(selected_boxes){
-  
   class_totals<-selected_boxes %>% group_by(majority_class) %>% summarize(total=n())
   p<-selected_boxes %>% group_by(majority_class,behavior) %>% summarize(n=n()) %>% as.data.frame() %>% select(-geometry) %>% 
     inner_join(class_totals) %>% mutate(prop=n/total * 100) %>% ggplot(.) + 
@@ -168,3 +167,16 @@ construct_id<-function(site,event){
   tileset_id <- paste(site,"_",event_formatted,sep="")
   return(tileset_id)
 }
+
+zooniverse_complete<-function(){
+  #Load subject data
+  subject_data<-read.csv("data/everglades-watch-subjects.csv")
+  raw_annotations<-read.csv("data/parsed_annotations.csv")
+  subject_data$Site<-sapply(subject_data$metadata, function(x) str_match(gsub('\"', "", x, fixed = TRUE),"site:(\\w+)")[,2])
+  
+  #images per site
+  completed<-subject_data %>% group_by(Site) %>% mutate(annotated=subject_id %in% raw_annotations$subject_ids) %>% select(Site,subject_id, annotated) %>% group_by(Site, annotated) %>% summarize(n=n_distinct(subject_id)) %>% 
+    tidyr::spread(annotated,n, fill=0) %>% mutate(Percent_Complete=`TRUE`/(`TRUE`+`FALSE`)*100)
+  p<-ggplot(completed,aes(x=Site,y=Percent_Complete)) + coord_flip() + geom_bar(stat="identity") + labs(y="Annotated (%)",x="Subject Set") 
+  return(p)
+  }
