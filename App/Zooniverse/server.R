@@ -107,9 +107,8 @@ shinyServer(function(input, output, session) {
     return(to_plot)
   })
   
-  
   observe({
-    output$colony_map<-renderLeaflet(plot_annotations(selected_boxes =colony_filter()))
+    output$colony_map<-renderLeaflet(plot_annotations(selected_boxes =colony_filter(),MAPBOX_ACCESS_TOKEN))
   })
   
   ##Prediction page
@@ -120,7 +119,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$predicted_time_plot<-renderPlot(time_predictions(df))
-  output$sample_prediction_map<-renderLeaflet(plot_predictions(df=prediction_filter()))
+  output$sample_prediction_map<-renderLeaflet(plot_predictions(df=prediction_filter(),MAPBOX_ACCESS_TOKEN))
   output$Zooniverse_Predicted_Table<-renderTable(compare_counts(df, selected_boxes))
   
   ###Nest Page###
@@ -141,7 +140,7 @@ shinyServer(function(input, output, session) {
   })
   
   #Default plot
-  output$nest_map<-renderLeaflet(plot_nests(nestdf %>% filter(Site=="Joule",Date==min(Date))))
+  output$nest_map<-renderLeaflet(plot_nests(nestdf %>% filter(Site=="Joule",Date==min(Date)),MAPBOX_ACCESS_TOKEN))
   
   nest_map_site_filter<-reactive({
     selected_nests<-nestdf %>% filter(Site == input$nest_site)
@@ -155,13 +154,13 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$nest_site,{
     selected_nests<-nest_map_site_filter()
-    output$nest_map<-renderLeaflet(plot_nests(selected_nests %>% filter(Date==min(Date))))
+    output$nest_map<-renderLeaflet(plot_nests(selected_nests %>% filter(Date==min(Date)),MAPBOX_ACCESS_TOKEN))
   })
   
   observeEvent(input$nest_date,{
     selected_nests<-nest_map_date_filter()
     selected_nests<-selected_nests %>% filter(Site==input$nest_site)
-    update_nests(selected_nests)
+    update_nests(selected_nests, MAPBOX_ACCESS_TOKEN)
   })
   
 })

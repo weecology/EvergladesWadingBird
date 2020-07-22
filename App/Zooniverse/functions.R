@@ -32,7 +32,6 @@ check_events<-function(x){
   }
 }
 filter_annotations<-function(raw_data){
-  
   selected_ids<-unique(raw_data$selected_i)
   
   #Majority rule for labels
@@ -69,7 +68,7 @@ site_phenology<-function(selected_boxes){
     theme(text = element_text(size=20))
 }
 
-plot_annotations<-function(selected_boxes){
+plot_annotations<-function(selected_boxes, MAPBOX_ACCESS_TOKEN){
   pal <- colorFactor(
     palette = 'Dark2',
     domain = selected_boxes$species
@@ -87,7 +86,7 @@ plot_annotations<-function(selected_boxes){
   return(m)
 }
 
-plot_predictions<-function(df){
+plot_predictions<-function(df, MAPBOX_ACCESS_TOKEN){
   mapbox_tileset<-unique(df$tileset_id)
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
@@ -143,7 +142,7 @@ nest_history<-function(dat){
     theme(axis.text.x  = element_text(angle = -90),text = element_text(size=20)) 
 }
 
-plot_nests<-function(df){
+plot_nests<-function(df, MAPBOX_ACCESS_TOKEN){
   mapbox_tileset<-unique(df$tileset_id)[1]
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
   
@@ -153,7 +152,7 @@ plot_nests<-function(df){
   return(m)
 }
 
-update_nests<-function(df){
+update_nests<-function(df, MAPBOX_ACCESS_TOKEN){
   mapbox_tileset<-unique(df$tileset_id)[1]
   mapbox_tileset<-paste("bweinstein.",mapbox_tileset,sep="")
     leafletProxy("nest_map")  %>% clearShapes() %>%
