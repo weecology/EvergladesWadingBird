@@ -17,6 +17,8 @@ import start_cluster
 #"/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03_24_2020.tif"]
 
 def upload(path):
+     dst_crs = rio.crs.CRS.from_epsg("3857")
+     
      src = rio.open(path)
 
      with rio.open(path) as src:
@@ -62,8 +64,6 @@ if __name__=="__main__":
      
      files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif", recursive=True)
      files_to_upload = [x for x in files_to_upload if "projected" not in x]
-     
-     dst_crs = rio.crs.CRS.from_epsg("3857")
      
      for path in files_to_upload:
           upload(path)
