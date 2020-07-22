@@ -68,7 +68,7 @@ if __name__=="__main__":
      for path in files_to_upload:
           upload(path)
      
-     client = tart_cluster.start(cpus=20, mem_size="20GB")
+     client = start_cluster.start(cpus=20, mem_size="20GB")
      futures = client.map(upload,files_to_upload)
      
      completed_files = [x.result() for x in futures]
