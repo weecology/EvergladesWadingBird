@@ -17,56 +17,57 @@ import start_cluster
 #"/orange/ewhite/everglades/WadingBirds2020/Vacation/Vacation_03_24_2020.tif"]
 
 def upload(path):
-     dst_crs = rio.crs.CRS.from_epsg("3857")
+     try:
+          dst_crs = rio.crs.CRS.from_epsg("3857")
+          
+          src = rio.open(path)
      
-     src = rio.open(path)
-
-     with rio.open(path) as src:
-          transform, width, height = calculate_default_transform(
-               src.crs, dst_crs, src.width, src.height, *src.bounds)
-          kwargs = src.meta.copy()
-          kwargs.update({
-               'crs': dst_crs,
-              'transform': transform,
-             'width': width,
-             'height': height
-          })
-
+          with rio.open(path) as src:
+               transform, width, height = calculate_default_transform(
+                    src.crs, dst_crs, src.width, src.height, *src.bounds)
+               kwargs = src.meta.copy()
+               kwargs.update({
+                    'crs': dst_crs,
+                   'transform': transform,
+                  'width': width,
+                  'height': height
+               })
+     
+               #create output filename
+               out_filename = "{}_projected.tif".format(os.path.splitext(path)[0])
+     
+               if not os.path.exists(out_filename):
+                    with rio.open(out_filename, 'w', **kwargs) as dst:
+                         for i in range(1, src.count + 1):
+                              reproject(
+                                   source=rio.band(src, i),
+                               destination=rio.band(dst, i),
+                               src_transform=src.transform,
+                               src_crs=src.crs,
+                               dst_transform=transform,
+                               dst_crs=dst_crs,
+                               resampling=Resampling.nearest)
+     
+          ##Project to web mercator
           #create output filename
-          out_filename = "{}_projected.tif".format(os.path.splitext(path)[0])
-
-          if not os.path.exists(out_filename):
-               with rio.open(out_filename, 'w', **kwargs) as dst:
-                    for i in range(1, src.count + 1):
-                         reproject(
-                              source=rio.band(src, i),
-                          destination=rio.band(dst, i),
-                          src_transform=src.transform,
-                          src_crs=src.crs,
-                          dst_transform=transform,
-                          dst_crs=dst_crs,
-                          resampling=Resampling.nearest)
-
-     ##Project to web mercator
-     #create output filename
-     basename = os.path.splitext(os.path.basename(path))[0]
-     mbtiles_filename = "/orange/ewhite/everglades/mapbox/{}.mbtiles".format(basename)
-
-     if not os.path.exists(mbtiles_filename):
-          subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..24 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
-
-          ##Generate tiles
-          subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
+          basename = os.path.splitext(os.path.basename(path))[0]
+          mbtiles_filename = "/orange/ewhite/everglades/mapbox/{}.mbtiles".format(basename)
      
+          if not os.path.exists(mbtiles_filename):
+               subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..24 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
+     
+               ##Generate tiles
+               subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
+     
+     except Exception as e:
+          return "path: {} raised: {}".format(path, e)
+          
      return mbtiles_filename
 
 if __name__=="__main__":
      
      files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif", recursive=True)
      files_to_upload = [x for x in files_to_upload if "projected" not in x]
-     
-     for path in files_to_upload:
-          upload(path)
      
      client = start_cluster.start(cpus=20, mem_size="20GB")
      futures = client.map(upload,files_to_upload)
