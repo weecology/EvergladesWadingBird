@@ -149,12 +149,15 @@ if __name__ == "__main__":
     #for path in paths:
         #run(model_path=model_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
         
-    futures = client.map(run, paths, model_path=model_path, savedir="/orange/ewhite/everglades/predictions")
+    futures = client.map(run, paths[0:2], model_path=model_path, savedir="/orange/ewhite/everglades/predictions")
     wait(futures)
-    completed_predictions = [x.result() for x in futures]
-    
-    #remove any errors
-    completed_predictions = [x for x in completed_predictions if os.path.exists(x) ]
+    completed_predictions = []
+    for x in futures:
+        try:
+            fn = x.result()
+            completed_predictions.append(fn)
+        except:
+            pass
     
     #write output to zooniverse app
     df = summarize(completed_predictions)
