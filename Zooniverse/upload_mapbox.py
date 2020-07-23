@@ -28,9 +28,9 @@ def upload(path):
                kwargs = src.meta.copy()
                kwargs.update({
                     'crs': dst_crs,
-                   'transform': transform,
-                  'width': width,
-                  'height': height
+                    'transform': transform,
+                    'width': width,
+                    'height': height
                })
      
                #create output filename

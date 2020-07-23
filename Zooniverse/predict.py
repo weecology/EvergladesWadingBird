@@ -141,7 +141,7 @@ def summarize(paths):
     return summary
     
 if __name__ == "__main__":
-    client = start(gpus=8,mem_size="30GB")    
+    client = start(gpus=10,mem_size="30GB")    
     model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200722_173611.h5"
     
     paths = find_files()
@@ -156,7 +156,8 @@ if __name__ == "__main__":
     for x in futures:
         try:
             fn = x.result()
-            completed_predictions.append(fn)
+            if os.path.exists(fn):
+                completed_predictions.append(fn)
         except:
             pass
     
