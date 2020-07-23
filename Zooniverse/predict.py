@@ -6,6 +6,7 @@ from distributed import wait
 import geopandas
 import glob
 import numpy as np
+import pandas as pd
 import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 import re
