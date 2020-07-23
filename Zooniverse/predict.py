@@ -1,13 +1,14 @@
 #Predict birds in imagery
 import os
-import glob
-from distributed import wait
 from deepforest import deepforest
 from deepforest import preprocess
+from distributed import wait
 import geopandas
+import glob
 import numpy as np
 import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
+import re
 import shapely
 from start_cluster import start
 
@@ -64,7 +65,6 @@ def utm_project_raster(path, savedir="/orange/ewhite/everglades/utm_projected/")
             'height': height
         })
 
-
         with rasterio.open(dest_name, 'w', **kwargs) as dst:
             for i in range(1, src.count + 1):
                 reproject(
@@ -114,6 +114,31 @@ def find_files():
     
     return paths
 
+def get_site(path):
+    path = os.path.basename(path)    
+    regex = re.compile("(\\w+)_\\d+_\\d+_\\d+_projected")
+    return regex.match(path).group(1)
+
+def get_event(path):
+    path = os.path.basename(path)
+    regex = re.compile('\\w+_(\\d+_\\d+_\\d+)_projected')
+    return regex.match(path).group(1)
+
+def load_shapefile(x):
+    shp = geopandas.read_file(x)
+    shp["site"] = get_site(x)
+    shp["event"] = get_event(x)
+    return shp
+    
+def summarize(paths):
+    """Take prediction shapefiles and wrap into a single file"""
+    shapefiles = [load_shapefile(x) for x in paths]
+    summary = geopandas.GeoDataFrame(pd.concat(shapefiles,ignore_index=True),crs=shapefiles[0].crs)
+    summary["label"] = "Bird"
+    summary = summary[summary.score > 0.3]
+    
+    return summary
+    
 if __name__ == "__main__":
     client = start(gpus=8,mem_size="40GB")    
     model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200625_230822.h5"
@@ -126,6 +151,14 @@ if __name__ == "__main__":
         
     futures = client.map(run, paths, model_path=model_path, savedir="/orange/ewhite/everglades/predictions")
     wait(futures)
-    print([x.result() for x in futures])
+    completed_predictions = [x.result() for x in futures]
+    
+    #remove any errors
+    completed_predictions = [os.path.exists(x) for x in completed_predictions]
+    
+    #write output to zooniverse app
+    df = summarize(completed_predictions)
+    df.to_file("../App/Zooniverse/data/PredictedBirds.shp")
+    
     
     

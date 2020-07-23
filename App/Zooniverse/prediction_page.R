@@ -8,7 +8,7 @@ predicted_page<-function(df){
       plotOutput("predicted_time_plot",height = 700,width = 1200),
       
       h1("View Predictions"),
-      selectInput("prediction_tileset","Event",choices = unique(df$tileset_id),selected="Joule_03_24_2020"),
+      selectInput("prediction_tileset","Event",choices = sort(unique(df$tileset_id)),selected="Joule_03_24_2020"),
       leafletOutput("sample_prediction_map",height=800,width=1200),
       
       h2("Compare Zooniverse to Predicted"),

@@ -7,7 +7,6 @@ library(gridExtra)
 library(stringr)
 library(htmltools)
 
-
 #Site map
 create_map<-function(colonies){
   m <- leaflet(data=colonies) %>% addTiles() %>% addMarkers(popup =~colony) 

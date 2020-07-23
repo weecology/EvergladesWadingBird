@@ -53,11 +53,11 @@ def upload(path):
           basename = os.path.splitext(os.path.basename(path))[0]
           mbtiles_filename = "/orange/ewhite/everglades/mapbox/{}.mbtiles".format(basename)
      
-          if not os.path.exists(mbtiles_filename):
-               subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..24 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
-     
-               ##Generate tiles
-               subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
+          #if not os.path.exists(mbtiles_filename):
+          #subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..24 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
+
+          ##Generate tiles
+          subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
      
      except Exception as e:
           return "path: {} raised: {}".format(path, e)
@@ -69,8 +69,11 @@ if __name__=="__main__":
      files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif", recursive=True)
      files_to_upload = [x for x in files_to_upload if "projected" not in x]
      
-     client = start_cluster.start(cpus=20, mem_size="20GB")
-     futures = client.map(upload,files_to_upload)
+     for path in files_to_upload:
+          upload(path)
+          
+     #client = start_cluster.start(cpus=20, mem_size="20GB")
+     #futures = client.map(upload,files_to_upload)
      
-     completed_files = [x.result() for x in futures]
-     print("Completed upload of {}".format(completed_files))
+     #completed_files = [x.result() for x in futures]
+     #print("Completed upload of {}".format(completed_files))

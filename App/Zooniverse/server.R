@@ -29,10 +29,11 @@ shinyServer(function(input, output, session) {
   
   #Predictions
   df<-st_read("data/PredictedBirds.shp")
-  df$event<-as.Date(df$event)
+  df$event<-as.Date(df$event,"%m_%d_%Y")
   df$tileset_id<-construct_id(df$site,df$event)
   df<-df %>% filter(score>0.40)
   df<-st_transform(df,4326)
+  df<-st_centroid(df)
   
   #Nest predictions
   nestdf<-st_read("data/nest_detections.shp")
