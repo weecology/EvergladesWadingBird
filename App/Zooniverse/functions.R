@@ -108,11 +108,11 @@ behavior_heatmap<-function(selected_boxes){
 time_predictions<-function(df){
   #only plot sites with more than one event
   site_names <- df %>% as.data.frame() %>% select(site,event) %>% group_by(site) %>% summarize(n=length(unique(event))) %>% filter(n>1) %>% .$site
-  df %>% group_by(site,event) %>% filter(site %in% site_names,score>0.40) %>% summarize(n=n()) %>% ggplot(.,aes(x=event,y=n)) + geom_point() + geom_line() + facet_wrap(~site,ncol=3,scales="free") + labs(y="Predicted Birds",x="Date") + theme(text = element_text(size=20))
+  df %>% group_by(site,event) %>% filter(site %in% site_names) %>% summarize(n=n()) %>% ggplot(.,aes(x=event,y=n)) + geom_point() + geom_line() + facet_wrap(~site,ncol=3,scales="free") + labs(y="Predicted Birds",x="Date") + theme(text = element_text(size=20))
 }
 
 compare_counts<-function(df, selected_boxes){
-  automated_count<-data.frame(df) %>% filter(score>0.40) %>% select(site,event) %>% group_by(site,event) %>% summarize(predicted=n())
+  automated_count<-data.frame(df) %>% select(site,event) %>% group_by(site,event) %>% summarize(predicted=n())
   zooniverse_count<-data.frame(selected_boxes) %>% select(site,event) %>% group_by(site,event) %>% summarize(Zooniverse=n())
   comparison_table<-automated_count %>% inner_join(zooniverse_count) %>% mutate(event=as.character(event))
   comparison_table<-comparison_table %>% filter(!site=="6thBridge")

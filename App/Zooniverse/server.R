@@ -31,7 +31,7 @@ shinyServer(function(input, output, session) {
   df<-st_read("data/PredictedBirds.shp")
   df$event<-as.Date(df$event,"%m_%d_%Y")
   df$tileset_id<-construct_id(df$site,df$event)
-  df<-df %>% filter(score>0.40)
+  df<-df %>% filter(score>0.35)
   df<-st_transform(df,4326)
   df<-st_centroid(df)
   
