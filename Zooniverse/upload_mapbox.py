@@ -54,7 +54,7 @@ def upload(path):
           mbtiles_filename = "/orange/ewhite/everglades/mapbox/{}.mbtiles".format(basename)
      
           #if not os.path.exists(mbtiles_filename):
-          #subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..24 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
+          subprocess.call("rio mbtiles {} -o {} --zoom-levels 17..24 -j 4 -f PNG --overwrite".format(out_filename, mbtiles_filename), shell=True)
 
           ##Generate tiles
           subprocess.call("mapbox upload bweinstein.{} {}".format(basename,mbtiles_filename), shell=True)
