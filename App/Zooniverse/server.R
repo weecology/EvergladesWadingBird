@@ -41,7 +41,7 @@ shinyServer(function(input, output, session) {
   nestdf$tileset_id<-construct_id(nestdf$Site,nestdf$Date)
   nestdf<-st_centroid(nestdf)
   nestdf<-st_transform(nestdf,4326)
-  selected_indices<-nestdf %>% as.data.frame() %>% group_by(Site, target_ind) %>% 
+  selected_indices<-nestdf %>% as.data.frame() %>% filter(score>0.3) %>% group_by(Site, target_ind) %>% 
     summarize(n=n()) %>% filter(n>2) %>% mutate(site_index=paste(Site,target_ind)) 
   nestdf<-nestdf %>% mutate(site_index=paste(Site,target_ind)) %>% inner_join(selected_indices)
   
