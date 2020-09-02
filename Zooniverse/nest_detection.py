@@ -115,6 +115,8 @@ def find_rgb_path(paths, site, date):
     
     if not len(paths) == 1:
         raise ValueError("A single tile match is needed, found: {}".format(paths))
+    
+    return paths
 
 def crop(rgb_path, geom, extend_box=8):
     src = rasterio.open(rgb_path)
