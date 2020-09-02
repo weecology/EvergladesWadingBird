@@ -156,7 +156,9 @@ def extract_nests(filename, rgb_pool, savedir):
         
         #save output
         dirname =  "{}/{}".format(savedir, name) 
-        os.mkdir(dirname)
+        if not os.path.exists(dirname):
+            os.mkdir(dirname)
+            
         for datename in crops:
             filename = "{}/{}.png".format(dirname, datename)
             crop = crops[datename]

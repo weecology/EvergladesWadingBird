@@ -16,5 +16,7 @@ dependencies:
     - deepforest
     - comet_ml
     - paramiko
+    - opencv-python
+
 
 

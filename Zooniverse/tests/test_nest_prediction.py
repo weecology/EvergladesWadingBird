@@ -34,7 +34,7 @@ def test_detect_nests():
         if group.shape[0] < 3:
             continue
         for index,row in group.iterrows():
-            filename = "output/{}/{}_{}_{}".format(index, row["target_ind"],row["Site"],row["Date"])
+            filename = "output/{}/{}_{}_{}.png".format(index, row["target_ind"],row["Site"],row["Date"])
             os.path.exists(filename)
     
     
