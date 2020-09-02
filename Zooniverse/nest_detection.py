@@ -130,6 +130,8 @@ def crop(rgb_path, geom, extend_box=8):
                              transform=src.transform)
     
     img = src.read(window=window)
+    
+    print("Image shape is {}".format(img.shape))
     return img
     
 def crop_images(df, rgb_pool):
