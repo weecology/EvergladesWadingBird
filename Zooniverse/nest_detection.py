@@ -138,7 +138,6 @@ def crop_images(df, rgb_pool):
         rgb_path = find_rgb_path(rgb_pool, row["Site"],row["Date"])
         datename = "{}_{}_{}".format(index,row["Site"],row["Date"])
         crops[datename] = crop(rgb_path, row["geometry"])
-        crops.append(img)
     
     return crops
 
