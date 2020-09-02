@@ -5,6 +5,8 @@ import rtree
 import rasterio
 import os
 import pandas as pd
+import cv2
+
 
 from rasterio.windows import from_bounds
 
