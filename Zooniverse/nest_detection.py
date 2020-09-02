@@ -162,7 +162,7 @@ def extract_nests(filename, rgb_pool, savedir):
         for datename in crops:
             filename = "{}/{}.png".format(dirname, datename)
             crop = crops[datename]
-            cv2.imwrite(crop, filename)
+            cv2.imwrite(filename, crop)
 
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
