@@ -172,7 +172,9 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
     grouped = gdf.groupby("target_ind")
     if upload:
         everglades_watch = utils.connect()
+        subject_set = create_subject_set(everglades_watch)
         subjects = []
+    
     for name, group in grouped:
         #atleast three detections
         if group.shape[0] < 3:
@@ -198,7 +200,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             subjects.append(subject)
             
     if upload:
-        upload_subject_set(everglades_watch, subjects)
+        subject_set.add(subjects)
             
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
