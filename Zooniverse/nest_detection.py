@@ -170,7 +170,9 @@ def create_subject_set(everglades_watch, name="Nest detections"):
 def extract_nests(filename, rgb_pool, savedir, upload=False):
     gdf = geopandas.read_file(filename)
     grouped = gdf.groupby("target_ind")
-    subjects = []
+    if upload:
+        everglades_watch = utils.connect()
+        subjects = []
     for name, group in grouped:
         #atleast three detections
         if group.shape[0] < 3:
@@ -196,7 +198,6 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             subjects.append(subject)
             
     if upload:
-        everglades_watch = utils.connect()
         upload_subject_set(everglades_watch, subjects)
             
 def find_files():
