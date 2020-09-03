@@ -4,6 +4,7 @@ import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 import pytest
 import nest_detection
+import geopandas
 
 def test_load_files():
     df = nest_detection.load_files("data/predictions/")

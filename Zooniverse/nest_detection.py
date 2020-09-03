@@ -122,20 +122,17 @@ def find_rgb_path(paths, site, date):
 
 def crop(rgb_path, geom, extend_box=8):
     src = rasterio.open(rgb_path)
-    left, bottom, right, top = geom.bounds
-    print("Raster bounds is: {}".format(src.bounds))
-    print("Geom bounds are: {}".format(geom.bounds))
-    
+    left, bottom, right, top = geom.bounds    
     window = from_bounds(left - extend_box,
                              bottom - extend_box,
                              right + extend_box,
                              top + extend_box,
                              transform=src.transform)
     
-    img = src.read(window=window)
-    
-    print("Image shape is {}".format(img.shape))
-    return img
+    numpy_array = src.read(window=window)
+    numpy_array_rgb = np.rollaxis(numpy_array, 0,3)    
+    numpy_array_bgr = numpy_array_rgb[:,:,::-1]    
+    return numpy_array_bgr
     
 def crop_images(df, rgb_pool):
     """Crop images for a series of data"""
