@@ -192,9 +192,9 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
         for datename in crops:
             filename = "{}/{}.png".format(dirname, datename)
             crop = crops[datename]
-            cv2.imwrite(filename, crop)
             if not crop.shape[2] == 3:
-                continue
+                continue            
+            cv2.imwrite(filename, crop)
             filenames.append(filename)
             
         if upload:
