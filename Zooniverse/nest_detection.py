@@ -151,7 +151,7 @@ def create_subject(filenames, everglades_watch):
     subject.links.project = everglades_watch
     for filename in filenames:
         subject.add_location(filename)
-        subject.metadata.update(filename)
+        subject.metadata.update({"filename":filename})
 
     #Trigger upload
     subject.save()    
