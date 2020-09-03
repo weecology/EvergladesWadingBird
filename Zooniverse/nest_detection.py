@@ -7,6 +7,8 @@ import os
 import pandas as pd
 import cv2
 import numpy as np
+from panoptes_client import Panoptes, Project, SubjectSet, Subject
+import utils
 
 from rasterio.windows import from_bounds
 
@@ -145,9 +147,30 @@ def crop_images(df, rgb_pool):
     
     return crops
 
-def extract_nests(filename, rgb_pool, savedir):
+def create_subject(filenames, everglades_watch):
+    subject = Subject()
+
+    subject.links.project = everglades_watch
+    for filename in filenames:
+        subject.add_location(filename)
+
+    #Trigger upload
+    subject.save()    
+    
+    return subject
+    
+def create_subject_set(everglades_watch, name="Nest detections"):
+    subject_set = SubjectSet()
+    subject_set.links.project = everglades_watch
+    subject_set.display_name = name
+    subject_set.save()
+
+    return subject_set
+
+def extract_nests(filename, rgb_pool, savedir, upload=False):
     gdf = geopandas.read_file(filename)
     grouped = gdf.groupby("target_ind")
+    subjects = []
     for name, group in grouped:
         #atleast three detections
         if group.shape[0] < 3:
@@ -157,16 +180,25 @@ def extract_nests(filename, rgb_pool, savedir):
         crops = crop_images(group, rgb_pool=rgb_pool)
         
         #save output
-        
         dirname =  "{}/{}_{}_{}".format(savedir,name,unique(group["Site"]),unique(group["Date"]))
         if not os.path.exists(dirname):
             os.mkdir(dirname)
-            
+        
+        filenames = []
         for datename in crops:
             filename = "{}/{}.png".format(dirname, datename)
             crop = crops[datename]
             cv2.imwrite(filename, crop)
-
+            filenames.append(filename)
+            
+        if upload:
+            subject = create_subject(filenames, everglades_watch)
+            subjects.append(subject)
+            
+    if upload:
+        everglades_watch = utils.connect()
+        upload_subject_set(everglades_watch, subjects)
+            
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
     
