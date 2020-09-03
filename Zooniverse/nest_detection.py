@@ -140,7 +140,7 @@ def crop_images(df, rgb_images):
     for tile in rgb_images:
         #find rgb data
         basename = os.path.splitext(os.path.basename(tile))[0]
-        datename = "{}_{}_{}".format(target_ind, basename)
+        datename = "{}_{}".format(target_ind, basename)
         crops[datename] = crop(tile, geom)
     
     return crops
