@@ -113,16 +113,12 @@ def detect_nests(dirname, savedir):
         
     return filename
 
-def find_rgb_path(paths, site, date):
+def find_rgb_paths(site, paths):
     paths = [x for x in paths if site in x]
-    paths = [x for x in paths if date in x]
     
-    if not len(paths) == 1:
-        raise ValueError("A single tile match is needed, found: {}".format(paths))
-    
-    return paths[0]
+    return paths
 
-def crop(rgb_path, geom, extend_box=8):
+def crop(rgb_path, geom, extend_box=3):
     src = rasterio.open(rgb_path)
     left, bottom, right, top = geom.bounds    
     window = from_bounds(left - extend_box,
@@ -136,14 +132,16 @@ def crop(rgb_path, geom, extend_box=8):
     numpy_array_bgr = numpy_array_rgb[:,:,::-1]    
     return numpy_array_bgr
     
-def crop_images(df, rgb_pool):
+def crop_images(df, rgb_images):
     """Crop images for a series of data"""
     crops = {}
-    for index, row in df.iterrows():
+    geom = df.geometry.iloc[0]
+    target_ind = df.target_ind.unique()[0]
+    for tile in rgb_images:
         #find rgb data
-        rgb_path = find_rgb_path(rgb_pool, row["Site"],row["Date"])
-        datename = "{}_{}_{}".format(index,row["Site"],row["Date"])
-        crops[datename] = crop(rgb_path, row["geometry"])
+        basename = os.path.splitext(os.path.basename(tile))[0]
+        datename = "{}_{}_{}".format(target_ind, basename)
+        crops[datename] = crop(tile, geom)
     
     return crops
 
@@ -181,10 +179,12 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             continue
         
         #Crop with date names as key
-        crops = crop_images(group, rgb_pool=rgb_pool)
+        site = group.Site.unique()[0]
+        rgb_images = find_rgb_paths(site, rgb_pool)
+        crops = crop_images(group, rgb_images=rgb_images)
         
         #save output
-        dirname =  "{}/{}_{}_{}".format(savedir,name,group["Site"].unique(),group["Date"].unique())
+        dirname =  "{}/{}_{}".format(savedir,name,group["Site"].unique()[0])
         if not os.path.exists(dirname):
             os.mkdir(dirname)
         
@@ -196,7 +196,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             filenames.append(filename)
             
         if upload:
-            subject = create_subject(filenames, everglades_watch)
+            subject = create_subject(filenames[0:2], everglades_watch)
             subjects.append(subject)
             
     if upload:
