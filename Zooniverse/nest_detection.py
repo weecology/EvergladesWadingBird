@@ -8,7 +8,6 @@ import pandas as pd
 import cv2
 import numpy as np
 
-
 from rasterio.windows import from_bounds
 
 def load_files(dirname):
