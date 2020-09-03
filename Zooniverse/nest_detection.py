@@ -180,7 +180,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
         crops = crop_images(group, rgb_pool=rgb_pool)
         
         #save output
-        dirname =  "{}/{}_{}_{}".format(savedir,name,unique(group["Site"]),unique(group["Date"]))
+        dirname =  "{}/{}_{}_{}".format(savedir,name,group["Site"].unique(),group["Date"].unique())
         if not os.path.exists(dirname):
             os.mkdir(dirname)
         
