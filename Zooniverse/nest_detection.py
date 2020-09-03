@@ -151,6 +151,7 @@ def create_subject(filenames, everglades_watch):
     subject.links.project = everglades_watch
     for filename in filenames:
         subject.add_location(filename)
+        subject.metadata.update(filename)
 
     #Trigger upload
     subject.save()    
@@ -198,7 +199,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             filenames.append(filename)
             
         if upload:
-            subject = create_subject(filenames, everglades_watch)
+            subject = create_subject(filenames[0:2], everglades_watch)
             subjects.append(subject)
             
     if upload:
