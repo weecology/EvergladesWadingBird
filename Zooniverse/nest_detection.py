@@ -170,10 +170,7 @@ def extract_nests(filename, rgb_pool, savedir):
             cv2.imwrite(filename, crop)
 
 def find_files():
-    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
-    sites = ["Joule","CypressCity","Vacation","JetPort","Jerrod","StartMel","OtherColonies","6th Bridge"]
-    paths = [x for x in paths if any(w in x for w in sites)]
-    paths = [x for x in paths if "projected" in x]
+    paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
     
     return paths
 
