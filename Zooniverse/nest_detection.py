@@ -123,6 +123,9 @@ def find_rgb_path(paths, site, date):
 def crop(rgb_path, geom, extend_box=8):
     src = rasterio.open(rgb_path)
     left, bottom, right, top = geom.bounds
+    print("Raster bounds is: {}".format(src.bounds))
+    print("Geom bounds are: {}".format(geom.bounds))
+    
     window = from_bounds(left - extend_box,
                              bottom - extend_box,
                              right + extend_box,
