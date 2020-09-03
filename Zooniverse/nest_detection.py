@@ -213,4 +213,4 @@ if __name__=="__main__":
     nest_shp = detect_nests("/orange/ewhite/everglades/predictions/", savedir="../App/Zooniverse/data/")
     #Write nests into folders of clips
     rgb_pool = find_files()
-    extract_nests(nest_shp, rgb_pool=rgb_pool, savedir="/orange/ewhite/everglades/nest_crops/")
+    extract_nests(nest_shp, rgb_pool=rgb_pool, savedir="/orange/ewhite/everglades/nest_crops/", upload=True)
