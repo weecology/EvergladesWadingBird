@@ -199,11 +199,11 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             filenames.append(filename)
             
         if upload:
-            subject = create_subject(filenames[0:2], everglades_watch)
+            subject = create_subject(filenames, everglades_watch)
             subjects.append(subject)
             
     if upload:
-        subject_set.add(subjects)
+        subject_set.add(subjects[0:2])
             
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
