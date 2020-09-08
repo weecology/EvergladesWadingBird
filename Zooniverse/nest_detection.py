@@ -137,6 +137,7 @@ def crop_images(df, rgb_images):
     crops = {}
     geom = df.geometry.iloc[0]
     target_ind = df.target_ind.unique()[0]
+   
     for tile in rgb_images:
         #find rgb data
         basename = os.path.splitext(os.path.basename(tile))[0]
@@ -166,6 +167,10 @@ def create_subject_set(everglades_watch, name="Nest detections"):
 
     return subject_set
 
+def write_timestamp(image, text):
+    image = cv2.putText(image,text, (10,image.shape[1]), 1, 2, 2)
+    return image
+    
 def extract_nests(filename, rgb_pool, savedir, upload=False):
     gdf = geopandas.read_file(filename)
     grouped = gdf.groupby("target_ind")
@@ -194,7 +199,11 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             filename = "{}/{}.png".format(dirname, datename)
             crop = crops[datename]
             if not crop.shape[2] == 3:
-                continue            
+                continue      
+            
+            #Write timestamp as watermark
+            crop = write_timestamp(crop, datename)
+            
             cv2.imwrite(filename, crop)
             filenames.append(filename)
             
