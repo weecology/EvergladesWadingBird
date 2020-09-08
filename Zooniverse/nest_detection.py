@@ -168,6 +168,7 @@ def create_subject_set(everglades_watch, name="Nest detections"):
     return subject_set
 
 def write_timestamp(image, text):
+    image = np.array(image)
     image = cv2.putText(image,text, (10,image.shape[1]), 1, 2, 2)
     return image
     
