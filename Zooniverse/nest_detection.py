@@ -169,8 +169,23 @@ def create_subject_set(everglades_watch, name="Nest detections"):
 
 def write_timestamp(image, text):
     text = text.replace("projected","")
-    image = np.asarray(image)
-    image = cv2.putText(image, text, (10,30), 1, 2, 2)
+    
+    # org 
+    org = (50, 50) 
+    
+    # fontScale 
+    fontScale = 1
+    
+    # Blue color in BGR 
+    color = (255, 0, 0) 
+    
+    # Line thickness of 2 px 
+    thickness = 1
+    
+    # Using cv2.putText() method 
+    image = cv2.putText(image, 'OpenCV', org, font,  
+                        fontScale, color, thickness, cv2.LINE_AA) 
+    
     return image
     
 def extract_nests(filename, rgb_pool, savedir, upload=False):
