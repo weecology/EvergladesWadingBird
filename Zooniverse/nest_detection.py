@@ -116,6 +116,7 @@ def detect_nests(dirname, savedir):
 
 def find_rgb_paths(site, paths):
     paths = [x for x in paths if site in x]
+    paths.sort()
     
     return paths
 
