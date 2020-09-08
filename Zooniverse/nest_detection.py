@@ -151,6 +151,7 @@ def create_subject(filenames, everglades_watch):
     subject = Subject()
 
     subject.links.project = everglades_watch
+    print("adding subjects: {}".format(filenames))
     for filename in filenames:
         subject.add_location(filename)
         subject.metadata.update({"filename":filename})
