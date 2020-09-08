@@ -11,6 +11,7 @@ from panoptes_client import Panoptes, Project, SubjectSet, Subject
 import utils
 
 from rasterio.windows import from_bounds
+from PIL import Image, ImageDraw
 
 def load_files(dirname):
     """Load shapefiles and concat into large frame"""
@@ -169,9 +170,10 @@ def create_subject_set(everglades_watch, name="Nest detections"):
 
 def write_timestamp(image, text):
     text = text.replace("_projected","")
-    image = np.array(image[:,::-1]) 
-    image = cv2.putText(image,text, (10,image.shape[1]), 1, 2, 2)
-    return image
+    image = Image.fromarray(image)
+    draw = ImageDraw.Draw(image)  
+    draw.text((10, 10), text)  
+    return np.array(image)
     
 def extract_nests(filename, rgb_pool, savedir, upload=False):
     gdf = geopandas.read_file(filename)
