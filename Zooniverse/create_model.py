@@ -37,9 +37,13 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     df = df.rename(columns={"minx":"xmin","miny":"ymin","maxx":"xmax","maxy":"ymax"})
     
     #cut off on borders
-    with rasterio.open(rgb_path) as src:
-        height, width = src.shape
-        
+    try:
+        with rasterio.open(rgb_path) as src:
+            height, width = src.shape
+    except:
+        print("Image {} failed to open".format(rgb_path))
+        return None
+    
     df.ymax[df.ymax > height] = height
     df.xmax[df.xmax > width] = width
     df.ymin[df.ymin < 0] = 0
@@ -86,6 +90,9 @@ def format_shapefiles(shp_dir,image_dir=None):
     for shapefile in shapefiles:
         rgb_path = find_rgb_path(shapefile, image_dir)
         result = shapefile_to_annotations(shapefile, rgb_path)
+        #skip invalid files
+        if result is None:
+            continue
         annotations.append(result)
     annotations = pd.concat(annotations)
     
