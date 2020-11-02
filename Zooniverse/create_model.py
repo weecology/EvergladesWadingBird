@@ -213,6 +213,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     #Add some empty images to train and test
     empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
+    empty_frames_df.sample(n=200)
     
     #add some blank annotations
     empty_frames_df["xmin"] = pd.Series(dtype="Int64")
@@ -223,6 +224,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     empty_train, empty_test = split_test_train(empty_frames_df)
     
+    #limit the number of empty
     train = pd.concat([train, empty_train])
     test = pd.concat([test, empty_test])
     
