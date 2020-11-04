@@ -2,8 +2,8 @@
 import glob
 import geopandas
 import rtree
-import random
 import rasterio
+import random
 import os
 import pandas as pd
 import cv2
@@ -219,7 +219,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             subjects.append(subject)
             
     if upload:
-	random.shuffle(subjects)
+        random.shuffle(subjects)
         subject_set.add(subjects[0:20])
             
 def find_files():
