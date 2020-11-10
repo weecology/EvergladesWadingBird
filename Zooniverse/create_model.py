@@ -103,8 +103,19 @@ def split_test_train(annotations):
     """Split annotation in train and test by image"""
     #Currently want to mantain the random split
     np.random.seed(0)
+    
+    #add to train_names until reach target split threshold
     image_names = annotations.image_path.unique()
-    train_names = np.random.choice(image_names, int(len(image_names) * 0.95))
+    target = int(annotations.shape[0] * 0.9)
+    counter = 0
+    
+    for x in image_names:
+        if target > counter:
+            train_names.append(x)
+            counter+=annotations[annotations.image_path == x].shape[0]
+        else:
+            break
+        
     train = annotations[annotations.image_path.isin(train_names)]
     test = annotations[~(annotations.image_path.isin(train_names))]
     
