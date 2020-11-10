@@ -108,7 +108,7 @@ def split_test_train(annotations):
     image_names = annotations.image_path.unique()
     target = int(annotations.shape[0] * 0.9)
     counter = 0
-    
+    train_names = []
     for x in image_names:
         if target > counter:
             train_names.append(x)
