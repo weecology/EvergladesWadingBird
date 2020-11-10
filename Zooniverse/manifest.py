@@ -186,7 +186,7 @@ if __name__ == "__main__":
     everglades_watch = utils.connect()
 
     #set model
-    model = "/orange/ewhite/everglades/Zooniverse/predictions/20200723_224610.h5"
+    model = "/orange/ewhite/everglades/Zooniverse/predictions/20201110_161912.h5"
 
     #Currently debugging with just one site
     paths = [

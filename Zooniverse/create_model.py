@@ -197,6 +197,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
     model.config["epochs"] = 10
+    
     model.train(train_path, comet_experiment=comet_experiment)
     
     #Create a positive bird recall curve
@@ -212,6 +213,21 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
         empty_images = empty_frame_df.image_path.unique()    
         predict_empty_frames(model, empty_images, comet_experiment)
     
+    #evaluaate at lower iou_thresholds
+    mAPs = []
+    threshold = []
+    for x in np.arange(0.1,0.5,.05):
+        mAP = model.evaluate_generator(annotations, 
+                                iou_threshold=x, comet_experiment=comet_experiment)
+        threshold.append(x)
+        mAPs.append(mAP)
+    
+    mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
+    recall_plot = mAPdf.plot.scatter("mAP","IoU_Threshold")
+    recall_plot.set_xlabel("IoU Threshold")
+    recall_plot.set_ylabel("mAP")
+    comet_experiment.log_figure(recall_plot)
+        
     return model
     
 def run(shp_dir, empty_frames_path=None, save_dir="."):
