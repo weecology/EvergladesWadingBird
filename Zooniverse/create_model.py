@@ -104,7 +104,7 @@ def split_test_train(annotations):
     #Currently want to mantain the random split
     np.random.seed(0)
     image_names = annotations.image_path.unique()
-    train_names = np.random.choice(image_names, int(len(image_names) * 0.9))
+    train_names = np.random.choice(image_names, int(len(image_names) * 0.95))
     train = annotations[annotations.image_path.isin(train_names)]
     test = annotations[~(annotations.image_path.isin(train_names))]
     
@@ -185,6 +185,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
+    model.config["epochs"] = 10
     model.train(train_path, comet_experiment=comet_experiment)
     
     #Create a positive bird recall curve
