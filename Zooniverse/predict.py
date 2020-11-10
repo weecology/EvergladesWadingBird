@@ -136,7 +136,7 @@ def summarize(paths):
     shapefiles = [load_shapefile(x) for x in paths]
     summary = geopandas.GeoDataFrame(pd.concat(shapefiles,ignore_index=True),crs=shapefiles[0].crs)
     summary["label"] = "Bird"
-    summary = summary[summary.score > 0.3]
+    #summary = summary[summary.score > 0.3]
     
     return summary
     
