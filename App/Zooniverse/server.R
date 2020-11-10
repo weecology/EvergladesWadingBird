@@ -31,7 +31,7 @@ shinyServer(function(input, output, session) {
   df<-st_read("data/PredictedBirds.shp")
   df$event<-as.Date(df$event,"%m_%d_%Y")
   df$tileset_id<-construct_id(df$site,df$event)
-  df<-df %>% filter(score>0.30)
+  df<-df %>% filter(score>0.1)
   df<-st_transform(df,4326)
   df<-st_centroid(df)
   
@@ -41,7 +41,7 @@ shinyServer(function(input, output, session) {
   nestdf$tileset_id<-construct_id(nestdf$Site,nestdf$Date)
   nestdf<-st_centroid(nestdf)
   nestdf<-st_transform(nestdf,4326)
-  selected_indices<-nestdf %>% as.data.frame() %>% filter(score>0.3) %>% group_by(Site, target_ind) %>% 
+  selected_indices<-nestdf %>% as.data.frame() %>% filter(score>0.2) %>% group_by(Site, target_ind) %>% 
     summarize(n=n()) %>% filter(n>2) %>% mutate(site_index=paste(Site,target_ind)) 
   nestdf<-nestdf %>% mutate(site_index=paste(Site,target_ind)) %>% inner_join(selected_indices)
   
@@ -112,7 +112,7 @@ shinyServer(function(input, output, session) {
     output$colony_map<-renderLeaflet(plot_annotations(selected_boxes =colony_filter(),MAPBOX_ACCESS_TOKEN))
   })
   
-  ##Prediction page
+  ##Prediction page##
   prediction_filter<-reactive({
     #filter based on selection
     to_plot <- df %>% filter(tileset_id==input$prediction_tileset) 

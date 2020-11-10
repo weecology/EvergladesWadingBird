@@ -211,7 +211,12 @@ def project_point(df):
     geoms = [Point(x,y) for x,y in zip(df.utm_x, df.utm_y)]
     gdf = gpd.GeoDataFrame(df, geometry=geoms)
     
-    #set CRS
+    #set CRS, this is a bit complicated as we originally started uploading in epsg 32617 (UTM) and changed for mapbox to 3857 web mercator. We can infer from first digit, but its not ideal.
+    utm17 = gdf[gdf.utm_x.astype('str').str.startswith("5")]
+    web_mercator = gdf[gdf.utm_x.astype('str').str.startswith("-8")]
+    web_mercator.crs = 'epsg:3857'
+    reprojected_utm_points = web_mercator.to_crs(epsg=32617)
+    gdf = pd.concat([utm17,reprojected_utm_points], ignore_index=True)
     gdf.crs = 'epsg:32617'
     
     return gdf

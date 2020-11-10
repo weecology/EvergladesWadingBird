@@ -6,6 +6,7 @@ library(sf)
 library(gridExtra)
 library(stringr)
 library(htmltools)
+library(tidyr)
 
 #Site map
 create_map<-function(colonies){
@@ -45,7 +46,9 @@ filter_annotations<-function(raw_data){
   
   selected_boxes$event<-as.Date(selected_boxes$event,"%m_%d_%Y")
   selected_boxes$tileset_id<-construct_id(selected_boxes$site,selected_boxes$event)
-    
+  
+  #get unique boxes among observers
+  
   return(selected_boxes)
 }
 
@@ -113,9 +116,8 @@ time_predictions<-function(df){
 
 compare_counts<-function(df, selected_boxes){
   automated_count<-data.frame(df) %>% select(site,event) %>% group_by(site,event) %>% summarize(predicted=n())
-  zooniverse_count<-data.frame(selected_boxes) %>% select(site,event) %>% group_by(site,event) %>% summarize(Zooniverse=n())
-  comparison_table<-automated_count %>% inner_join(zooniverse_count) %>% mutate(event=as.character(event))
-  comparison_table<-comparison_table %>% filter(!site=="6thBridge")
+  zooniverse_count<-data.frame(selected_boxes) %>% select(user_name,site,event) %>% group_by(user_name,site,event) %>% summarize(Zooniverse=n())
+  comparison_table<-automated_count %>% inner_join(zooniverse_count) %>% mutate(event=as.character(event)) %>% pivot_wider(names_from = user_name,values_from = Zooniverse)
   return(comparison_table)
 }
 
