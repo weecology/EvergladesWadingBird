@@ -241,7 +241,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     #Add some empty images to train and test
     empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
-    empty_frames_df.sample(n=200)
+    empty_frames_df.sample(n=10)
     
     #add some blank annotations
     empty_frames_df["xmin"] = pd.Series(dtype="Int64")
