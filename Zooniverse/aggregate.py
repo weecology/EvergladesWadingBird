@@ -216,6 +216,8 @@ def project_point(df):
     web_mercator = gdf[gdf.utm_x.astype('str').str.startswith("-8")]
     web_mercator.crs = 'epsg:3857'
     reprojected_utm_points = web_mercator.to_crs(epsg=32617)
+    reprojected_utm_points["utm_x"] = reprojected_utm_points.geometry.apply(lambda x: x.coords[0][0])
+    reprojected_utm_points["utm_y"] = reprojected_utm_points.geometry.apply(lambda x: x.coords[0][1])
     gdf = pd.concat([utm17,reprojected_utm_points], ignore_index=True)
     gdf.crs = 'epsg:32617'
     
