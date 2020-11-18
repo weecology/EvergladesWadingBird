@@ -190,11 +190,10 @@ if __name__ == "__main__":
 
     #Currently debugging with just one site
     paths = [
-        "/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_03_10_2020.tif",                
-        "/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_03_19_2020.tif",        
-        "/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_03_31_2020.tif",        
-        "/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_05_01_2020.tif",
-        "/orange/ewhite/everglades/WadingBirds2020/Jerrod/Jerrod_05_05_2020.tif"                
+        "/orange/ewhite/everglades/WadingBirds2020/Jetport/JetportSouth_05_28_2020.tif",                
+        "/orange/ewhite/everglades/WadingBirds2020/Jetport/JetportSouth_04_28_2020.tif",                
+        "/orange/ewhite/everglades/WadingBirds2020/Jetport/JetportSouth_04_07_2020.tif" ,               
+        "/orange/ewhite/everglades/WadingBirds2020/Jetport/JetportSouth_03_30_2020.tif" ,
         ]
 
     for path in paths[1:]:
