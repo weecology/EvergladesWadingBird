@@ -189,11 +189,9 @@ if __name__ == "__main__":
     model = "/orange/ewhite/everglades/Zooniverse/predictions/20201110_161912.h5"
 
     #Currently debugging with just one site
-    paths = [
-        "/orange/ewhite/everglades/WadingBirds2020/6thBridge/6thBridge_03_25_2020.tif"
-        ]
+    paths = ["/orange/ewhite/everglades/WadingBirds2020/6thBridge/6thBridge_03_25_2020.tif"]
 
-    for path in paths[1:]:
+    for path in paths:
         print(path)
         saved_file = main(path, everglades_watch, model)
 
