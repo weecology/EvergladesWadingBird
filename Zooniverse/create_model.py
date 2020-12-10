@@ -196,7 +196,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
-    model.config["epochs"] = 10
+    model.config["epochs"] = 9
     
     model.train(train_path, comet_experiment=comet_experiment)
     
@@ -217,7 +217,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     mAPs = []
     threshold = []
     for x in np.arange(0.1,0.5,.05):
-        mAP = model.evaluate_generator(annotations, 
+        mAP = model.evaluate_generator(test_path, 
                                 iou_threshold=x, comet_experiment=comet_experiment)
         threshold.append(x)
         mAPs.append(mAP)
