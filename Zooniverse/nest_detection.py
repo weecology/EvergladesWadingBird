@@ -220,7 +220,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             
     if upload:
         random.shuffle(subjects)
-        subject_set.add(subjects[0:20])
+        subject_set.add(subjects)
             
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
