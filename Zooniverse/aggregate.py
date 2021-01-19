@@ -233,35 +233,43 @@ def spatial_join(gdf, IoU_threshold = 0.2):
     #Turn buffered points into boxes
     gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(1).bounds.values]
     
-    filtered_boxes = [ ]
-    for index, row in gdf.iterrows():
-        geom = row["bbox"]
-        #Spatial clip to window using spatial index for faster querying
-        possible_matches_index = list(spatial_index.intersection(geom.bounds))
-        possible_matches = gdf.iloc[possible_matches_index]
-        
-        boxes_to_merge = { }
-        labels = [ ]
-        
-        #Add target box to consider
-        boxes_to_merge[index] = geom
-        labels.append(row["species"])
-        
-        #Find intersection over union
-        for match_index, match_row in possible_matches.iterrows():
-            match_geom = match_row["bbox"]
-            IoU = calculate_IoU(geom, match_geom)
+    #for each overlapping image
+    for name, group in gdf.groupby("subject_ids"):
+        if len(group.classification_id.unique()) == 1:
+            group["selected_index"] = group.index.values
+        else:
+            for index, row in group.iterrows():
+                geom = row["bbox"]
+                #Spatial clip to window using spatial index for faster querying
+                possible_matches_index = list(spatial_index.intersection(geom.bounds))
+                possible_matches = gdf.iloc[possible_matches_index]
+                
+                #If just matches itself, skip indexing
+                if len(possible_matches) == 1:
+                    gdf.loc[index, "selected_index"] = index
+                else:
+                    boxes_to_merge = { }
+                    labels = []
+                    
+                    #Add target box to consider
+                    boxes_to_merge[index] = geom
+                    labels.append(row["species"])
+                    
+                    #Find intersection over union
+                    for match_index, match_row in possible_matches.iterrows():
+                        match_geom = match_row["bbox"]
+                        IoU = calculate_IoU(geom, match_geom)
+                        
+                        if IoU > IoU_threshold:
+                            boxes_to_merge[match_index] = match_geom
+                            labels.append(match_row["species"])
+                    
+                    #Choose final box and labels
+                    selected_key = choose_box(boxes_to_merge)
+                    gdf.loc[index, "selected_index"] = selected_key
             
-            if IoU > IoU_threshold:
-                boxes_to_merge[match_index] = match_geom
-                labels.append(match_row["species"])
-        
-        #Choose final box and labels
-        selected_key = choose_box(boxes_to_merge)
-        gdf.loc[index, "selected_index"] = selected_key
-    
-    #remove duplicates
-    return gdf
+        #remove duplicates
+        return gdf
         
 def choose_box(boxes_to_merge):
     """Choose the smallest box of a set to mantain"""

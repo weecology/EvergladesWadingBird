@@ -104,6 +104,9 @@ def split_test_train(annotations):
     #Currently want to mantain the random split
     np.random.seed(0)
     
+    #unique annotations for the bird detector
+    annotations = annotations.groupby(selected_i).apply(lambda x: x.head(1))
+    
     #add to train_names until reach target split threshold
     image_names = annotations.image_path.unique()
     target = int(annotations.shape[0] * 0.9)
