@@ -59,7 +59,6 @@ def test_spatial_join(csv_data):
     project_df = aggregate.project_point(df)
     project_df = project_df[df.species.notna()] 
     gdf = aggregate.spatial_join(project_df)
-    assert gdf["selected_index"].iloc[0]
     
     #assert the shape size is mantained
     print("{} non-empty frames".format(len(gdf.classification_id.unique())))
@@ -67,7 +66,7 @@ def test_spatial_join(csv_data):
 
 @pytest.mark.parametrize("download", [True, False])
 def test_run(download):
-    aggregate.run("data/everglades-watch-classifications.csv", min_version=min_version, download=download, generate=False, savedir="output",debug=False)
+    aggregate.run("data/everglades-watch-classifications.csv", min_version=min_version, download=download, generate=False, savedir="output",debug=True)
     assert os.path.exists("output/everglades-watch-classifications.shp")
     assert os.path.exists("output/parsed_annotations.csv")
     
