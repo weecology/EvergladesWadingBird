@@ -3,6 +3,7 @@ import sys
 import os
 import pytest
 import pandas as pd
+import geopandas as gpd
 sys.path.append(os.path.dirname(os.getcwd()))
 
 import aggregate
@@ -63,6 +64,8 @@ def test_spatial_join(csv_data):
     #assert the shape size is mantained
     print("{} non-empty frames".format(len(gdf.classification_id.unique())))
     assert len(gdf.classification_id.unique()) < debug_data.shape[0]
+    
+    assert "selected_index" in gdf.columns 
 
 @pytest.mark.parametrize("download", [True, False])
 def test_run(download):
@@ -70,7 +73,8 @@ def test_run(download):
     assert os.path.exists("output/everglades-watch-classifications.shp")
     assert os.path.exists("output/parsed_annotations.csv")
     
-    df = pd.read_csv("output/parsed_annotations.csv")
+    df = gpd.read_file("output/everglades-watch-classifications.shp")
+    assert 'selected_i' in df.columns
 
 @pytest.mark.parametrize("generate", [False])
 def test_download_data(generate):

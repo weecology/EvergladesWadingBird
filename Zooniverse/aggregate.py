@@ -236,7 +236,7 @@ def spatial_join(gdf, IoU_threshold = 0.2):
     #for each overlapping image
     for name, group in gdf.groupby("subject_ids"):
         if len(group.classification_id.unique()) == 1:
-            group["selected_index"] = group.index.values
+            gdf.loc[group.index.values,"selected_index"] = group.index.values
         else:
             for index, row in group.iterrows():
                 geom = row["bbox"]
@@ -268,8 +268,8 @@ def spatial_join(gdf, IoU_threshold = 0.2):
                     selected_key = choose_box(boxes_to_merge)
                     gdf.loc[index, "selected_index"] = selected_key
             
-        #remove duplicates
-        return gdf
+    #remove duplicates
+    return gdf
         
 def choose_box(boxes_to_merge):
     """Choose the smallest box of a set to mantain"""
@@ -302,7 +302,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     
     #if debug for testing, just sample 50 rows    
     if debug:
-        df = df.sample(n=50)        
+        df = df.sample(n=20)        
     
     #Parse JSON and filter
     df = parse_birds(df)

@@ -11,28 +11,23 @@ import pytest
 import rasterio
 import geopandas as gp
 import pandas as pd
+import glob
 
 #Setup method
 @pytest.fixture()
-def extract_images():
-    #create an output image folder is needed
-    if not os.path.exists("output/images/"):
-        os.mkdir("output/images/")
+def extract_images(tmpdir):
     aggregate.run("data/everglades-watch-classifications.csv", min_version=272.359, download=False, generate=False, savedir="output",debug=True)
-    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir="output/images/")
+    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir=tmpdir)
 
 @pytest.fixture()
-def shp_dir():
-    return "output/images"
-
-@pytest.fixture()
-def annotations(extract_images, shp_dir):
-    annotations = create_model.format_shapefiles(shp_dir=shp_dir)    
+def annotations(extract_images, tmpdir):
+    annotations = create_model.format_shapefiles(shp_dir=tmpdir)    
     return annotations
 
-def test_shapefile_to_annotations(extract_images):
-    rgb_path="output/images/43845552.png"
-    df = create_model.shapefile_to_annotations(shapefile="output/images/43845552.shp", rgb_path=rgb_path)
+def test_shapefile_to_annotations(extract_images, tmpdir):
+    rgb_path = glob.glob("{}/*.png".format(tmpdir))[0]
+    shp = "{}/{}.shp".format(tmpdir, os.path.splitext(os.path.basename(rgb_path))[0])
+    df = create_model.shapefile_to_annotations(shapefile=shp, rgb_path=rgb_path)
     assert all(df.columns == ["image_path","xmin","ymin","xmax","ymax","label"])
     
     #assert that the coordinates are in the image system
@@ -43,7 +38,7 @@ def test_shapefile_to_annotations(extract_images):
     assert (df.iloc[0].ymin >= 0) & (df.iloc[0].ymax <= height)
     
     #Assert total number of records
-    gdf = gp.read_file("output/images/43845552.shp")
+    gdf = gp.read_file(shp)
     assert gdf.shape[0] == df.shape[0]
     
     #Assert no duplicates
@@ -64,8 +59,8 @@ def test_plot_recall_curve():
     
     ax1 = create_model.plot_recall_curve(precision_curve)
 
-def test_format_shapefiles(extract_images, shp_dir):
-    results = create_model.format_shapefiles(shp_dir=shp_dir)
+def test_format_shapefiles(extract_images, tmpdir):
+    results = create_model.format_shapefiles(shp_dir=tmpdir)
     assert all(results.columns == ["image_path","xmin","ymin","xmax","ymax","label"])
     assert results.xmin.dtype == int
     
