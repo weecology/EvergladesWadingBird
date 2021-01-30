@@ -79,7 +79,7 @@ def run(classification_shp, image_data ,savedir="."):
     """
     #Read in species data
     df = gp.read_file(classification_shp)
-    df = df[["subject_id","x","y","species","behavior","geometry"]]
+    df = df[["subject_id","x","y","species","behavior","geometry","selected_i"]]
     df.subject_id = df.subject_id.astype(int)
     
     #Read in image location data
@@ -88,7 +88,7 @@ def run(classification_shp, image_data ,savedir="."):
     
     #drop duplicates
     image_df = image_df.drop_duplicates()
-    
+    df.subject_id = df.subject_id.astype("int")
     joined_df = df.merge(image_df,on="subject_id")
     
     #assert single matches
