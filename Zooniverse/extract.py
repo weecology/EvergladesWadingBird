@@ -8,6 +8,7 @@ import rasterio
 import requests
 import json
 from shapely.geometry import box
+from PIL import Image
 
 #source keys outside of git control
 import everglade_tokens
@@ -70,7 +71,9 @@ def extract_empty(parsed_data, image_data,save_dir="."):
         #confirm file can be opened 
         try:
             a = rasterio.open(name)
-        except:
+            b = Image.open(name).convert('RGB')
+        except Exception as e:
+            print("{} failed with {}".format(name, e))
             continue
         
         empty_paths.append(name)
@@ -122,7 +125,9 @@ def run(classification_shp, image_data ,savedir="."):
         #Confirm file can be opened
         try:
             a = rasterio.open(name)
-        except:
+            b = Image.open(name).convert('RGB')
+        except Exception as e:
+            print("{} failed with {}".format(name, e))
             continue
         
         group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]

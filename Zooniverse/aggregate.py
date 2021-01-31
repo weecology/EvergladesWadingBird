@@ -331,4 +331,4 @@ if __name__ == "__main__":
     #Download from Zooniverse and parse
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=279.365)
+       generate=False, min_version=300)
