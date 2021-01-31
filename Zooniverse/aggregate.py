@@ -286,7 +286,7 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=272.359, debug=False):
+def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=300, debug=False):
     
     #Authenticate
     if download:
