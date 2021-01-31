@@ -4,6 +4,7 @@ import paramiko
 import os
 import geopandas as gp
 import everglade_tokens
+import rasterio
 import requests
 import json
 from shapely.geometry import box
@@ -64,7 +65,14 @@ def extract_empty(parsed_data, image_data,save_dir="."):
         #Download image
         basename = "{}".format(group.subject_id.unique()[0])
         name = "{}.png".format(os.path.join(os.path.abspath(save_dir),basename))
-        download_from_zooniverse(name=name, url=download_url)    
+        download_from_zooniverse(name=name, url=download_url)   
+        
+        #confirm file can be opened 
+        try:
+            a = rasterio.open("")
+        except:
+            continue
+        
         empty_paths.append(name)
         
     #Write dict in retinanet format
@@ -110,6 +118,13 @@ def run(classification_shp, image_data ,savedir="."):
         basename = "{}".format(group.subject_id.unique()[0])
         name = "{}.png".format(os.path.join(savedir,basename))
         download_from_zooniverse(name=name, url=download_url)
+        
+        #Confirm file can be opened
+        try:
+            a = rasterio.open("")
+        except:
+            continue
+        
         group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]
         
         #Create a shapefile

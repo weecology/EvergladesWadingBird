@@ -300,7 +300,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         #Read file from zooniverse download
         df = load_classifications(classifications_file, min_version=min_version)        
     
-    #if debug for testing, just sample 50 rows    
+    #if debug for testing, just sample 20 rows    
     if debug:
         df = df.sample(n=20)        
     
