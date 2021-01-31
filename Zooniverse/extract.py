@@ -69,7 +69,7 @@ def extract_empty(parsed_data, image_data,save_dir="."):
         
         #confirm file can be opened 
         try:
-            a = rasterio.open("")
+            a = rasterio.open(name)
         except:
             continue
         
@@ -121,7 +121,7 @@ def run(classification_shp, image_data ,savedir="."):
         
         #Confirm file can be opened
         try:
-            a = rasterio.open("")
+            a = rasterio.open(name)
         except:
             continue
         
