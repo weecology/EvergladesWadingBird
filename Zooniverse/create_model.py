@@ -24,6 +24,9 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     #Read shapefile
     gdf = gp.read_file(shapefile)
     
+    #Drop any rounding errors duplicated
+    gdf = gdf.groupby("selected_i").apply(lambda x: x.head(1))
+    
     #define in image coordinates and buffer to create a box
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.x.astype(float), gdf.y.astype(float))]
     gdf["geometry"] = [box(int(left), int(bottom), int(right), int(top)) for left, bottom, right, top in gdf.geometry.buffer(25).bounds.values]
@@ -62,8 +65,7 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     
     #select columns
     result = df[["image_path","xmin","ymin","xmax","ymax","label"]]
-    
-    #Drop any rounding errors duplicated
+     
     result = result.drop_duplicates()
     
     return result
