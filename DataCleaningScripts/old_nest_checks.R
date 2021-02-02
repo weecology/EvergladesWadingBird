@@ -15,6 +15,7 @@ old_data <- dplyr::bind_rows(new94, new02, new03)
 old_data$chicks[which(old_data$chicks==33)] = 3 
 old_data$chicks[which(old_data$chicks=="*")] = 0 
 
+### 2004 and 2005 are single sheets
 ### 2004 data
 tab_names04 <- readxl::excel_sheets(path = files[1])
 new04 <- readxl::read_excel(path = files[1], sheet = tab_names04[2], col_names = TRUE)[,1:103] %>%
@@ -86,4 +87,42 @@ old_data <- old_data %>%
                 species = replace(species, species=="ge/nh", "unkn"),
                 species = replace(species, species=="ge/nh?", "unkn"))
 
-write.csv(old_data, "Nesting/nest_checks.csv", row.names = FALSE, na = "")
+## Add weird 2006 and 2009 data
+new06 <- extra_nest_data(files[11], years[11])
+
+new09 <- extra_nest_data(files[12], years[12])
+
+old_data <- old_data %>%
+  dplyr::mutate(date = as.Date(date),
+                eggs = as.numeric(eggs),
+                chicks = as.numeric(chicks)) %>%
+  dplyr::bind_rows(new06, new09)
+
+### 2013 - 2019
+
+new13 <- clean_nest_data(files[4], years[4])
+
+new14 <- clean_nest_data(files[5], years[5])
+
+new15 <- clean_nest_data(files[6], years[6])
+
+new16 <- clean_nest_data(files[7], years[7])
+
+new17 <- clean_nest_data(files[8], years[8])
+
+new18 <- clean_nest_data(files[2], years[2])
+
+new19 <- clean_nest_data(files[3], years[3])
+
+
+write.csv(old_data, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = FALSE)
+
+species[17, 1:4]=c("smwt", "small white unidentified bird", "unknown", "no")
+
+species <- species %>% dplyr::arrange(species)
+write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "")
+
+colonies[62, 1]="an2015"
+
+colonies <- colonies %>% dplyr::arrange(wca,colony)
+write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = FALSE)
