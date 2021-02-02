@@ -115,7 +115,7 @@ new18 <- clean_nest_data(files[2], years[2])
 new19 <- clean_nest_data(files[3], years[3])
 
 
-write.csv(old_data, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = FALSE)
+write.csv(old_data, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = TRUE)
 
 species[17, 1:4]=c("smwt", "small white unidentified bird", "unknown", "no")
 
