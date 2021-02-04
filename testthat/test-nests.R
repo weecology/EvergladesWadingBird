@@ -26,8 +26,8 @@ test_that("Dates valid", {
 
 test_that("Egg and chick counts valid", {
   
-  expect_true(all(nests$eggs %in% c(0,1,2,3,4,5,6, NA)))
-  expect_true(all(nests$chicks %in% c(0,1,2,3,4,5,6, NA)))
+  expect_true(all(nests$eggs %in% c(0,1,2,3,4,5,6,7, NA)))
+  expect_true(all(nests$chicks %in% c(0,1,2,3,4,5,6,7, NA)))
 })
 
 # test_that("no duplicated rows", {
