@@ -206,7 +206,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     model.config["save_path"] = save_dir
     model.config["epochs"] = 9
     
-    model.train(train_path, comet_experiment=comet_experiment)
+    model.train(train_path, comet_experiment=None)
     
     #Create a positive bird recall curve
     test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
