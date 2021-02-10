@@ -163,7 +163,7 @@ def create_subject(filenames, everglades_watch):
     
     return subject
     
-def create_subject_set(everglades_watch, name="Nest detections"):
+def create_subject_set(everglades_watch, name="Nest detections 2.0"):
     subject_set = SubjectSet()
     subject_set.links.project = everglades_watch
     subject_set.display_name = name
@@ -224,6 +224,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
+    paths = [x for x in paths if not "Cypress" in x]
     
     return paths
 
