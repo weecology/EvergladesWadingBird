@@ -19,7 +19,7 @@ shinyServer(function(input, output, session) {
   #Load data
   raw_data <- load_classifications()
   selected_boxes<-filter_annotations(raw_data)
-  colonies<-st_read("data/colonies.csv", options=c("X_POSSIBLE_NAMES=longitude","Y_POSSIBLE_NAMES=latitude"))
+  scolonies<-st_read("data/colonies.csv", options=c("X_POSSIBLE_NAMES=longitude","Y_POSSIBLE_NAMES=latitude"))
   
   output$zooniverse_anotation<-renderPlot(zooniverse_complete())
 

@@ -142,7 +142,7 @@ def summarize(paths):
     
 if __name__ == "__main__":
     client = start(gpus=10,mem_size="30GB")    
-    model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20201210_024559.h5"
+    model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
     
     paths = find_files()
     print("Found {} files".format(len(paths)))
