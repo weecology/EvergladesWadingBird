@@ -127,6 +127,12 @@ def split_test_train(annotations):
     train = annotations[annotations.image_path.isin(train_names)]
     test = annotations[~(annotations.image_path.isin(train_names))]
     
+    #resample train for rare species
+    train_images = train[train.label.isin(["Great Blue Heron","Wood Stork","Snowy Egret"])]
+    rare_train_images = train_images.image_path.unique()
+    duplicated_frames = train[train.image_path.isin(rare_train_images)] 
+    train = pd.concat([train,duplicated_frames,duplicated_frames,duplicated_frames,duplicated_frames])
+    
     return train, test
     
 def is_empty(precision_curve, threshold):
@@ -204,7 +210,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
-    model.config["epochs"] = 9
+    model.config["epochs"] = 14
     
     model.train(train_path, comet_experiment=None)
     
@@ -231,7 +237,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
         mAPs.append(mAP)
     
     mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
-    recall_plot = mAPdf.plot.scatter("mAP","IoU_Threshold")
+    recall_plot = mAPdf.plot.scatter("IoU_Threshold","mAP")
     recall_plot.set_xlabel("IoU Threshold")
     recall_plot.set_ylabel("mAP")
     comet_experiment.log_figure(recall_plot)
