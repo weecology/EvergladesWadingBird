@@ -210,10 +210,10 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
-    model.config["epochs"] = 3
+    model.config["epochs"] = 2
     
     model.train(train_path, comet_experiment=None)
-    model.predict_generator(test_path, return_plot=True)
+    #model.predict_generator(test_path, return_plot=True)
     model.evaluate_generator(test_path)
     
     #Create a positive bird recall curve
