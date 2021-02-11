@@ -291,9 +291,9 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     comet_experiment.log_parameter("timestamp",timestamp)
     
-    train_path = "{}/train.csv".format(save_dir)
-    test_path = "{}/test.csv".format(save_dir)
-    empty_test_path = "{}/empty_test.csv".format(save_dir)
+    train_path = "{}/train.csv".format(shp_dir)
+    test_path = "{}/test.csv".format(shp_dir)
+    empty_test_path = "{}/empty_test.csv".format(shp_dir)
     
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
