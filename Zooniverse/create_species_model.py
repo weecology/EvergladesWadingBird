@@ -286,14 +286,14 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     #write paths to headerless files alongside data, add a seperate test empty file
     #Save
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    savedir = "{}/{}".format(save_dir,timestamp)
-    os.mkdir(savedir)
+    model_savedir = "{}/{}".format(save_dir,timestamp)
+    os.mkdir(model_savedir)
     
     comet_experiment.log_parameter("timestamp",timestamp)
     
-    train_path = "{}/train.csv".format(savedir)
-    test_path = "{}/test.csv".format(savedir)
-    empty_test_path = "{}/empty_test.csv".format(savedir)
+    train_path = "{}/train.csv".format(save_dir)
+    test_path = "{}/test.csv".format(save_dir)
+    empty_test_path = "{}/empty_test.csv".format(save_dir)
     
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
@@ -301,7 +301,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
     
-    model.prediction_model.save("{}/species_model.h5".format(save_dir))
+    model.prediction_model.save("{}/species_model.h5".format(model_savedir))
     
 if __name__ == "__main__":
     run(
