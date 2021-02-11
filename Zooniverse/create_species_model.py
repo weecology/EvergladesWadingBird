@@ -210,37 +210,39 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
-    model.config["epochs"] = 14
+    model.config["epochs"] = 3
     
     model.train(train_path, comet_experiment=None)
+    model.predict_generator(test_path, return_plot=True)
+    model.evaluate_generator(test_path)
     
     #Create a positive bird recall curve
-    test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
-    dirname = os.path.dirname(test_path)
-    test_frame_df["image_path"] = test_frame_df["image_name"].apply(lambda x: os.path.join(dirname,x))
-    empty_images = test_frame_df.image_path.unique()    
-    predict_empty_frames(model, empty_images, comet_experiment, invert=True)
+    #test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
+    #dirname = os.path.dirname(test_path)
+    #test_frame_df["image_path"] = test_frame_df["image_name"].apply(lambda x: os.path.join(dirname,x))
+    #empty_images = test_frame_df.image_path.unique()    
+    #predict_empty_frames(model, empty_images, comet_experiment, invert=True)
     
-    #Test on empy frames
-    if empty_images_path:
-        empty_frame_df = pd.read_csv(empty_images_path)
-        empty_images = empty_frame_df.image_path.unique()    
-        predict_empty_frames(model, empty_images, comet_experiment)
+    ##Test on empy frames
+    #if empty_images_path:
+        #empty_frame_df = pd.read_csv(empty_images_path)
+        #empty_images = empty_frame_df.image_path.unique()    
+        #predict_empty_frames(model, empty_images, comet_experiment)
     
     #evaluaate at lower iou_thresholds
-    mAPs = []
-    threshold = []
-    for x in np.arange(0.1,0.5,.05):
-        mAP = model.evaluate_generator(test_path, 
-                                iou_threshold=x, comet_experiment=comet_experiment)
-        threshold.append(x)
-        mAPs.append(mAP)
+    #mAPs = []
+    #threshold = []
+    #for x in np.arange(0.1,0.5,.05):
+        #mAP = model.evaluate_generator(test_path, 
+                                #iou_threshold=x, comet_experiment=comet_experiment)
+        #threshold.append(x)
+        #mAPs.append(mAP)
     
-    mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
-    recall_plot = mAPdf.plot.scatter("IoU_Threshold","mAP")
-    recall_plot.set_xlabel("IoU Threshold")
-    recall_plot.set_ylabel("mAP")
-    comet_experiment.log_figure(recall_plot)
+    #mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
+    #recall_plot = mAPdf.plot.scatter("IoU_Threshold","mAP")
+    #recall_plot.set_xlabel("IoU Threshold")
+    #recall_plot.set_ylabel("mAP")
+    #comet_experiment.log_figure(recall_plot)
         
     return model
     
@@ -282,9 +284,16 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     test.ymax = test.ymax.astype("Int64")
                 
     #write paths to headerless files alongside data, add a seperate test empty file
-    train_path = "{}/train.csv".format(shp_dir)
-    test_path = "{}/test.csv".format(shp_dir)
-    empty_test_path = "{}/empty_test.csv".format(shp_dir)
+    #Save
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    savedir = "{}/{}".format(save_dir,timestamp)
+    os.mkdir(savedir)
+    
+    comet_experiment.log_parameter("timestamp",timestamp)
+    
+    train_path = "{}/train.csv".format(savedir)
+    test_path = "{}/test.csv".format(savedir)
+    empty_test_path = "{}/empty_test.csv".format(savedir)
     
     train.to_csv(train_path, index=False,header=False)
     test.to_csv(test_path, index=False,header=False)
@@ -292,10 +301,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
     
-    #Save
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    comet_experiment.log_parameter("timestamp",timestamp)
-    model.prediction_model.save("{}/{}.h5".format(save_dir,timestamp))
+    model.prediction_model.save("{}/species_model.h5".format(save_dir))
     
 if __name__ == "__main__":
     run(
