@@ -211,12 +211,11 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
-    model.config["epochs"] = 2
+    model.config["epochs"] = 14
     
     model.train(train_path, comet_experiment=None)
     
     #Manually convert model
-    model.prediction_model = convert_model(model.model)
     #model.predict_generator(test_path, return_plot=True)
     print(model.classes)
     print(model.classes_file)
@@ -249,7 +248,10 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #recall_plot.set_xlabel("IoU Threshold")
     #recall_plot.set_ylabel("mAP")
     #comet_experiment.log_figure(recall_plot)
-        
+    
+    #save model
+    model.prediction_model.save("{}/species_model.h5".format(save_dir))
+    
     return model
     
 def run(shp_dir, empty_frames_path=None, save_dir="."):
@@ -305,9 +307,8 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     test.to_csv(test_path, index=False,header=False)
     empty_test.to_csv(empty_test_path, index=False)
     
-    model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
+    train_model(train_path, test_path, empty_test_path, model_savedir, comet_experiment)
     
-    model.prediction_model.save("{}/species_model.h5".format(model_savedir))
     
 if __name__ == "__main__":
     run(
