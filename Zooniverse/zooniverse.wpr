@@ -4,6 +4,22 @@
 # Wing project file                                              #
 ##################################################################
 [project attributes]
+debug.launch-configs = (2,
+                        {'launch-0vdTQ4hsLPDbLugQ': ({},
+        {'buildcmd': ('project',
+                      None),
+         'env': ('project',
+                 [u'']),
+         'name': u'test',
+         'pyexec': ('custom',
+                    u'/Users/benweinstein/opt/miniconda3/envs/test/bin/python'),
+         'pypath': ('project',
+                    []),
+         'pyrunargs': ('project',
+                       '-u'),
+         'runargs': u'',
+         'rundir': ('project',
+                    u'')})})
 proj.directory-list = [{'dirloc': loc('.'),
                         'excludes': (),
                         'filter': u'*',

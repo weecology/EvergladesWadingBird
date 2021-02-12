@@ -211,45 +211,47 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
-    model.config["epochs"] = 2
+    model.config["epochs"] = 14
     
     model.train(train_path, comet_experiment=None)
     
     #Manually convert model
-    model.prediction_model = convert_model(model.model)
     #model.predict_generator(test_path, return_plot=True)
     print(model.classes)
     print(model.classes_file)
     model.evaluate_generator(test_path)
     
     #Create a positive bird recall curve
-    #test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
-    #dirname = os.path.dirname(test_path)
-    #test_frame_df["image_path"] = test_frame_df["image_name"].apply(lambda x: os.path.join(dirname,x))
-    #empty_images = test_frame_df.image_path.unique()    
-    #predict_empty_frames(model, empty_images, comet_experiment, invert=True)
+    test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
+    dirname = os.path.dirname(test_path)
+    test_frame_df["image_path"] = test_frame_df["image_name"].apply(lambda x: os.path.join(dirname,x))
+    empty_images = test_frame_df.image_path.unique()    
+    predict_empty_frames(model, empty_images, comet_experiment, invert=True)
     
-    ##Test on empy frames
-    #if empty_images_path:
-        #empty_frame_df = pd.read_csv(empty_images_path)
-        #empty_images = empty_frame_df.image_path.unique()    
-        #predict_empty_frames(model, empty_images, comet_experiment)
+    #Test on empy frames
+    if empty_images_path:
+        empty_frame_df = pd.read_csv(empty_images_path)
+        empty_images = empty_frame_df.image_path.unique()    
+        predict_empty_frames(model, empty_images, comet_experiment)
     
-    #evaluaate at lower iou_thresholds
-    #mAPs = []
-    #threshold = []
-    #for x in np.arange(0.1,0.5,.05):
-        #mAP = model.evaluate_generator(test_path, 
-                                #iou_threshold=x, comet_experiment=comet_experiment)
-        #threshold.append(x)
-        #mAPs.append(mAP)
+    #valuaate at lower iou_thresholds
+    mAPs = []
+    threshold = []
+    for x in np.arange(0.1,0.5,.05):
+        mAP = model.evaluate_generator(test_path, 
+                                iou_threshold=x, comet_experiment=comet_experiment)
+        threshold.append(x)
+        mAPs.append(mAP)
     
-    #mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
-    #recall_plot = mAPdf.plot.scatter("IoU_Threshold","mAP")
-    #recall_plot.set_xlabel("IoU Threshold")
-    #recall_plot.set_ylabel("mAP")
-    #comet_experiment.log_figure(recall_plot)
-        
+    mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
+    recall_plot = mAPdf.plot.scatter("IoU_Threshold","mAP")
+    recall_plot.set_xlabel("IoU Threshold")
+    recall_plot.set_ylabel("mAP")
+    comet_experiment.log_figure(recall_plot)
+    
+    #save model
+    model.prediction_model.save("{}/species_model.h5".format(save_dir))
+    
     return model
     
 def run(shp_dir, empty_frames_path=None, save_dir="."):
@@ -305,9 +307,8 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     test.to_csv(test_path, index=False,header=False)
     empty_test.to_csv(empty_test_path, index=False)
     
-    model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
+    train_model(train_path, test_path, empty_test_path, model_savedir, comet_experiment)
     
-    model.prediction_model.save("{}/species_model.h5".format(model_savedir))
     
 if __name__ == "__main__":
     run(
