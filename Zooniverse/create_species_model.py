@@ -1,6 +1,7 @@
 #DeepForest bird detection from extracted Zooniverse predictions
 import comet_ml
 from deepforest import deepforest
+from deepforest.keras_retinanet.models import convert_model
 import geopandas as gp
 from shapely.geometry import Point, box
 import pandas as pd
@@ -213,7 +214,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     model.config["epochs"] = 2
     
     model.train(train_path, comet_experiment=None)
+    
+    #Manually convert model
+    model.prediction_model = convert_model(model.model)
     #model.predict_generator(test_path, return_plot=True)
+    print(model.classes)
+    print(model.classes_file)
     model.evaluate_generator(test_path)
     
     #Create a positive bird recall curve
