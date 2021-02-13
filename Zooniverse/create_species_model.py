@@ -250,7 +250,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     comet_experiment.log_figure(recall_plot)
     
     #save model
-    model.prediction_model.save("{}/species_model.h5".format(save_dir))
+    model.model.save("{}/species_model.h5".format(save_dir))
     
     return model
     
