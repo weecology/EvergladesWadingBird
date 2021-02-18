@@ -134,24 +134,6 @@ def screen_blanks(images, model):
 
     return screened_images
 
-def predict_species(images, model):
-    #Load bird detection model
-    model = deepforest.deepforest(saved_model=model)
-    screened_images = {}
-    for filename, metadata in images.items():
-        boxes = model.predict_image(filename, return_plot=False)
-
-        #small score filter
-        boxes = boxes[boxes.score > 0.5]
-        
-
-        else:
-            print("Remove {}, screened empty".format(filename))
-
-    #return keys for dict
-
-    return screened_images
-
 def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades/Zooniverse/"):
     """Args:
         path: a .tif to run
