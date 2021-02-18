@@ -119,6 +119,7 @@ def screen_blanks(images, model):
     #Load bird detection model
     model = deepforest.deepforest(saved_model=model)
     model.classes_file = utilities.create_classes("/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv")    
+    model.read_classes()
     screened_images = {}
     for filename, metadata in images.items():
         boxes = model.predict_image(filename, return_plot=False)
