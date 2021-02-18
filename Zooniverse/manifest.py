@@ -180,9 +180,8 @@ if __name__ == "__main__":
 
     #auth
     everglades_watch = utils.connect()
-
-    #set model
-    model = "/orange/ewhite/everglades/Zooniverse/predictions/20210212_191155.h5"
+    
+    model = "/orange/ewhite/everglades/Zooniverse/predictions/20210212_191155/species_model.h5"
 
     #Currently debugging with just one site
     paths = ["/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-6.tif"]
