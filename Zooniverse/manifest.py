@@ -173,7 +173,7 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
     subject_set = create_subject_set(name="{}_rare_classes".format(basename), everglades_watch=everglades_watch)
 
     #Upload
-    upload(subject_set, screened_images[:5], everglades_watch)
+    upload(subject_set, screened_images, everglades_watch)
 
     return saved_file
 
