@@ -185,8 +185,8 @@ if __name__ == "__main__":
     model = "/orange/ewhite/everglades/Zooniverse/predictions/20210212_191155/species_model.h5"
 
     #Currently debugging with just one site
-    paths = ["/orange/ewhite/everglades/WadingBirds2020/AlleyNorth/AlleyNorth_02132020-0-6.tif"]
-
+    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/OtherColonies/*.tif")
+    paths = [x for x in paths if "projected" not in x]
     for path in paths:
         print(path)
         saved_file = main(path, everglades_watch, model)
