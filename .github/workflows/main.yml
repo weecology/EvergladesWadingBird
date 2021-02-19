@@ -1,0 +1,39 @@
+# Install packages, update data, test, and archive 
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: "0 11 * * 1,4"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v2
+
+      - name: Install packages
+        run: Rscript install-packages.R
+
+      - name: Update data
+        run: Rscript update-data.R
+        
+      - name: Test
+        run: Rscript testthat.R
+        
+      - name: Archive
+        run: Rscript archive.R
