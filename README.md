@@ -1,7 +1,8 @@
 # EvergladesWadingBird Data
-
-[![Build Status](https://travis-ci.com/weecology/EvergladesWadingBird.svg?branch=master)](https://travis-ci.com/weecology/EvergladesWadingBird)
+<!-- badges: start -->
+[![Build Status](https://github.com/weecology/EvergladesWadingBird/workflows/CI/badge.svg)](https://github.com/weecology/EvergladesWadingBird/actions)
 [![License](http://i.creativecommons.org/p/zero/1.0/88x31.png)](https://raw.githubusercontent.com/weecology/PortalData/master/LICENSE)
+<!-- badges: end -->
 
 Data from the Everglades breeding bird monitoring project
 
