@@ -80,7 +80,7 @@ writeLines(as.character(new_ver), "version.txt")
 #  5. trigger a release.
 if (new_ver > current_ver && 
     Sys.getenv("GITHUB_EVENT_PATH") == 'main' && 
-    Sys.getenv("GITHUB_EVENT_NAME") %in% c("cron", "push")
+    Sys.getenv("GITHUB_EVENT_NAME") %in% c("cron", "push"))
 {
   # write out the new version and add the commit
   github_token <- Sys.getenv("GITHUB_TOKEN")
