@@ -2,9 +2,8 @@
 
 name: CI
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+
   push:
     branches: [ main ]
   pull_request:
@@ -23,7 +22,8 @@ env:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    if: github.event_name == 'push' && contains(toJson(github.event.commits), '[skip ci]') == false
+    
     runs-on: ubuntu-latest
 
     steps:
