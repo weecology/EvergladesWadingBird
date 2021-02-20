@@ -27,14 +27,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@master
         with:
-          r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
-
-      - uses: r-lib/actions/setup-pandoc@master
+            fetch-depth: 0
+      - uses: r-lib/actions/setup-r@master
 
       - name: Install packages
         run: Rscript install-packages.R
