@@ -189,7 +189,7 @@ def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
 def train_model(train_path, test_path, empty_images_path=None, save_dir=".", comet_experiment=None):
     """Train a DeepForest model"""
     model = deepforest.deepforest()
-    model.use_release()
+    #model.use_release()
     comet_experiment.log_parameters(model.config)
     
     #Log the number of training and test
