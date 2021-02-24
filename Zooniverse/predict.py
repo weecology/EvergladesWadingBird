@@ -108,8 +108,8 @@ def run(tile_path, model_path, savedir="."):
     return fn
 
 def find_files():
-    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
-    sites = ["Joule","CypressCity","Vacation","JetPort","Jerrod","StartMel","OtherColonies","6th Bridge"]
+    paths = glob.glob("/orange/ewhite/everglades/2021/**/*.tif",recursive=True)
+    #sites = ["Joule","CypressCity","Vacation","JetPort","Jerrod","StartMel","OtherColonies","6th Bridge"]
     paths = [x for x in paths if any(w in x for w in sites)]
     paths = [x for x in paths if not "projected" in x]
     
