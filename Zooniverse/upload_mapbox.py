@@ -66,15 +66,15 @@ def upload(path):
 
 if __name__=="__main__":
      
-     #files_to_upload = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif", recursive=True)
-     #files_to_upload = [x for x in files_to_upload if "projected" not in x]
+     files_to_upload = glob.glob("/orange/ewhite/everglades/2021/**/*.tif", recursive=True)
+     files_to_upload = [x for x in files_to_upload if "projected" not in x]
      
-     files_to_upload = [
-     "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03_10_2020.tif",
-     "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03_24_2020.tif",
-     "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_04_21_2020.tif",
-     "/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_05_05_2020.tif"    
-     ]
+     #files_to_upload = [
+     #"/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03_10_2020.tif",
+     #"/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_03_24_2020.tif",
+     #"/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_04_21_2020.tif",
+     #"/orange/ewhite/everglades/WadingBirds2020/Joule/Joule_05_05_2020.tif"    
+     #]
      
      for path in files_to_upload:
           upload(path)
