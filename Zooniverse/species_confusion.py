@@ -1,9 +1,9 @@
 #Confusion matrix
 #srun -p gpu --gpus=1 --mem 20GB --time 5:00:00 --pty -u bash -i
-module load tensorflow/1.14.0
-export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
-export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
-export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
+#module load tensorflow/1.14.0
+#export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
+#export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
+#export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
 
 from deepforest import deepforest
 from deepforest import utilities
