@@ -1,4 +1,9 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
+#srun -p gpu --gpus=1 --mem 20GB --time 5:00:00 --pty -u bash -i
+module load tensorflow/1.14.0
+export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
+export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
+export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
 
 from deepforest import deepforest
 from matplotlib import pyplot as plt
@@ -71,7 +76,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     
     return result
 
-df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/Users/benweinstein/Dropbox/Weecology/bird_detector/Weinstein_TNC_collaboration/Palmyra Tiles (53 m)/20201113_1617-Dudley-A1-im2-206-75x80_transparent_mosaic_group1.tif")
+df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palymra.tif")
 df.to_csv("Figures/annotations.csv")
 
 src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
