@@ -1,9 +1,9 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
 #srun -p gpu --gpus=1 --mem 20GB --time 5:00:00 --pty -u bash -i
-module load tensorflow/1.14.0
-export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
-export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
-export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
+#module load tensorflow/1.14.0
+#export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
+#export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
+#export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
 
 from deepforest import deepforest
 from matplotlib import pyplot as plt
@@ -36,7 +36,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     #define in image coordinates and buffer to create a box
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(int(left), int(bottom), int(right), int(top)) for left, bottom, right, top in gdf.geometry.buffer(1.5/resolution).bounds.values]
+    gdf["geometry"] = [box(int(left), int(bottom), int(right), int(top)) for left, bottom, right, top in gdf.geometry.buffer(1.5).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -61,7 +61,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     if "label" in gdf.columns:
         df["label"] = gdf["label"]
     else:
-        df["label"] = "Tree"
+        df["label"] = "Bird"
     
     #add filename
     df["image_path"] = os.path.basename(rgb)
@@ -77,16 +77,21 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
 
 df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palymra.tif")
-df.to_csv("Figures/annotations.csv")
 
 src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
 numpy_image = src.read()
 numpy_image = np.moveaxis(numpy_image,0,2)
 numpy_image = numpy_image[:,:,:3].astype("float32")
 
+crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/annotations.csv", patch_size=2500, base_dir="crops", image_name="palymra.tif")
+crop_annotations.to_csv("crops/annotations.csv",index=False)
+
 model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
 model = deepforest.deepforest(weights=model_path)
 model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
+
+#Evaluate against model
+model.evaluate_generator("crops/annotations.csv")
 
 boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2500)
 bounds = src.bounds
@@ -103,7 +108,4 @@ boxes['geometry'] = boxes.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.x
 boxes = gpd.GeoDataFrame(boxes, geometry='geometry')
 
 boxes.crs = src.crs.to_wkt()
-boxes.to_file("figures/predictions.shp")
-
-#Evaluate against model
-model.evaluate_generator("Figures/annotations.csv")
+boxes.to_file("Figures/predictions.shp")
