@@ -77,6 +77,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
 
 df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palymra.tif")
+df.to_csv("Figures/annotations.csv")
 
 src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
 numpy_image = src.read()
