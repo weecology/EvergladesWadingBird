@@ -85,7 +85,7 @@ numpy_image = np.moveaxis(numpy_image,0,2)
 numpy_image = numpy_image[:,:,:3].astype("uint8")
 
 crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/annotations.csv", patch_size=2500, base_dir="crops", image_name="palymra.tif")
-crop_annotations.to_csv("crops/annotations.csv",index=False)
+crop_annotations.to_csv("crops/annotations.csv",index=False, header=False)
 
 model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
 model = deepforest.deepforest(weights=model_path)
