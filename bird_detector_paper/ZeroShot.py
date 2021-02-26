@@ -14,6 +14,8 @@ import rasterio as rio
 import numpy as np
 import os
 
+from . import evaluate
+
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
@@ -36,7 +38,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     #define in image coordinates and buffer to create a box
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(int(left), int(bottom), int(right), int(top)) for left, bottom, right, top in gdf.geometry.buffer(1.5).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -61,7 +63,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     if "label" in gdf.columns:
         df["label"] = gdf["label"]
     else:
-        df["label"] = "Bird"
+        df["label"] = "Tree"
     
     #add filename
     df["image_path"] = os.path.basename(rgb)
@@ -85,15 +87,16 @@ numpy_image = np.moveaxis(numpy_image,0,2)
 numpy_image = numpy_image[:,:,:3].astype("uint8")
 
 crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/annotations.csv", patch_size=2500, base_dir="crops", image_name="palymra.tif")
+crop_annotations.head()
 crop_annotations.to_csv("crops/annotations.csv",index=False, header=False)
 
 model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
 model = deepforest.deepforest(weights=model_path)
 model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
 
-#Evaluate against model
-model.evaluate_generator("crops/annotations.csv")
+model.evaluate_generator(annotations="crops/annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
 
+#Evaluate against model
 boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2500)
 bounds = src.bounds
 pixelSizeX, pixelSizeY  = src.res
@@ -110,3 +113,12 @@ boxes = gpd.GeoDataFrame(boxes, geometry='geometry')
 
 boxes.crs = src.crs.to_wkt()
 boxes.to_file("Figures/predictions.shp")
+
+#define in image coordinates and buffer to create a box
+gdf = gpd.read_file(shapefile="data/TNC_Dudley_annotation.shp")
+gdf = gdf[~gdf.geometry.isnull()]
+gdf["geometry"] = gdf.geometry.boundary.centroid
+gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
+gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
+
+evaluate(predictions=boxes, ground_df=gdf, root_dir=".", project=False, show_plot=False, iou_threshold=0.4, score_threshold=0.05)
