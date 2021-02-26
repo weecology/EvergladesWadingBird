@@ -14,7 +14,7 @@ import rasterio as rio
 import numpy as np
 import os
 
-from . import evaluate
+import evaluate
 
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
@@ -121,4 +121,4 @@ gdf["geometry"] = gdf.geometry.boundary.centroid
 gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
 gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
 
-evaluate(predictions=boxes, ground_df=gdf, root_dir=".", project=False, show_plot=False, iou_threshold=0.4, score_threshold=0.05)
+precision, recall = evaluate(predictions=boxes, ground_df=gdf, root_dir=".", project=False, show_plot=False, iou_threshold=0.4, score_threshold=0.05)

@@ -25,14 +25,7 @@ def evaluate_image(predictions, ground_df, project, score_threshold, show_plot, 
         raise ValueError("More than one plot passed to image crown: {}".format(plot_name))
     else:
         plot_name = plot_names[0]
-    
-    else:
-        predictions['geometry'] = predictions.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.xmax,x.ymax), axis=1)
-        predictions = gpd.GeoDataFrame(predictions, geometry='geometry')
-        
-        ground_df['geometry'] = ground_df.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.xmax,x.ymax), axis=1)
-        ground_df = gpd.GeoDataFrame(ground_df, geometry='geometry')        
-                
+                    
     if show_plot:
         rgb_path = "{}/{}".format(root_dir,plot_name)
         rgb_src = rasterio.open(rgb_path)        
