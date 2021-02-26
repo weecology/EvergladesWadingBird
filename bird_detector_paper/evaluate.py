@@ -8,7 +8,7 @@ from rasterio.plot import show
 import shapely
 from matplotlib import pyplot
 
-from . import IoU
+import IoU
 
 def evaluate_image(predictions, ground_df, project, score_threshold, show_plot, root_dir):
     """
