@@ -20,11 +20,6 @@ def evaluate_image(predictions, ground_df, project, score_threshold, show_plot, 
     project: Logical. Whether to project predictions that are in image coordinates (0,0 origin) into the geographic coordinates of the ground truth image. The CRS is take from the image file using rasterio.crs
     root_dir: Where to search for image names in df
     """
-    plot_names = predictions["image_path"].unique()
-    if len(plot_names) > 1:
-        raise ValueError("More than one plot passed to image crown: {}".format(plot_name))
-    else:
-        plot_name = plot_names[0]
                     
     if show_plot:
         rgb_path = "{}/{}".format(root_dir,plot_name)
