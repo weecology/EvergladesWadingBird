@@ -55,23 +55,11 @@ def evaluate(predictions, ground_df, root_dir, project=False, show_plot=False, i
         precision: proportion of predictions that are true positive
     """
         
-    #Run evaluation on all plots
-    results = [ ]
-    for image_path, group in predictions.groupby("image_path"):
-        plot_ground_truth = ground_df[ground_df["image_path"] == image_path]
-        result = evaluate_image(predictions=group, ground_df=plot_ground_truth, project=project, show_plot=show_plot, score_threshold=score_threshold, root_dir=root_dir)
-        results.append(result)
-    
-    if len(results)==0:
-        print("No predictions made, setting precision and recall to 0")
-        recall = 0
-        precision = 0
-    else:
-        results = pd.concat(results)
-        
-        results["match"] = results.score > iou_threshold
-        true_positive = sum(results["match"] == True)
-        recall = true_positive / results.shape[0]
-        precision = true_positive / predictions.shape[0]
+    results = evaluate_image(predictions=predictions, ground_df=ground_df, project=project, show_plot=show_plot, score_threshold=score_threshold, root_dir=root_dir)
+
+    results["match"] = results.score > iou_threshold
+    true_positive = sum(results["match"] == True)
+    recall = true_positive / results.shape[0]
+    precision = true_positive / predictions.shape[0]
     
     return recall, precision
