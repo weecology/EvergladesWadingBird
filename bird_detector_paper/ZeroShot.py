@@ -14,7 +14,7 @@ import rasterio as rio
 import numpy as np
 import os
 
-import evaluate
+import IoU
 
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
@@ -86,7 +86,7 @@ numpy_image = src.read()
 numpy_image = np.moveaxis(numpy_image,0,2)
 numpy_image = numpy_image[:,:,:3].astype("uint8")
 
-crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/annotations.csv", patch_size=2500, base_dir="crops", image_name="palymra.tif")
+crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/annotations.csv", patch_size=2000, base_dir="crops", image_name="palymra.tif")
 crop_annotations.head()
 crop_annotations.to_csv("crops/annotations.csv",index=False, header=False)
 
@@ -97,7 +97,7 @@ model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
 model.evaluate_generator(annotations="crops/annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
 
 #Evaluate against model
-boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2500)
+boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2000)
 bounds = src.bounds
 pixelSizeX, pixelSizeY  = src.res
 
