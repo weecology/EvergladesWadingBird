@@ -68,7 +68,7 @@ jobs:
           else 
             echo "::set-output name=diff::TRUE"
           fi
-      
+          
       - name: Bump version
         id: version
         env: 
@@ -89,6 +89,7 @@ jobs:
         id: tagging
         run: |
           value=`cat version.txt`
+          echo "::set-output name=release::$value"
           value="v${value}"
           echo "::set-output name=tag::$value"
       
@@ -103,4 +104,12 @@ jobs:
           message: "Update data and trigger archive: GitHub Build ${{ github.run_number }} ${{ env.JOB_TAGS }}"
           tag: ${{ steps.tagging.outputs.tag }}
           
-
+      - name: Create Release
+        if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
+        id: create_release
+        uses: zendesk/action-create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tagging.outputs.release }}
+          release_name: ${{ steps.tagging.outputs.release }}
