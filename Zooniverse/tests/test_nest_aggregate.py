@@ -38,7 +38,7 @@ def test_parse_subject_data(csv_data):
     assert  subject_data.event.iloc[0]  == "05_29_2020"
     
 def test_parse_birds(csv_data):
-    df = nest_aggregate.parse_birds(csv_data.loc[7971])
+    df = nest_aggregate.parse_birds(csv_data.head())
     assert not df.empty
     
     #assert size is mantained

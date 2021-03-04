@@ -83,7 +83,9 @@ def find_files(path):
         img.save(png_name)
 
         #Create dict
-        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg(),"site":site_name,"resolution":d.res,"filename":png_name}
+        crs = d.crs.to_epsg()
+        crs = None
+        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":crs,"site":site_name,"resolution":d.res,"filename":png_name}
         counter +=1
 
     return images
@@ -116,20 +118,20 @@ def upload(subject_set, images, everglades_watch):
     subject_set.add(new_subjects)
 
 def screen_blanks(images, model):
-    #Load bird detection model
+    #Load detection model
     model = deepforest.deepforest(saved_model=model)
-    model.classes_file = utilities.create_classes("/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv")    
-    model.read_classes()
+    #model.classes_file = utilities.create_classes("/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv")    
+    #model.read_classes()
     screened_images = {}
     for filename, metadata in images.items():
         boxes = model.predict_image(filename, return_plot=False)
 
         #small score filter
-        boxes = boxes[boxes.score > 0.3]
+        boxes = boxes[boxes.score > 0.4]
         
         if not boxes.empty:
-            if any([x in boxes.label.unique() for x in ["Great Blue Heron","Snowy Egret","Wood Stork","Roseate Spoonbill"]]):
-                screened_images[filename] = metadata
+            #if any([x in boxes.label.unique() for x in ["Great Blue Heron","Snowy Egret","Wood Stork","Roseate Spoonbill"]]):
+            screened_images[filename] = metadata
         else:
             print("Remove {}, screened empty".format(filename))
 
@@ -140,7 +142,10 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
         path: a .tif to run
     """
     #Create new directory in save_dir
+    
     basename = os.path.splitext(os.path.basename(path))[0]
+    event = os.path.basename(os.path.dirname(os.path.dirname(path))).replace(" ","")
+    basename = "{}_{}".format(event,basename)
     dirname = "{}/{}".format(save_dir,basename)
 
     try:
@@ -152,11 +157,11 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
     #Crop tif
     #Project from longlat to utm
     #check if exists
-    projected_raster_path = "{}_projected.tif".format(os.path.splitext(path)[0])
-    if not os.path.exists(projected_raster_path):
-        projected_raster_path = utm_project(path)
+    #projected_raster_path = "{}_projected.tif".format(os.path.splitext(path)[0])
+    #if not os.path.exists(projected_raster_path):
+        #projected_raster_path = utm_project(path)
 
-    saved_file = tile_raster.run(path=projected_raster_path, save_dir=dirname,)
+    saved_file = tile_raster.run(path=path, save_dir=dirname)
     print("Created cropped files at {}".format(saved_file))
 
     #Generate metadata
@@ -170,7 +175,7 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
         screened_images = images
     
     #Create a new subject set
-    subject_set = create_subject_set(name="{}_rare_classes".format(basename), everglades_watch=everglades_watch)
+    subject_set = create_subject_set(name="{}".format(basename), everglades_watch=everglades_watch)
 
     #Upload
     upload(subject_set, screened_images, everglades_watch)
@@ -182,10 +187,10 @@ if __name__ == "__main__":
     #auth
     everglades_watch = utils.connect()
     
-    model = "/orange/ewhite/everglades/Zooniverse/predictions/20210212_191155/species_model.h5"
+    model = "/orange/ewhite/everglades/Zooniverse/predictions/20210224_121421.h5"
 
     #Currently debugging with just one site
-    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/OtherColonies/*.tif")
+    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Raw/Cypress City_03_25_2020/Mapping Photos/*.JPG")
     paths = [x for x in paths if "projected" not in x]
     for path in paths:
         print(path)

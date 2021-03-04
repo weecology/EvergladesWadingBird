@@ -99,9 +99,13 @@ def parse_question_task(x):
      
 
 def parse_annotations(x):
-    annotations = parse_nest_location(x)
-    annotations["valid_nest"] = parse_question_task(x)    
-    
+    nest_status = parse_question_task(x)    
+    if nest_status:
+        annotations = parse_nest_location(x)
+        annotations["valid_nest"] = nest_status
+    else:
+        annotations
+        
     return annotations
      
 def parse_subject_data(x):
