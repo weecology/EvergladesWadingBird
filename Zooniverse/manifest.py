@@ -83,7 +83,7 @@ def find_files(path):
         img.save(png_name)
 
         #Create dict
-        crs = d.crs.to_epsg()
+        #crs = d.crs.to_epsg()
         crs = None
         images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":crs,"site":site_name,"resolution":d.res,"filename":png_name}
         counter +=1
