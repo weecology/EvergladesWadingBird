@@ -119,7 +119,7 @@ def upload(subject_set, images, everglades_watch):
 
 def screen_blanks(images, model):
     #Load detection model
-    model = deepforest.deepforest(saved_model=model)
+    model = deepforest.deepforest(weights=model)
     #model.classes_file = utilities.create_classes("/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv")    
     #model.read_classes()
     screened_images = {}
