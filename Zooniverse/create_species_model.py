@@ -211,7 +211,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
-    model.config["epochs"] = 14
+    model.config["epochs"] = 30
     
     model.train(train_path, comet_experiment=None)
     
