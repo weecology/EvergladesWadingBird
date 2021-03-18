@@ -189,9 +189,9 @@ def parse_birds(df):
 def project_box(df):
     """Convert points into utm coordinates"""
     df["box_utm_left"] = df.image_utm_left + (df.resolution * df.x)
-    df["box_utm_bottom"] = df.image_utm_bottom + (df.resolution * df.y)
+    df["box_utm_bottom"] = df.image_utm_top - (df.resolution * df.y)
     df["box_utm_right"] = df.image_utm_left + (df.resolution * (df.x + df.width))
-    df["box_utm_top"] = df.image_utm_bottom + (df.resolution * (df.y + df.height))
+    df["box_utm_top"] = df.image_utm_top - (df.resolution * (df.y + df.height))
     
     #Create geopandas
     geoms = [box(left, bottom, right, top) for left, bottom, right, top in zip(df.box_utm_left, df.box_utm_bottom, df.box_utm_right, df.box_utm_top)]
