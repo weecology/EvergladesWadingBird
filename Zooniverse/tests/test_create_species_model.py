@@ -84,4 +84,3 @@ def test_split_test_train(extract_images, annotations):
     
     #Assert no duplicates
     train_dropped_duplicates = train.drop_duplicates()
-    assert train_dropped_duplicates.shape[0] == train.shape[0]    
