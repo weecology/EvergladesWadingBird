@@ -1,4 +1,7 @@
 #test deepforest development
+import comet_ml
+from pytorch_lightning.loggers import CometLogger
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -84,3 +87,18 @@ def test_split_test_train(extract_images, annotations):
     
     #Assert no duplicates
     train_dropped_duplicates = train.drop_duplicates()
+
+def test_train_model(extract_images, annotations, tmpdir):
+    
+    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                  project_name="everglades-species", workspace="bw4sz")
+    
+    train, test = create_species_model.split_test_train(annotations)
+    train_path = "{}/train.csv".format(tmpdir)
+    train.to_csv(train_path,index=False)
+    
+    test_path = "{}/test.csv".format(tmpdir)
+    test.to_csv(test_path,index=False)    
+    
+    create_species_model.train_model(train_path = train_path, test_path = test_path, epochs=1, comet_logger=comet_logger, debug=True)
+    

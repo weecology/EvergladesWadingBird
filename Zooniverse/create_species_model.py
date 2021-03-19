@@ -196,36 +196,50 @@ def predict_empty_frames(model, empty_images, comet_logger, invert=False):
     comet_logger.experiment.log_metric(metric_name,value)
     comet_logger.experiment.log_figure(recall_plot)    
     
-def train_model(train_path, test_path, empty_images_path=None, save_dir=".", comet_logger=None, epochs=15):
+def train_model(train_path, test_path, empty_images_path=None, save_dir=".", comet_logger=None, epochs=15, debug=False):
     """Train a DeepForest model"""
-    model = main.deepforest()
-    comet_logger.experiment.log_parameters(model.config)
-    
+        
     #Log the number of training and test
     train = pd.read_csv(train_path)
     test = pd.read_csv(test_path)
-    comet_logger.experiment.log_parameter("Training_Annotations",train.shape[0])    
-    comet_logger.experiment.log_parameter("Testing_Annotations",test.shape[0])
+
     
-    #Set config and train
+    #Set config and train'    
+    label_dict = {key:value for value, key in enumerate(train.label.unique())}
+    model = main.deepforest(num_classes=len(train.label.unique()),label_dict=label_dict)
+    
     model.config["train"]["csv_file"] = train_path
     model.config["train"]["root_dir"] = os.path.dirname(train_path)
     model.config["train"]["epochs"] = epochs
+    
+    if debug:
+        model.config["train"]["fast_dev_run"] = True
     
     #Set config and train
     model.config["validation"]["csv_file"] = test_path
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
     
+    if comet_logger is not None:
+        comet_logger.experiment.log_parameters(model.config)
+        comet_logger.experiment.log_parameter("Training_Annotations",train.shape[0])    
+        comet_logger.experiment.log_parameter("Testing_Annotations",test.shape[0])
+        
     model.create_trainer()
     model.trainer.fit(model)
     
     #Manually convert model
-    #model.predict_generator(test_path, return_plot=True)
     results = model.evaluate(test_path)
-    comet_logger.experiment.log_asset(results["result"])
-    comet_logger.experiment.log_asset(results["class_recall"])
-    comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
     
+    if comet_logger is not None:
+        comet_logger.experiment.log_asset(results["result"])
+        comet_logger.experiment.log_asset(results["class_recall"])
+        comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
+        comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(save_dir))
+        
+        ypred = results["results"].predicted_label
+        ytrue = results["results"].true_label
+        comet_logger.experiment.log_confusion_matrix(ytrue,ypred, list(model.label_dict.keys()))
+        
     #Create a positive bird recall curve
     test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
     dirname = os.path.dirname(test_path)
