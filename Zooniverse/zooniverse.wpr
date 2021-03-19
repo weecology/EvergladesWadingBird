@@ -19,6 +19,21 @@ debug.launch-configs = (2,
                        '-u'),
          'runargs': u'',
          'rundir': ('project',
+                    u'')}),
+                         'launch-mKZHgISpJY1R2Pv1': ({},
+        {'buildcmd': ('project',
+                      None),
+         'env': ('project',
+                 [u'']),
+         'name': 'pytorch',
+         'pyexec': ('custom',
+                    u'/Users/benweinstein/opt/miniconda3/envs/Zooniverse_pytorch/bin/python'),
+         'pypath': ('project',
+                    []),
+         'pyrunargs': ('project',
+                       '-u'),
+         'runargs': u'',
+         'rundir': ('project',
                     u'')})})
 proj.directory-list = [{'dirloc': loc('.'),
                         'excludes': (),
@@ -27,6 +42,9 @@ proj.directory-list = [{'dirloc': loc('.'),
                         'recursive': True,
                         'watch_for_changes': True}]
 proj.file-type = 'shared'
+proj.launch-config = {loc('tests/test_create_species_model.py'): ('custom',
+        (u'',
+         'launch-mKZHgISpJY1R2Pv1'))}
 testing.auto-test-file-specs = (('glob',
                                  'test_*'),)
 testing.test-framework = {None: ':internal pytest'}
