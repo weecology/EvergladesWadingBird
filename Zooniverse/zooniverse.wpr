@@ -33,8 +33,8 @@ debug.launch-configs = (2,
          'pyrunargs': ('project',
                        '-u'),
          'runargs': u'',
-         'rundir': ('project',
-                    u'')})})
+         'rundir': ('custom',
+                    u'/Users/benweinstein/Documents/EvergladesWadingBird/Zooniverse/species_model')})})
 proj.directory-list = [{'dirloc': loc('.'),
                         'excludes': (),
                         'filter': u'*',
@@ -42,7 +42,11 @@ proj.directory-list = [{'dirloc': loc('.'),
                         'recursive': True,
                         'watch_for_changes': True}]
 proj.file-type = 'shared'
-proj.launch-config = {loc('tests/test_create_species_model.py'): ('custom',
+proj.launch-config = {loc('species_model/tests/test_create_species_model.py'): ('c'\
+        'ustom',
+        (u'',
+         'launch-mKZHgISpJY1R2Pv1')),
+                      loc('tests/test_create_species_model.py'): ('custom',
         (u'',
          'launch-mKZHgISpJY1R2Pv1'))}
 testing.auto-test-file-specs = (('glob',

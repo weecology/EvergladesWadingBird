@@ -6,7 +6,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 
-from .. import create_species_model
+from ..species_model import create_species_model
 from .. import extract
 from .. import aggregate
 

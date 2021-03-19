@@ -74,6 +74,20 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     
     return result
 
+def sample_if(x,n):
+    """Sample up to n rows if rows is less than n
+    Args:
+        x: pandas object
+        n: row minimum
+        species_counts: number of each species in total data
+    """
+    if x.shape[0] < n:
+        to_sample = n - x.shape[0]
+        new_rows =  x.sample(to_sample, replace=True)
+        return pd.concat([x, new_rows])
+    else:
+        return x
+
 def find_rgb_path(shp_path, image_dir):
     basename = os.path.splitext(os.path.basename(shp_path))[0]
     rgb_path = "{}/{}.png".format(image_dir,basename)
@@ -105,8 +119,13 @@ def format_shapefiles(shp_dir,image_dir=None):
     
     return annotations
 
-def split_test_train(annotations):
-    """Split annotation in train and test by image"""
+def split_test_train(annotations, resample_n=100):
+    """Split annotation in train and test by image
+    Args:
+         annotations: dataframe of bounding box objects
+         resample_n: resample classes under n images to n images
+    """
+    
     #Currently want to mantain the random split
     np.random.seed(0)
     
@@ -129,10 +148,11 @@ def split_test_train(annotations):
     test = annotations[~(annotations.image_path.isin(train_names))]
     
     #resample train for rare species
-    train_images = train[train.label.isin(["Great Blue Heron","Wood Stork","Snowy Egret"])]
-    rare_train_images = train_images.image_path.unique()
-    duplicated_frames = train[train.image_path.isin(rare_train_images)] 
-    train = pd.concat([train,duplicated_frames,duplicated_frames])
+    
+    resampled_train = train[train.label.isin(["Great Blue Heron","Wood Stork","Snowy Egret"])].groupby("label").apply(lambda x: sample_if(x,resample_n)).reset_index(drop=True)    
+    common_class_train = train[~train.label.isin(["Great Blue Heron","Wood Stork","Snowy Egret"])]
+    
+    train = pd.concat([common_class_train,resampled_train])
     
     return train, test
     
@@ -203,7 +223,6 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     train = pd.read_csv(train_path)
     test = pd.read_csv(test_path)
 
-    
     #Set config and train'    
     label_dict = {key:value for value, key in enumerate(train.label.unique())}
     model = main.deepforest(num_classes=len(train.label.unique()),label_dict=label_dict)
@@ -214,16 +233,13 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     
     if debug:
         model.config["train"]["fast_dev_run"] = True
+        model.config["gpus"] = None
+        model.config["workers"] = 0
+        model.config["batch_size"] = 1
     
     #Set config and train
-<<<<<<< HEAD
-    model.config["validation_annotations"] = test_path
-    model.config["save_path"] = save_dir
-    model.config["epochs"] = 30
-=======
     model.config["validation"]["csv_file"] = test_path
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
->>>>>>> 41dd2641e52d97040a0f36e327b78be45a151fcc
     
     if comet_logger is not None:
         comet_logger.experiment.log_parameters(model.config)
