@@ -10,6 +10,7 @@ import os
 import numpy as np
 import glob
 from datetime import datetime
+import warnings
 
 #Define shapefile utility
 def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
@@ -42,8 +43,11 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     
     #cut off on borders
     try:
-        with rasterio.open(rgb_path) as src:
-            height, width = src.shape
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore')        
+            
+            with rasterio.open(rgb_path) as src:
+                height, width = src.shape
     except:
         print("Image {} failed to open".format(rgb_path))
         os.remove(rgb_path)
@@ -321,8 +325,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     #write paths to headerless files alongside data, add a seperate test empty file
     #Save
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    model_savedir = "{}/{}".format(save_dir,timestamp)
-    os.mkdir(model_savedir)
+    model_savedir = "{}/{}".format(save_dir,timestamp)    
     
     comet_logger.experiment.log_parameter("timestamp",timestamp)
     
