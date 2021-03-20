@@ -12,9 +12,13 @@
 #SBATCH --partition=gpu
 #SBATCH --gpus=3
 
+
 conda activate Zooniverse_pytorch
+module load gcc
 
 #comet debug
 #python aggregate.py
 #python extract.py
+cd species_model
+
 python create_species_model.py

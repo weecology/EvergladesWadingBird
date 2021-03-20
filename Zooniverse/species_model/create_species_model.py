@@ -134,7 +134,7 @@ def split_test_train(annotations, resample_n=100):
     
     #add to train_names until reach target split threshold
     image_names = annotations.image_path.unique()
-    target = int(annotations.shape[0] * 0.95)
+    target = int(annotations.shape[0] * 0.92)
     counter = 0
     train_names = []
     for x in image_names:
@@ -250,7 +250,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     model.trainer.fit(model)
     
     #Manually convert model
-    results = model.evaluate(test_path)
+    results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))
     
     if comet_logger is not None:
         comet_logger.experiment.log_asset(results["result"])
