@@ -8,6 +8,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 sys.path.append(os.getcwd())
 
 import create_species_model
+from species_model import train
 import extract
 import aggregate
 
@@ -91,7 +92,7 @@ def test_split_test_train(extract_images, annotations):
     #Assert no duplicates
     train_dropped_duplicates = train.drop_duplicates()
 
-def test_train_model(extract_images, annotations, tmpdir):
+def test_train_species(extract_images, annotations, tmpdir):
     
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades-species", workspace="bw4sz")
@@ -102,6 +103,5 @@ def test_train_model(extract_images, annotations, tmpdir):
     
     test_path = "{}/test.csv".format(tmpdir)
     test.to_csv(test_path,index=False)    
-    
-    create_species_model.train_model(train_path = train_path, test_path = test_path, epochs=1, comet_logger=comet_logger, debug=True)
+    train_species.train_model(train_path = train_path, test_path = test_path)
     

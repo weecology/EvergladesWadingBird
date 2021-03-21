@@ -13,8 +13,7 @@
 #SBATCH --gpus=3
 
 
-conda activate Zooniverse_pytorch
-module load gcc
+source activate Zooniverse_pytorch
 
 #comet debug
 #python aggregate.py
@@ -22,3 +21,4 @@ module load gcc
 cd species_model
 
 python create_species_model.py
+python train.py

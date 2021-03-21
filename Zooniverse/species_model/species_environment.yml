@@ -1,8 +1,8 @@
 name: Zooniverse_pytorch
 channels: 
-  - defaults
+  - pytorch
+  - conda-forge
 dependencies:
-  - python
   - geopandas
   - shapely
   - pandas

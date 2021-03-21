@@ -7,6 +7,7 @@ import everglade_tokens
 import rasterio
 import requests
 import json
+from skimage import io
 from shapely.geometry import box
 from PIL import Image
 
@@ -70,8 +71,10 @@ def extract_empty(parsed_data, image_data,save_dir="."):
         
         #confirm file can be opened 
         try:
-            a = rasterio.open(name)
-            b = Image.open(name).convert('RGB')
+            img = io.imread(name)
+            if img.shape[2] == 4:
+                img[:,:,:3].save(name)
+            
         except Exception as e:
             print("{} failed with {}".format(name, e))
             continue
