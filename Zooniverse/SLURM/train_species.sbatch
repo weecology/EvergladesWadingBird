@@ -20,3 +20,4 @@ source activate Zooniverse_pytorch
 cd species_model
 
 python create_species_model.py
+python train.py
