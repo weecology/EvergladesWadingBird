@@ -179,8 +179,8 @@ def generate(shp_dir, empty_frames_path=None, save_dir="."):
     empty_train, empty_test = split_test_train(empty_frames_df)
     
     #base name
-    empty_test["image_path"] = os.path.basename(empty_test["image_path"])
-    empty_train["image_path"] = os.path.basename(empty_train["image_path"])
+    empty_test["image_path"] = empty_test["image_path"].apply(lambda x: os.path.basename(x))
+    empty_train["image_path"] = empty_train["image_path"].apply(lambda x: os.path.basename(x))
     
     #limit the number of empty
     train = pd.concat([train, empty_train])
