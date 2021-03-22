@@ -110,6 +110,9 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
         comet_logger.experiment.log_asset(results["result"])
         comet_logger.experiment.log_asset(results["class_recall"])
         comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
+        comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
+        comet_logger.experiment.log_metric("Box Precision",results["box_precision"])
+        
         comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(model_savedir))
         
         ypred = results["results"].predicted_label

@@ -10,6 +10,7 @@ from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
 import shapely
+import pandas as pd
 import rasterio as rio
 import numpy as np
 import os
@@ -79,7 +80,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
     
 def training(proportion, pretrained=True):
-    df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palymra.tif")
+    df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
     df.to_csv("Figures/annotations.csv",index=False)
     
     df = shapefile_to_annotations(shapefile="", rgb="")
