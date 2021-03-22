@@ -99,7 +99,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
         comet_logger.experiment.log_parameter("Training_Annotations",train.shape[0])    
         comet_logger.experiment.log_parameter("Testing_Annotations",test.shape[0])
         
-    im_callback = images_callback(csv_file=m.config["validation"]["csv_file"], root_dir=m.config["validation"]["root_dir"], savedir=model_savedir, n=8)    
+    im_callback = images_callback(csv_file=model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"], savedir=model_savedir, n=8)    
     model.create_trainer(callbacks=[im_callback], logger=comet_logger)
     model.trainer.fit(model)
     
