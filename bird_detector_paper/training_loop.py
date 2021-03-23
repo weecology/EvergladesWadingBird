@@ -124,6 +124,7 @@ def training(proportion, pretrained=True):
         pass
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
+    model.config["epochs"] = 12
     model.train(annotations="crops/training_annotations.csv")
     model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
     
