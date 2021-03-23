@@ -83,12 +83,12 @@ def prepare_test():
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
     df.to_csv("Figures/test_annotations.csv",index=False)
     
-    src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
+    src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2000, base_dir="crops", image_name="palymra.tif")
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2000, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
@@ -123,7 +123,7 @@ def training(proportion, pretrained=True):
     model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
     
     #Evaluate against model
-    src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
+    src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
