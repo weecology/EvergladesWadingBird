@@ -75,7 +75,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
                                   project_name="everglades-species", workspace="bw4sz")
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    model_savedir = "{}/{}".format(save_dir,timestamp)    
+    model_savedir = "{}/{}".format(save_dir,timestamp)  
+    
+    try:
+        os.mkdir(model_savedir)
+    except Exception as e:
+        print(e)
     
     comet_logger.experiment.log_parameter("timestamp",timestamp)
     

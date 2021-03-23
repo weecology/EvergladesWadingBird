@@ -80,23 +80,23 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
     
 def training(proportion, pretrained=True):
-    df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
-    df.to_csv("Figures/annotations.csv",index=False)
-    
-    df = shapefile_to_annotations(shapefile="", rgb="")
-    df.sample(proportion=proportion)
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
     df.to_csv("Figures/training_annotations.csv",index=False)
+    
+    df = shapefile_to_annotations(shapefile="TNC_Dudley_annotation", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
+    df.sample(proportion=proportion)
+    df.to_csv("Figures/testing_annotations.csv",index=False)
     
     src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/annotations.csv", patch_size=2000, base_dir="crops", image_name="palymra.tif")
+    crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/testing_annotations.csv", patch_size=2000, base_dir="crops", image_name="palymra.tif")
     crop_annotations.head()
-    crop_annotations.to_csv("crops/dudley_annotations.csv",index=False, header=False)
+    crop_annotations.to_csv("crops/testing_annotations.csv",index=False, header=False)
     
-    train_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/training_annotations.csv", patch_size=2000, base_dir="crops", image_name="palymra.tif")
+    train_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/training_annotations.csv", patch_size=2000, base_dir="crops", image_name="CooperStrawn_53m_tile_clip.tif")
     train_annotations.head()
     train_annotations.to_csv("crops/training_annotations.csv",index=False, header=False)
     
@@ -106,7 +106,10 @@ def training(proportion, pretrained=True):
     else:
         model = deepforest.deepforest()
     
-    os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
+    try:
+        os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
+    except:
+        pass
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
     model.train(annotations="crops/training_annotations.csv")
@@ -131,7 +134,7 @@ def training(proportion, pretrained=True):
     boxes.to_file("Figures/predictions.shp")
     
     #define in image coordinates and buffer to create a box
-    gdf = gpd.read_file("data/TNC_Dudley_annotation.shp")
+    gdf = gpd.read_file("/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp")
     gdf = gdf[~gdf.geometry.isnull()]
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
