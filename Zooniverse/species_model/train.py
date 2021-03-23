@@ -75,7 +75,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
                                   project_name="everglades-species", workspace="bw4sz")
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    model_savedir = "{}/{}".format(save_dir,timestamp)    
+    model_savedir = "{}/{}".format(save_dir,timestamp)  
+    
+    try:
+        os.mkdir(model_savedir)
+    except Exception as e:
+        print(e)
     
     comet_logger.experiment.log_parameter("timestamp",timestamp)
     
@@ -110,6 +115,9 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
         comet_logger.experiment.log_asset(results["result"])
         comet_logger.experiment.log_asset(results["class_recall"])
         comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
+        comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
+        comet_logger.experiment.log_metric("Box Precision",results["box_precision"])
+        
         comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(model_savedir))
         
         ypred = results["results"].predicted_label
