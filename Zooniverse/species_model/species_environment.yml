@@ -5,6 +5,8 @@ channels:
 dependencies:
   - geopandas
   - shapely
+  - pytorch
+  - torchvision
   - pandas
   - pytest
   - pip
@@ -14,7 +16,6 @@ dependencies:
     - panoptescli
     - mapboxcli
     - rasterio
-    - deepforest-pytorch
     - comet_ml
     - paramiko
     - opencv-python
