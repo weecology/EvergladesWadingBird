@@ -78,26 +78,34 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     result = result[~(result.ymin == result.ymax)]
     
     return result
-    
-def training(proportion, pretrained=True):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
-    df.to_csv("Figures/training_annotations.csv",index=False)
-    
+ 
+def prepare_test():
     df = shapefile_to_annotations(shapefile="TNC_Dudley_annotation", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
-    df.sample(proportion=proportion)
-    df.to_csv("Figures/testing_annotations.csv",index=False)
+    df = df.sample(proportion=proportion)
+    df.to_csv("Figures/test_annotations.csv",index=False)
     
     src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    crop_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/testing_annotations.csv", patch_size=2000, base_dir="crops", image_name="palymra.tif")
-    crop_annotations.head()
-    crop_annotations.to_csv("crops/testing_annotations.csv",index=False, header=False)
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2000, base_dir="crops", image_name="palymra.tif")
+    print(test_annotations.head())
+    test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
-    train_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/training_annotations.csv", patch_size=2000, base_dir="crops", image_name="CooperStrawn_53m_tile_clip.tif")
-    train_annotations.head()
+def training(proportion, pretrained=True):
+    
+    
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
+    df.to_csv("Figures/training_annotations.csv",index=False)
+    
+    train_annotations = deepforest.preprocess.split_raster(
+        "/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif",
+        annotations_file="Figures/training_annotations.csv",
+        patch_size=2000, base_dir="crops",
+        image_name="CooperStrawn_53m_tile_clip.tif"
+    )
+    
     train_annotations.to_csv("crops/training_annotations.csv",index=False, header=False)
     
     if pretrained:
@@ -113,9 +121,13 @@ def training(proportion, pretrained=True):
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
     model.train(annotations="crops/training_annotations.csv")
-    model.evaluate_generator(annotations="crops/dudley_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
+    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
     
     #Evaluate against model
+    src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
+    numpy_image = src.read()
+    numpy_image = np.moveaxis(numpy_image,0,2)
+    numpy_image = numpy_image[:,:,:3].astype("uint8")    
     boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2000)
     bounds = src.bounds
     pixelSizeX, pixelSizeY  = src.res
@@ -151,9 +163,12 @@ def training(proportion, pretrained=True):
     
     return precision, recall
 
+
 proportion = []
 recall = []
 precision = []
+
+prepare_test()
 
 for x in np.arange(0,120,20)/100:
     p, r = training(proportion=x)
