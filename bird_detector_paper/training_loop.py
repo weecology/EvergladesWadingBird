@@ -98,8 +98,13 @@ def training(proportion, pretrained=True):
     df = df.sample(frac=proportion)
     df.to_csv("Figures/training_annotations.csv",index=False)
     
+    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
+    numpy_image = src.read()
+    numpy_image = np.moveaxis(numpy_image,0,2)
+    numpy_image = numpy_image[:,:,:3].astype("uint8")
+    
     train_annotations = deepforest.preprocess.split_raster(
-        path_to_raster="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif",
+        numpy_image=numpy_image,
         annotations_file="Figures/training_annotations.csv",
         patch_size=2000, base_dir="crops",
         image_name="CooperStrawn_53m_tile_clip.tif"
