@@ -99,7 +99,7 @@ def training(proportion, pretrained=True):
     df.to_csv("Figures/training_annotations.csv",index=False)
     
     train_annotations = deepforest.preprocess.split_raster(
-        "/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif",
+        path_to_raster="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif",
         annotations_file="Figures/training_annotations.csv",
         patch_size=2000, base_dir="crops",
         image_name="CooperStrawn_53m_tile_clip.tif"
