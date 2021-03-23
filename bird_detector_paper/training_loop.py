@@ -80,7 +80,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
  
 def prepare_test():
-    df = shapefile_to_annotations(shapefile="TNC_Dudley_annotation", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
+    df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
     df = df.sample(proportion=proportion)
     df.to_csv("Figures/test_annotations.csv",index=False)
     
