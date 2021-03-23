@@ -80,8 +80,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
  
 def prepare_test():
-    df = shapefile_to_annotations(shapefile="data/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
-    df = df.sample(proportion=proportion)
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
     df.to_csv("Figures/test_annotations.csv",index=False)
     
     src = rio.open("/orange/ewhite/everglades/Palmyra/palymra.tif")
@@ -95,8 +94,8 @@ def prepare_test():
     
 def training(proportion, pretrained=True):
     
-    
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
+    df = df.sample(frac=proportion)
     df.to_csv("Figures/training_annotations.csv",index=False)
     
     train_annotations = deepforest.preprocess.split_raster(
