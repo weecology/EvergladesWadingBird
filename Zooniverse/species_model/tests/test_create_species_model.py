@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 sys.path.append(os.getcwd())
 
 import create_species_model
-from species_model import train
+from species_model import train as training_script
 import extract
 import aggregate
 
@@ -103,5 +103,5 @@ def test_train_species(extract_images, annotations, tmpdir):
     
     test_path = "{}/test.csv".format(tmpdir)
     test.to_csv(test_path,index=False)    
-    train_species.train_model(train_path = train_path, test_path = test_path)
+    training_script.train_model(train_path = train_path, test_path = test_path, debug = True)
     

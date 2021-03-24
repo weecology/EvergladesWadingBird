@@ -49,7 +49,7 @@ def predict_empty_frames(model, empty_images, comet_logger, invert=False):
     #Create PR curve
     precision_curve = [ ]
     for path in empty_images:
-        boxes = model.predict_image(path, return_plot=False)
+        boxes = model.predict_image(path = path, return_plot=False)
         boxes["image"] = path
         precision_curve.append(boxes)
     
@@ -68,7 +68,7 @@ def predict_empty_frames(model, empty_images, comet_logger, invert=False):
     comet_logger.experiment.log_metric(metric_name,value)
     comet_logger.experiment.log_figure(recall_plot)   
     
-def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
+def train_model(train_path, test_path, empty_images_path=None, save_dir=".", debug = False):
     """Train a DeepForest model"""
     
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
@@ -99,6 +99,10 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     model.config["validation"]["csv_file"] = test_path
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
     
+    if debug:
+        model.config["train"]["fast_dev_run"] = True
+        model.config["gpus"] = None
+        
     if comet_logger is not None:
         comet_logger.experiment.log_parameters(model.config)
         comet_logger.experiment.log_parameter("Training_Annotations",train.shape[0])    
@@ -126,7 +130,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
         
         ypred = results["results"].predicted_label
         ytrue = results["results"].true_label
-        comet_logger.experiment.log_confusion_matrix(ytrue,ypred, list(model.label_dict.keys()))
+        comet_logger.experiment.log_confusion_matrix(ytrue, ypred, labels = list(model.label_dict.keys()))
         
     #Create a positive bird recall curve
     test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
