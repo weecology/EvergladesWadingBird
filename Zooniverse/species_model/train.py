@@ -112,7 +112,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))
     
     if comet_logger is not None:
-        comet_logger.experiment.log_asset(results["result"])
+        comet_logger.experiment.log_asset(results["results"])
         comet_logger.experiment.log_asset(results["class_recall"])
         comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
         comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
