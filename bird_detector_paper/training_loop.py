@@ -167,7 +167,7 @@ def training(proportion, pretrained=True):
     
     return precision, recall
 
-def run(debug=False):
+def run():
     proportion = []
     recall = []
     precision = []
@@ -175,7 +175,7 @@ def run(debug=False):
     prepare_test()
     
     for x in np.arange(10,120,20)/100:
-        p, r = training(proportion=x, debug = debug)
+        p, r = training(proportion=x)
         precision.append(p)
         recall.append(r)
         proportion.append(x)
