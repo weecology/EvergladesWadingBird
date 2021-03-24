@@ -172,7 +172,7 @@ def run(debug=False):
     recall = []
     precision = []
     
-    prepare_test()
+    #prepare_test()
     
     for x in np.arange(10,120,20)/100:
         p, r = training(proportion=x, debug = debug)
