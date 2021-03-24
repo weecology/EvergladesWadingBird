@@ -1,5 +1,5 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
-#srun -p gpu --gpus=1 --mem 20GB --time 5:00:00 --pty -u bash -i
+#srun -p gpu --gpus=1 --mem 70GB --time 5:00:00 --pty -u bash -i
 #module load tensorflow/1.14.0
 #export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
 #export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
@@ -93,7 +93,6 @@ def prepare_test():
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
 def training(proportion, pretrained=True):
-    
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
     df = df.sample(frac=proportion)
     df.to_csv("Figures/training_annotations.csv",index=False)
@@ -117,7 +116,7 @@ def training(proportion, pretrained=True):
         model = deepforest.deepforest(weights=model_path)
     else:
         model = deepforest.deepforest()
-    
+            
     try:
         os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
     except:
@@ -168,18 +167,21 @@ def training(proportion, pretrained=True):
     
     return precision, recall
 
+def run(debug=False):
+    proportion = []
+    recall = []
+    precision = []
+    
+    prepare_test()
+    
+    for x in np.arange(10,120,20)/100:
+        p, r = training(proportion=x, debug = debug)
+        precision.append(p)
+        recall.append(r)
+        proportion.append(x)
+    
+    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion})
+    results.to_csv("Figures/results.csv") 
 
-proportion = []
-recall = []
-precision = []
-
-prepare_test()
-
-for x in np.arange(0,120,20)/100:
-    p, r = training(proportion=x)
-    precision.append(p)
-    recall.append(r)
-    proportion.append(x)
-
-results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion})
-results.to_csv("Figures/results.csv") 
+if __name__ == "__main__":
+    run()
