@@ -94,6 +94,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     
     model.config["train"]["csv_file"] = train_path
     model.config["train"]["root_dir"] = os.path.dirname(train_path)
+    model.config["train"]["fast_dev_run"] = True
     
     #Set config and train
     model.config["validation"]["csv_file"] = test_path
@@ -112,8 +113,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))
     
     if comet_logger is not None:
-        comet_logger.experiment.log_asset(results["results"])
-        comet_logger.experiment.log_asset(results["class_recall"])
+        results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+        comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+        
+        results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+        comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+        
         comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
         comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
         comet_logger.experiment.log_metric("Box Precision",results["box_precision"])
