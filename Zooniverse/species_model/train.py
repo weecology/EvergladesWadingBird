@@ -94,7 +94,6 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir="."):
     
     model.config["train"]["csv_file"] = train_path
     model.config["train"]["root_dir"] = os.path.dirname(train_path)
-    model.config["train"]["fast_dev_run"] = True
     
     #Set config and train
     model.config["validation"]["csv_file"] = test_path
