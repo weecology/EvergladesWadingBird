@@ -56,7 +56,7 @@ def test_empty_image():
     image = ["a","a","a","b","b"]
     scores = ["0.1","0.1","0.1","0.2","0.9"]
     precision_curve = pd.DataFrame({"image":image,"score":scores})
-    empty_recall = create_species_model.empty_image(precision_curve, threshold=0.15)
+    empty_recall = training_script.empty_image(precision_curve, threshold=0.15)
     assert empty_recall == 0.5
 
 def test_plot_recall_curve():
