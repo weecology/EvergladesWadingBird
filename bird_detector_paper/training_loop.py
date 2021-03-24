@@ -34,7 +34,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     #raster bounds
     with rio.open(rgb) as src:
         left, bottom, right, top = src.bounds
-        resolution = src.res[0]
+        resolution = 0.00589
         
     #define in image coordinates and buffer to create a box
     gdf["geometry"] = gdf.geometry.boundary.centroid
