@@ -1,5 +1,5 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
-#srun -p gpu --gpus=1 --mem 70GB --time 5:00:00 --pty -u bash -i
+#srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
 #module load tensorflow/1.14.0
 #export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
 #export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
@@ -93,11 +93,11 @@ def prepare_test():
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
 def training(proportion, pretrained=True):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_original.tif")
     df = df.sample(frac=proportion)
     df.to_csv("Figures/training_annotations.csv",index=False)
     
-    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip.tif")
+    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_original.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
@@ -106,7 +106,7 @@ def training(proportion, pretrained=True):
         numpy_image=numpy_image,
         annotations_file="Figures/training_annotations.csv",
         patch_size=2000, base_dir="crops",
-        image_name="CooperStrawn_53m_tile_clip.tif"
+        image_name="CooperStrawn_53m_tile_original.tif"
     )
     
     train_annotations.to_csv("crops/training_annotations.csv",index=False, header=False)
