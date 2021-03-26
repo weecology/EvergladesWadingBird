@@ -1,10 +1,6 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
 #srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
-#module load tensorflow/1.14.0
-#export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
-#export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
-#export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
-
+# conda activate Zooniverse
 from deepforest import deepforest
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
@@ -14,6 +10,7 @@ import pandas as pd
 import rasterio as rio
 import numpy as np
 import os
+
 
 import IoU
 
@@ -34,7 +31,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     #raster bounds
     with rio.open(rgb) as src:
         left, bottom, right, top = src.bounds
-        resolution = 0.00589
+        resolution = src.res[0]
         
     #define in image coordinates and buffer to create a box
     gdf["geometry"] = gdf.geometry.boundary.centroid
@@ -92,21 +89,17 @@ def prepare_test():
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
-def training(proportion, pretrained=True):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_original.tif")
+def training(proportion,training_image, pretrained=True):
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
     df = df.sample(frac=proportion)
     df.to_csv("Figures/training_annotations.csv",index=False)
     
-    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_original.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    numpy_image = numpy_image[:,:,:3].astype("uint8")
-    
     train_annotations = deepforest.preprocess.split_raster(
-        numpy_image=numpy_image,
+        numpy_image=training_image,
         annotations_file="Figures/training_annotations.csv",
         patch_size=2000, base_dir="crops",
-        image_name="CooperStrawn_53m_tile_original.tif"
+        image_name="CooperStrawn_53m_tile_clip_projected.tif",
+        allow_empty=False
     )
     
     train_annotations.to_csv("crops/training_annotations.csv",index=False, header=False)
@@ -174,8 +167,14 @@ def run():
     
     prepare_test()
     
+    #Only open training raster once because its so huge.
+    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
+    numpy_image = src.read()
+    numpy_image = np.moveaxis(numpy_image,0,2)
+    training_image = numpy_image[:,:,:3].astype("uint8")
+    
     for x in np.arange(10,120,20)/100:
-        p, r = training(proportion=x)
+        p, r = training(proportion=x, training_image=training_image)
         precision.append(p)
         recall.append(r)
         proportion.append(x)
