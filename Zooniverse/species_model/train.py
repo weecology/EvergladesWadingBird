@@ -7,6 +7,7 @@ import pandas as pd
 import os
 import numpy as np
 from datetime import datetime
+import traceback
 
 def is_empty(precision_curve, threshold):
     precision_curve.score = precision_curve.score.astype(float)
@@ -118,22 +119,25 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))
     
     if comet_logger is not None:
-        results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
-        comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
-        
-        results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
-        comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
-        
-        comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
-        comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
-        comet_logger.experiment.log_metric("Box Precision",results["box_precision"])
-        
-        comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(model_savedir))
-        
-        ypred = results["results"].predicted_label
-        ytrue = results["results"].true_label
-        comet_logger.experiment.log_confusion_matrix(ytrue, ypred, labels = list(model.label_dict.keys()))
-        
+        try:
+            results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+            comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+            
+            results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+            comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+            
+            comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
+            comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
+            comet_logger.experiment.log_metric("Box Precision",results["box_precision"])
+            
+            comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(model_savedir))
+            
+            ypred = results["results"].predicted_label
+            ytrue = results["results"].true_label
+            comet_logger.experiment.log_confusion_matrix(ytrue, ypred, labels = list(model.label_dict.keys()))
+        except Exception as e:
+            print("logger exception: {} with traceback \n {}".format(e, traceback.print_exc()))
+    
     #Create a positive bird recall curve
     test_frame_df = pd.read_csv(test_path)
     dirname = os.path.dirname(test_path)
