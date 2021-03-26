@@ -98,7 +98,9 @@ def training(proportion,training_image, pretrained=True):
     comet_experiment.add_tag("Palmyra")
     
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
-    df = df.sample(frac=proportion)
+    crops = df.image_path.unique()
+    selected_crops = np.random.choice(crops, size = int(proportion*len(crops)))
+    df = df[df.image_path.isin(selected_crops)]
     df.to_csv("Figures/training_annotations.csv",index=False)
     
     train_annotations = deepforest.preprocess.split_raster(
