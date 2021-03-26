@@ -51,8 +51,11 @@ def predict_empty_frames(model, empty_images, comet_logger, invert=False):
     precision_curve = [ ]
     for path in empty_images:
         boxes = model.predict_image(path = path, return_plot=False)
-        boxes["image"] = path
-        precision_curve.append(boxes)
+        if boxes is not None:     
+            boxes["image"] = path
+            precision_curve.append(boxes)
+    if len(precision_curve) == 0:
+        return None
     
     precision_curve = pd.concat(precision_curve)
     recall_plot = plot_recall_curve(precision_curve, invert=invert)
