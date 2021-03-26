@@ -1,6 +1,7 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
 #srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse
+import comet_ml
 from deepforest import deepforest
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
@@ -90,6 +91,12 @@ def prepare_test():
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
 def training(proportion,training_image, pretrained=True):
+    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                           project_name="everglades", workspace="bw4sz")
+    
+    comet_experiment.log_parameter("proportion",proportion)
+    comet_experiment.add_tag("Palmyra")
+    
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
     df = df.sample(frac=proportion)
     df.to_csv("Figures/training_annotations.csv",index=False)
@@ -117,8 +124,8 @@ def training(proportion,training_image, pretrained=True):
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
     model.config["epochs"] = 12
-    model.train(annotations="crops/training_annotations.csv")
-    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
+    model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
+    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
     
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
@@ -158,9 +165,14 @@ def training(proportion,training_image, pretrained=True):
     print("Recall is {}".format(recall))
     print("Precision is {}".format(precision))
     
+    comet_experiment.log_metric("precision",precision)
+    comet_experiment.log_metric("recall", recall)
+    
     return precision, recall
 
 def run():
+
+    
     proportion = []
     recall = []
     precision = []
