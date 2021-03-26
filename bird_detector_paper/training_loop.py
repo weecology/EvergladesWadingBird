@@ -86,7 +86,7 @@ def prepare_test():
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2000, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2500, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
@@ -132,7 +132,7 @@ def training(proportion,training_image, pretrained=True):
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2000)
+    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2500)
     bounds = src.bounds
     pixelSizeX, pixelSizeY  = src.res
     
@@ -185,7 +185,7 @@ def run():
     numpy_image = np.moveaxis(numpy_image,0,2)
     training_image = numpy_image[:,:,:3].astype("uint8")
     
-    for x in np.arange(10,120,20)/100:
+    for x in [0.25, 0.5, 0.75, 1]:
         p, r = training(proportion=x, training_image=training_image)
         precision.append(p)
         recall.append(r)
