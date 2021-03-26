@@ -166,21 +166,21 @@ def generate(shp_dir, empty_frames_path=None, save_dir="."):
     train, test = split_test_train(annotations)
     
     ##Add some empty images to train and test
-    #empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
-    #empty_frames_df.sample(n=10)
+    empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
+    empty_frames_df.sample(n=10)
     
-    ##add some blank annotations
-    #empty_frames_df["xmin"] = pd.Series(dtype="Int64")
-    #empty_frames_df["ymin"] = pd.Series(dtype="Int64")
-    #empty_frames_df["xmax"] = pd.Series(dtype="Int64")
-    #empty_frames_df["ymax"] = pd.Series(dtype="Int64")
-    #empty_frames_df["label"] = pd.Series(dtype=str)
+    #add some blank annotations
+    empty_frames_df["xmin"] = pd.Series(dtype="Int64")
+    empty_frames_df["ymin"] = pd.Series(dtype="Int64")
+    empty_frames_df["xmax"] = pd.Series(dtype="Int64")
+    empty_frames_df["ymax"] = pd.Series(dtype="Int64")
+    empty_frames_df["label"] = pd.Series(dtype=str)
     
-    #empty_train, empty_test = split_test_train(empty_frames_df)
+    empty_train, empty_test = split_test_train(empty_frames_df)
     
     ##base name
-    #empty_test["image_path"] = empty_test["image_path"].apply(lambda x: os.path.basename(x))
-    #empty_train["image_path"] = empty_train["image_path"].apply(lambda x: os.path.basename(x))
+    empty_test["image_path"] = empty_test["image_path"].apply(lambda x: os.path.basename(x))
+    empty_train["image_path"] = empty_train["image_path"].apply(lambda x: os.path.basename(x))
     
     #limit the number of empty
     #train = pd.concat([train, empty_train])

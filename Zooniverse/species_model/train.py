@@ -135,7 +135,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         comet_logger.experiment.log_confusion_matrix(ytrue, ypred, labels = list(model.label_dict.keys()))
         
     #Create a positive bird recall curve
-    test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
+    test_frame_df = pd.read_csv(test_path)
     dirname = os.path.dirname(test_path)
     test_frame_df["image_path"] = test_frame_df["image_name"].apply(lambda x: os.path.join(dirname,x))
     empty_images = test_frame_df.image_path.unique()    
