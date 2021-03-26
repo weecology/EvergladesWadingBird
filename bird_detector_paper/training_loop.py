@@ -104,7 +104,7 @@ def training(proportion,training_image, pretrained=True):
     train_annotations = deepforest.preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/training_annotations.csv",
-        patch_size=2000, base_dir="crops",
+        patch_size=2500, base_dir="crops",
         image_name="CooperStrawn_53m_tile_clip_projected.tif",
         allow_empty=False
     )
@@ -123,10 +123,10 @@ def training(proportion,training_image, pretrained=True):
         pass
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
-    model.config["epochs"] = 1
+    model.config["epochs"] = 3
     model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
     model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
-    
+    #model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))    
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
