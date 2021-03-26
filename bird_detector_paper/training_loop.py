@@ -109,9 +109,10 @@ def training(proportion,training_image, pretrained=True):
         allow_empty=False
     )
     
-    crops = train_annotations.image_name.unique()    
+    print(train_annotations.head())
+    crops = train_annotations.image_path.unique()    
     selected_crops = np.random.choice(crops, size = int(proportion*len(crops)))
-    train_annotations = train_annotations[train_annotations.image_name.isin(selected_crops)]
+    train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
     
     train_annotations.to_csv("crops/training_annotations.csv",index=False, header=False)
     
