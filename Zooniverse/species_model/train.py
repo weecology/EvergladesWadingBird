@@ -141,7 +141,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     #Create a positive bird recall curve
     test_frame_df = pd.read_csv(test_path)
     dirname = os.path.dirname(test_path)
-    test_frame_df["image_path"] = test_frame_df["image_name"].apply(lambda x: os.path.join(dirname,x))
+    test_frame_df["image_path"] = test_frame_df["image_path"].apply(lambda x: os.path.join(dirname,x))
     empty_images = test_frame_df.image_path.unique()    
     predict_empty_frames(model, empty_images, comet_logger.experiment, invert=True)
     
