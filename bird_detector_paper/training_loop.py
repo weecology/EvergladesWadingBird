@@ -121,7 +121,7 @@ def training(proportion,training_image, pretrained=True):
         model = deepforest.deepforest(weights=model_path)
     else:
         model = deepforest.deepforest()
-            
+        model.use_release()
     try:
         os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
     except:
