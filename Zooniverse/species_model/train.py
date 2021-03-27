@@ -137,7 +137,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
             
             ypred = results["results"].predicted_label
             ytrue = results["results"].true_label
-            comet_logger.experiment.log_confusion_matrix(ytrue, ypred, labels = list(model.label_dict.keys()))
+            comet_logger.experiment.log_confusion_matrix(ytrue=ytrue, y_predicted=ypred, labels = [list(model.label_dict.keys()),list(model.label_dict.keys())])
         except Exception as e:
             print("logger exception: {} with traceback \n {}".format(e, traceback.print_exc()))
     
@@ -146,13 +146,13 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     dirname = os.path.dirname(test_path)
     test_frame_df["image_path"] = test_frame_df["image_path"].apply(lambda x: os.path.join(dirname,x))
     empty_images = test_frame_df.image_path.unique()    
-    predict_empty_frames(model, empty_images, comet_logger.experiment, invert=True)
+    predict_empty_frames(model, empty_images, comet_logger, invert=True)
     
     #Test on empy frames
     if empty_images_path:
         empty_frame_df = pd.read_csv(empty_images_path)
         empty_images = empty_frame_df.image_path.unique()    
-        predict_empty_frames(model, empty_images, comet_logger.experiment)
+        predict_empty_frames(model, empty_images, comet_logger)
     
     #save model
     model.save_checkpoint("{}/species_model.pl".format(model_savedir))
