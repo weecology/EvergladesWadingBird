@@ -104,9 +104,9 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
     
     if debug:
-        model.config["train"]["fast_dev_run"] = False
+        model.config["train"]["fast_dev_run"] = True
         model.config["gpus"] = None
-        model.config["workers"] = 0
+        model.config["workers"] = 1
         model.config["batch_size"] = 1
         
     if comet_logger is not None:
@@ -137,7 +137,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
             
             ypred = results["results"].predicted_label
             ytrue = results["results"].true_label
-            comet_logger.experiment.log_confusion_matrix(ytrue=ytrue, y_predicted=ypred, labels = [list(model.label_dict.keys()),list(model.label_dict.keys())])
+            comet_logger.experiment.log_confusion_matrix(y_true=ytrue, y_predicted=ypred)
         except Exception as e:
             print("logger exception: {} with traceback \n {}".format(e, traceback.print_exc()))
     
@@ -155,7 +155,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         predict_empty_frames(model, empty_images, comet_logger)
     
     #save model
-    model.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     return model
 

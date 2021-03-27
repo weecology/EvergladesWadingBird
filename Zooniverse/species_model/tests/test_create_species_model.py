@@ -64,7 +64,7 @@ def test_plot_recall_curve():
     scores = ["0.1","0.1","0.1","0.2","0.9"]
     precision_curve = pd.DataFrame({"image":image,"score":scores})
     
-    ax1 = create_species_model.plot_recall_curve(precision_curve)
+    ax1 = training_script.plot_recall_curve(precision_curve)
 
 def test_format_shapefiles(extract_images, tmpdir):
     results = create_species_model.format_shapefiles(shp_dir=tmpdir)
@@ -93,9 +93,6 @@ def test_split_test_train(extract_images, annotations):
     train_dropped_duplicates = train.drop_duplicates()
 
 def test_train_species(extract_images, annotations, tmpdir):
-    
-    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                  project_name="everglades-species", workspace="bw4sz")
     
     train, test = create_species_model.split_test_train(annotations)
     train_path = "{}/train.csv".format(tmpdir)
