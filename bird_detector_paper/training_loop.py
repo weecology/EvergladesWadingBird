@@ -90,7 +90,7 @@ def prepare_test():
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
-def training(proportion,training_image, pretrained=False):
+def training(proportion,training_image, pretrained=True):
     comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                            project_name="everglades", workspace="bw4sz")
     
@@ -130,8 +130,8 @@ def training(proportion,training_image, pretrained=False):
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
     model.config["epochs"] = 3
     model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
-    model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
-    #model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))    
+    #model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
+    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)    
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
