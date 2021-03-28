@@ -152,7 +152,8 @@ def training(proportion,training_image, pretrained=True):
     boxes = gpd.GeoDataFrame(boxes, geometry='geometry')
     
     boxes.crs = src.crs.to_wkt()
-    boxes.to_file("Figures/predictions.shp")
+    boxes.to_file("Figures/predictions_{}.shp".format(proportion))
+    comet_experiment.log_asset("Figures/predictions_{}.shp".format(proportion))
     
     #define in image coordinates and buffer to create a box
     gdf = gpd.read_file("/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp")
@@ -163,6 +164,10 @@ def training(proportion,training_image, pretrained=True):
     
     results = IoU.compute_IoU(gdf, boxes)
     results["match"] = results.score > 0.4
+    
+    results.to_csv("Figures/iou_dataframe_{}.csv".format(proportion))
+    comet_experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
+    
     true_positive = sum(results["match"] == True)
     recall = true_positive / results.shape[0]
     precision = true_positive / boxes.shape[0]
