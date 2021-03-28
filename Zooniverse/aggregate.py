@@ -302,7 +302,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     
     #if debug for testing, just sample 20 rows    
     if debug:
-        df = df.sample(n=75)        
+        df = df.sample(n=30)        
     
     #Parse JSON and filter
     df = parse_birds(df)
