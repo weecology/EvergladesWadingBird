@@ -148,7 +148,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         image_weight = sum([class_weights[x] for x in labels])/len(labels)
         data_weights.append(1-image_weight)
         
-    sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights)
+    sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights, num_samples=len(ds))
     dataloader = torch.data.utils.DataLoader(ds, batch_size = model.config["batch_size"], shuffle=True, sampler = sampler, collate_fn=utilities.collate_fn, num_workers=model.config["workers"])
     
     model.trainer.fit(model, dataloader)
@@ -163,6 +163,10 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
             
             results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
             comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+            
+            for index, row in results["class_recall"].iterrows():
+                comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"].values[0])
+                comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"].values[0])
             
             comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
             comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
