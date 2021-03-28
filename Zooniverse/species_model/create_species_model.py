@@ -147,14 +147,7 @@ def split_test_train(annotations, resample_n=100):
         
     train = annotations[annotations.image_path.isin(train_names)]
     test = annotations[~(annotations.image_path.isin(train_names))]
-    
-    #resample train for rare species
-    
-    resampled_train = train[train.label.isin(["Great Blue Heron","Wood Stork","Snowy Egret"])].groupby("label").apply(lambda x: sample_if(x,resample_n)).reset_index(drop=True)    
-    common_class_train = train[~train.label.isin(["Great Blue Heron","Wood Stork","Snowy Egret"])]
-    
-    train = pd.concat([common_class_train,resampled_train])
-    
+
     return train, test
      
     

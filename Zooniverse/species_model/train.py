@@ -3,11 +3,14 @@ import comet_ml
 from pytorch_lightning.loggers import CometLogger
 from deepforest.callbacks import images_callback
 from deepforest import main
+from deepforest import dataset
+from deepforest import utilities
 import pandas as pd
 import os
 import numpy as np
 from datetime import datetime
 import traceback
+import torch
 
 def is_empty(precision_curve, threshold):
     precision_curve.score = precision_curve.score.astype(float)
@@ -116,7 +119,39 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         
     im_callback = images_callback(csv_file=model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"], savedir=model_savedir, n=8)    
     model.create_trainer(callbacks=[im_callback], logger=comet_logger)
-    model.trainer.fit(model)
+    
+    #Overwrite sampler to weight by class
+    ds = dataset.TreeDataset(csv_file=model.config["train"]["csv_file"],
+                             root_dir=model.config["train"]["root_dir"],
+                             transforms=dataset.get_transform(augment=True),
+                             label_dict=model.label_dict)
+
+    #get class weights
+    class_weights = {}
+    for x in list(model.label_dict.keys()):
+        class_weights[x] = 0 
+    
+    for batch in ds:
+        path, image, targets = batch
+        labels = [model.numeric_to_label_dict[x] for x in targets["labels"].numpy()]
+        for x in labels:
+            class_weights[x] = class_weights[x]+1
+    
+    for x in class_weights:
+        class_weights[x] = class_weights[x]/sum(class_weights.values())
+    
+    data_weights = []
+    #sample rare classes more
+    for idx, batch in enumerate(ds):
+        path, image, targets = batch
+        labels = [model.numeric_to_label_dict[x] for x in targets["labels"].numpy()]
+        image_weight = sum([class_weights[x] for x in labels])/len(labels)
+        data_weights[idx] = 1-image_weight
+        
+    sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights)
+    dataloader = torch.data.utils.DataLoader(ds, batch_size = model.config["batch_size"], shuffle=True, sampler = sampler, collate_fn=utilities.collate_fn, num_workers=model.config["workers"])
+    
+    model.trainer.fit(model, dataloader)
     
     #Manually convert model
     results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))

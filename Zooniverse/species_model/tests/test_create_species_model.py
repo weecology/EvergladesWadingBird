@@ -92,8 +92,7 @@ def test_split_test_train(extract_images, annotations):
     #Assert no duplicates
     train_dropped_duplicates = train.drop_duplicates()
 
-def test_train_species(extract_images, annotations, tmpdir):
-    
+def test_train_species(extract_images,annotations, tmpdir):
     train, test = create_species_model.split_test_train(annotations)
     train_path = "{}/train.csv".format(tmpdir)
     train.to_csv(train_path,index=False)
