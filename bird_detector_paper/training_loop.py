@@ -115,7 +115,7 @@ def training(proportion,training_image, pretrained=True):
     train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
     
     comet_experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
-    comet_experiment.log_parameter("training_annotations",len(train_annotations.shape[0])) 
+    comet_experiment.log_parameter("training_annotations",train_annotations.shape[0])
     
     train_annotations.to_csv("crops/training_annotations.csv",index=False, header=False)
     
