@@ -163,7 +163,7 @@ def generate(shp_dir, empty_frames_path=None, save_dir="."):
     annotations = format_shapefiles(shp_dir)   
     
     #Split train and test
-    train, test = split_test_train(annotations)
+    train, test = split_test_train(annotations, resample_n=1)
     
     ##Add some empty images to train and test
     empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
