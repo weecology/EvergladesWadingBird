@@ -118,7 +118,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         comet_logger.experiment.log_parameter("Testing_Annotations",test.shape[0])
         
     im_callback = images_callback(csv_file=model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"], savedir=model_savedir, n=8)    
-    model.create_trainer(callbacks=[im_callback], logger=comet_logger)
+    model.create_trainer(callbacks=[im_callback], logger=comet_logger, replace_sampler_ddp=False)
     
     #Overwrite sampler to weight by class
     ds = dataset.TreeDataset(csv_file=model.config["train"]["csv_file"],
@@ -150,7 +150,6 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         
     sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights, num_samples=len(ds))
     dataloader = torch.utils.data.DataLoader(ds, batch_size = model.config["batch_size"], sampler = sampler, collate_fn=utilities.collate_fn, num_workers=model.config["workers"])
-    model.trainer.replace_sampler_ddp = False
     model.trainer.fit(model, dataloader)
     
     #Manually convert model
