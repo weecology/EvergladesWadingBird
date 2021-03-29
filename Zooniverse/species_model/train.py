@@ -150,7 +150,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         
     sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights, num_samples=len(ds))
     dataloader = torch.utils.data.DataLoader(ds, batch_size = model.config["batch_size"], sampler = sampler, collate_fn=utilities.collate_fn, num_workers=model.config["workers"])
-    model.trainer.fit(model, dataloader)
+    model.trainer.fit(model, dataloader, replace_sampler_ddp=False)
     
     #Manually convert model
     results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))
