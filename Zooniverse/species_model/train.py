@@ -164,8 +164,8 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
             comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
             
             for index, row in results["class_recall"].iterrows():
-                comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"].values)
-                comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"].values)
+                comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
+                comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
             
             comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
             comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
