@@ -1,10 +1,6 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
-#srun -p gpu --gpus=1 --mem 20GB --time 5:00:00 --pty -u bash -i
-#module load tensorflow/1.14.0
-#export PATH=${PATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/bin/
-#export PYTHONPATH=${PYTHONPATH}:/home/b.weinstein/miniconda3/envs/Zooniverse/lib/python3.7/site-packages/
-#export LD_LIBRARY_PATH=/home/b.weinstein/miniconda3/envs/Zooniverse/lib/:${LD_LIBRARY_PATH}
-
+#srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
+#conda activate Zooniverse
 from deepforest import deepforest
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box

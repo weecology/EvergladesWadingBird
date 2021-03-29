@@ -141,12 +141,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         class_weights[x] = class_weights[x]/sum(class_weights.values())
     
     data_weights = []
-    #sample rare classes more
+    #upsample rare classes more as a residual
     for idx, batch in enumerate(ds):
         path, image, targets = batch
         labels = [model.numeric_to_label_dict[x] for x in targets["labels"].numpy()]
         image_weight = sum([class_weights[x] for x in labels])/len(labels)
-        data_weights.append(1/len(ds))
+        data_weights.append(1/image_weight)
         
     sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights, num_samples=len(ds))
     dataloader = torch.utils.data.DataLoader(ds, batch_size = model.config["batch_size"], sampler = sampler, collate_fn=utilities.collate_fn, num_workers=model.config["workers"])
