@@ -175,10 +175,6 @@ def generate(shp_dir, empty_frames_path=None, save_dir="."):
     empty_test["image_path"] = empty_test["image_path"].apply(lambda x: os.path.basename(x))
     empty_train["image_path"] = empty_train["image_path"].apply(lambda x: os.path.basename(x))
     
-    #limit the number of empty
-    #train = pd.concat([train, empty_train])
-    #test = pd.concat([test, empty_test])
-    
     #Enforce rounding to pixels, pandas "Int64" dtype for nullable arrays https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html
     train.xmin = train.xmin.astype("Int64")
     train.ymin = train.ymin.astype("Int64")
