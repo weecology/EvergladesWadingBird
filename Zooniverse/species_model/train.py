@@ -117,40 +117,40 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         comet_logger.experiment.log_parameter("Training_Annotations",train.shape[0])    
         comet_logger.experiment.log_parameter("Testing_Annotations",test.shape[0])
         
-    im_callback = images_callback(csv_file=model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"], savedir=model_savedir, n=8)    
-    model.create_trainer(callbacks=[im_callback], logger=comet_logger, replace_sampler_ddp=False)
+    im_callback = images_callback(csv_file=model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"], savedir=model_savedir, n=20)    
+    model.create_trainer(callbacks=[im_callback], logger=comet_logger)
     
-    #Overwrite sampler to weight by class
-    ds = dataset.TreeDataset(csv_file=model.config["train"]["csv_file"],
-                             root_dir=model.config["train"]["root_dir"],
-                             transforms=dataset.get_transform(augment=True),
-                             label_dict=model.label_dict)
+    ##Overwrite sampler to weight by class
+    #ds = dataset.TreeDataset(csv_file=model.config["train"]["csv_file"],
+                             #root_dir=model.config["train"]["root_dir"],
+                             #transforms=dataset.get_transform(augment=True),
+                             #label_dict=model.label_dict)
 
-    #get class weights
-    class_weights = {}
-    for x in list(model.label_dict.keys()):
-        class_weights[x] = 0 
+    ##get class weights
+    #class_weights = {}
+    #for x in list(model.label_dict.keys()):
+        #class_weights[x] = 0 
     
-    for batch in ds:
-        path, image, targets = batch
-        labels = [model.numeric_to_label_dict[x] for x in targets["labels"].numpy()]
-        for x in labels:
-            class_weights[x] = class_weights[x]+1
+    #for batch in ds:
+        #path, image, targets = batch
+        #labels = [model.numeric_to_label_dict[x] for x in targets["labels"].numpy()]
+        #for x in labels:
+            #class_weights[x] = class_weights[x]+1
     
-    for x in class_weights:
-        class_weights[x] = class_weights[x]/sum(class_weights.values())
+    #for x in class_weights:
+        #class_weights[x] = class_weights[x]/sum(class_weights.values())
     
-    data_weights = []
-    #upsample rare classes more as a residual
-    for idx, batch in enumerate(ds):
-        path, image, targets = batch
-        labels = [model.numeric_to_label_dict[x] for x in targets["labels"].numpy()]
-        image_weight = sum([1-class_weights[x] for x in labels])/len(labels)
-        data_weights.append(1/image_weight)
+    #data_weights = []
+    ##upsample rare classes more as a residual
+    #for idx, batch in enumerate(ds):
+        #path, image, targets = batch
+        #labels = [model.numeric_to_label_dict[x] for x in targets["labels"].numpy()]
+        #image_weight = sum([1-class_weights[x] for x in labels])/len(labels)
+        #data_weights.append(1/image_weight)
         
-    sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights, num_samples=len(ds))
-    dataloader = torch.utils.data.DataLoader(ds, batch_size = model.config["batch_size"], sampler = sampler, collate_fn=utilities.collate_fn, num_workers=model.config["workers"])
-    model.trainer.fit(model, dataloader)
+    #sampler = torch.utils.data.sampler.WeightedRandomSampler(weights = data_weights, num_samples=len(ds))
+    #dataloader = torch.utils.data.DataLoader(ds, batch_size = model.config["batch_size"], sampler = sampler, collate_fn=utilities.collate_fn, num_workers=model.config["workers"])
+    #model.trainer.fit(model)
     
     #Manually convert model
     results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))
