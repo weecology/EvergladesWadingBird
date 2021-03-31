@@ -3,6 +3,8 @@ import comet_ml
 from pytorch_lightning.loggers import CometLogger
 
 import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 
