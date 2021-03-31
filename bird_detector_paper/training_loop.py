@@ -1,5 +1,5 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
-#srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
+#srun -p gpu --gpus=1 --mem 70GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse
 import comet_ml
 from deepforest import deepforest
@@ -91,8 +91,7 @@ def prepare_test():
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
 def training(proportion,training_image, pretrained=True):
-    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                           project_name="everglades", workspace="bw4sz")
+    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
     
     comet_experiment.log_parameter("proportion",proportion)
     comet_experiment.add_tag("Palmyra")
@@ -183,6 +182,8 @@ def training(proportion,training_image, pretrained=True):
     comet_experiment.log_metric("precision",precision)
     comet_experiment.log_metric("recall", recall)
     
+    comet_experiment.end()
+    
     return precision, recall
 
 def run():
@@ -193,7 +194,7 @@ def run():
     precision = []
     pretrained =[]
     
-    prepare_test()
+    #prepare_test()
     
     #Only open training raster once because its so huge.
     src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
@@ -202,6 +203,7 @@ def run():
     training_image = numpy_image[:,:,:3].astype("uint8")
     
     for x in [0,0.25, 0.5, 0.75, 1]:
+        print(x)
         for y in [True, False]:     
             p, r = training(proportion=x, training_image=training_image, pretrained=y)
             precision.append(p)
