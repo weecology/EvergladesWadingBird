@@ -168,7 +168,7 @@ def training(proportion,training_image, pretrained=True):
     gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
     
     results = IoU.compute_IoU(gdf, boxes)
-    results["match"] = results.score > 0.4
+    results["match"] = results.IoU > 0.4
     
     results.to_csv("Figures/iou_dataframe_{}.csv".format(proportion))
     comet_experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
