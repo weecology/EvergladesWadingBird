@@ -174,11 +174,11 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
             
             comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(model_savedir))
             
-            ypred = results["results"].predicted_label.to_numpy()
+            ypred = results["results"].predicted_label.astype("int").to_numpy()
             ypred = torch.from_numpy(ypred)
             ypred = torch.nn.functional.one_hot(ypred, num_classes = model.num_classes).numpy()
             
-            ytrue = results["results"].true_label.to_numpy()
+            ytrue = results["results"].true_label.astype("int").to_numpy()
             ytrue = torch.from_numpy(ytrue)
             ytrue = torch.nn.functional.one_hot(ytrue, num_classes = model.num_classes).numpy()
                         
@@ -204,7 +204,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     
     #Save a full set of predictions to file.
     boxes = model.predict_file(model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"])
-    visualize.plot_prediction_dataframe(df = boxes, save_dir = model_savedir)
+    visualize.plot_prediction_dataframe(df = boxes, savedir = model_savedir)
     
     
     return model
