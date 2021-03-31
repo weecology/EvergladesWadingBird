@@ -5,6 +5,7 @@ from deepforest.callbacks import images_callback
 from deepforest import main
 from deepforest import dataset
 from deepforest import utilities
+from deepforest import visualize
 import pandas as pd
 import os
 import numpy as np
@@ -173,8 +174,14 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
             
             comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(model_savedir))
             
-            ypred = results["results"].predicted_label
-            ytrue = results["results"].true_label
+            ypred = results["results"].predicted_label.to_numpy()
+            ypred = torch.from_numpy(ypred)
+            ypred = torch.nn.functional.one_hot(ypred, num_classes = model.num_classes).numpy()
+            
+            ytrue = results["results"].true_label.to_numpy()
+            ytrue = torch.from_numpy(ytrue)
+            ytrue = torch.nn.functional.one_hot(ytrue, num_classes = model.num_classes).numpy()
+                        
             comet_logger.experiment.log_confusion_matrix(y_true=ytrue, y_predicted=ypred)
         except Exception as e:
             print("logger exception: {} with traceback \n {}".format(e, traceback.print_exc()))
@@ -194,6 +201,11 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     
     #save model
     model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    
+    #Save a full set of predictions to file.
+    boxes = model.predict_file(model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"])
+    visualize.plot_prediction_dataframe(df = boxes, save_dir = model_savedir)
+    
     
     return model
 
