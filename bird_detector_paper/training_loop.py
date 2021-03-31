@@ -133,7 +133,7 @@ def training(proportion,training_image, pretrained=True):
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
     model.config["epochs"] = 10
     
-    if proportion is not 0:
+    if not proportion == 0:
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
     #model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
     
