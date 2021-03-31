@@ -86,7 +86,7 @@ def prepare_test():
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=1000, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2500, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
@@ -104,7 +104,7 @@ def training(proportion,training_image, pretrained=True):
     train_annotations = deepforest.preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/training_annotations.csv",
-        patch_size=1000, base_dir="crops",
+        patch_size=2500, base_dir="crops",
         image_name="CooperStrawn_53m_tile_clip_projected.tif",
         allow_empty=False
     )
@@ -132,15 +132,17 @@ def training(proportion,training_image, pretrained=True):
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
     model.config["epochs"] = 10
-    model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
-    #model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
-    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)    
+    
+    if proportion is not 0:
+        model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
+    #model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
+    
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=1000)
+    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2500)
     bounds = src.bounds
     pixelSizeX, pixelSizeY  = src.res
     
@@ -166,7 +168,7 @@ def training(proportion,training_image, pretrained=True):
     gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
     
     results = IoU.compute_IoU(gdf, boxes)
-    results["match"] = results.score > 0.25
+    results["match"] = results.score > 0.4
     
     results.to_csv("Figures/iou_dataframe_{}.csv".format(proportion))
     comet_experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
@@ -189,8 +191,9 @@ def run():
     proportion = []
     recall = []
     precision = []
+    pretrained =[]
     
-    #prepare_test()
+    prepare_test()
     
     #Only open training raster once because its so huge.
     src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
@@ -198,13 +201,15 @@ def run():
     numpy_image = np.moveaxis(numpy_image,0,2)
     training_image = numpy_image[:,:,:3].astype("uint8")
     
-    for x in [0.25, 0.5, 0.75, 1]:
-        p, r = training(proportion=x, training_image=training_image)
-        precision.append(p)
-        recall.append(r)
-        proportion.append(x)
+    for x in [0,0.25, 0.5, 0.75, 1]:
+        for y in [True, False]:     
+            p, r = training(proportion=x, training_image=training_image, pretrained=y)
+            precision.append(p)
+            recall.append(r)
+            proportion.append(x)
+            pretrained.append(y)
     
-    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion})
+    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
     results.to_csv("Figures/results.csv") 
 
 if __name__ == "__main__":
