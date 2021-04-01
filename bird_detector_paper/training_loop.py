@@ -142,6 +142,10 @@ def training(proportion,training_image, pretrained=True):
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
     boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2500)
+    
+    if boxes is None:
+        return None
+    
     bounds = src.bounds
     pixelSizeX, pixelSizeY  = src.res
     
