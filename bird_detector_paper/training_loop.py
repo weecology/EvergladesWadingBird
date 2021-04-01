@@ -12,7 +12,6 @@ import rasterio as rio
 import numpy as np
 import os
 
-
 import IoU
 
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
