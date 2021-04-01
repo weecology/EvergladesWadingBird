@@ -230,6 +230,7 @@ def run(patch_size=2000):
     prepare_train(patch_size=int(patch_size/2))
     
     p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
+    p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
     #for x in [0,0.25, 0.5, 0.75, 1]:
         #print(x)
