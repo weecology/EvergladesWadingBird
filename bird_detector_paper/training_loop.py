@@ -85,7 +85,7 @@ def prepare_test():
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=1000, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2000, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
     
@@ -102,7 +102,7 @@ def training(proportion,training_image, pretrained=True):
     train_annotations = deepforest.preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/training_annotations.csv",
-        patch_size=1000, base_dir="crops",
+        patch_size=2000, base_dir="crops",
         image_name="CooperStrawn_53m_tile_clip_projected.tif",
         allow_empty=False
     )
@@ -129,18 +129,19 @@ def training(proportion,training_image, pretrained=True):
         pass
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
-    model.config["epochs"] = 20
+    model.config["epochs"] = 10
     
     if not proportion == 0:
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
-    #model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
+    
+    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
     
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=1000)
+    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2000)
     
     if boxes is None:
         return 0,0
@@ -191,7 +192,6 @@ def training(proportion,training_image, pretrained=True):
 
 def run():
 
-    
     proportion = []
     recall = []
     precision = []
@@ -205,17 +205,19 @@ def run():
     numpy_image = np.moveaxis(numpy_image,0,2)
     training_image = numpy_image[:,:,:3].astype("uint8")
     
-    for x in [0,0.25, 0.5, 0.75, 1]:
-        print(x)
-        for y in [True, False]:     
-            p , r = training(proportion=x, training_image=training_image, pretrained=y)
-            precision.append(p)
-            recall.append(r)
-            proportion.append(x)
-            pretrained.append(y)
+    p , r = training(proportion=1, training_image=training_image, pretrained=True)
     
-    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
-    results.to_csv("Figures/results.csv") 
+    #for x in [0,0.25, 0.5, 0.75, 1]:
+        #print(x)
+        #for y in [True, False]:     
+            #p , r = training(proportion=x, training_image=training_image, pretrained=y)
+            #precision.append(p)
+            #recall.append(r)
+            #proportion.append(x)
+            #pretrained.append(y)
+    
+    #results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
+    #results.to_csv("Figures/results.csv") 
 
 if __name__ == "__main__":
     run()
