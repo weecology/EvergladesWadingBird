@@ -144,7 +144,7 @@ def training(proportion,training_image, pretrained=True):
     boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2500)
     
     if boxes is None:
-        return None
+        return 0,0
     
     bounds = src.bounds
     pixelSizeX, pixelSizeY  = src.res
@@ -209,7 +209,7 @@ def run():
     for x in [0,0.25, 0.5, 0.75, 1]:
         print(x)
         for y in [True, False]:     
-            p, r = training(proportion=x, training_image=training_image, pretrained=y)
+            p , r = training(proportion=x, training_image=training_image, pretrained=y)
             precision.append(p)
             recall.append(r)
             proportion.append(x)
