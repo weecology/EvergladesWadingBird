@@ -146,6 +146,7 @@ def training(proportion, epochs=1, patch_size=2000,pretrained=True):
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
     model.config["epochs"] = epochs
+    model.config["validation_annotations"] = "crops/test_annotations.csv"
     
     if not proportion == 0:
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
@@ -207,7 +208,7 @@ def training(proportion, epochs=1, patch_size=2000,pretrained=True):
     
     return precision, recall
 
-def run(patch_size=2000):
+def run(patch_size=2500):
 
     folder = 'crops/'
     for filename in os.listdir(folder):

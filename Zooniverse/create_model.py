@@ -1,6 +1,6 @@
 #DeepForest bird detection from extracted Zooniverse predictions
 import comet_ml
-from deepforest import deepforest
+from deepforest import main
 import geopandas as gp
 from shapely.geometry import Point, box
 import pandas as pd
@@ -258,8 +258,8 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     empty_train, empty_test = split_test_train(empty_frames_df)
     
     #limit the number of empty
-    train = pd.concat([train, empty_train])
-    test = pd.concat([test, empty_test])
+    #train = pd.concat([train, empty_train])
+    #test = pd.concat([test, empty_test])
     
     #Enforce rounding to pixels, pandas "Int64" dtype for nullable arrays https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html
     train.xmin = train.xmin.astype("Int64")
@@ -277,8 +277,8 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     test_path = "{}/test.csv".format(shp_dir)
     empty_test_path = "{}/empty_test.csv".format(shp_dir)
     
-    train.to_csv(train_path, index=False,header=False)
-    test.to_csv(test_path, index=False,header=False)
+    train.to_csv(train_path, index=False)
+    test.to_csv(test_path, index=False)
     empty_test.to_csv(empty_test_path, index=False)
     
     model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
