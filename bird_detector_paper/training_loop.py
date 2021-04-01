@@ -149,6 +149,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
     
     model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
+    model.evaluate_generator(annotations="crops/train_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
     
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
