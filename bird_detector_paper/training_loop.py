@@ -90,7 +90,12 @@ def prepare_test(patch_size=2000):
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
 
-def prepare_train(training_image, patch_size=2000):
+def prepare_train(patch_size=2000):
+    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
+    numpy_image = src.read()
+    numpy_image = np.moveaxis(numpy_image,0,2)
+    training_image = numpy_image[:,:,:3].astype("uint8")
+    
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
 
     df.to_csv("Figures/training_annotations.csv",index=False)
@@ -117,6 +122,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     crops = train_annotations.image_path.unique()    
     selected_crops = np.random.choice(crops, size = int(proportion*len(crops)))
     train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
+    train_annotations.to_csv("crops/training_annotations.csv", index=False, header=False)
     
     comet_experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_experiment.log_parameter("training_annotations",train_annotations.shape[0])
@@ -213,13 +219,8 @@ def run(patch_size=2000):
     pretrained =[]
     
     prepare_test(patch_size=patch_size)
-    #Only open training raster once because its so huge.
-    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    training_image = numpy_image[:,:,:3].astype("uint8")
-    
-    prepare_train(training_image, patch_size=patch_size)
+    #Only open training raster once because its so huge
+    prepare_train(patch_size=patch_size)
     
     p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
     
