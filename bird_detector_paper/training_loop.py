@@ -130,7 +130,7 @@ def training(proportion,training_image, pretrained=True):
         pass
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
-    model.config["epochs"] = 5
+    model.config["epochs"] = 20
     
     if not proportion == 0:
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
