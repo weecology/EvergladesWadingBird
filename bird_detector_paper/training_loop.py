@@ -1,5 +1,5 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
-#srun -p gpu --gpus=1 --mem 70GB --time 5:00:00 --pty -u bash -i
+#srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse
 import comet_ml
 from deepforest import deepforest
@@ -11,6 +11,7 @@ import pandas as pd
 import rasterio as rio
 import numpy as np
 import os
+import shutil
 
 import IoU
 
@@ -76,7 +77,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     
     return result
  
-def prepare_test():
+def prepare_test(patch_size=2000):
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
     df.to_csv("Figures/test_annotations.csv",index=False)
     
@@ -85,16 +86,11 @@ def prepare_test():
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=2000, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
-    
-def training(proportion,training_image, pretrained=True):
-    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
-    
-    comet_experiment.log_parameter("proportion",proportion)
-    comet_experiment.add_tag("Palmyra")
-    
+
+def prepare_train(training_image, patch_size=2000):
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
 
     df.to_csv("Figures/training_annotations.csv",index=False)
@@ -102,21 +98,29 @@ def training(proportion,training_image, pretrained=True):
     train_annotations = deepforest.preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/training_annotations.csv",
-        patch_size=2000, base_dir="crops",
+        patch_size=patch_size, base_dir="crops",
         image_name="CooperStrawn_53m_tile_clip_projected.tif",
         allow_empty=False
     )
     
-    print(train_annotations.head())
+    train_annotations.to_csv("crops/full_training_annotations.csv",index=False, header=False)
+    
+def training(proportion, epochs=10, patch_size=2000,pretrained=True):
+    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
+    
+    comet_experiment.log_parameter("proportion",proportion)
+    comet_experiment.log_parameter("patch_size",proportion)
+    
+    comet_experiment.add_tag("Palmyra")
+    
+    train_annotations = pd.read_csv("crops/full_training_annotations.csv", names=["image_path","xmin","ymin","xmax","ymax","label"])
     crops = train_annotations.image_path.unique()    
     selected_crops = np.random.choice(crops, size = int(proportion*len(crops)))
     train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
     
     comet_experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_experiment.log_parameter("training_annotations",train_annotations.shape[0])
-    
-    train_annotations.to_csv("crops/training_annotations.csv",index=False, header=False)
-    
+        
     if pretrained:
         model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
         model = deepforest.deepforest(weights=model_path)
@@ -129,19 +133,19 @@ def training(proportion,training_image, pretrained=True):
         pass
     
     model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
-    model.config["epochs"] = 10
+    model.config["epochs"] = epochs
     
     if not proportion == 0:
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
     
-    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0))
+    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
     
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=2000)
+    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=patch_size)
     
     if boxes is None:
         return 0,0
@@ -190,22 +194,34 @@ def training(proportion,training_image, pretrained=True):
     
     return precision, recall
 
-def run():
+def run(patch_size=2000):
 
+    folder = 'crops/'
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+            
     proportion = []
     recall = []
     precision = []
     pretrained =[]
     
-    prepare_test()
-    
+    prepare_test(patch_size=patch_size)
     #Only open training raster once because its so huge.
     src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     training_image = numpy_image[:,:,:3].astype("uint8")
     
-    p , r = training(proportion=1, training_image=training_image, pretrained=True)
+    prepare_train(training_image, patch_size=patch_size)
+    
+    p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
     
     #for x in [0,0.25, 0.5, 0.75, 1]:
         #print(x)
@@ -217,7 +233,9 @@ def run():
             #pretrained.append(y)
     
     #results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
-    #results.to_csv("Figures/results.csv") 
+    #results.to_csv("Figures/results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
     run()
+    #for x in [1500,2000,2500,3000, 4000]:
+        #run(patch_size=x)
