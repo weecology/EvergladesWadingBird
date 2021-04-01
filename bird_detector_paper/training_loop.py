@@ -209,7 +209,11 @@ def run():
     for x in [0,0.25, 0.5, 0.75, 1]:
         print(x)
         for y in [True, False]:     
-            p, r = training(proportion=x, training_image=training_image, pretrained=y)
+            result = training(proportion=x, training_image=training_image, pretrained=y)
+            if result is not None:
+                p, r = result
+            else:
+                continue
             precision.append(p)
             recall.append(r)
             proportion.append(x)
