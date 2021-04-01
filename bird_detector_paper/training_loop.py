@@ -112,7 +112,7 @@ def prepare_train(patch_size=2000):
     
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False, header=False)
     
-def training(proportion, epochs=10, patch_size=2000,pretrained=True):
+def training(proportion, epochs=1, patch_size=2000,pretrained=True):
     comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
     
     comet_experiment.log_parameter("proportion",proportion)
@@ -123,9 +123,11 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     train_annotations = pd.read_csv("crops/full_training_annotations.csv", names=["image_path","xmin","ymin","xmax","ymax","label"])
     crops = train_annotations.image_path.unique()    
     
-    if proportion < 1:  
-        selected_crops = np.random.choice(crops, size = int(proportion*len(crops)),replace=False)
-        train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
+    if not proportion == 0:
+        if proportion < 1:  
+            selected_crops = np.random.choice(crops, size = int(proportion*len(crops)),replace=False)
+            train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
+    
     train_annotations.to_csv("crops/training_annotations.csv", index=False, header=False)
     
     comet_experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
