@@ -120,8 +120,10 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     train_annotations = pd.read_csv("crops/full_training_annotations.csv", names=["image_path","xmin","ymin","xmax","ymax","label"])
     crops = train_annotations.image_path.unique()    
-    selected_crops = np.random.choice(crops, size = int(proportion*len(crops)))
-    train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
+    
+    if proportion < 1:  
+        selected_crops = np.random.choice(crops, size = int(proportion*len(crops)),replace=False)
+        train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
     train_annotations.to_csv("crops/training_annotations.csv", index=False, header=False)
     
     comet_experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
