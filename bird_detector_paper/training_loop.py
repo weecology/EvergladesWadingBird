@@ -37,7 +37,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     #define in image coordinates and buffer to create a box
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -86,7 +86,7 @@ def prepare_test(patch_size=2000):
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
 
@@ -103,7 +103,9 @@ def prepare_train(patch_size=2000):
     train_annotations = deepforest.preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/training_annotations.csv",
-        patch_size=patch_size, base_dir="crops",
+        patch_size=patch_size,
+        patch_overlap=0.05,
+        base_dir="crops",
         image_name="CooperStrawn_53m_tile_clip_projected.tif",
         allow_empty=False
     )
@@ -114,7 +116,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
     
     comet_experiment.log_parameter("proportion",proportion)
-    comet_experiment.log_parameter("patch_size",proportion)
+    comet_experiment.log_parameter("patch_size",patch_size)
     
     comet_experiment.add_tag("Palmyra")
     
@@ -153,7 +155,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=patch_size)
+    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=patch_size, patch_overlap=0.05)
     
     if boxes is None:
         return 0,0
@@ -180,10 +182,10 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     gdf = gdf[~gdf.geometry.isnull()]
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
     
     results = IoU.compute_IoU(gdf, boxes)
-    results["match"] = results.IoU > 0.4
+    results["match"] = results.IoU > 0.25
     
     results.to_csv("Figures/iou_dataframe_{}.csv".format(proportion))
     comet_experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
