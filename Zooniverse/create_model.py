@@ -229,7 +229,8 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
     
     if debug:
-        model.config["train"]["fast_dev_run"] = True
+        print("DEBUG")
+        model.config["train"]["fast_dev_run"] = False
         model.config["gpus"] = None
         model.config["workers"] = 0
         model.config["batch_size"] = 1

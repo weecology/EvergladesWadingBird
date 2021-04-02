@@ -12,9 +12,9 @@
 #SBATCH --partition=gpu
 #SBATCH --gpus=1
 
-conda activate Zooniverse_pytorch
+source activate Zooniverse_pytorch
 
 #comet debug
-python aggregate.py
-python extract.py
+#python aggregate.py
+#python extract.py
 python create_model.py
