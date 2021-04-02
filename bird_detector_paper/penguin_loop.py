@@ -113,7 +113,7 @@ def prepare_train(patch_size=2000):
     
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False, header=False)
     
-def training(proportion, epochs=1, patch_size=2000,pretrained=True):
+def training(proportion, epochs=10, patch_size=1000,pretrained=True):
     comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
     
     comet_experiment.log_parameter("proportion",proportion)
@@ -209,7 +209,7 @@ def training(proportion, epochs=1, patch_size=2000,pretrained=True):
     
     return precision, recall
 
-def run(patch_size=2000):
+def run(patch_size=1000):
 
     folder = 'crops/'
     for filename in os.listdir(folder):
@@ -231,7 +231,11 @@ def run(patch_size=2000):
     #Only open training raster once because its so huge
     prepare_train(patch_size=int(patch_size))
     
-    p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
+    try:
+        p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
+    except Exception as e:
+        print(e)
+        
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
     #for x in [0,0.25, 0.5, 0.75, 1]:
