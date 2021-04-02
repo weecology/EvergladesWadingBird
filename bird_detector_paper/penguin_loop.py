@@ -35,7 +35,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
         resolution = src.res[0]
         
     #define in image coordinates and buffer to create a box
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.4).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -185,9 +185,7 @@ def training(proportion, epochs=10, patch_size=1000,pretrained=True):
     #define in image coordinates and buffer to create a box
     gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.shp")
     gdf = gdf[~gdf.geometry.isnull()]
-    gdf["geometry"] = gdf.geometry.boundary.centroid
-    gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.4).bounds.values]
     
     results = IoU.compute_IoU(gdf, boxes)
     results["match"] = results.IoU > 0.25
