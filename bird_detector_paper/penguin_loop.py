@@ -35,8 +35,6 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
         resolution = src.res[0]
         
     #define in image coordinates and buffer to create a box
-    gdf["geometry"] = gdf.geometry.boundary.centroid
-    gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
     gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
         
     #get coordinates
