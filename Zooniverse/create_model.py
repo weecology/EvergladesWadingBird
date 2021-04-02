@@ -229,12 +229,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     model.config["validation"]["csv_file"] = test_path
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
     
-    if debug:
-        print("DEBUG")
-        model.config["train"]["fast_dev_run"] = False
-        model.config["gpus"] = None
-        model.config["workers"] = 0
-        model.config["batch_size"] = 1
+    #if debug:
+    #    print("DEBUG")
+    #    model.config["train"]["fast_dev_run"] = False
+    #    model.config["gpus"] = None
+    #    model.config["workers"] = 0
+    #    model.config["batch_size"] = 1
         
     if comet_logger is not None:
         comet_logger.experiment.log_parameters(model.config)
