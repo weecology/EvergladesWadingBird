@@ -3,6 +3,8 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
+
 from .. import create_model
 from .. import extract
 from .. import aggregate
@@ -16,12 +18,12 @@ import glob
 #Setup method
 @pytest.fixture()
 def extract_images(tmpdir):
-    aggregate.run("data/everglades-watch-classifications.csv", min_version=300, download=False, generate=False, savedir="output",debug=True)
-    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir=tmpdir)
+    aggregate.run("data/everglades-watch-classifications.csv", min_version=300, download=False, generate=False, savedir="data",debug=True)
+    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="data/everglades-watch-classifications.shp",savedir="output")
 
 @pytest.fixture()
 def annotations(extract_images, tmpdir):
-    annotations = create_model.format_shapefiles(shp_dir=tmpdir)    
+    annotations = create_model.format_shapefiles(shp_dir="output/")    
     return annotations
 
 def test_shapefile_to_annotations(extract_images, tmpdir):
@@ -87,3 +89,10 @@ def test_split_test_train(extract_images, annotations):
     #Assert no duplicates
     train_dropped_duplicates = train.drop_duplicates()
     assert train_dropped_duplicates.shape[0] == train.shape[0]    
+    
+def test_train_model(extract_images, annotations, tmpdir):
+    train, test = create_model.split_test_train(annotations)
+    train.to_csv("output/train.csv",index=False)
+    test.to_csv("output/test.csv",index=False)
+    create_model.train_model(train_path="output/train.csv", test_path="output/test.csv", save_dir=tmpdir, debug=True)
+    

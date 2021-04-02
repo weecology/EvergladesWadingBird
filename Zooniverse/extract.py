@@ -10,6 +10,7 @@ import json
 from skimage import io
 from shapely.geometry import box
 from PIL import Image
+import numpy as np
 
 #source keys outside of git control
 import everglade_tokens
@@ -127,8 +128,12 @@ def run(classification_shp, image_data ,savedir="."):
         
         #Confirm file can be opened
         try:
-            a = rasterio.open(name)
-            b = Image.open(name).convert('RGB')
+            numpy_image = rasterio.open(name).read()
+            if numpy_image.shape[0] == 4:
+                numpy_image = np.moveaxis(numpy_image,0,2)
+                numpy_image = numpy_image[:,:,:3].astype("uint8")
+                image = Image.fromarray(numpy_image)
+                image.save(name)
         except Exception as e:
             print("{} failed with {}".format(name, e))
             continue

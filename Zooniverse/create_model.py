@@ -1,6 +1,9 @@
 #DeepForest bird detection from extracted Zooniverse predictions
 import comet_ml
+from pytorch_lightning.loggers import CometLogger
+from deepforest.callbacks import images_callback
 from deepforest import main
+import traceback
 import geopandas as gp
 from shapely.geometry import Point, box
 import pandas as pd
@@ -167,7 +170,7 @@ def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
     #Create PR curve
     precision_curve = [ ]
     for path in empty_images:
-        boxes = model.predict_image(path, return_plot=False)
+        boxes = model.predict_image(path=path, return_plot=False)
         boxes["image"] = path
         precision_curve.append(boxes)
     
@@ -186,55 +189,108 @@ def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
     comet_experiment.log_metric(metric_name,value)
     comet_experiment.log_figure(recall_plot)    
     
-def train_model(train_path, test_path, empty_images_path=None, save_dir=".", comet_experiment=None):
+def train_model(train_path, test_path, empty_images_path=None, save_dir=".", debug = False):
     """Train a DeepForest model"""
-    model = deepforest.deepforest()
-    #model.use_release()
-    comet_experiment.log_parameters(model.config)
+    
+    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                  project_name="everglades-species", workspace="bw4sz")
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    model_savedir = "{}/{}".format(save_dir,timestamp)  
+    
+    try:
+        os.mkdir(model_savedir)
+    except Exception as e:
+        print(e)
+    
+    comet_logger.experiment.log_parameter("timestamp",timestamp)
     
     #Log the number of training and test
     train = pd.read_csv(train_path)
     test = pd.read_csv(test_path)
-    comet_experiment.log_parameter("Training_Annotations",train.shape[0])    
-    comet_experiment.log_parameter("Testing_Annotations",test.shape[0])
+
+    #Set config and train'    
+    label_dict = {key:value for value, key in enumerate(train.label.unique())}
+    model = main.deepforest(num_classes=len(train.label.unique()),label_dict=label_dict)
+    
+    model.config["train"]["csv_file"] = train_path
+    model.config["train"]["root_dir"] = os.path.dirname(train_path)
     
     #Set config and train
-    model.config["validation_annotations"] = test_path
-    model.config["save_path"] = save_dir
-    model.config["epochs"] = 9
+    model.config["validation"]["csv_file"] = test_path
+    model.config["validation"]["root_dir"] = os.path.dirname(test_path)
     
-    model.train(train_path, comet_experiment=comet_experiment)
+    if debug:
+        model.config["train"]["fast_dev_run"] = True
+        model.config["gpus"] = None
+        model.config["workers"] = 0
+        model.config["batch_size"] = 1
+        
+    if comet_logger is not None:
+        comet_logger.experiment.log_parameters(model.config)
+        comet_logger.experiment.log_parameter("Training_Annotations",train.shape[0])    
+        comet_logger.experiment.log_parameter("Testing_Annotations",test.shape[0])
+        
+    im_callback = images_callback(csv_file=model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"], savedir=model_savedir, n=20)    
+    model.create_trainer(callbacks=[im_callback], logger=comet_logger)
+    
+    model.trainer.fit(model)
+    
+    #Manually convert model
+    results = model.evaluate(test_path, root_dir = os.path.dirname(test_path))
+    
+    if comet_logger is not None:
+        try:
+            results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+            comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+            
+            results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+            comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+            
+            for index, row in results["class_recall"].iterrows():
+                comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
+                comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
+            
+            comet_logger.experiment.log_metric("Average Class Recall",results["class_recall"].recall.mean())
+            comet_logger.experiment.log_metric("Box Recall",results["box_recall"])
+            comet_logger.experiment.log_metric("Box Precision",results["box_precision"])
+            
+            comet_logger.experiment.log_parameter("saved_checkpoint","{}/species_model.pl".format(model_savedir))
+            
+            ypred = results["results"].predicted_label.astype('category').cat.codes.to_numpy()            
+            ypred = torch.from_numpy(ypred)
+            ypred = torch.nn.functional.one_hot(ypred, num_classes = model.num_classes).numpy()
+            
+            ytrue = results["results"].true_label.astype('category').cat.codes.to_numpy()
+            ytrue = torch.from_numpy(ytrue)
+            ytrue = torch.nn.functional.one_hot(ytrue, num_classes = model.num_classes).numpy()
+            comet_logger.experiment.log_confusion_matrix(y_true=ytrue, y_predicted=ypred, labels = list(model.label_dict.keys()))
+        except Exception as e:
+            print("logger exception: {} with traceback \n {}".format(e, traceback.print_exc()))
     
     #Create a positive bird recall curve
-    test_frame_df = pd.read_csv(test_path, names=["image_name","xmin","ymin","xmax","ymax","label"])
+    test_frame_df = pd.read_csv(test_path)
     dirname = os.path.dirname(test_path)
-    test_frame_df["image_path"] = test_frame_df["image_name"].apply(lambda x: os.path.join(dirname,x))
+    test_frame_df["image_path"] = test_frame_df["image_path"].apply(lambda x: os.path.join(dirname,x))
     empty_images = test_frame_df.image_path.unique()    
-    predict_empty_frames(model, empty_images, comet_experiment, invert=True)
+    predict_empty_frames(model, empty_images, comet_logger, invert=True)
     
     #Test on empy frames
     if empty_images_path:
         empty_frame_df = pd.read_csv(empty_images_path)
         empty_images = empty_frame_df.image_path.unique()    
-        predict_empty_frames(model, empty_images, comet_experiment)
+        predict_empty_frames(model, empty_images, comet_logger)
     
-    #evaluaate at lower iou_thresholds
-    mAPs = []
-    threshold = []
-    for x in np.arange(0.1,0.5,.05):
-        mAP = model.evaluate_generator(test_path, 
-                                iou_threshold=x, comet_experiment=comet_experiment)
-        threshold.append(x)
-        mAPs.append(mAP)
+    #save model
+    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
-    mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
-    recall_plot = mAPdf.plot.scatter("mAP","IoU_Threshold")
-    recall_plot.set_xlabel("IoU Threshold")
-    recall_plot.set_ylabel("mAP")
-    comet_experiment.log_figure(recall_plot)
-        
+    #Save a full set of predictions to file.
+    boxes = model.predict_file(model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"])
+    visualize.plot_prediction_dataframe(df = boxes, savedir = model_savedir, root_dir=model.config["validation"]["root_dir"])
+    
+    
     return model
-    
+
 def run(shp_dir, empty_frames_path=None, save_dir="."):
     """Parse annotations, create a test split and train a model"""
     annotations = format_shapefiles(shp_dir)    
