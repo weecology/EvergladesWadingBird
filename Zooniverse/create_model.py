@@ -2,6 +2,7 @@
 import comet_ml
 from pytorch_lightning.loggers import CometLogger
 from deepforest.callbacks import images_callback
+from deepforest import visualize
 from deepforest import main
 import traceback
 import geopandas as gp
@@ -11,6 +12,7 @@ import rasterio
 import os
 import numpy as np
 import glob
+import torch
 from datetime import datetime
 
 #Define shapefile utility
@@ -171,10 +173,16 @@ def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
     precision_curve = [ ]
     for path in empty_images:
         boxes = model.predict_image(path=path, return_plot=False)
-        boxes["image"] = path
-        precision_curve.append(boxes)
+        if boxes is not None:    
+            boxes["image"] = path
+            precision_curve.append(boxes)
     
-    precision_curve = pd.concat(precision_curve)
+    #if no boxes, skip plot
+    try:
+        precision_curve = pd.concat(precision_curve)
+    except:
+        return None
+    
     recall_plot = plot_recall_curve(precision_curve, invert=invert)
     value = empty_image(precision_curve, threshold=0.4)
     
