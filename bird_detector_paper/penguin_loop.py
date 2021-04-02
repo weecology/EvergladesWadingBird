@@ -1,4 +1,4 @@
-"""Script to take the trained everglades model and predict the Palmyra data"""
+"""Script to take the trained everglades model and predict the penguin data"""
 #srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse
 import comet_ml
@@ -96,8 +96,8 @@ def prepare_train(patch_size=2000):
     training_image = numpy_image[:,:,:3].astype("uint8")
     
     df = shapefile_to_annotations(
-        shapefile="/orange/ewhite/everglades/Palmyra/offshore_rocks_cape_wallace_survey_4.shp",
-        rgb="/orange/ewhite/everglades/Palmyra/offshore_rocks_cape_wallace_survey_4.tif")
+        shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp",
+        rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
 
     df.to_csv("Figures/training_annotations.csv",index=False)
     
