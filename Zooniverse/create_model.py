@@ -235,7 +235,9 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
         model.config["gpus"] = None
         model.config["workers"] = 0
         model.config["batch_size"] = 1
-        
+    else:
+       model.config["gpus"] = 1
+       model.config["batch_size"] = 6    
     if comet_logger is not None:
         comet_logger.experiment.log_parameters(model.config)
         comet_logger.experiment.log_parameter("Training_Annotations",train.shape[0])    
