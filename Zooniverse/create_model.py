@@ -194,14 +194,14 @@ def predict_empty_frames(model, empty_images, comet_experiment, invert=False):
         metric_name = "EmptyRecall_at_0.4"
         recall_plot.set_title("Empty Recall")        
         
-    comet_experiment.log_metric(metric_name,value)
-    comet_experiment.log_figure(recall_plot)    
+    comet_experiment.experiment.log_metric(metric_name,value)
+    comet_experiment.experiment.log_figure(recall_plot)    
     
 def train_model(train_path, test_path, empty_images_path=None, save_dir=".", debug = False):
     """Train a DeepForest model"""
     
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                  project_name="everglades-species", workspace="bw4sz")
+                                  project_name="everglades", workspace="bw4sz")
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model_savedir = "{}/{}".format(save_dir,timestamp)  
@@ -228,6 +228,7 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     #Set config and train
     model.config["validation"]["csv_file"] = test_path
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
+    model.config["train"]["epochs"] = 20
     
     if debug:
         print("DEBUG")
