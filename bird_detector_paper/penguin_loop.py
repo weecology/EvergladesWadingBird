@@ -88,6 +88,10 @@ def prepare_test(patch_size=2000):
     
     test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="cape_wallace_survey_11-14.tif")
     print(test_annotations.head())
+    
+    #just limit to one image to check
+    test_annotations = test_annotations[test_annotations.plot_name == "offshore_rocks_cape_wallace_survey_4_926"]
+    
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
 
 def prepare_train(patch_size=2000):
