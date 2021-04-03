@@ -12,6 +12,7 @@ import rasterio as rio
 import numpy as np
 import os
 import shutil
+import shapely
 
 import IoU
 
@@ -202,6 +203,43 @@ def training(proportion, epochs=20, patch_size=1000,pretrained=True):
     
     comet_experiment.log_metric("precision",precision)
     comet_experiment.log_metric("recall", recall)
+    
+    
+    #repeat using predict_generator
+    iou_dataframe = []
+    image_boxes = model.predict_generator("crops/test_annotations.csv")
+    ground_truth = pd.read_csv("crops/test_annotations.csv",names=["image_path","xmin","ymin","xmax","ymax","label"])
+    for name, group in image_boxes.groupby("image_path"):
+        
+        group = group.reset_index(drop=True)
+        ground_df = ground_truth[ground_truth.image_path == name].reset_index(drop=True)
+        ground_df['geometry'] = ground_df.apply(
+            lambda x: shapely.geometry.box(x.xmin, x.ymin, x.xmax, x.ymax), axis=1)
+        
+        ground_df = gpd.GeoDataFrame(ground_df, geometry='geometry')
+    
+        group['geometry'] = group.apply(
+            lambda x: shapely.geometry.box(x.xmin, x.ymin, x.xmax, x.ymax), axis=1)
+        predictions = gpd.GeoDataFrame(group, geometry='geometry')
+        
+        image_results = IoU.compute_IoU(ground_df, predictions)
+        iou_dataframe.append(image_results)
+
+    results = pd.concat(iou_dataframe)
+    results["match"] = results.IoU > 0.25
+    
+    results.to_csv("Figures/crop_penguin_iou_dataframe_{}.csv".format(proportion))
+    comet_experiment.log_asset("Figures/crop_penguin_iou_dataframe_{}.csv".format(proportion))
+    
+    true_positive = sum(results["match"] == True)
+    recall = true_positive / results.shape[0]
+    precision = true_positive / boxes.shape[0]
+    
+    print("Crop Recall is {}".format(recall))
+    print("Crop Precision is {}".format(precision))
+    
+    comet_experiment.log_metric("crop_precision",precision)
+    comet_experiment.log_metric("crop_recall", recall)    
     
     comet_experiment.end()
     
