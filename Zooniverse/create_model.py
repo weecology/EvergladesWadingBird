@@ -229,12 +229,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     model.config["validation"]["csv_file"] = test_path
     model.config["validation"]["root_dir"] = os.path.dirname(test_path)
     
-    #if debug:
-    #    print("DEBUG")
-    #    model.config["train"]["fast_dev_run"] = False
-    #    model.config["gpus"] = None
-    #    model.config["workers"] = 0
-    #    model.config["batch_size"] = 1
+    if debug:
+        print("DEBUG")
+        model.config["train"]["fast_dev_run"] = False
+        model.config["gpus"] = None
+        model.config["workers"] = 0
+        model.config["batch_size"] = 1
         
     if comet_logger is not None:
         comet_logger.experiment.log_parameters(model.config)
@@ -298,15 +298,12 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     boxes = model.predict_file(model.config["validation"]["csv_file"], root_dir=model.config["validation"]["root_dir"])
     visualize.plot_prediction_dataframe(df = boxes, savedir = model_savedir, root_dir=model.config["validation"]["root_dir"])
     
-    
     return model
 
 def run(shp_dir, empty_frames_path=None, save_dir="."):
     """Parse annotations, create a test split and train a model"""
     annotations = format_shapefiles(shp_dir)    
-    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                           project_name="everglades", workspace="bw4sz")
-    
+
     #Split train and test
     train, test = split_test_train(annotations)
     
@@ -347,17 +344,15 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     test.to_csv(test_path, index=False)
     empty_test.to_csv(empty_test_path, index=False)
     
-    model = train_model(train_path, test_path, empty_test_path, save_dir, comet_experiment)
-    
-    #Save
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    comet_experiment.log_parameter("timestamp",timestamp)
-    model.prediction_model.save("{}/{}.h5".format(save_dir,timestamp))
-    
 if __name__ == "__main__":
-    run(
-        shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
-        empty_frames_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_frames.csv",
-        save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
-    )
+    #run(
+    #    shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
+    #    empty_frames_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_frames.csv",
+    #    save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
+    #)
+    
+    model = train_model(train_path="/orange/ewhite/everglades/Zooniverse/parsed_images/train.csv",
+                        test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv",
+                        empty_test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_test.csv",
+                        save_dir="/orange/ewhite/everglades/Zooniverse/predictions/", comet_experiment)
     
