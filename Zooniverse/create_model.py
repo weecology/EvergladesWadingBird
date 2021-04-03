@@ -354,5 +354,5 @@ if __name__ == "__main__":
     model = train_model(train_path="/orange/ewhite/everglades/Zooniverse/parsed_images/train.csv",
                         test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv",
                         empty_test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_test.csv",
-                        save_dir="/orange/ewhite/everglades/Zooniverse/predictions/", comet_experiment)
+                        save_dir="/orange/ewhite/everglades/Zooniverse/predictions/")
     

@@ -114,7 +114,7 @@ def prepare_train(patch_size=2000):
     
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False, header=False)
     
-def training(proportion, epochs=20, patch_size=1000,pretrained=True):
+def training(proportion, epochs=1, patch_size=1000,pretrained=True):
     comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
     
     comet_experiment.log_parameter("proportion",proportion)
@@ -209,7 +209,7 @@ def training(proportion, epochs=20, patch_size=1000,pretrained=True):
     iou_dataframe = []
     image_boxes = model.predict_generator("crops/test_annotations.csv")
     ground_truth = pd.read_csv("crops/test_annotations.csv",names=["image_path","xmin","ymin","xmax","ymax","label"])
-    for name, group in image_boxes.groupby("image_path"):
+    for name, group in image_boxes.groupby("plot_name"):
         
         group = group.reset_index(drop=True)
         ground_df = ground_truth[ground_truth.image_path == name].reset_index(drop=True)
