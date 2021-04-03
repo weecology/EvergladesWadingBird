@@ -153,57 +153,56 @@ def training(proportion, epochs=10, patch_size=1000,pretrained=True):
     if not proportion == 0:
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
     
-    #model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
-    #model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
+    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
+    model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
     
    
-    #src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.tif")
-    #numpy_image = src.read()
-    #numpy_image = np.moveaxis(numpy_image,0,2)
-    #numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    #boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=patch_size, patch_overlap=0.05)
+    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.tif")
+    numpy_image = src.read()
+    numpy_image = np.moveaxis(numpy_image,0,2)
+    numpy_image = numpy_image[:,:,:3].astype("uint8")    
+    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=patch_size, patch_overlap=0.05)
     
-    #if boxes is None:
-        #return 0,0
+    if boxes is None:
+        return 0,0
     
-    #bounds = src.bounds
-    #pixelSizeX, pixelSizeY  = src.res
+    bounds = src.bounds
+    pixelSizeX, pixelSizeY  = src.res
     
-    ##subtract origin. Recall that numpy origin is top left! Not bottom left.
-    #boxes["xmin"] = (boxes["xmin"] *pixelSizeX) + bounds.left
-    #boxes["xmax"] = (boxes["xmax"] * pixelSizeX) + bounds.left
-    #boxes["ymin"] = bounds.top - (boxes["ymin"] * pixelSizeY) 
-    #boxes["ymax"] = bounds.top - (boxes["ymax"] * pixelSizeY)
+    #subtract origin. Recall that numpy origin is top left! Not bottom left.
+    boxes["xmin"] = (boxes["xmin"] *pixelSizeX) + bounds.left
+    boxes["xmax"] = (boxes["xmax"] * pixelSizeX) + bounds.left
+    boxes["ymin"] = bounds.top - (boxes["ymin"] * pixelSizeY) 
+    boxes["ymax"] = bounds.top - (boxes["ymax"] * pixelSizeY)
     
-    ## combine column to a shapely Box() object, save shapefile
-    #boxes['geometry'] = boxes.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.xmax,x.ymax), axis=1)
-    #boxes = gpd.GeoDataFrame(boxes, geometry='geometry')
+    # combine column to a shapely Box() object, save shapefile
+    boxes['geometry'] = boxes.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.xmax,x.ymax), axis=1)
+    boxes = gpd.GeoDataFrame(boxes, geometry='geometry')
     
-    #boxes.crs = src.crs.to_wkt()
-    #boxes.to_file("Figures/penguin_predictions_{}.shp".format(proportion))
-    #comet_experiment.log_asset("Figures/penguin_predictions_{}.shp".format(proportion))
+    boxes.crs = src.crs.to_wkt()
+    boxes.to_file("Figures/penguin_predictions_{}.shp".format(proportion))
+    comet_experiment.log_asset("Figures/penguin_predictions_{}.shp".format(proportion))
     
-    ##define in image coordinates and buffer to create a box
-    #gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.shp")
-    #gdf = gdf[~gdf.geometry.isnull()]
-    #gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.4).bounds.values]
+    #define in image coordinates and buffer to create a box
+    gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.shp")
+    gdf = gdf[~gdf.geometry.isnull()]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.4).bounds.values]
     
-    #results = IoU.compute_IoU(gdf, boxes)
-    #results["match"] = results.IoU > 0.25
+    results = IoU.compute_IoU(gdf, boxes)
+    results["match"] = results.IoU > 0.25
     
-    #results.to_csv("Figures/penguin_iou_dataframe_{}.csv".format(proportion))
-    #comet_experiment.log_asset("Figures/penguin_iou_dataframe_{}.csv".format(proportion))
+    results.to_csv("Figures/penguin_iou_dataframe_{}.csv".format(proportion))
+    comet_experiment.log_asset("Figures/penguin_iou_dataframe_{}.csv".format(proportion))
     
-    #true_positive = sum(results["match"] == True)
-    #recall = true_positive / results.shape[0]
-    #precision = true_positive / boxes.shape[0]
+    true_positive = sum(results["match"] == True)
+    recall = true_positive / results.shape[0]
+    precision = true_positive / boxes.shape[0]
     
-    #print("Recall is {}".format(recall))
-    #print("Precision is {}".format(precision))
+    print("Recall is {}".format(recall))
+    print("Precision is {}".format(precision))
     
-    #comet_experiment.log_metric("precision",precision)
-    #comet_experiment.log_metric("recall", recall)
-    
+    comet_experiment.log_metric("precision",precision)
+    comet_experiment.log_metric("recall", recall)
     
     #repeat using predict_generator
     iou_dataframe = []
