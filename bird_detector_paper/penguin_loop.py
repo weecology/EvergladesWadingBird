@@ -210,18 +210,14 @@ def training(proportion, epochs=1, patch_size=1000,pretrained=True):
     image_boxes = model.predict_generator("crops/test_annotations.csv")
     ground_truth = pd.read_csv("crops/test_annotations.csv",names=["image_path","xmin","ymin","xmax","ymax","label"])
     for name, group in image_boxes.groupby("plot_name"):
-        
         group = group.reset_index(drop=True)
-        ground_df = ground_truth[ground_truth.image_path == name].reset_index(drop=True)
+        ground_df = ground_truth[ground_truth.image_path == "{}.png".format(name)].reset_index(drop=True)
         ground_df['geometry'] = ground_df.apply(
             lambda x: shapely.geometry.box(x.xmin, x.ymin, x.xmax, x.ymax), axis=1)
-        
         ground_df = gpd.GeoDataFrame(ground_df, geometry='geometry')
-    
         group['geometry'] = group.apply(
             lambda x: shapely.geometry.box(x.xmin, x.ymin, x.xmax, x.ymax), axis=1)
         predictions = gpd.GeoDataFrame(group, geometry='geometry')
-        
         image_results = IoU.compute_IoU(ground_df, predictions)
         iou_dataframe.append(image_results)
 
