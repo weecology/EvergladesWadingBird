@@ -90,7 +90,7 @@ def prepare_test(patch_size=2000):
     print(test_annotations.head())
     
     #just limit to one image to check
-    test_annotations = test_annotations[test_annotations.plot_name == "offshore_rocks_cape_wallace_survey_4_926"]
+    test_annotations = test_annotations[test_annotations.image_path == "offshore_rocks_cape_wallace_survey_4_926"]
     
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
 
