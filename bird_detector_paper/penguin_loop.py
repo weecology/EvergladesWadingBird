@@ -233,7 +233,7 @@ def training(proportion, epochs=1, patch_size=1000,pretrained=True):
     
     true_positive = sum(results["match"] == True)
     recall = true_positive / results.shape[0]
-    precision = true_positive / boxes.shape[0]
+    precision = true_positive / image_boxes.shape[0]
     
     print("Crop Recall is {}".format(recall))
     print("Crop Precision is {}".format(precision))
