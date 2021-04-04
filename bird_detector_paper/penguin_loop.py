@@ -101,11 +101,17 @@ def prepare_train(patch_size=2000):
         shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp",
         rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
 
-    df.to_csv("Figures/training_annotations.csv",index=False)
+    df.to_csv("Figures/offshore_rocks_cape_wallace_survey_4_annotations.csv",index=False)
     
-    train_annotations = deepforest.preprocess.split_raster(
+    df = shapefile_to_annotations(
+        shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp",
+        rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
+
+    df.to_csv("Figures/cape_wallace_survey_8_annotations.csv",index=False)
+    
+    train_annotations_1 = deepforest.preprocess.split_raster(
         numpy_image=training_image,
-        annotations_file="Figures/training_annotations.csv",
+        annotations_file="Figures/offshore_rocks_cape_wallace_survey_4_annotations.csv",
         patch_size=patch_size,
         patch_overlap=0.05,
         base_dir="crops",
@@ -113,6 +119,17 @@ def prepare_train(patch_size=2000):
         allow_empty=False
     )
     
+    train_annotations_2 = deepforest.preprocess.split_raster(
+        numpy_image=training_image,
+        annotations_file="Figures/cape_wallace_survey_8_annotations.csv",
+        patch_size=patch_size,
+        patch_overlap=0.05,
+        base_dir="crops",
+        image_name="cape_wallace_survey_8.tif",
+        allow_empty=False
+    )
+    
+    train_annotations = pd.concat([train_annotations_1, train_annotations_2])
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False, header=False)
     
 def training(proportion, epochs=40, patch_size=1000,pretrained=True):
