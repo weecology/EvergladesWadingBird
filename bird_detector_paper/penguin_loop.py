@@ -172,7 +172,7 @@ def training(proportion, epochs=40, patch_size=1000,pretrained=True):
         model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
     
     model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
-    #model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
+    model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
     
    
     src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.tif")
