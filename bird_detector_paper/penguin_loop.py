@@ -77,11 +77,11 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
  
 def prepare_test(patch_size=2000):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.shp",
-                                  rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.tif")
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp",
+                                  rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
     df.to_csv("Figures/test_annotations.csv",index=False)
     
-    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.tif")
+    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
@@ -103,13 +103,7 @@ def prepare_train(patch_size=2000):
 
     df.to_csv("Figures/offshore_rocks_cape_wallace_survey_4_annotations.csv",index=False)
     
-    df = shapefile_to_annotations(
-        shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp",
-        rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-
-    df.to_csv("Figures/cape_wallace_survey_8_annotations.csv",index=False)
-    
-    train_annotations_1 = deepforest.preprocess.split_raster(
+    train_annotations = deepforest.preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/offshore_rocks_cape_wallace_survey_4_annotations.csv",
         patch_size=patch_size,
@@ -119,22 +113,6 @@ def prepare_train(patch_size=2000):
         allow_empty=False
     )
     
-    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    training_image = numpy_image[:,:,:3].astype("uint8")
-    
-    train_annotations_2 = deepforest.preprocess.split_raster(
-        numpy_image=training_image,
-        annotations_file="Figures/cape_wallace_survey_8_annotations.csv",
-        patch_size=patch_size,
-        patch_overlap=0.05,
-        base_dir="crops",
-        image_name="cape_wallace_survey_8.tif",
-        allow_empty=False
-    )
-    
-    train_annotations = pd.concat([train_annotations_1, train_annotations_2])
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False, header=False)
     
 def training(proportion, epochs=1, patch_size=1000,pretrained=True):
@@ -263,7 +241,7 @@ def training(proportion, epochs=1, patch_size=1000,pretrained=True):
     
     return precision, recall
 
-def run(patch_size=800):
+def run(patch_size=900):
 
     folder = 'crops/'
     for filename in os.listdir(folder):
@@ -292,17 +270,17 @@ def run(patch_size=800):
         
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
-    #for x in [0,0.25, 0.5, 0.75, 1]:
-        #print(x)
-        #for y in [True, False]:     
-            #p , r = training(proportion=x, training_image=training_image, pretrained=y)
-            #precision.append(p)
-            #recall.append(r)
-            #proportion.append(x)
-            #pretrained.append(y)
+    for x in [0,0.25, 0.5, 0.75, 1]:
+        print(x)
+        for y in [True, False]:     
+            p , r = training(proportion=x, pretrained=y, patch_size=patch_size)
+            precision.append(p)
+            recall.append(r)
+            proportion.append(x)
+            pretrained.append(y)
     
-    #results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
-    #results.to_csv("Figures/results_{}.csv".format(patch_size)) 
+    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
+    results.to_csv("Figures/results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
     run()
