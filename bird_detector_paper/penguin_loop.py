@@ -86,7 +86,10 @@ def prepare_test(patch_size=2000):
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="cape_wallace_survey_11-14.tif")
+    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image,
+                                                          annotations_file="Figures/test_annotations.csv",
+                                                          patch_size=patch_size, patch_overlap=0.05,
+                                                          base_dir="crops", image_name="cape_wallace_survey_8.tif")
     print(test_annotations.head())
         
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
@@ -158,7 +161,7 @@ def training(proportion, epochs=1, patch_size=1000,pretrained=True):
     #model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
     
    
-    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.tif")
+    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
@@ -185,7 +188,7 @@ def training(proportion, epochs=1, patch_size=1000,pretrained=True):
     comet_experiment.log_asset("Figures/penguin_predictions_{}.shp".format(proportion))
     
     #define in image coordinates and buffer to create a box
-    gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_11-14.shp")
+    gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp")
     gdf = gdf[~gdf.geometry.isnull()]
     gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.4).bounds.values]
     
