@@ -119,6 +119,11 @@ def prepare_train(patch_size=2000):
         allow_empty=False
     )
     
+    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
+    numpy_image = src.read()
+    numpy_image = np.moveaxis(numpy_image,0,2)
+    training_image = numpy_image[:,:,:3].astype("uint8")
+    
     train_annotations_2 = deepforest.preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/cape_wallace_survey_8_annotations.csv",
