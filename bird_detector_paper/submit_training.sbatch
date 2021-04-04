@@ -16,4 +16,4 @@ source activate Zooniverse
 
 
 #comet debug
-python training_loop.py
+python penguin_loop.py
