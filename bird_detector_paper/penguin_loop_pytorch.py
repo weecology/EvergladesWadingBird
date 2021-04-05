@@ -38,9 +38,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
         resolution = src.res[0]
         
     #define in image coordinates and buffer to create a box
-    gdf["geometry"] = gdf.geometry.boundary.centroid
-    gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -116,7 +114,7 @@ def prepare_train(patch_size=2000):
     
     train_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/crops/full_training_annotations.csv",index=False)
     
-def training(proportion, epochs=10, patch_size=2000,pretrained=True):
+def training(proportion, patch_size=2000,pretrained=True):
 
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
@@ -160,7 +158,6 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     except:
         pass
     
-    model.config["train"]["epochs"] = epochs
     model.config["train"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/training_annotations.csv"
     model.config["train"]["root_dir"] = "/orange/ewhite/b.weinstein/penguins/crops"    
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/test_annotations.csv"
@@ -222,8 +219,6 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     ##define in image coordinates and buffer to create a box
     #gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp")
     #gdf = gdf[~gdf.geometry.isnull()]
-    #gdf["geometry"] = gdf.geometry.boundary.centroid
-    #gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
     #gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
     
     #results = IoU.compute_IoU(gdf, boxes)
