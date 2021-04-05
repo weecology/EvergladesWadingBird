@@ -321,7 +321,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     empty_train, empty_test = split_test_train(empty_frames_df)
     
     #limit the number of empty
-    #train = pd.concat([train, empty_train])
+    train = pd.concat([train, empty_train])
     #test = pd.concat([test, empty_test])
     
     #Enforce rounding to pixels, pandas "Int64" dtype for nullable arrays https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html
@@ -345,11 +345,11 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     empty_test.to_csv(empty_test_path, index=False)
     
 if __name__ == "__main__":
-    #run(
-    #    shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
-    #    empty_frames_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_frames.csv",
-    #    save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
-    #)
+    run(
+       shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
+       empty_frames_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_frames.csv",
+       save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
+    )
     
     model = train_model(train_path="/orange/ewhite/everglades/Zooniverse/parsed_images/train.csv",
                         test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv",
