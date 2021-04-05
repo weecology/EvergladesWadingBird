@@ -244,31 +244,31 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     return precision, recall
 
-def run(patch_size=2500):
-
-    folder = 'crops/'
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print('Failed to delete %s. Reason: %s' % (file_path, e))
-            
-    proportion = []
-    recall = []
-    precision = []
-    pretrained =[]
+def run(patch_size=2500, generate=True):
+    if generate:
+        folder = 'crops/'
+        for filename in os.listdir(folder):
+            file_path = os.path.join(folder, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print('Failed to delete %s. Reason: %s' % (file_path, e))
+                
     
-    prepare_test(patch_size=patch_size)
-    #Only open training raster once because its so huge
-    prepare_train(patch_size=int(patch_size/2))
+        prepare_test(patch_size=patch_size)
+        prepare_train(patch_size=int(patch_size/2))
     
     p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
+    proportion = []
+    recall = []
+    precision = []
+    pretrained =[]
+        
     #run x times to get uncertainty in sampling
     for i in np.arange(5):
         for x in [0,0.25, 0.5, 0.75, 1]:
