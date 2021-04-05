@@ -345,11 +345,11 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     empty_test.to_csv(empty_test_path, index=False)
     
 if __name__ == "__main__":
-    run(
-       shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
-       empty_frames_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_frames.csv",
-       save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
-    )
+    #run(
+    #   shp_dir="/orange/ewhite/everglades/Zooniverse/parsed_images/",
+    #   empty_frames_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_frames.csv",
+    #   save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
+    #)
     
     model = train_model(train_path="/orange/ewhite/everglades/Zooniverse/parsed_images/train.csv",
                         test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv",
