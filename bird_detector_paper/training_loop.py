@@ -150,10 +150,10 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
         
     if pretrained:
-        model = deepforest.main.load_from_checkpoint("/orange/ewhite/everglades/Zooniverse/predictions//20210404_180042/species_model.pl")
+        model = main.deepforest.load_from_checkpoint("/orange/ewhite/everglades/Zooniverse/predictions//20210404_180042/species_model.pl")
         
     else:
-        model = deepforest.main()
+        model = main()
     try:
         os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
     except:
