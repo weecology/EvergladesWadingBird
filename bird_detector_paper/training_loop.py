@@ -91,7 +91,7 @@ def prepare_test(patch_size=2000):
     
     test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
-    test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
+    test_annotations.to_csv("crops/test_annotations.csv",index=False)
 
 def prepare_train(patch_size=2000):
     src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
@@ -162,8 +162,6 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     model.config["train"]["epochs"] = epochs
     model.config["validation"]["csv_file"] = "crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "crops"
-    model.config["nms_thresh"] = 0.3
-    model.config["score_thresh"] = 0.1
     
     model.create_trainer(logger=comet_logger)
     
@@ -195,7 +193,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    boxes = model.predict_tile(numpy_image=numpy_image, return_plot=False, patch_size=patch_size, patch_overlap=0.05)
+    boxes = model.predict_tile(image=numpy_image, return_plot=False, patch_size=patch_size, patch_overlap=0.05)
     
     if boxes is None:
         return 0,0
