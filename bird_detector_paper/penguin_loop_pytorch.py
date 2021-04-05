@@ -5,7 +5,7 @@ import comet_ml
 from pytorch_lightning.loggers import CometLogger
 from deepforest import main
 from deepforest import preprocess
-import glob
+from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
 import shapely
@@ -81,25 +81,25 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
  
 def prepare_test(patch_size=2000):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp", rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
     df.to_csv("Figures/test_annotations.csv",index=False)
     
-    src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
+    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="cape_wallace_survey_8.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False)
 
 def prepare_train(patch_size=2000):
-    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
+    src = rio.open("/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     training_image = numpy_image[:,:,:3].astype("uint8")
     
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp", rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
 
     df.to_csv("Figures/training_annotations.csv",index=False)
     
@@ -155,7 +155,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     else:
         model = main.deepforest()
     try:
-        os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
+        os.mkdir("/orange/ewhite/b.weinstein/penguins/{}/".format(proportion))
     except:
         pass
     
@@ -191,7 +191,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
             print(e)
                 
     #Evaluate against model
-    src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
+    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")    
@@ -218,7 +218,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     comet_logger.experiment.log_asset("Figures/predictions_{}.shp".format(proportion))
     
     #define in image coordinates and buffer to create a box
-    gdf = gpd.read_file("/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp")
+    gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp")
     gdf = gdf[~gdf.geometry.isnull()]
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
@@ -245,14 +245,12 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     images = glob.glob("{}/*.png".format(model_savedir))
     for img in images:
         comet_logger.experiment.log_image(img)
-    
         
     comet_logger.experiment.end()
     
-
     return precision, recall
 
-def run(patch_size=2500, generate=False):
+def run(patch_size=2500, generate=True):
     if generate:
         folder = 'crops/'
         for filename in os.listdir(folder):
@@ -265,9 +263,8 @@ def run(patch_size=2500, generate=False):
             except Exception as e:
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 
-    
-        #prepare_test(patch_size=patch_size)
-        #prepare_train(patch_size=int(patch_size/2))
+        prepare_test(patch_size=patch_size)
+        prepare_train(patch_size=int(patch_size/2))
     
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
