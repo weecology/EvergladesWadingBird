@@ -170,7 +170,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     if not proportion == 0:
         model.trainer.fit(model)
     
-    test_results = model.evaluate(annotations="crops/test_annotations.csv")
+    test_results = model.evaluate(csv_file="crops/test_annotations.csv", root_dir="crops/")
     
     if comet_logger is not None:
         try:
