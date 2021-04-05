@@ -136,7 +136,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     comet_logger.experiment.add_tag("Palmyra")
     
-    train_annotations = pd.read_csv("crops/full_training_annotations.csv", names=["image_path","xmin","ymin","xmax","ymax","label"])
+    train_annotations = pd.read_csv("crops/full_training_annotations.csv")
     crops = train_annotations.image_path.unique()    
     
     if not proportion == 0:
