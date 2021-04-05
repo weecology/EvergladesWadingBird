@@ -160,6 +160,8 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
         pass
     
     model.config["train"]["epochs"] = epochs
+    model.config["validation"]["csv_file"] = "crops/training_annotations.csv"
+    model.config["validation"]["root_dir"] = "crops"    
     model.config["validation"]["csv_file"] = "crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "crops"
     
@@ -259,7 +261,6 @@ def run(patch_size=2500, generate=False):
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size/2))
     
-    p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
     proportion = []
