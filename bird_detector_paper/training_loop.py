@@ -4,6 +4,7 @@
 import comet_ml
 from pytorch_lightning.loggers import CometLogger
 from deepforest import main
+from deepforest import preprocess
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
@@ -88,7 +89,7 @@ def prepare_test(patch_size=2000):
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = deepforest.preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False, header=False)
 
@@ -102,7 +103,7 @@ def prepare_train(patch_size=2000):
 
     df.to_csv("Figures/training_annotations.csv",index=False)
     
-    train_annotations = deepforest.preprocess.split_raster(
+    train_annotations = preprocess.split_raster(
         numpy_image=training_image,
         annotations_file="Figures/training_annotations.csv",
         patch_size=patch_size,
