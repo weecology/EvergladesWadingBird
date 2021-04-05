@@ -5,7 +5,7 @@ import comet_ml
 from pytorch_lightning.loggers import CometLogger
 from deepforest import main
 from deepforest import preprocess
-from matplotlib import pyplot as plt
+import glob
 from shapely.geometry import Point, box
 import geopandas as gpd
 import shapely
@@ -153,7 +153,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
         model = main.deepforest.load_from_checkpoint("/orange/ewhite/everglades/Zooniverse/predictions//20210404_180042/species_model.pl")
         
     else:
-        model = main()
+        model = main.deepforest()
     try:
         os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
     except:
@@ -240,8 +240,16 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     comet_logger.experiment.log_metric("precision",precision)
     comet_logger.experiment.log_metric("recall", recall)
     
+    #log images
+    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], save_dir=model_savedir)
+    images = glob.glob("{}/*.png".format(model_savedir))
+    for img in images:
+        comet_logger.experiment.log_image(img)
+    
+        
     comet_logger.experiment.end()
     
+
     return precision, recall
 
 def run(patch_size=2500, generate=True):
@@ -269,7 +277,7 @@ def run(patch_size=2500, generate=True):
     pretrained =[]
         
     #run x times to get uncertainty in sampling
-    for i in np.arange(5):
+    for i in np.arange(2):
         for x in [0,0.25, 0.5, 0.75, 1]:
             print(x)
             for y in [True, False]:     
