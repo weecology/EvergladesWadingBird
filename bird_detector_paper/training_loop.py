@@ -262,9 +262,9 @@ def run(patch_size=2500):
     precision = []
     pretrained =[]
     
-    prepare_test(patch_size=patch_size)
+    #prepare_test(patch_size=patch_size)
     #Only open training raster once because its so huge
-    prepare_train(patch_size=int(patch_size/2))
+    #prepare_train(patch_size=int(patch_size/2))
     
     p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
