@@ -108,7 +108,7 @@ def prepare_train(patch_size=2000):
         patch_size=patch_size,
         patch_overlap=0.05,
         base_dir="/orange/ewhite/b.weinstein/penguins/crops",
-        image_name="CooperStrawn_53m_tile_clip_projected.tif",
+        image_name="offshore_rocks_cape_wallace_survey_4.tif",
         allow_empty=False
     )
     
