@@ -12,7 +12,7 @@
 #SBATCH --partition=gpu
 #SBATCH --gpus=3
 
-source activate Zooniverse
+source activate Zooniverse_pytorch
 
 
 #comet debug

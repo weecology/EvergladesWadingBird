@@ -249,7 +249,7 @@ def training(proportion, patch_size=2000,pretrained=True):
     
     return precision, recall
 
-def run(patch_size=2500, generate=True):
+def run(patch_size=2500, generate=False):
     if generate:
         folder = '/orange/ewhite/b.weinstein/penguins/crops/'
         for filename in os.listdir(folder):

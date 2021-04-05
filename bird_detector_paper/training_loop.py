@@ -270,8 +270,8 @@ def run(patch_size=2500, generate=False):
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 
     
-        #prepare_test(patch_size=patch_size)
-        #prepare_train(patch_size=int(patch_size/2))
+        prepare_test(patch_size=patch_size)
+        prepare_train(patch_size=int(patch_size/2))
     
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
