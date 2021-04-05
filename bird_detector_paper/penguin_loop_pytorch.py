@@ -90,7 +90,7 @@ def prepare_test(patch_size=2000):
     test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05,
                                                base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
     print(test_annotations.head())
-    test_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
+    test_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/crops/test_annotations.csv",index=False)
 
 def prepare_train(patch_size=2000):
     src = rio.open("/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
@@ -133,7 +133,7 @@ def training(proportion, patch_size=2000,pretrained=True):
     comet_logger.experiment.log_parameter("proportion",proportion)
     comet_logger.experiment.log_parameter("patch_size",patch_size)
     
-    comet_logger.experiment.add_tag("Palmyra")
+    comet_logger.experiment.add_tag("Penguin")
     
     train_annotations = pd.read_csv("/orange/ewhite/b.weinstein/penguins/crops/full_training_annotations.csv")
     crops = train_annotations.image_path.unique()    
