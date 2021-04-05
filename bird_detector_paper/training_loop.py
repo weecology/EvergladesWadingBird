@@ -1,8 +1,9 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
 #srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
-# conda activate Zooniverse
+# conda activate Zooniverse_pytorch
 import comet_ml
-from deepforest import deepforest
+from pytorch_lightning.loggers import CometLogger
+from deepforest import main
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
@@ -12,6 +13,7 @@ import rasterio as rio
 import numpy as np
 import os
 import shutil
+from datetime import datetime
 
 import IoU
 
@@ -37,7 +39,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     #define in image coordinates and buffer to create a box
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -110,15 +112,28 @@ def prepare_train(patch_size=2000):
         allow_empty=False
     )
     
-    train_annotations.to_csv("crops/full_training_annotations.csv",index=False, header=False)
+    train_annotations.to_csv("crops/full_training_annotations.csv",index=False)
     
-def training(proportion, epochs=1, patch_size=2000,pretrained=True):
-    comet_experiment = comet_ml.Experiment(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",project_name="everglades", workspace="bw4sz")
+def training(proportion, epochs=10, patch_size=2000,pretrained=True):
+
+    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                  project_name="everglades", workspace="bw4sz")
     
-    comet_experiment.log_parameter("proportion",proportion)
-    comet_experiment.log_parameter("patch_size",patch_size)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    save_dir="/orange/ewhite/everglades/Palmyra/"
+    model_savedir = "{}/{}".format(save_dir,timestamp)  
     
-    comet_experiment.add_tag("Palmyra")
+    try:
+        os.mkdir(model_savedir)
+    except Exception as e:
+        print(e)
+    
+    comet_logger.experiment.log_parameter("timestamp",timestamp)
+    
+    comet_logger.experiment.log_parameter("proportion",proportion)
+    comet_logger.experiment.log_parameter("patch_size",patch_size)
+    
+    comet_logger.experiment.add_tag("Palmyra")
     
     train_annotations = pd.read_csv("crops/full_training_annotations.csv", names=["image_path","xmin","ymin","xmax","ymax","label"])
     crops = train_annotations.image_path.unique()    
@@ -128,32 +143,50 @@ def training(proportion, epochs=1, patch_size=2000,pretrained=True):
             selected_crops = np.random.choice(crops, size = int(proportion*len(crops)),replace=False)
             train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
     
-    train_annotations.to_csv("crops/training_annotations.csv", index=False, header=False)
+    train_annotations.to_csv("crops/training_annotations.csv", index=False)
     
-    comet_experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
-    comet_experiment.log_parameter("training_annotations",train_annotations.shape[0])
+    comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
+    comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
         
     if pretrained:
-        model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
-        model = deepforest.deepforest(weights=model_path)
+        model = deepforest.main.load_from_checkpoint("/orange/ewhite/everglades/Zooniverse/predictions//20210404_180042/species_model.pl")
+        
     else:
-        model = deepforest.deepforest()
-        model.use_release()
+        model = deepforest.main()
     try:
         os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
     except:
         pass
     
-    model.config["save_path"] = "/orange/ewhite/everglades/Palmyra/"
-    model.config["epochs"] = epochs
-    model.config["validation_annotations"] = "crops/test_annotations.csv"
+    model.config["train"]["epochs"] = epochs
+    model.config["validation"]["csv_file"] = "crops/test_annotations.csv"
+    model.config["validation"]["root_dir"] = "crops"
+    model.config["nms_thresh"] = 0.3
+    model.config["score_thresh"] = 0.1
+    
+    model.create_trainer(logger=comet_logger)
     
     if not proportion == 0:
-        model.train(annotations="crops/training_annotations.csv", comet_experiment=comet_experiment)
+        model.trainer.fit(model)
     
-    model.evaluate_generator(annotations="crops/test_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
-    model.evaluate_generator(annotations="crops/training_annotations.csv", color_annotation=(0,255,0),color_detection=(255,255,0), comet_experiment=comet_experiment)
+    test_results = model.evaluate(annotations="crops/test_annotations.csv")
     
+    if comet_logger is not None:
+        try:
+            test_results["test_results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+            comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+            
+            test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+            comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+            
+            for index, row in test_results["class_recall"].iterrows():
+                comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
+                comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
+            
+            comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
+            comet_logger.experiment.log_metric("Box Recall",test_results["box_recall"])
+            comet_logger.experiment.log_metric("Box Precision",test_results["box_precision"])
+                
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
     numpy_image = src.read()
@@ -179,20 +212,20 @@ def training(proportion, epochs=1, patch_size=2000,pretrained=True):
     
     boxes.crs = src.crs.to_wkt()
     boxes.to_file("Figures/predictions_{}.shp".format(proportion))
-    comet_experiment.log_asset("Figures/predictions_{}.shp".format(proportion))
+    comet_logger.experiment.log_asset("Figures/predictions_{}.shp".format(proportion))
     
     #define in image coordinates and buffer to create a box
     gdf = gpd.read_file("/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp")
     gdf = gdf[~gdf.geometry.isnull()]
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.2).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
     
     results = IoU.compute_IoU(gdf, boxes)
     results["match"] = results.IoU > 0.25
     
     results.to_csv("Figures/iou_dataframe_{}.csv".format(proportion))
-    comet_experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
+    comet_logger.experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
     
     true_positive = sum(results["match"] == True)
     recall = true_positive / results.shape[0]
@@ -201,10 +234,10 @@ def training(proportion, epochs=1, patch_size=2000,pretrained=True):
     print("Recall is {}".format(recall))
     print("Precision is {}".format(precision))
     
-    comet_experiment.log_metric("precision",precision)
-    comet_experiment.log_metric("recall", recall)
+    comet_logger.experiment.log_metric("precision",precision)
+    comet_logger.experiment.log_metric("recall", recall)
     
-    comet_experiment.end()
+    comet_logger.experiment.end()
     
     return precision, recall
 
@@ -233,17 +266,19 @@ def run(patch_size=2500):
     p , r = training(proportion=0, pretrained=True, patch_size=patch_size)
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
-    #for x in [0,0.25, 0.5, 0.75, 1]:
-        #print(x)
-        #for y in [True, False]:     
-            #p , r = training(proportion=x, training_image=training_image, pretrained=y)
-            #precision.append(p)
-            #recall.append(r)
-            #proportion.append(x)
-            #pretrained.append(y)
-    
-    #results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
-    #results.to_csv("Figures/results_{}.csv".format(patch_size)) 
+    #run x times to get uncertainty in sampling
+    for i in np.arange(5):
+        for x in [0,0.25, 0.5, 0.75, 1]:
+            print(x)
+            for y in [True, False]:     
+                p , r = training(proportion=x, pretrained=y, patch_size=patch_size)
+                precision.append(p)
+                recall.append(r)
+                proportion.append(x)
+                pretrained.append(y)
+        
+    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
+    results.to_csv("Figures/results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
     run()
