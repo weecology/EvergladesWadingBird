@@ -149,10 +149,10 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
+    comet_logger.experiment.log_parameter("pretrained", pretrained)
         
     if pretrained:
         model = main.deepforest.load_from_checkpoint("/orange/ewhite/everglades/Zooniverse/predictions//20210404_180042/species_model.pl")
-        
     else:
         model = main.deepforest()
     try:
@@ -167,11 +167,12 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     model.config["validation"]["root_dir"] = "crops"
     
     model.create_trainer(logger=comet_logger)
+    comet_logger.experiment.log_parameters(model.config)
     
     if not proportion == 0:
         model.trainer.fit(model)
     
-    test_results = model.evaluate(csv_file="crops/test_annotations.csv", root_dir="crops/")
+    test_results = model.evaluate(csv_file="crops/test_annotations.csv", root_dir="crops/", iou_threshold=0.25)
     
     if comet_logger is not None:
         try:
@@ -191,55 +192,57 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
         except Exception as e:
             print(e)
                 
-    #Evaluate against model
-    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    numpy_image = numpy_image[:,:,:3].astype("uint8")    
-    boxes = model.predict_tile(image=numpy_image, return_plot=False, patch_size=patch_size, patch_overlap=0.05)
+    ##Evaluate against model
+    #src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
+    #numpy_image = src.read()
+    #numpy_image = np.moveaxis(numpy_image,0,2)
+    #numpy_image = numpy_image[:,:,:3].astype("uint8")    
+    #boxes = model.predict_tile(image=numpy_image, return_plot=False, patch_size=patch_size, patch_overlap=0.05)
     
-    if boxes is None:
-        return 0,0
+    #if boxes is None:
+        #return 0,0
     
-    bounds = src.bounds
-    pixelSizeX, pixelSizeY  = src.res
+    #bounds = src.bounds
+    #pixelSizeX, pixelSizeY  = src.res
     
-    #subtract origin. Recall that numpy origin is top left! Not bottom left.
-    boxes["xmin"] = (boxes["xmin"] *pixelSizeX) + bounds.left
-    boxes["xmax"] = (boxes["xmax"] * pixelSizeX) + bounds.left
-    boxes["ymin"] = bounds.top - (boxes["ymin"] * pixelSizeY) 
-    boxes["ymax"] = bounds.top - (boxes["ymax"] * pixelSizeY)
+    ##subtract origin. Recall that numpy origin is top left! Not bottom left.
+    #boxes["xmin"] = (boxes["xmin"] *pixelSizeX) + bounds.left
+    #boxes["xmax"] = (boxes["xmax"] * pixelSizeX) + bounds.left
+    #boxes["ymin"] = bounds.top - (boxes["ymin"] * pixelSizeY) 
+    #boxes["ymax"] = bounds.top - (boxes["ymax"] * pixelSizeY)
     
-    # combine column to a shapely Box() object, save shapefile
-    boxes['geometry'] = boxes.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.xmax,x.ymax), axis=1)
-    boxes = gpd.GeoDataFrame(boxes, geometry='geometry')
+    ## combine column to a shapely Box() object, save shapefile
+    #boxes['geometry'] = boxes.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.xmax,x.ymax), axis=1)
+    #boxes = gpd.GeoDataFrame(boxes, geometry='geometry')
     
-    boxes.crs = src.crs.to_wkt()
-    boxes.to_file("Figures/predictions_{}.shp".format(proportion))
-    comet_logger.experiment.log_asset("Figures/predictions_{}.shp".format(proportion))
+    #boxes.crs = src.crs.to_wkt()
+    #boxes.to_file("Figures/predictions_{}.shp".format(proportion))
+    #comet_logger.experiment.log_asset("Figures/predictions_{}.shp".format(proportion))
     
-    #define in image coordinates and buffer to create a box
-    gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp")
-    gdf = gdf[~gdf.geometry.isnull()]
-    gdf["geometry"] = gdf.geometry.boundary.centroid
-    gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
+    ##define in image coordinates and buffer to create a box
+    #gdf = gpd.read_file("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp")
+    #gdf = gdf[~gdf.geometry.isnull()]
+    #gdf["geometry"] = gdf.geometry.boundary.centroid
+    #gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
+    #gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
     
-    results = IoU.compute_IoU(gdf, boxes)
-    results["match"] = results.IoU > 0.25
+    #results = IoU.compute_IoU(gdf, boxes)
+    #results["match"] = results.IoU > 0.25
     
-    results.to_csv("Figures/iou_dataframe_{}.csv".format(proportion))
-    comet_logger.experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
+    #results.to_csv("Figures/iou_dataframe_{}.csv".format(proportion))
+    #comet_logger.experiment.log_asset("Figures/iou_dataframe_{}.csv".format(proportion))
     
-    true_positive = sum(results["match"] == True)
-    recall = true_positive / results.shape[0]
-    precision = true_positive / boxes.shape[0]
+    #true_positive = sum(results["match"] == True)
+    #recall = true_positive / results.shape[0]
+    #precision = true_positive / boxes.shape[0]
     
+    recall = test_results["recall"]
+    precision = test_results["precision"]    
     print("Recall is {}".format(recall))
     print("Precision is {}".format(precision))
     
-    comet_logger.experiment.log_metric("precision",precision)
-    comet_logger.experiment.log_metric("recall", recall)
+    #comet_logger.experiment.log_metric("precision",precision)
+    #comet_logger.experiment.log_metric("recall", recall)
     
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
