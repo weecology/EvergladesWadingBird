@@ -241,7 +241,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     comet_logger.experiment.log_metric("recall", recall)
     
     #log images
-    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], save_dir=model_savedir)
+    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
     images = glob.glob("{}/*.png".format(model_savedir))
     for img in images:
         comet_logger.experiment.log_image(img)
