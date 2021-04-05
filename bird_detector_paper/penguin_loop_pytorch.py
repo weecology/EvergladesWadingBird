@@ -9,7 +9,6 @@ from deepforest import preprocess
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
-import shapely
 import pandas as pd
 import rasterio as rio
 import numpy as np
@@ -83,16 +82,17 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
  
 def prepare_test(patch_size=2000):
     df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp", rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-    df.to_csv("Figures/test_annotations.csv",index=False)
+    df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
     
     src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="cape_wallace_survey_8.tif")
+    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05,
+                                               base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
     print(test_annotations.head())
-    test_annotations.to_csv("crops/test_annotations.csv",index=False)
+    test_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
 
 def prepare_train(patch_size=2000):
     src = rio.open("/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
@@ -102,19 +102,19 @@ def prepare_train(patch_size=2000):
     
     df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp", rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
 
-    df.to_csv("Figures/training_annotations.csv",index=False)
+    df.to_csv("/orange/ewhite/b.weinstein/penguins/training_annotations.csv",index=False)
     
     train_annotations = preprocess.split_raster(
         numpy_image=training_image,
-        annotations_file="Figures/training_annotations.csv",
+        annotations_file="/orange/ewhite/b.weinstein/penguins/training_annotations.csv",
         patch_size=patch_size,
         patch_overlap=0.05,
-        base_dir="crops",
+        base_dir="/orange/ewhite/b.weinstein/penguins/crops",
         image_name="CooperStrawn_53m_tile_clip_projected.tif",
         allow_empty=False
     )
     
-    train_annotations.to_csv("crops/full_training_annotations.csv",index=False)
+    train_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/crops/full_training_annotations.csv",index=False)
     
 def training(proportion, epochs=10, patch_size=2000,pretrained=True):
 
@@ -137,7 +137,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     comet_logger.experiment.add_tag("Palmyra")
     
-    train_annotations = pd.read_csv("crops/full_training_annotations.csv")
+    train_annotations = pd.read_csv("/orange/ewhite/b.weinstein/penguins/crops/full_training_annotations.csv")
     crops = train_annotations.image_path.unique()    
     
     if not proportion == 0:
@@ -145,7 +145,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
             selected_crops = np.random.choice(crops, size = int(proportion*len(crops)),replace=False)
             train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
     
-    train_annotations.to_csv("crops/training_annotations.csv", index=False)
+    train_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/crops/training_annotations.csv", index=False)
     
     comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
@@ -161,10 +161,10 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
         pass
     
     model.config["train"]["epochs"] = epochs
-    model.config["train"]["csv_file"] = "crops/training_annotations.csv"
-    model.config["train"]["root_dir"] = "crops"    
-    model.config["validation"]["csv_file"] = "crops/test_annotations.csv"
-    model.config["validation"]["root_dir"] = "crops"
+    model.config["train"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/training_annotations.csv"
+    model.config["train"]["root_dir"] = "/orange/ewhite/b.weinstein/penguins/crops"    
+    model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/test_annotations.csv"
+    model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/penguins/crops"
     
     model.create_trainer(logger=comet_logger)
     comet_logger.experiment.log_parameters(model.config)
@@ -172,7 +172,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     if not proportion == 0:
         model.trainer.fit(model)
     
-    test_results = model.evaluate(csv_file="crops/test_annotations.csv", root_dir="crops/", iou_threshold=0.25)
+    test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/penguins/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/penguins/crops/", iou_threshold=0.25)
     
     if comet_logger is not None:
         try:
@@ -256,7 +256,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
 
 def run(patch_size=2500, generate=True):
     if generate:
-        folder = 'crops/'
+        folder = '/orange/ewhite/b.weinstein/penguins/crops/'
         for filename in os.listdir(folder):
             file_path = os.path.join(folder, filename)
             try:
@@ -289,7 +289,7 @@ def run(patch_size=2500, generate=True):
                 pretrained.append(y)
         
     results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
-    results.to_csv("Figures/results_{}.csv".format(patch_size)) 
+    results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
     run()
