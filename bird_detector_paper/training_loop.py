@@ -176,7 +176,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     if comet_logger is not None:
         try:
-            test_results["test_results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+            test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
             comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
             
             test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
@@ -242,8 +242,8 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     print("Recall is {}".format(recall))
     print("Precision is {}".format(precision))
     
-    #comet_logger.experiment.log_metric("precision",precision)
-    #comet_logger.experiment.log_metric("recall", recall)
+    comet_logger.experiment.log_metric("precision",precision)
+    comet_logger.experiment.log_metric("recall", recall)
     
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
