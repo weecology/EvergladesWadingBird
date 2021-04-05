@@ -186,6 +186,8 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
             comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
             comet_logger.experiment.log_metric("Box Recall",test_results["box_recall"])
             comet_logger.experiment.log_metric("Box Precision",test_results["box_precision"])
+        except Exception as e:
+            print(e)
                 
     #Evaluate against model
     src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
