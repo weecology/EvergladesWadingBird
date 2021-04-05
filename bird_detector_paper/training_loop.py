@@ -133,6 +133,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     comet_logger.experiment.log_parameter("proportion",proportion)
     comet_logger.experiment.log_parameter("patch_size",patch_size)
+    comet_logger.experiment.log_parameter("pretrained", pretrained)
     
     comet_logger.experiment.add_tag("Palmyra")
     
@@ -166,6 +167,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     model.config["validation"]["root_dir"] = "crops"
     
     model.create_trainer(logger=comet_logger)
+    comet_logger.experiment.log_parameters(model.config)
     
     if not proportion == 0:
         model.trainer.fit(model)

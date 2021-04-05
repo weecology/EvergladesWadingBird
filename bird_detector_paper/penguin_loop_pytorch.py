@@ -149,10 +149,10 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     
     comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
+    comet_logger.experiment.log_parameter("pretrained", pretrained)
         
     if pretrained:
         model = main.deepforest.load_from_checkpoint("/orange/ewhite/everglades/Zooniverse/predictions//20210404_180042/species_model.pl")
-        
     else:
         model = main.deepforest()
     try:
@@ -167,6 +167,7 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     model.config["validation"]["root_dir"] = "crops"
     
     model.create_trainer(logger=comet_logger)
+    comet_logger.experiment.log_parameters(model.config)
     
     if not proportion == 0:
         model.trainer.fit(model)
