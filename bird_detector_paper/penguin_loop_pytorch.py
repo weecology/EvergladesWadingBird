@@ -236,8 +236,8 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     #recall = true_positive / results.shape[0]
     #precision = true_positive / boxes.shape[0]
     
-    recall = test_results["recall"]
-    precision = test_results["precision"]    
+    recall = test_results["box_recall"]
+    precision = test_results["box_precision"]    
     print("Recall is {}".format(recall))
     print("Precision is {}".format(precision))
     
