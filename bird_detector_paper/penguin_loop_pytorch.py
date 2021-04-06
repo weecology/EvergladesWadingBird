@@ -253,7 +253,7 @@ def training(proportion, patch_size=2000,pretrained=True):
         
     comet_logger.experiment.end()
     
-    formatted_results = pd.DataFrame({"proportion":proportion, "pretrained": pretrained, "annotations": train_annotations.shape[0],"precision": precision,"recall": recall})
+    formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall]})
     
     return formatted_results
 
