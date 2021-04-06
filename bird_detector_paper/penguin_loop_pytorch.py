@@ -273,7 +273,7 @@ def run(patch_size=900, generate=False):
     pretrained =[]
         
     #run x times to get uncertainty in sampling
-    for i in np.arange(2):
+    for i in np.arange(5):
         for x in [0,0.25, 0.5, 0.75, 1]:
             print(x)
             for y in [True, False]:     

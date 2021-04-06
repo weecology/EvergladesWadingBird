@@ -273,7 +273,7 @@ def run(patch_size=2500, generate=False):
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size/2))
     
-    p , r = training(proportion=0.25, pretrained=True, patch_size=patch_size)
+    #p , r = training(proportion=0.25, pretrained=True, patch_size=patch_size)
     
     proportion = []
     recall = []
@@ -281,7 +281,7 @@ def run(patch_size=2500, generate=False):
     pretrained =[]
         
     #run x times to get uncertainty in sampling
-    for i in np.arange(2):
+    for i in np.arange(5):
         for x in [0,0.25, 0.5, 0.75, 1]:
             print(x)
             for y in [True, False]:     
