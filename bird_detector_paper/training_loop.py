@@ -254,7 +254,9 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
     comet_logger.experiment.end()
     
 
-    return precision, recall
+    formatted_results = pd.DataFrame({"proportion":proportion, "pretrained": pretrained, "annotations": train_annotations.shape[0],"precision": precision,"recall": recall})
+
+    return formatted_results
 
 def run(patch_size=2500, generate=False):
     if generate:
@@ -273,26 +275,18 @@ def run(patch_size=2500, generate=False):
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size/2))
     
-    #p , r = training(proportion=0.25, pretrained=True, patch_size=patch_size)
-    
-    proportion = []
-    recall = []
-    precision = []
-    pretrained =[]
+    results = []
         
     #run x times to get uncertainty in sampling
     for i in np.arange(5):
         for x in [0,0.25, 0.5, 0.75, 1]:
             print(x)
             for y in [True, False]:     
-                p , r = training(proportion=x, pretrained=y, patch_size=patch_size)
-                precision.append(p)
-                recall.append(r)
-                proportion.append(x)
-                pretrained.append(y)
-        
-    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
-    results.to_csv("Figures/results_{}.csv".format(patch_size)) 
+                result = training(proportion=x, pretrained=y, patch_size=patch_size)
+                results.append(result)
+    
+    results = pd.concat(results)
+    results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
     run()
