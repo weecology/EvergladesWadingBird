@@ -249,7 +249,7 @@ def training(proportion, patch_size=2000,pretrained=True):
     
     return precision, recall
 
-def run(patch_size=2500, generate=True):
+def run(patch_size=900, generate=True):
     if generate:
         folder = '/orange/ewhite/b.weinstein/penguins/crops/'
         for filename in os.listdir(folder):
@@ -263,7 +263,7 @@ def run(patch_size=2500, generate=True):
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 
         prepare_test(patch_size=patch_size)
-        prepare_train(patch_size=int(patch_size/2))
+        prepare_train(patch_size=int(patch_size))
     
     p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
     
