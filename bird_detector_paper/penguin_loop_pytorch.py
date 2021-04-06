@@ -285,20 +285,19 @@ def run(patch_size=900, generate=False, client=None):
     futures = []
     
     # run zero shot only once
-    future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
-    futures.append(future)
+    #future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
+    #futures.append(future)
     
-    future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
-    futures.append(future)
+    #future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
+    #futures.append(future)
     
     #run x times to get uncertainty in sampling
     iteration = 0
     while iteration < 5:
-        for x in [0.25, 0.5, 0.75, 1]:
+        for x in [0, 1]:
             print(x)
             for y in [True, False]: 
                 if client is not None:
-                    print("submitting job, iteration {}, pretrained {}, proportion {}".format(i, y, x))
                     future = client.submit(training, pretrained=y, patch_size=patch_size, proportion=x)
                     futures.append(future)
                     iteration+=1
@@ -316,11 +315,11 @@ def run(patch_size=900, generate=False, client=None):
                 except Exception as e:
                     print("future failed with {}, {}".format(future, e, traceback.print_exc()))    
    
+    print(results)
     results = pd.concat(results)
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    client = start_cluster.start(gpus=4, mem_size="30GB")
-    run(client=client)
-    #for x in [1500,2000,2500,3000, 4000]:
-        #run(patch_size=x)
+    #client = start_cluster.start(gpus=4, mem_size="30GB")
+    run(client=None)
+
