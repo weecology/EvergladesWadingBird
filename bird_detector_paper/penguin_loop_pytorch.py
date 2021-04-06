@@ -144,6 +144,8 @@ def training(proportion, patch_size=2000,pretrained=True):
     
     if not proportion == 0:
         if proportion < 1:  
+            #set new seed
+            np.random.seed()
             selected_crops = np.random.choice(crops, size = int(proportion*len(crops)),replace=False)
             train_annotations = train_annotations[train_annotations.image_path.isin(selected_crops)]
     
@@ -164,7 +166,7 @@ def training(proportion, patch_size=2000,pretrained=True):
     
     #if not pretrained, train for 50% longer
     if not pretrained:
-        model.config["train"]["epochs"] = int(model.config["train"]["epochs"] * 1.5)
+        model.config["train"]["epochs"] = int(model.config["train"]["epochs"] * 2)
         
     model.config["train"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/training_annotations.csv"
     model.config["train"]["root_dir"] = "/orange/ewhite/b.weinstein/penguins/crops"    
@@ -255,7 +257,11 @@ def training(proportion, patch_size=2000,pretrained=True):
         
     comet_logger.experiment.end()
     
-    formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall]})
+    if proportion == 0:
+        num_annotations = 0
+    else:
+        num_annotations = train_annotations.shape[0]
+    formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [num_annotations],"precision": [precision],"recall": [recall]})
     
     return formatted_results
 
@@ -274,7 +280,6 @@ def run(patch_size=900, generate=False, client=None):
                 
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size))
-    
   
     results = []
     futures = []
