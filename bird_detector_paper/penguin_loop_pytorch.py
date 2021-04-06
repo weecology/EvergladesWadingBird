@@ -285,17 +285,17 @@ def run(patch_size=900, generate=False, client=None):
     futures = []
     
     # run zero shot only once
-    #future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
-    #futures.append(future)
+    future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
+    futures.append(future)
     
-    #future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
-    #futures.append(future)
+    future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
+    futures.append(future)
     
     #run x times to get uncertainty in sampling
     
     iteration = 0
     while iteration < 6:
-        for x in [0, 1]:
+        for x in [0.25, 0.5, 0.75, 1]:
             for y in [True, False]: 
                 if client is not None:
                     future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
@@ -315,5 +315,5 @@ def run(patch_size=900, generate=False, client=None):
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    #client = start_cluster.start(gpus=4, mem_size="30GB")
-    run(client=None)
+    client = start_cluster.start(gpus=4, mem_size="30GB")
+    run(client=client)
