@@ -20,6 +20,8 @@ from dask.distributed import wait
 import traceback
 import IoU
 
+os.environ['SLURM_JOB_NAME'] = 'bash'
+
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
