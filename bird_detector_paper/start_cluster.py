@@ -68,7 +68,7 @@ def start(cpus=0, gpus=0, mem_size="10GB"):
             "--nodes=1"
         ]
 
-        cluster = SLURMCluster(
+        cluster = SLURMCluster(cores=1,
                                memory=mem_size,
                                walltime='24:00:00',
                                job_extra=extra_args,
