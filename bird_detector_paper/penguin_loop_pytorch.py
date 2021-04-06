@@ -309,12 +309,9 @@ def run(patch_size=900, generate=False, client=None):
     if client is not None:
         wait(futures)
         for future in futures:
-                try:
-                    result = future.result()
-                    results.append(result)
-                except Exception as e:
-                    print("future failed with {}, {}".format(future, e, traceback.print_exc()))    
-   
+            result = future.result()
+            results.append(result)
+
     print(results)
     results = pd.concat(results)
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
