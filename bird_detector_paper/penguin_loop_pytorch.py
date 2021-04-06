@@ -283,19 +283,28 @@ def run(patch_size=900, generate=False, client=None):
   
     results = []
     futures = []
+    
+    # run zero shot only once
+    future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
+    futures.append(future)
+    
+    future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
+    futures.append(future)
+    
     #run x times to get uncertainty in sampling
     for i in np.arange(5):
-        for x in [0,0.25, 0.5, 0.75, 1]:
+        for x in [0.25, 0.5, 0.75, 1]:
             print(x)
             for y in [True, False]: 
-                if client:
+                if client is not None:
+                    print("submitting job, iteration {}, pretrained {}, proportion {}",format(i, y, x))
                     future = client.submit(training, pretrained=y, patch_size=patch_size, proportion=x)
                     futures.append(future)
                 else:
                     result = training(proportion=x, patch_size=patch_size, pretrained=y)
                     results.append(result)
     
-    if client:
+    if client is not None:
         wait(futures)
         for future in futures:
                 try:
