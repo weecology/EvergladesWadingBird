@@ -292,18 +292,20 @@ def run(patch_size=900, generate=False, client=None):
     #futures.append(future)
     
     #run x times to get uncertainty in sampling
-    for i in np.arange(5):
-        for x in [0, 0.25, 0.5, 0.75, 1]:
+    iteration = 0
+    while iteration < 5:
+        for x in [0, 1]:
             print(x)
             for y in [True, False]: 
                 if client is not None:
-                    print("submitting job, iteration {}, pretrained {}, proportion {}".format(i, y, x))
                     future = client.submit(training, pretrained=y, patch_size=patch_size, proportion=x)
                     futures.append(future)
+                    iteration+=1
                 else:
                     result = training(proportion=x, patch_size=patch_size, pretrained=y)
                     results.append(result)
-    
+                    iteration+=1
+                    
     if client is not None:
         wait(futures)
         for future in futures:
@@ -313,9 +315,10 @@ def run(patch_size=900, generate=False, client=None):
                 except Exception as e:
                     print("future failed with {}, {}".format(future, e, traceback.print_exc()))    
    
+    print(results)
     results = pd.concat(results)
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    #client = start_cluster.start(gpus=2, mem_size="30GB")
+    #client = start_cluster.start(gpus=4, mem_size="30GB")
     run(client=None)
