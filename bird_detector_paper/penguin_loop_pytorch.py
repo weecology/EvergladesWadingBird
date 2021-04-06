@@ -297,7 +297,7 @@ def run(patch_size=900, generate=False, client=None):
             print(x)
             for y in [True, False]: 
                 if client is not None:
-                    print("submitting job, iteration {}, pretrained {}, proportion {}",format(i, y, x))
+                    print("submitting job, iteration {}, pretrained {}, proportion {}".format(i, y, x))
                     future = client.submit(training, pretrained=y, patch_size=patch_size, proportion=x)
                     futures.append(future)
                 else:
