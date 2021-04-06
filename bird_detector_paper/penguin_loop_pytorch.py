@@ -17,7 +17,7 @@ import shutil
 from datetime import datetime
 import start_cluster
 from dask.distributed import wait
-
+import traceback
 import IoU
 
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
@@ -295,7 +295,7 @@ def run(patch_size=900, generate=False, client=None):
                     result = future.result()
                     results.append(result)
                 except Exception as e:
-                    print("future {} failed with {}".format(future, e))    
+                    print("future failed with {}, {}".format(future, e, traceback.print_exc()))    
    
     results = pd.concat(results)
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
