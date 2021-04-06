@@ -2,13 +2,15 @@
 #srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse_pytorch
 import comet_ml
+import start_cluster
+from distributed import wait
 from pytorch_lightning.loggers import CometLogger
 from deepforest import main
 from deepforest import preprocess
 import glob
 from shapely.geometry import Point, box
 import geopandas as gpd
-import shapely
+
 import pandas as pd
 import rasterio as rio
 import numpy as np
@@ -115,7 +117,7 @@ def prepare_train(patch_size=2000):
     
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False)
     
-def training(proportion, epochs=10, patch_size=2000,pretrained=True):
+def training(proportion, epochs=15, patch_size=2000,pretrained=True, iteration=None):
 
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
@@ -252,9 +254,8 @@ def training(proportion, epochs=10, patch_size=2000,pretrained=True):
         comet_logger.experiment.log_image(img)
     
     comet_logger.experiment.end()
-    
 
-    formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall]})
+    formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall], "iteration":[iteration]})
 
     return formatted_results
 
@@ -271,24 +272,38 @@ def run(patch_size=2500, generate=False):
             except Exception as e:
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 
-    
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size/2))
     
-    results = []
-        
-    #run x times to get uncertainty in sampling
-    for i in np.arange(5):
-        for x in [0,0.25, 0.5, 0.75, 1]:
-            print(x)
-            for y in [True, False]:     
-                result = training(proportion=x, pretrained=y, patch_size=patch_size)
-                results.append(result)
+    iteration_result = []
+    futures = []    
     
-    results = pd.concat(results)
+    future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
+    futures.append(future)
+    
+    future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
+    futures.append(future)
+    
+    iteration = 0
+    while iteration < 6:
+        for x in [0, 1]:
+            for y in [True, False]: 
+                if client is not None:
+                    future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
+                    futures.append(future)
+                else:
+                    experiment_result = training(proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
+                    iteration_result.append(experiment_result)
+        iteration+=1
+                    
+    if client is not None:
+        wait(futures)
+        for future in futures:
+            iteration_result.append(future.result())
+
+    results = pd.concat(iteration_result)
     results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    run()
-    #for x in [1500,2000,2500,3000, 4000]:
-        #run(patch_size=x)
+    client = start_cluster.start(gpus=5, mem_size="25GB")
+    run(client=client)
