@@ -15,6 +15,8 @@ import numpy as np
 import os
 import shutil
 from datetime import datetime
+import start_cluster
+from dask.distributed import wait
 
 import IoU
 
@@ -158,6 +160,10 @@ def training(proportion, patch_size=2000,pretrained=True):
     except:
         pass
     
+    #if not pretrained, train for 50% longer
+    if not pretrained:
+        model.config["train"]["epochs"] = int(model.config["train"]["epochs"] * 1.5)
+        
     model.config["train"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/training_annotations.csv"
     model.config["train"]["root_dir"] = "/orange/ewhite/b.weinstein/penguins/crops"    
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/test_annotations.csv"
@@ -247,9 +253,11 @@ def training(proportion, patch_size=2000,pretrained=True):
         
     comet_logger.experiment.end()
     
-    return precision, recall
+    formatted_results = pd.DataFrame({"proportion":proportion, "pretrained": pretrained, "annotations": train_annotations.shape[0],"precision": precision,"recall": recall})
+    
+    return formatted_results
 
-def run(patch_size=900, generate=False):
+def run(patch_size=900, generate=False, client=None):
     if generate:
         folder = '/orange/ewhite/b.weinstein/penguins/crops/'
         for filename in os.listdir(folder):
@@ -265,28 +273,35 @@ def run(patch_size=900, generate=False):
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size))
     
-    p , r = training(proportion=0.25, pretrained=True, patch_size=patch_size)
-    
-    proportion = []
-    recall = []
-    precision = []
-    pretrained =[]
-        
+  
+    results = []
+    futures = []
     #run x times to get uncertainty in sampling
     for i in np.arange(5):
         for x in [0,0.25, 0.5, 0.75, 1]:
             print(x)
-            for y in [True, False]:     
-                p , r = training(proportion=x, pretrained=y, patch_size=patch_size)
-                precision.append(p)
-                recall.append(r)
-                proportion.append(x)
-                pretrained.append(y)
-        
-    results = pd.DataFrame({"precision":precision,"recall": recall,"proportion":proportion, "pretrained":pretrained})
+            for y in [True, False]: 
+                if client:
+                    future = client.submit(training, pretrained=y, patch_size=patch_size, proportion=x)
+                    futures.append(future)
+                else:
+                    result = training(proportion=x, patch_size=patch_size, pretrained=y)
+                    results.append(result)
+    
+    if client:
+        wait(futures)
+        for future in futures:
+                try:
+                    result = future.result()
+                    results.append(result)
+                except Exception as e:
+                    print("future {} failed with {}".format(future, e))    
+   
+    results = pd.concat(results)
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    run()
+    client = start_cluster.start(gpus=5, mem_size="30GB")
+    run(client=client)
     #for x in [1500,2000,2500,3000, 4000]:
         #run(patch_size=x)
