@@ -116,7 +116,7 @@ def prepare_train(patch_size=2000):
     
     train_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/crops/full_training_annotations.csv",index=False)
     
-def training(proportion, patch_size=2000,pretrained=True):
+def training(proportion, patch_size=2000,pretrained=True, iteration=None):
 
     os.environ["SLURM_JOB_NAME"] = "bash"
 
@@ -261,7 +261,7 @@ def training(proportion, patch_size=2000,pretrained=True):
         num_annotations = 0
     else:
         num_annotations = train_annotations.shape[0]
-    formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [num_annotations],"precision": [precision],"recall": [recall]})
+    formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [num_annotations],"precision": [precision],"recall": [recall], "iteration":[iteration]})
     
     return formatted_results
 
@@ -298,10 +298,10 @@ def run(patch_size=900, generate=False, client=None):
         for x in [0, 1]:
             for y in [True, False]: 
                 if client is not None:
-                    future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y)
+                    future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
                     futures.append(future)
                 else:
-                    experiment_result = training(proportion=x, patch_size=patch_size, pretrained=y)
+                    experiment_result = training(proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
                     iteration_result.append(experiment_result)
         iteration+=1
                     
