@@ -281,7 +281,7 @@ def run(patch_size=900, generate=False, client=None):
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size))
   
-    results = []
+    iteration_result = []
     futures = []
     
     # run zero shot only once
@@ -292,28 +292,26 @@ def run(patch_size=900, generate=False, client=None):
     #futures.append(future)
     
     #run x times to get uncertainty in sampling
+    
     iteration = 0
-    while iteration < 5:
+    while iteration < 6:
         for x in [0, 1]:
-            print(x)
             for y in [True, False]: 
                 if client is not None:
-                    future = client.submit(training, pretrained=y, patch_size=patch_size, proportion=x)
+                    future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y)
                     futures.append(future)
-                    iteration+=1
                 else:
-                    result = training(proportion=x, patch_size=patch_size, pretrained=y)
-                    results.append(result)
-                    iteration+=1
+                    experiment_result = training(proportion=x, patch_size=patch_size, pretrained=y)
+                    iteration_result.append(experiment_result)
+        iteration+=1
                     
     if client is not None:
         wait(futures)
         for future in futures:
-            result = future.result()
-            results.append(result)
+            iteration_result.append(future.result())
 
-    print(results)
-    results = pd.concat(results)
+    print(iteration_result)
+    results = pd.concat(iteration_result)
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
