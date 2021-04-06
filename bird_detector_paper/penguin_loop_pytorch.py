@@ -20,8 +20,6 @@ from dask.distributed import wait
 import traceback
 import IoU
 
-os.environ['SLURM_JOB_NAME'] = 'bash'
-
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
@@ -119,6 +117,8 @@ def prepare_train(patch_size=2000):
     train_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/crops/full_training_annotations.csv",index=False)
     
 def training(proportion, patch_size=2000,pretrained=True):
+
+    os.environ["SLURM_JOB_NAME"] = "bash"
 
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
