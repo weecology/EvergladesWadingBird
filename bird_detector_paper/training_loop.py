@@ -273,7 +273,7 @@ def run(patch_size=2500, generate=False):
         prepare_test(patch_size=patch_size)
         prepare_train(patch_size=int(patch_size/2))
     
-    p , r = training(proportion=1, pretrained=True, patch_size=patch_size)
+    p , r = training(proportion=0.25, pretrained=True, patch_size=patch_size)
     
     proportion = []
     recall = []
