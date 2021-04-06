@@ -64,7 +64,7 @@ def start(cpus=0, gpus=0, mem_size="10GB"):
             "--error=/orange/idtrees-collab/logs/dask-worker-%j.err", "--account=ewhite",
             "--output=/orange/idtrees-collab/logs/dask-worker-%j.out", "--partition=gpu",
             "--gpus=1",
-            "--cpus-per-task=2"
+            "--cpus-per-task=2",
             "--nodes=1"
         ]
 
