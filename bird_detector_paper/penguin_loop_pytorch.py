@@ -171,7 +171,7 @@ def training(proportion, patch_size=2000,pretrained=True):
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/penguins/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/penguins/crops"
     
-    model.create_trainer(logger=comet_logger, distributed_backend=None)
+    model.create_trainer(logger=comet_logger)
     comet_logger.experiment.log_parameters(model.config)
     
     if not proportion == 0:
