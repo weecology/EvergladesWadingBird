@@ -320,5 +320,5 @@ def run(patch_size=900, generate=False, client=None):
     results.to_csv("Figures/penguin_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    #client = start_cluster.start(gpus=4, mem_size="30GB")
-    run(client=None)
+    client = start_cluster.start(gpus=4, mem_size="30GB")
+    run(client=client)
