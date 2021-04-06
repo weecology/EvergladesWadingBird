@@ -47,13 +47,10 @@ def start(cpus=0, gpus=0, mem_size="10GB"):
             "--output=/orange/idtrees-collab/logs/dask-worker-%j.out"
         ]
 
-        cluster = SLURMCluster(processes=1,
-                               queue='hpg2-compute',
-                               cores=1,
+        cluster = SLURMCluster(queue='hpg2-compute',
                                memory=mem_size,
-                               walltime='10:00:00',
+                               walltime='1:00:00',
                                job_extra=extra_args,
-                               extra=['--resources cpu=1'],
                                scheduler_options={"dashboard_address": ":8781"},
                                local_directory="/orange/idtrees-collab/tmp/",
                                death_timeout=300)
@@ -68,14 +65,13 @@ def start(cpus=0, gpus=0, mem_size="10GB"):
             "--output=/orange/idtrees-collab/logs/dask-worker-%j.out", "--partition=gpu",
             "--gpus=1",
             "--cpus-per-task=2"
+            "--nodes=1"
         ]
 
-        cluster = SLURMCluster(processes=1,
-                               cores=1,
+        cluster = SLURMCluster(
                                memory=mem_size,
                                walltime='24:00:00',
                                job_extra=extra_args,
-                               extra=['--resources gpu=1'],
                                scheduler_options={"dashboard_address": ":8787"},
                                local_directory="/orange/idtrees-collab/tmp/",
                                death_timeout=300)
