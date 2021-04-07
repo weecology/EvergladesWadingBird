@@ -121,6 +121,8 @@ def prepare_train(patch_size=2000):
     
 def training(proportion, epochs=15, patch_size=2000,pretrained=True, iteration=None):
 
+    os.environ["SLURM_JOB_NAME"] = "bash"
+
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
     
