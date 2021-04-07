@@ -2,6 +2,7 @@
 #srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse_pytorch
 import comet_ml
+import gc
 import start_cluster
 from distributed import wait
 from pytorch_lightning.loggers import CometLogger
@@ -17,6 +18,7 @@ import numpy as np
 import os
 import shutil
 from datetime import datetime
+from matplotlib import pyplot as plt
 
 import IoU
 
@@ -256,7 +258,10 @@ def training(proportion, epochs=15, patch_size=2000,pretrained=True, iteration=N
     comet_logger.experiment.end()
 
     formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall], "iteration":[iteration]})
-
+    
+    #close all figures
+    plt.close("all")
+    gc.collect()
     return formatted_results
 
 def run(patch_size=2500, generate=False, client=None):
