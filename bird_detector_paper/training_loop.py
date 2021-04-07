@@ -290,8 +290,8 @@ def run(patch_size=2500, generate=False, client=None):
     futures.append(future)
     
     iteration = 0
-    while iteration < 6:
-        for x in [0, 1]:
+    while iteration < 10:
+        for x in [1]:
             for y in [True, False]: 
                 if client is not None:
                     future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
