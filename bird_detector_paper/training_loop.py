@@ -259,7 +259,7 @@ def training(proportion, epochs=15, patch_size=2000,pretrained=True, iteration=N
 
     return formatted_results
 
-def run(patch_size=2500, generate=False):
+def run(patch_size=2500, generate=False, client=None):
     if generate:
         folder = 'crops/'
         for filename in os.listdir(folder):
