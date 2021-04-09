@@ -119,7 +119,7 @@ def prepare_train(patch_size=2000):
     
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False)
     
-def training(proportion, epochs=15, patch_size=2000,pretrained=True, iteration=None):
+def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=None):
 
     os.environ["SLURM_JOB_NAME"] = "bash"
 
@@ -167,6 +167,7 @@ def training(proportion, epochs=15, patch_size=2000,pretrained=True, iteration=N
         pass
     
     model.config["train"]["epochs"] = epochs
+    model.config["gpus"] = 3
     model.config["train"]["csv_file"] = "crops/training_annotations.csv"
     model.config["train"]["root_dir"] = "crops"    
     model.config["validation"]["csv_file"] = "crops/test_annotations.csv"
@@ -252,18 +253,18 @@ def training(proportion, epochs=15, patch_size=2000,pretrained=True, iteration=N
     comet_logger.experiment.log_metric("recall", recall)
     
     #log images
-    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
-    images = glob.glob("{}/*.png".format(model_savedir))
-    for img in images:
-        comet_logger.experiment.log_image(img)
+    #model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
+    #images = glob.glob("{}/*.png".format(model_savedir))
+    #for img in images:
+    #    comet_logger.experiment.log_image(img)
     
-    comet_logger.experiment.end()
+    #comet_logger.experiment.end()
 
     formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall], "iteration":[iteration]})
     
     #close all figures
-    plt.close("all")
-    gc.collect()
+    #plt.close("all")
+    #gc.collect()
     return formatted_results
 
 def run(patch_size=2500, generate=False, client=None):
@@ -288,6 +289,8 @@ def run(patch_size=2500, generate=False, client=None):
     result_df = training(proportion=1, epochs=10, patch_size=patch_size)
     iteration_result.append(result_df)
         
+    #future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
+    #futures.append(future)
     #future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
     #futures.append(future)
     
@@ -303,13 +306,13 @@ def run(patch_size=2500, generate=False, client=None):
                     #iteration_result.append(experiment_result)
         #iteration+=1
                     
-    if client is not None:
-        wait(futures)
-        for future in futures:
-            iteration_result.append(future.result())
+    #if client is not None:
+    #    wait(futures)
+    #    for future in futures:
+    #        iteration_result.append(future.result())
 
-    results = pd.concat(iteration_result)
-    results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
+    #results = pd.concat(iteration_result)
+    #results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
     #client = start_cluster.start(gpus=5, mem_size="25GB")
