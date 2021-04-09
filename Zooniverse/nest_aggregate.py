@@ -18,6 +18,8 @@ def species_from_label(value):
     label_dict[4] = "Wood Stork"
     label_dict[5] = "Roseate Spoonbill"
     label_dict[6] = "Anhinga"
+    label_dict[7] = "Other"
+    label_dict[8] = "Unknown"
     
     return label_dict[value]
     
@@ -29,9 +31,9 @@ def download_data(everglades_watch, min_version, generate=False):
         rows.append(row)    
     
     df = pd.DataFrame(rows)
+    df  = df[df.workflow_name =="Nests"]     
     df["workflow_version"] = df.workflow_version.astype(float)
     df  = df[df.workflow_version > min_version]  
-    df  = df[df.workflow_name =="Nests"]     
     
     return df
 
@@ -104,8 +106,8 @@ def parse_annotations(x):
         annotations = parse_nest_location(x)
         annotations["valid_nest"] = nest_status
     else:
-        annotations
-        
+        annotations = pd.DataFrame({"frame":[None], "nest_x":[None], "nest_y":[None],"species":[None], "valid_nest":[False]})
+               
     return annotations
      
 def parse_subject_data(x):
@@ -278,10 +280,10 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     df = parse_birds(df)
     
     #Write parsed data
-    df.to_csv("{}/{}.csv".format(savedir, "parsed_annotations"),index=True)
+    df.to_csv("{}/{}.csv".format(savedir, "parsed_nest_annotations"),index=True)
     
     #Remove blank frames and spatial coordinates of bird points
-    df = df[df.species.notna()]
+    #df = df[df.species.notna()]
     
     #gdf = project_point(df)
     
@@ -301,4 +303,4 @@ if __name__ == "__main__":
     #Download from Zooniverse and parse
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=279.365)
+       generate=False, min_version=195.257)
