@@ -1,5 +1,5 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
-#srun -p gpu --gpus=1 --mem 40GB --time 5:00:00 --pty -u bash -i
+#srun -p gpu --gpus=2 --mem 70GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse_pytorch
 import comet_ml
 import gc
@@ -285,23 +285,23 @@ def run(patch_size=2500, generate=False, client=None):
     iteration_result = []
     futures = []    
     
-    future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
-    futures.append(future)
+    result_df = training(proportion=1, epochs=10, patch_size=patch_size)
+    iteration_result.append(result_df)
+        
+    #future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
+    #futures.append(future)
     
-    future = client.submit(training, pretrained=False, patch_size=patch_size, proportion=0)
-    futures.append(future)
-    
-    iteration = 0
-    while iteration < 10:
-        for x in [1]:
-            for y in [True, False]: 
-                if client is not None:
-                    future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
-                    futures.append(future)
-                else:
-                    experiment_result = training(proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
-                    iteration_result.append(experiment_result)
-        iteration+=1
+    #iteration = 0
+    #while iteration < 2:
+        #for x in [1]:
+            #for y in [True, False]: 
+                #if client is not None:
+                    #future = client.submit(training,proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
+                    #futures.append(future)
+                #else:
+                    #experiment_result = training(proportion=x, patch_size=patch_size, pretrained=y, iteration = iteration)
+                    #iteration_result.append(experiment_result)
+        #iteration+=1
                     
     if client is not None:
         wait(futures)
@@ -312,5 +312,6 @@ def run(patch_size=2500, generate=False, client=None):
     results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    client = start_cluster.start(gpus=5, mem_size="25GB")
-    run(client=client)
+    #client = start_cluster.start(gpus=5, mem_size="25GB")
+    for x in [1000,1500,2000,2500]:
+        run(client=None, patch_size=x)
