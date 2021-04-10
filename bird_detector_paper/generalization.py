@@ -8,12 +8,12 @@ from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
 import pandas as pd
-import PIL
 import rasterio as rio
 import numpy as np
 import os
 import shutil
 from datetime import datetime
+import PIL
 
 def split_test_train(annotations, split = 0.9):
     """Split annotation in train and test by image"""
@@ -153,22 +153,7 @@ def prepare_palmyra(generate=True):
             
     return {"train":train_path, "test":test_path}
 
-<<<<<<< HEAD
-def prepare_penguin():
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp", rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-    df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
-    
-    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    numpy_image = numpy_image[:,:,:3].astype("uint8")
-    
-    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=800, patch_overlap=0.05,
-                                               base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
-    
-=======
 def prepare_penguin(generate=True):
->>>>>>> 347d472e96aa8774dae1c675c4adaabe279e0596
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/penguins_test.csv"
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/penguins_train.csv"
     
@@ -181,7 +166,7 @@ def prepare_penguin(generate=True):
         numpy_image = np.moveaxis(numpy_image,0,2)
         numpy_image = numpy_image[:,:,:3].astype("uint8")
         
-        test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05,
+        test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=800, patch_overlap=0.05,
                                                    base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
         
         test_annotations.to_csv(test_path,index=False)
@@ -217,38 +202,13 @@ def prepare_everglades():
     
     return {"train":train_path, "test":test_path}
 
-<<<<<<< HEAD
-def prepare_terns():
-
-    PIL.Image.MAX_IMAGE_PIXELS = 933120000
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/birds.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
-    df.to_csv("/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv")
-    
-    annotations = preprocess.split_raster(
-        path_to_raster="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif",
-        annotations_file="/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv",
-        patch_size=1000,
-        patch_overlap=0,
-        base_dir="/orange/ewhite/b.weinstein/terns/crops",
-        image_name="seabirds_rgb.tif",
-        allow_empty=False
-    )
-    
-    #split into train test
-    train, test = split_test_train(annotations)
-    train_path = "/orange/ewhite/b.weinstein/generalization/crops/terns_train.csv"
-    train.to_csv(train_path,index=False)    
-    
-    #Test
-    df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
-    
-=======
 def prepare_terns(generate=True):
->>>>>>> 347d472e96aa8774dae1c675c4adaabe279e0596
+    PIL.Image.MAX_IMAGE_PIXELS = 933120000
+    
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/tern_test.csv"
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/terns_train.csv"        
     if generate:   
-        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/seabirds_rgb.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/birds.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
         df.to_csv("/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv")
         
         annotations = preprocess.split_raster(
@@ -265,9 +225,7 @@ def prepare_terns(generate=True):
         train, test = split_test_train(annotations)
         train.to_csv(train_path,index=False)    
         
-        #Test
-        df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
-        
+        #Test        
         test.to_csv(test_path,index=False)
     
     return {"train":train_path, "test":test_path}
@@ -278,10 +236,10 @@ def prepare_murres():
 def prepare():
     paths = {}
     #paths["murres"] = prepare_murres()
-    paths["terns"] = prepare_terns()
+    paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin()
-    paths["palmyra"] = prepare_palmyra()
+    paths["penguins"] = prepare_penguin(generate=False)
+    paths["palmyra"] = prepare_palmyra(generate=False)
     
     return paths
 
@@ -375,6 +333,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    for x in ["penguins"]
     result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra"], test_sets=["terns"])
     
