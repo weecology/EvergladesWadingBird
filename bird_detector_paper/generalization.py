@@ -268,7 +268,15 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
         all_sets.append(df)
     
     train_annotations = pd.concat(all_sets)
-    train_annotations.to_csv("/orange/ewhite/b.weinstein/penguins/crops/full_training_annotations.csv")
+    train_annotations.to_csv("/orange/ewhite/b.weinstein/generalization/crops/training_annotations.csv")
+
+    all_val_sets = []
+    for x in all_val_sets:
+        df = pd.read_csv(path_dict[x]["test"])
+        all_val_sets.append(df)
+    
+    test_annotations = pd.concat(all_val_sets)
+    test_annotations.to_csv("/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv")
 
     comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
