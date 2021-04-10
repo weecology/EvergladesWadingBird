@@ -216,7 +216,7 @@ def prepare_terns(generate=True):
             annotations_file="/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv",
             patch_size=1000,
             patch_overlap=0,
-            base_dir="/orange/ewhite/b.weinstein/terns/crops",
+            base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             image_name="seabirds_rgb.tif",
             allow_empty=False
         )
