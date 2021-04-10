@@ -267,7 +267,7 @@ def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=N
     #gc.collect()
     return formatted_results
 
-def run(patch_size=2500, generate=False, client=None, epochs=10):
+def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2):
     if generate:
         folder = 'crops/'
         for filename in os.listdir(folder):
@@ -281,12 +281,13 @@ def run(patch_size=2500, generate=False, client=None, epochs=10):
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 
         prepare_test(patch_size=patch_size)
-        prepare_train(patch_size=int(patch_size/2))
+        prepare_train(patch_size=int(patch_size/ratio))
     
     iteration_result = []
     futures = []    
-    
+    print("ratio is {}".format(ratio))
     result_df = training(proportion=1, epochs=epochs, patch_size=patch_size)
+    result_df = training(proportion=1,epochs=epochs,patch_size=patch_size)
     iteration_result.append(result_df)
         
     #future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
@@ -316,5 +317,5 @@ def run(patch_size=2500, generate=False, client=None, epochs=10):
 
 if __name__ == "__main__":
     #client = start_cluster.start(gpus=5, mem_size="25GB")
-    for x in [1,5,10,15,20]:
-        run(client=None, patch_size=1000, epochs=x)
+    for x in [1,2,3]:
+        run(client=None, patch_size=1000, epochs=10, ratio=x)
