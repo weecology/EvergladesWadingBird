@@ -277,7 +277,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
 
-    model = main.deepforest()
+    model = main.deepforest(label_dict={"Bird":0})
 
     try:
         os.mkdir(model_savedir)
