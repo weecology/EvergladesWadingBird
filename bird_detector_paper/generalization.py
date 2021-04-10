@@ -8,6 +8,7 @@ from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
 import pandas as pd
+import PIL
 import rasterio as rio
 import numpy as np
 import os
@@ -160,7 +161,7 @@ def prepare_penguin():
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05,
+    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=800, patch_overlap=0.05,
                                                base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
     
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/penguins_test.csv"
@@ -200,7 +201,8 @@ def prepare_everglades():
 
 def prepare_terns():
 
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/seabirds_rgb.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
+    PIL.Image.MAX_IMAGE_PIXELS = 933120000
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/birds.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
     df.to_csv("/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv")
     
     annotations = preprocess.split_raster(
