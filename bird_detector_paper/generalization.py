@@ -106,87 +106,90 @@ def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, conf
     
     return result
 
-def prepare_palmyra():
-    df = shapefile_to_annotations(
-        shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp",
-        rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif", box_points=True, confidence_filter=True)
-    df.to_csv("Figures/test_annotations.csv",index=False)
-    
-    src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    numpy_image = numpy_image[:,:,:3].astype("uint8")
-    
-    test_annotations = preprocess.split_raster(numpy_image=numpy_image,
-                                               annotations_file="Figures/test_annotations.csv",
-                                               patch_size=1000, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="palmyra.tif")
+def prepare_palmyra(generate=True):
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/palmyra_test.csv"
-    
-    test_annotations.to_csv(test_path,index=False)
-    
-    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    training_image = numpy_image[:,:,:3].astype("uint8")
-    
-    df = shapefile_to_annotations(
-        shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", 
-        rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif", box_points=True,
-        confidence_filter=True
-    )
-
-    df.to_csv("Figures/training_annotations.csv",index=False)
-    
-    train_annotations = preprocess.split_raster(
-        numpy_image=training_image,
-        annotations_file="Figures/training_annotations.csv",
-        patch_size=1000,
-        patch_overlap=0.05,
-        base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
-        image_name="CooperStrawn_53m_tile_clip_projected.tif",
-        allow_empty=False
-    )
-    train_path = "/orange/ewhite/b.weinstein/generalization/crops/palmyra_train.csv"    
-    train_annotations.to_csv(train_path,index=False)
+    train_path = "/orange/ewhite/b.weinstein/generalization/crops/palmyra_train.csv"      
+    if generate:      
+        df = shapefile_to_annotations(
+            shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp",
+            rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif", box_points=True, confidence_filter=True)
+        df.to_csv("Figures/test_annotations.csv",index=False)
         
+        src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
+        numpy_image = src.read()
+        numpy_image = np.moveaxis(numpy_image,0,2)
+        numpy_image = numpy_image[:,:,:3].astype("uint8")
+        
+        test_annotations = preprocess.split_raster(numpy_image=numpy_image,
+                                                   annotations_file="Figures/test_annotations.csv",
+                                                   patch_size=1000, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="palmyra.tif")
+        
+        test_annotations.to_csv(test_path,index=False)
+        
+        src = rio.open("/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif")
+        numpy_image = src.read()
+        numpy_image = np.moveaxis(numpy_image,0,2)
+        training_image = numpy_image[:,:,:3].astype("uint8")
+        
+        df = shapefile_to_annotations(
+            shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", 
+            rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif", box_points=True,
+            confidence_filter=True
+        )
+    
+        df.to_csv("Figures/training_annotations.csv",index=False)
+        
+        train_annotations = preprocess.split_raster(
+            numpy_image=training_image,
+            annotations_file="Figures/training_annotations.csv",
+            patch_size=1000,
+            patch_overlap=0.05,
+            base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
+            image_name="CooperStrawn_53m_tile_clip_projected.tif",
+            allow_empty=False
+        )
+        train_annotations.to_csv(train_path,index=False)
+            
     return {"train":train_path, "test":test_path}
 
-def prepare_penguin():
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp", rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-    df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
-    
-    src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    numpy_image = numpy_image[:,:,:3].astype("uint8")
-    
-    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05,
-                                               base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
-    
+def prepare_penguin(generate=True):
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/penguins_test.csv"
-    test_annotations.to_csv(test_path,index=False)
-
-    src = rio.open("/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    training_image = numpy_image[:,:,:3].astype("uint8")
-    
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp", rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
-
-    df.to_csv("/orange/ewhite/b.weinstein/penguins/training_annotations.csv",index=False)
-    
-    train_annotations = preprocess.split_raster(
-        numpy_image=training_image,
-        annotations_file="/orange/ewhite/b.weinstein/penguins/training_annotations.csv",
-        patch_size=800,
-        patch_overlap=0.05,
-        base_dir="/orange/ewhite/b.weinstein/generalization/crops",
-        image_name="offshore_rocks_cape_wallace_survey_4.tif",
-        allow_empty=False
-    )
-    
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/penguins_train.csv"
-    train_annotations.to_csv(train_path,index=False)
+    
+    if generate:
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp", rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
+        df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
+        
+        src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
+        numpy_image = src.read()
+        numpy_image = np.moveaxis(numpy_image,0,2)
+        numpy_image = numpy_image[:,:,:3].astype("uint8")
+        
+        test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05,
+                                                   base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
+        
+        test_annotations.to_csv(test_path,index=False)
+    
+        src = rio.open("/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
+        numpy_image = src.read()
+        numpy_image = np.moveaxis(numpy_image,0,2)
+        training_image = numpy_image[:,:,:3].astype("uint8")
+        
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp", rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
+    
+        df.to_csv("/orange/ewhite/b.weinstein/penguins/training_annotations.csv",index=False)
+        
+        train_annotations = preprocess.split_raster(
+            numpy_image=training_image,
+            annotations_file="/orange/ewhite/b.weinstein/penguins/training_annotations.csv",
+            patch_size=800,
+            patch_overlap=0.05,
+            base_dir="/orange/ewhite/b.weinstein/generalization/crops",
+            image_name="offshore_rocks_cape_wallace_survey_4.tif",
+            allow_empty=False
+        )
+        
+        train_annotations.to_csv(train_path,index=False)
         
     return {"train":train_path, "test":test_path}
 
@@ -198,31 +201,31 @@ def prepare_everglades():
     
     return {"train":train_path, "test":test_path}
 
-def prepare_terns():
-
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/seabirds_rgb.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
-    df.to_csv("/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv")
-    
-    annotations = preprocess.split_raster(
-        path_to_raster="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif",
-        annotations_file="/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv",
-        patch_size=1000,
-        patch_overlap=0,
-        base_dir="/orange/ewhite/b.weinstein/terns/crops",
-        image_name="seabirds_rgb.tif",
-        allow_empty=False
-    )
-    
-    #split into train test
-    train, test = split_test_train(annotations)
-    train_path = "/orange/ewhite/b.weinstein/generalization/crops/terns_train.csv"
-    train.to_csv(train_path,index=False)    
-    
-    #Test
-    df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
-    
+def prepare_terns(generate=True):
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/tern_test.csv"
-    test.to_csv(test_path,index=False)
+    train_path = "/orange/ewhite/b.weinstein/generalization/crops/terns_train.csv"        
+    if generate:   
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/seabirds_rgb.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
+        df.to_csv("/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv")
+        
+        annotations = preprocess.split_raster(
+            path_to_raster="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif",
+            annotations_file="/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv",
+            patch_size=1000,
+            patch_overlap=0,
+            base_dir="/orange/ewhite/b.weinstein/terns/crops",
+            image_name="seabirds_rgb.tif",
+            allow_empty=False
+        )
+        
+        #split into train test
+        train, test = split_test_train(annotations)
+        train.to_csv(train_path,index=False)    
+        
+        #Test
+        df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
+        
+        test.to_csv(test_path,index=False)
     
     return {"train":train_path, "test":test_path}
 
@@ -236,6 +239,8 @@ def prepare():
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin()
     paths["palmyra"] = prepare_palmyra()
+    
+    return paths
 
 def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
@@ -327,5 +332,6 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
+    for x in ["penguins"]
     result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra"], test_sets=["terns"])
     
