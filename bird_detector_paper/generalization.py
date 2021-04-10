@@ -271,7 +271,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     train_annotations.to_csv("/orange/ewhite/b.weinstein/generalization/crops/training_annotations.csv")
 
     all_val_sets = []
-    for x in all_val_sets:
+    for x in test_sets:
         df = pd.read_csv(path_dict[x]["test"])
         all_val_sets.append(df)
     
