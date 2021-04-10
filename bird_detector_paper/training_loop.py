@@ -20,8 +20,6 @@ import shutil
 from datetime import datetime
 from matplotlib import pyplot as plt
 
-import IoU
-
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
@@ -34,6 +32,9 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
     #Read shapefile
     gdf = gpd.read_file(shapefile)
+    
+    #confidence levels
+    gdf = gdf[gdf.Confidence==1]
     gdf = gdf[~gdf.geometry.isnull()]
         
     #raster bounds
