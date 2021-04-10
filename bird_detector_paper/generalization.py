@@ -88,11 +88,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, conf
     df["tile_ymin"] = (top - df.ymax)/resolution
     df["tile_ymin"] = df["tile_ymin"].astype(int)    
     
-    #Add labels is they exist
-    if "label" in gdf.columns:
-        df["label"] = gdf["label"]
-    else:
-        df["label"] = "Tree"
+    df["label"] = "Bird"
     
     #add filename
     df["image_path"] = os.path.basename(rgb)
