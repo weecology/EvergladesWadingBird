@@ -232,7 +232,7 @@ def prepare_murres():
 def prepare():
     paths = {}
     #paths["murres"] = prepare_murres()
-    paths["terns"] = prepare_terns(generate=True)
+    paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
     paths["palmyra"] = prepare_palmyra(generate=False)
