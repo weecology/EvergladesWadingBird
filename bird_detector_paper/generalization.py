@@ -294,7 +294,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     
     model.trainer.fit(model)
     
-    test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/penguins/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/penguins/crops/", iou_threshold=0.25)
+    test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
     
     if comet_logger is not None:
         try:
