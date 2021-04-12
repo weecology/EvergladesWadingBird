@@ -144,7 +144,10 @@ def parse_subject_data(x):
     
     for key in annotation_dict:
         data = annotation_dict[key]
-        utm_left, utm_bottom, utm_right, utm_top = data["bounds"]
+        try:
+            utm_left, utm_bottom, utm_right, utm_top = data["bounds"]
+        except:
+            return None
         subject_reference = data["subject_reference"]
         resolution = data["resolution"][0]
             
@@ -170,6 +173,10 @@ def parse_birds(df):
         
         #Extract subject data
         bounds = parse_subject_data(row.subject_data)
+        
+        if bounds is None:
+            print("Row {} had no spatial bounds".format(row["subject_data"]))
+            continue
         
         #Assign columns
         annotations["classification_id"] = row["classification_id"]
