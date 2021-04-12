@@ -210,7 +210,7 @@ def prepare_terns(generate=True):
         annotations = preprocess.split_raster(
             path_to_raster="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif",
             annotations_file="/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv",
-            patch_size=1000,
+            patch_size=800,
             patch_overlap=0,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             image_name="seabirds_rgb.tif",
@@ -331,6 +331,8 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     comet_logger.experiment.end()
     
     formatted_results = pd.DataFrame({"train": train_sets, "test": test_sets, "precision": [precision],"recall": [recall]})
+    
+    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     return formatted_results        
 
