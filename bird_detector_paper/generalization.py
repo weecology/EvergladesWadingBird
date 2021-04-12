@@ -330,12 +330,12 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
         
     comet_logger.experiment.end()
     
-    formatted_results = pd.DataFrame({"train": train_sets, "test": test_sets, "precision": [precision],"recall": [recall]})
+    #formatted_results = pd.DataFrame({"train": train_sets, "test": test_sets, "precision": [precision],"recall": [recall]})
     
     return formatted_results        
 
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra"], test_sets=["terns"])
+    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra","terns"], test_sets=["terns"])
     
