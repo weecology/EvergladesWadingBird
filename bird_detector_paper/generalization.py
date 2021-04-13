@@ -232,10 +232,10 @@ def prepare_murres():
 def prepare():
     paths = {}
     #paths["murres"] = prepare_murres()
-    paths["terns"] = prepare_terns()
+    paths["terns"] = prepare_terns(generate=True)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin()
-    paths["palmyra"] = prepare_palmyra()
+    paths["penguins"] = prepare_penguin(generate=False)
+    paths["palmyra"] = prepare_palmyra(generate=False)
     
     return paths
 
@@ -330,7 +330,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
         
     comet_logger.experiment.end()
     
-    formatted_results = pd.DataFrame({"train": train_sets, "test": test_sets, "precision": [precision],"recall": [recall]})
+    #formatted_results = pd.DataFrame({"train": train_sets, "test": test_sets, "precision": [precision],"recall": [recall]})
     
     model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
@@ -339,5 +339,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra"], test_sets=["terns"])
+    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra","terns"], test_sets=["terns"])
     
