@@ -288,7 +288,8 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", deb
     #Test on empy frames
     if empty_images_path:
         empty_frame_df = pd.read_csv(empty_images_path)
-        empty_images = empty_frame_df.image_path.unique()    
+        empty_frame_df["image_path"] = empty_frame_df["image_path"].apply(lambda x: os.path.join(dirname,x))        
+        empty_images = empty_frame_df.image_path.unique()
         predict_empty_frames(model, empty_images, comet_logger)
     
     #save model

@@ -89,12 +89,12 @@ def extract_empty(parsed_data, image_data,save_dir="."):
     
 def run(classification_shp, image_data ,savedir="."):
     """
-    classification_shp: path to a processed .shp, see aggregate.py
+    classification_shp: path to a processed .csv, see aggregate.py
     image_data: subject id download from zooniverse everglades-watch-subjects.csv
     """
     #Read in species data
-    df = gp.read_file(classification_shp)
-    df = df[["subject_id","x","y","species","behavior","geometry","selected_i"]]
+    df = pd.read_csv(classification_shp)
+    df = df[["subject_ids","x","y","species","behavior","geometry","selected_i"]]
     df.subject_id = df.subject_id.astype(int)
     
     #Read in image location data
@@ -138,7 +138,7 @@ def run(classification_shp, image_data ,savedir="."):
             print("{} failed with {}".format(name, e))
             continue
         
-        group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]
+        #group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]
         
         #Create a shapefile
         shpname = "{}.shp".format(os.path.join(savedir,basename))
