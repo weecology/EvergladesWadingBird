@@ -87,14 +87,14 @@ def extract_empty(parsed_data, image_data,save_dir="."):
     csv_name = "{}.csv".format(os.path.join(save_dir,"empty_frames"))
     empty_frame_df.to_csv(csv_name)
     
-def run(classification_shp, image_data ,savedir="."):
+def run(classification_csv, image_data ,savedir="."):
     """
-    classification_shp: path to a processed .shp, see aggregate.py
+    classification_shp: path to a processed .csv, see aggregate.py
     image_data: subject id download from zooniverse everglades-watch-subjects.csv
     """
     #Read in species data
-    df = gp.read_file(classification_shp)
-    df = df[["subject_id","x","y","species","behavior","geometry","selected_i"]]
+    df = pd.read_csv(classification_csv)
+    df = df[["subject_ids","x","y","species","behavior","geometry","selected_i"]]
     df.subject_id = df.subject_id.astype(int)
     
     #Read in image location data

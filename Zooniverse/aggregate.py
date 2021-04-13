@@ -226,24 +226,31 @@ def project_point(df):
     reprojected_utm_points["utm_x"] = reprojected_utm_points.geometry.apply(lambda x: x.coords[0][0])
     reprojected_utm_points["utm_y"] = reprojected_utm_points.geometry.apply(lambda x: x.coords[0][1])
     gdf = pd.concat([utm17,reprojected_utm_points], ignore_index=True)
+    
+    
     gdf.crs = 'epsg:32617'
     
     return gdf
 
-def spatial_join(gdf, IoU_threshold = 0.2):
+def spatial_join(gdf, IoU_threshold = 0.2, buffer_size=1):
     """Find overlapping predictions in a geodataframe
     IoU_threshold: float threshold [0-1] for degree of overlap to merge annotations and vote on class
+    buffer_size: in the units of the gdf, meters if projected, pixels if not.
     """    
     #Create spatial index
     spatial_index = gdf.sindex
     
     #Turn buffered points into boxes
-    gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(1).bounds.values]
+    gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(buffer_size).bounds.values]
     
     #for each overlapping image
     for name, group in gdf.groupby("subject_ids"):
+        
+        #Unique index for each image
+        unique_index_value = 0
+        
         if len(group.classification_id.unique()) == 1:
-            gdf.loc[group.index.values,"selected_index"] = group.index.values
+            gdf.loc[group.index.values,"selected_index"] = unique_index_value
         else:
             for index, row in group.iterrows():
                 geom = row["bbox"]
@@ -253,7 +260,7 @@ def spatial_join(gdf, IoU_threshold = 0.2):
                 
                 #If just matches itself, skip indexing
                 if len(possible_matches) == 1:
-                    gdf.loc[index, "selected_index"] = index
+                    gdf.loc[index, "selected_index"] = unique_index_value
                 else:
                     boxes_to_merge = { }
                     labels = []
@@ -266,24 +273,36 @@ def spatial_join(gdf, IoU_threshold = 0.2):
                     for match_index, match_row in possible_matches.iterrows():
                         match_geom = match_row["bbox"]
                         IoU = calculate_IoU(geom, match_geom)
-                        
                         if IoU > IoU_threshold:
                             boxes_to_merge[match_index] = match_geom
                             labels.append(match_row["species"])
                     
                     #Choose final box and labels
-                    selected_key = choose_box(boxes_to_merge)
-                    gdf.loc[index, "selected_index"] = selected_key
+                    average_geom = create_average_box(boxes_to_merge,buffer_size=buffer_size)
+                    for x in boxes_to_merge:
+                        gdf.loc[x,"bbox"] = average_geom
+                        gdf.loc[x,"selected_index"] = unique_index_value
+                        gdf.loc[x,"species"] = vote_on_label(labels)
+                unique_index_value+=1
             
     #remove duplicates
+    gdf["geometry"] = gdf["bbox"]
     return gdf
-        
-def choose_box(boxes_to_merge):
-    """Choose the smallest box of a set to mantain"""
-    smallest_box_index = np.argmin([boxes_to_merge[x].area for x in boxes_to_merge])
-    key=list(boxes_to_merge.keys())[smallest_box_index]
+
+def vote_on_label(labels):
+    choosen_label = pd.Series(labels).mode()[0]
     
-    return key
+    return choosen_label
+
+def create_average_box(boxes_to_merge, buffer_size):
+    """Create a mean centered box based on input annotations"""
+    centroid_x = np.mean([boxes_to_merge[x].centroid.x for x in boxes_to_merge])
+    centroid_y = np.mean([boxes_to_merge[x].centroid.y for x in boxes_to_merge])
+    point_geom = Point(centroid_x,centroid_y)
+    left, bottom, right, top = point_geom.buffer(buffer_size).bounds
+    geom = box(left, bottom, right, top)
+    
+    return geom
     
 def calculate_IoU(geom, match):
     """Calculate intersection-over-union scores for a pair of boxes"""
@@ -312,6 +331,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         df = df.sample(n=30)        
     
     #Parse JSON and filter
+    #df = df[df.subject_ids == "58104676"]    
     df = parse_birds(df)
     
     #Write parsed data
@@ -320,18 +340,28 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     #Remove blank frames and spatial coordinates of bird points
     df = df[df.species.notna()]
     
-    gdf = project_point(df)
+    #find projection versus unprojected data        
+    unprojected_data = df[df.image_utm_left == 0]
+    geoms = [Point(x,y) for x,y in zip(unprojected_data.x, unprojected_data.y)]
+    unprojected_data_gdf = gpd.GeoDataFrame(unprojected_data, geometry=geoms)
+    unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=100)    
+    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_all")
+    unprojected_data_gdf=unprojected_data_gdf.drop(columns=["bbox"])    
+    unprojected_data_gdf.to_file(fname)    
+    
+    projected_data = df[~(df.image_utm_left == 0)]
+    projected_data_gdf = project_point(projected_data)
     
     #Find overlapping annotations and select annotations. Vote on best class for final box
-    selected_annotations = spatial_join(gdf)
-            
+    projected_data_gdf = spatial_join(projected_data_gdf, buffer_size=1)
+    
     #write shapefile
-    selected_annotations=selected_annotations.drop(columns=["bbox"])
+    projected_data_gdf=projected_data_gdf.drop(columns=["bbox"])
     
     #Connect to index
-    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications")
-    selected_annotations.to_file(fname)
-    
+    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_projected")
+    projected_data_gdf.to_file(fname)
+
     return fname
 
 if __name__ == "__main__":
