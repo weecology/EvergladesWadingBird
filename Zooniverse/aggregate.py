@@ -1,4 +1,5 @@
 #aggregation script
+from distributed import wait
 import pandas as pd
 import geopandas as gpd
 from panoptes_client import Panoptes
@@ -9,6 +10,7 @@ import os
 from datetime import datetime
 import utils
 import extract
+import start_cluster
 
 def download_data(everglades_watch, min_version, generate=False):
     #see https://panoptes-python-client.readthedocs.io/en/v1.1/panoptes_client.html#module-panoptes_client.classification
@@ -232,62 +234,91 @@ def project_point(df):
     
     return gdf
 
-def spatial_join(gdf, IoU_threshold = 0.2, buffer_size=1):
+def spatial_join_image(group, IoU_threshold, buffer_size):
+    #Unique index for each image
+    unique_index_value = 0
+    
+    #Create spatial index
+    spatial_index = group.sindex
+    
+    if len(group.classification_id.unique()) == 1:
+        group.loc[group.index.values,"selected_index"] = unique_index_value
+    else:
+        for index, row in group.iterrows():
+            geom = row["bbox"]
+            #Spatial clip to window using spatial index for faster querying
+            possible_matches_index = list(spatial_index.intersection(geom.bounds))
+            possible_matches = group.iloc[possible_matches_index]
+            
+            #If just matches itself, skip indexing
+            if len(possible_matches) == 1:
+                group.loc[index, "selected_index"] = unique_index_value
+            else:
+                boxes_to_merge = { }
+                labels = []
+                
+                #Add target box to consider
+                boxes_to_merge[index] = geom
+                labels.append(row["species"])
+                
+                #Find intersection over union
+                for match_index, match_row in possible_matches.iterrows():
+                    match_geom = match_row["bbox"]
+                    IoU = calculate_IoU(geom, match_geom)
+                    if IoU > IoU_threshold:
+                        boxes_to_merge[match_index] = match_geom
+                        labels.append(match_row["species"])
+                
+                #Choose final box and labels
+                average_geom = create_average_box(boxes_to_merge,buffer_size=buffer_size)
+                for x in boxes_to_merge:
+                    group.loc[x,"bbox"] = average_geom
+                    group.loc[x,"selected_index"] = unique_index_value
+                    group.loc[x,"species"] = vote_on_label(labels)
+            unique_index_value+=1
+    
+    return group
+            
+def spatial_join(gdf, IoU_threshold = 0.2, buffer_size=1, client=None):
     """Find overlapping predictions in a geodataframe
     IoU_threshold: float threshold [0-1] for degree of overlap to merge annotations and vote on class
     buffer_size: in the units of the gdf, meters if projected, pixels if not.
+    client: optional dask client to parallelize
     """    
-    #Create spatial index
-    spatial_index = gdf.sindex
     
     #Turn buffered points into boxes
     gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(buffer_size).bounds.values]
     
     #for each overlapping image
-    for name, group in gdf.groupby("subject_ids"):
-        
-        #Unique index for each image
-        unique_index_value = 0
-        
-        if len(group.classification_id.unique()) == 1:
-            gdf.loc[group.index.values,"selected_index"] = unique_index_value
-        else:
-            for index, row in group.iterrows():
-                geom = row["bbox"]
-                #Spatial clip to window using spatial index for faster querying
-                possible_matches_index = list(spatial_index.intersection(geom.bounds))
-                possible_matches = gdf.iloc[possible_matches_index]
+    results = []
+    if client:
+        futures = []        
+        for name, group in gdf.groupby("subject_ids"):
+            future = client.submit(spatial_join_image,group=group, IoU_threshold=IoU_threshold, buffer_size=buffer_size)
+            futures.append(future)
+        wait(futures)
+        for x in futures:
+            try:
+                result = x.result()
+                results.append(result)
+            except Exception as e:
+                print(e.with_traceback())
                 
-                #If just matches itself, skip indexing
-                if len(possible_matches) == 1:
-                    gdf.loc[index, "selected_index"] = unique_index_value
-                else:
-                    boxes_to_merge = { }
-                    labels = []
-                    
-                    #Add target box to consider
-                    boxes_to_merge[index] = geom
-                    labels.append(row["species"])
-                    
-                    #Find intersection over union
-                    for match_index, match_row in possible_matches.iterrows():
-                        match_geom = match_row["bbox"]
-                        IoU = calculate_IoU(geom, match_geom)
-                        if IoU > IoU_threshold:
-                            boxes_to_merge[match_index] = match_geom
-                            labels.append(match_row["species"])
-                    
-                    #Choose final box and labels
-                    average_geom = create_average_box(boxes_to_merge,buffer_size=buffer_size)
-                    for x in boxes_to_merge:
-                        gdf.loc[x,"bbox"] = average_geom
-                        gdf.loc[x,"selected_index"] = unique_index_value
-                        gdf.loc[x,"species"] = vote_on_label(labels)
-                unique_index_value+=1
-            
+        results = pd.concat(results)        
+    else:  
+        for name, group in gdf.groupby("subject_ids"):
+            group_result = spatial_join_image(group, IoU_threshold, buffer_size)
+            results.append(group_result)
+        results = pd.concat(results)
+    
+    final_gdf = gpd.GeoDataFrame(results)
+    
     #remove duplicates
-    gdf["geometry"] = gdf["bbox"]
-    return gdf
+    final_gdf["geometry"] = final_gdf["bbox"]
+    
+    final_gdf.crs = gdf.crs
+    
+    return final_gdf
 
 def vote_on_label(labels):
     choosen_label = pd.Series(labels).mode()[0]
@@ -366,6 +397,8 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 
 if __name__ == "__main__":
     #Download from Zooniverse and parse
+    #Optional dask client
+    client = start_cluster(cpus=20)
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=300)
+       generate=False, min_version=300, client=client)

@@ -4,6 +4,7 @@ import os
 import pytest
 import pandas as pd
 import geopandas as gpd
+from dask.distributed import Client
 sys.path.append(os.path.dirname(os.getcwd()))
 
 import aggregate
@@ -88,3 +89,12 @@ def test_download_subject_data():
     assert os.path.exists("output/everglades-watch-subjects.csv")
     df = pd.read_csv("output/everglades-watch-subjects.csv")
     assert not df.empty
+    
+def test_spatial_join_dask(csv_data):
+    debug_data = csv_data.iloc[0:100]
+    df = aggregate.parse_birds(debug_data)
+    project_df = aggregate.project_point(df)
+    project_df = project_df[df.species.notna()] 
+    gdf = aggregate.spatial_join(project_df, client = Client())
+    assert len(gdf.classification_id.unique()) < debug_data.shape[0]    
+    assert not gdf.empty
