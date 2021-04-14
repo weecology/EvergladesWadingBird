@@ -127,16 +127,16 @@ def run(classification_shp, image_data ,savedir="."):
         download_from_zooniverse(name=name, url=download_url)
         
         #Confirm file can be opened
-        try:
-            numpy_image = rasterio.open(name).read()
-            if numpy_image.shape[0] == 4:
-                numpy_image = np.moveaxis(numpy_image,0,2)
-                numpy_image = numpy_image[:,:,:3].astype("uint8")
-                image = Image.fromarray(numpy_image)
-                image.save(name)
-        except Exception as e:
-            print("{} failed with {}".format(name, e))
-            continue
+        #try:
+        #    numpy_image = rasterio.open(name).read()
+        #    if numpy_image.shape[0] == 4:
+        #        numpy_image = np.moveaxis(numpy_image,0,2)
+        #        numpy_image = numpy_image[:,:,:3].astype("uint8")
+        #        image = Image.fromarray(numpy_image)
+        #        image.save(name)
+        #except Exception as e:
+        #    print("{} failed with {}".format(name, e))
+        #    continue
         
         #group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]
         

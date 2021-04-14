@@ -311,6 +311,7 @@ def spatial_join(gdf, IoU_threshold = 0.2, buffer_size=1, client=None):
             results.append(group_result)
         results = pd.concat(results)
     
+    print("spatial join complete")
     final_gdf = gpd.GeoDataFrame(results)
     
     #remove duplicates
@@ -359,7 +360,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     
     #if debug for testing, just sample 20 rows    
     if debug:
-        df = df.sample(n=30)        
+        df = df.sample(n=2000)        
     
     #Parse JSON and filter
     #df = df[df.subject_ids == "58104676"]    
@@ -398,7 +399,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 if __name__ == "__main__":
     #Download from Zooniverse and parse
     #Optional dask client
-    client = start_cluster.start(cpus=20)
+    client = start_cluster.start(cpus=30, mem_size="10GB")
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=300, client=client)
+       generate=False, min_version=300, client=client, debug=False)
