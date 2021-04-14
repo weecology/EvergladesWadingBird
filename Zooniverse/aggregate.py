@@ -397,7 +397,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 if __name__ == "__main__":
     #Download from Zooniverse and parse
     #Optional dask client
-    client = start_cluster.start(cpus=30, mem_size="8GB")
+    client = start_cluster.start(cpus=40, mem_size="8GB")
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
        generate=False, min_version=300, client=client, debug=False)
