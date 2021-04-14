@@ -93,8 +93,8 @@ def run(classification_shp, image_data ,savedir="."):
     image_data: subject id download from zooniverse everglades-watch-subjects.csv
     """
     #Read in species data
-    df = pd.read_csv(classification_shp)
-    df = df[["subject_ids","x","y","species","behavior","geometry","selected_i"]]
+    df = gp.read_file(classification_shp)
+    df = df[["subject_id","x","y","species","behavior","geometry","selected_i"]]
     df.subject_id = df.subject_id.astype(int)
     
     #Read in image location data
@@ -147,7 +147,7 @@ def run(classification_shp, image_data ,savedir="."):
 if __name__=="__main__":
     #Download images
     run(
-        classification_shp="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-classifications.shp",
+        classification_shp="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-classifications_unprojected.shp",
         image_data="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-subjects.csv",
         savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
     ) 
