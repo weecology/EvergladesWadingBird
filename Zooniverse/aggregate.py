@@ -242,7 +242,7 @@ def spatial_join_image(group, IoU_threshold, buffer_size):
     spatial_index = group.sindex
     
     if len(group.classification_id.unique()) == 1:
-        group.loc[group.index.values,"selected_index"] = unique_index_value
+        group["selected_index"] = group.index.values
     else:
         for index, row in group.iterrows():
             geom = row["bbox"]
@@ -311,6 +311,7 @@ def spatial_join(gdf, IoU_threshold = 0.2, buffer_size=1, client=None):
             results.append(group_result)
         results = pd.concat(results)
     
+    print("spatial join complete")
     final_gdf = gpd.GeoDataFrame(results)
     
     #remove duplicates
@@ -359,10 +360,9 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     
     #if debug for testing, just sample 20 rows    
     if debug:
-        df = df.sample(n=30)        
+        df = df.sample(n=2000)        
     
     #Parse JSON and filter
-    df = df[df.subject_ids == "52928461"]    
     df = parse_birds(df)
     
     #Write parsed data
@@ -371,7 +371,6 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     #Remove blank frames and spatial coordinates of bird points
     df = df[df.species.notna()]
     
-
     #save an unprojected copy
     geoms = [Point(x,y) for x,y in zip(df.x, df.y)]
     unprojected_data_gdf = gpd.GeoDataFrame(df, geometry=geoms)
@@ -384,7 +383,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     projected_data_gdf = project_point(projected_data)
     
     #Find overlapping annotations and select annotations. Vote on best class for final box
-    projected_data_gdf = spatial_join(projected_data_gdf, buffer_size=1)
+    projected_data_gdf = spatial_join(projected_data_gdf, buffer_size=1, client=client)
     
     #write shapefile
     projected_data_gdf=projected_data_gdf.drop(columns=["bbox"])
@@ -398,7 +397,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 if __name__ == "__main__":
     #Download from Zooniverse and parse
     #Optional dask client
-    #client = start_cluster(cpus=20)
+    client = start_cluster(cpus=30)
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=300, client=None)
+       generate=False, min_version=300, client=client, debug=False)
