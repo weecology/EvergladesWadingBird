@@ -50,7 +50,6 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
             height, width = src.shape
     except:
         print("Image {} failed to open".format(rgb_path))
-        os.remove(rgb_path)
         return None
     
     df.ymax[df.ymax > height] = height

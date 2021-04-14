@@ -343,7 +343,7 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=300, debug=False):
+def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=300, debug=False, client=None):
     
     #Authenticate
     if download:
@@ -362,7 +362,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         df = df.sample(n=30)        
     
     #Parse JSON and filter
-    #df = df[df.subject_ids == "58104676"]    
+    df = df[df.subject_ids == "52928461"]    
     df = parse_birds(df)
     
     #Write parsed data
@@ -375,7 +375,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     #save an unprojected copy
     geoms = [Point(x,y) for x,y in zip(df.x, df.y)]
     unprojected_data_gdf = gpd.GeoDataFrame(df, geometry=geoms)
-    unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=100)    
+    unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=100, client=client)    
     fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_unprojected")
     unprojected_data_gdf=unprojected_data_gdf.drop(columns=["bbox"])    
     unprojected_data_gdf.to_file(fname)    
@@ -398,7 +398,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 if __name__ == "__main__":
     #Download from Zooniverse and parse
     #Optional dask client
-    client = start_cluster(cpus=20)
+    #client = start_cluster(cpus=20)
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=300, client=client)
+       generate=False, min_version=300, client=None)
