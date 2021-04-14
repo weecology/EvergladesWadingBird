@@ -50,7 +50,7 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
             height, width = src.shape
     except:
         print("Image {} failed to open".format(rgb_path))
-        os.remove(rgb_path)
+        #os.remove(rgb_path)
         return None
     
     df.ymax[df.ymax > height] = height
@@ -349,8 +349,8 @@ if __name__ == "__main__":
        save_dir="/orange/ewhite/everglades/Zooniverse/predictions/"
     )
     
-    model = train_model(train_path="/orange/ewhite/everglades/Zooniverse/parsed_images/train.csv",
-                        test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv",
-                        empty_images_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_test.csv",
-                        save_dir="/orange/ewhite/everglades/Zooniverse/predictions/")
+    #model = train_model(train_path="/orange/ewhite/everglades/Zooniverse/parsed_images/train.csv",
+    #                    test_path="/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv",
+    #                    empty_images_path="/orange/ewhite/everglades/Zooniverse/parsed_images/empty_test.csv",
+    #                    save_dir="/orange/ewhite/everglades/Zooniverse/predictions/")
     
