@@ -242,7 +242,7 @@ def spatial_join_image(group, IoU_threshold, buffer_size):
     spatial_index = group.sindex
     
     if len(group.classification_id.unique()) == 1:
-        group.loc[group.index.values,"selected_index"] = unique_index_value
+        group["selected_index"] = group.index.values
     else:
         for index, row in group.iterrows():
             geom = row["bbox"]
@@ -363,7 +363,6 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         df = df.sample(n=2000)        
     
     #Parse JSON and filter
-    #df = df[df.subject_ids == "58104676"]    
     df = parse_birds(df)
     
     #Write parsed data
@@ -372,7 +371,6 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     #Remove blank frames and spatial coordinates of bird points
     df = df[df.species.notna()]
     
-
     #save an unprojected copy
     geoms = [Point(x,y) for x,y in zip(df.x, df.y)]
     unprojected_data_gdf = gpd.GeoDataFrame(df, geometry=geoms)
@@ -399,7 +397,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
 if __name__ == "__main__":
     #Download from Zooniverse and parse
     #Optional dask client
-    client = start_cluster.start(cpus=30, mem_size="10GB")
+    client = start_cluster.start(cpus=30, mem_size="8GB")
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
        generate=False, min_version=300, client=client, debug=False)
