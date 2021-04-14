@@ -340,12 +340,12 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     #Remove blank frames and spatial coordinates of bird points
     df = df[df.species.notna()]
     
-    #find projection versus unprojected data        
-    unprojected_data = df[df.image_utm_left == 0]
-    geoms = [Point(x,y) for x,y in zip(unprojected_data.x, unprojected_data.y)]
-    unprojected_data_gdf = gpd.GeoDataFrame(unprojected_data, geometry=geoms)
+
+    #save an unprojected copy
+    geoms = [Point(x,y) for x,y in zip(df.x, df.y)]
+    unprojected_data_gdf = gpd.GeoDataFrame(df, geometry=geoms)
     unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=100)    
-    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_all")
+    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_unprojected")
     unprojected_data_gdf=unprojected_data_gdf.drop(columns=["bbox"])    
     unprojected_data_gdf.to_file(fname)    
     
@@ -359,7 +359,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     projected_data_gdf=projected_data_gdf.drop(columns=["bbox"])
     
     #Connect to index
-    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_projected")
+    fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications")
     projected_data_gdf.to_file(fname)
 
     return fname
