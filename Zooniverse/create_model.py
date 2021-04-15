@@ -60,6 +60,7 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     #add filename and bird labels
     df["image_path"] = os.path.basename(rgb_path)
     df["label"] = "Bird"
+    df["species"] = gdf.species
     
     #enforce pixel rounding
     df.xmin = df.xmin.astype(int)
@@ -68,7 +69,7 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     df.ymax = df.ymax.astype(int)
     
     #select columns
-    result = df[["image_path","xmin","ymin","xmax","ymax","label","species"]]
+    result = df[["image_path","xmin","ymin","xmax","ymax","label"]]
      
     result = result.drop_duplicates()
     
