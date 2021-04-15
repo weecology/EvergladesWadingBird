@@ -77,14 +77,11 @@ def test_format_shapefiles(extract_images, tmpdir):
     
 def test_split_test_train(extract_images, annotations):
     
-    train, test = create_species_model.split_test_train(annotations)
+    test = create_species_model.split_test_train(annotations)
     
     #Assert no overlapping cases and known deepforest format
     assert not test.empty
-    assert not train.empty
-    assert all(train.columns == ["image_path","xmin","ymin","xmax","ymax","label"])
     assert all(test.columns == ["image_path","xmin","ymin","xmax","ymax","label"])
-    assert test[test.image_path.isin(train.image_path.unique())].empty
     
     #Assert that data is same total sum
     #assert annotations.shape[0] == (test.shape[0] + train.shape[0])
