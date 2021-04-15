@@ -363,6 +363,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         df = df.sample(n=2000)        
     
     #Parse JSON and filter
+    #df = df[df.subject_ids=="43845902"]
     df = parse_birds(df)
     
     #Write parsed data
@@ -374,7 +375,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     #save an unprojected copy
     geoms = [Point(x,y) for x,y in zip(df.x, df.y)]
     unprojected_data_gdf = gpd.GeoDataFrame(df, geometry=geoms)
-    unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=100, client=client)    
+    unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=50, client=client) 
     fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_unprojected")
     unprojected_data_gdf=unprojected_data_gdf.drop(columns=["bbox"])    
     unprojected_data_gdf.to_file(fname)    

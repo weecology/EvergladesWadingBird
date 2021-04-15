@@ -30,7 +30,7 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     gdf = gp.read_file(shapefile)
     
     #Drop any rounding errors duplicated
-    #gdf = gdf.groupby("selected_i").apply(lambda x: x.head(1))
+    gdf = gdf.groupby("selected_i").apply(lambda x: x.head(1))
     
     #define in image coordinates and buffer to create a box
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.x.astype(float), gdf.y.astype(float))]
