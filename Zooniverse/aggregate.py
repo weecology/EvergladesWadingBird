@@ -279,7 +279,7 @@ def spatial_join_image(group, IoU_threshold, buffer_size):
     
     return group
             
-def spatial_join(gdf, IoU_threshold = 0.2, buffer_size=1, client=None):
+def spatial_join(gdf, IoU_threshold = 0.4, buffer_size=1, client=None):
     """Find overlapping predictions in a geodataframe
     IoU_threshold: float threshold [0-1] for degree of overlap to merge annotations and vote on class
     buffer_size: in the units of the gdf, meters if projected, pixels if not.
@@ -375,7 +375,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     #save an unprojected copy
     geoms = [Point(x,y) for x,y in zip(df.x, df.y)]
     unprojected_data_gdf = gpd.GeoDataFrame(df, geometry=geoms)
-    unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=50, client=client) 
+    unprojected_data_gdf = spatial_join(unprojected_data_gdf, buffer_size=75, client=client) 
     fname = "{}/{}.shp".format(savedir, "everglades-watch-classifications_unprojected")
     unprojected_data_gdf=unprojected_data_gdf.drop(columns=["bbox"])    
     unprojected_data_gdf.to_file(fname)    
