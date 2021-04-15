@@ -136,15 +136,35 @@ def prepare_palmyra(generate=True):
     
         df.to_csv("Figures/training_annotations.csv",index=False)
         
-        train_annotations = preprocess.split_raster(
+        train_annotations_1 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=1000,
+            patch_size=1200,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperStrawn_53m_tile_clip_projected.tif",
             allow_empty=False
         )
+        
+        src = rio.open("/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif")
+        numpy_image = src.read()
+        numpy_image = np.moveaxis(numpy_image,0,2)
+        training_image = numpy_image[:,:,:3].astype("uint8")
+        
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/CooperEelPond_53m_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif")
+    
+        df.to_csv("Figures/training_annotations.csv",index=False)        
+        train_annotations_2 = preprocess.split_raster(
+            numpy_image=training_image,
+            annotations_file="Figures/training_annotations.csv",
+            patch_size=1200,
+            patch_overlap=0.05,
+            base_dir="crops",
+            image_name="CooperEelPond_53M.tif",
+            allow_empty=False
+        )
+        
+        train_annotations = pd.concat([train_annotations_1, train_annotations_2])
         train_annotations.to_csv(train_path,index=False)
             
     return {"train":train_path, "test":test_path}
@@ -226,16 +246,56 @@ def prepare_terns(generate=True):
     
     return {"train":train_path, "test":test_path}
 
-def prepare_murres():
-    return {"train":train_path, "test":test_path}
+def prepare_murres(generate=True):
+    test_path = "/orange/ewhite/b.weinstein/generalization/crops/murres_test.csv"
+    if generate:   
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/murres/DJI_0019.shp",
+                                      rgb="/orange/ewhite/b.weinstein/murres/DJI_0019.JPG")
+        df.to_csv("/orange/ewhite/b.weinstein/murres/DJI_0019.csv")
+        
+        annotations = preprocess.split_raster(
+            path_to_raster="/orange/ewhite/b.weinstein/murres/DJI_0019.JPG",
+            annotations_file="/orange/ewhite/b.weinstein/murres/DJI_0019.csv",
+            patch_size=400,
+            patch_overlap=0,
+            base_dir="/orange/ewhite/b.weinstein/generalization/crops",
+            allow_empty=False
+        )
+        
+        #Test        
+        annotations.to_csv(test_path,index=False)    
+    
+    return {"test":test_path}
+
+def prepare_pelicans(generate=True):
+    test_path = "/orange/ewhite/b.weinstein/generalization/crops/pelicans_test.csv"
+    if generate:   
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.shp",
+                                      rgb="/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.JPG")
+        df.to_csv("/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.csv")
+        
+        annotations = preprocess.split_raster(
+            path_to_raster="/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.JPG",
+            annotations_file="/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.csv",
+            patch_size=800,
+            patch_overlap=0,
+            base_dir="/orange/ewhite/b.weinstein/generalization/crops",
+            allow_empty=False
+        )
+        
+        #Test        
+        annotations.to_csv(test_path,index=False)    
+    
+    return {"test":test_path}
 
 def prepare():
     paths = {}
-    #paths["murres"] = prepare_murres()
-    paths["terns"] = prepare_terns(generate=True)
+    paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=False)
+    paths["palmyra"] = prepare_palmyra(generate=True)
+    paths["pelicans"] = prepare_pelicans(generate=True)
+    paths["murres"] = prepare_murres(generate=True)
     
     return paths
 
@@ -296,32 +356,31 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     
     test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
     
-    if comet_logger is not None:
-        try:
-            test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
-            comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
-            
-            test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
-            comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
-            
-            for index, row in test_results["class_recall"].iterrows():
-                comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
-                comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
-            
-            comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
-            comet_logger.experiment.log_metric("Box Recall",test_results["box_recall"])
-            comet_logger.experiment.log_metric("Box Precision",test_results["box_precision"])
-        except Exception as e:
-            print(e)
-    
-    recall = test_results["box_recall"]
-    precision = test_results["box_precision"]    
-    print("Recall is {}".format(recall))
-    print("Precision is {}".format(precision))
-    
-    comet_logger.experiment.log_metric("precision",precision)
-    comet_logger.experiment.log_metric("recall", recall)
-    
+    for x in test_sets:
+        df = pd.read_csv(path_dict[x]["test"])
+        if comet_logger is not None:
+            try:
+                test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+                comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+                
+                test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+                comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+                
+                for index, row in test_results["class_recall"].iterrows():
+                    comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
+                    comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
+                
+                comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
+                comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
+                comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
+            except Exception as e:
+                print(e)
+        
+        recall = test_results["box_recall"]
+        precision = test_results["box_precision"]    
+        print("{} Recall is {}".format(x, recall))
+        print("{} Precision is {}".format(x, precision))
+        
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
     images = glob.glob("{}/*.png".format(model_savedir))
@@ -329,9 +388,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
         comet_logger.experiment.log_image(img)
         
     comet_logger.experiment.end()
-    
-    #formatted_results = pd.DataFrame({"train": train_sets, "test": test_sets, "precision": [precision],"recall": [recall]})
-    
+        
     model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     return formatted_results        
@@ -339,5 +396,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra","terns"], test_sets=["terns"])
+    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra","terns"], test_sets=["palmyra"])
     
