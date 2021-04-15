@@ -159,7 +159,7 @@ def prepare_palmyra(generate=True):
             annotations_file="Figures/training_annotations.csv",
             patch_size=1200,
             patch_overlap=0.05,
-            base_dir="crops",
+            base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperEelPond_53M.tif",
             allow_empty=False
         )
