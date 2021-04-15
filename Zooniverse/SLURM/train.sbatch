@@ -4,9 +4,9 @@
 #SBATCH --mail-user=benweinstein2010@gmail.com  # Where to send mail
 #SBATCH --account=ewhite
 #SBATCH --nodes=1                 # Number of MPI ranks
-#SBATCH --cpus-per-task=12
-#SBATCH --mem=50GB
-#SBATCH --time=10:00:00       #Time limit hrs:min:sec
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=12GB
+#SBATCH --time=4:00:00       #Time limit hrs:min:sec
 #SBATCH --output=/home/b.weinstein/logs/everglades_%j.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/everglades_%j.err
 #SBATCH --partition=gpu
