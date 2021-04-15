@@ -68,7 +68,7 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     df.ymax = df.ymax.astype(int)
     
     #select columns
-    result = df[["image_path","xmin","ymin","xmax","ymax","label"]]
+    result = df[["image_path","xmin","ymin","xmax","ymax","label","species"]]
      
     result = result.drop_duplicates()
     
