@@ -259,7 +259,7 @@ def prepare_pfeifer(generate=True):
     if generate:   
         for x in glob.glob("/orange/ewhite/b.weinstein/pfeifer/*.shp")[:1]:
             basename = os.path.splitext(os.path.basename(x))[0]
-            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.pfeifer/pfeifer/{}.shp".format(basename),
+            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/pfeifer/{}.shp".format(basename),
                                           rgb="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename))
             df.to_csv("/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename))
             
