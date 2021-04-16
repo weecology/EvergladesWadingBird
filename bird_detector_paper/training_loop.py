@@ -118,26 +118,26 @@ def prepare_train(patch_size=2000):
         allow_empty=False
     )
     
-    src = rio.open("/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif")
-    numpy_image = src.read()
-    numpy_image = np.moveaxis(numpy_image,0,2)
-    training_image = numpy_image[:,:,:3].astype("uint8")
+    #src = rio.open("/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif")
+    #numpy_image = src.read()
+    #numpy_image = np.moveaxis(numpy_image,0,2)
+    #training_image = numpy_image[:,:,:3].astype("uint8")
     
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/CooperEelPond_53m_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif")
+    #df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/CooperEelPond_53m_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif")
 
-    df.to_csv("Figures/training_annotations.csv",index=False)
+    #df.to_csv("Figures/training_annotations.csv",index=False)
     
-    train_annotations_2 = preprocess.split_raster(
-        numpy_image=training_image,
-        annotations_file="Figures/training_annotations.csv",
-        patch_size=patch_size,
-        patch_overlap=0.05,
-        base_dir="crops",
-        image_name="CooperEelPond_53M.tif",
-        allow_empty=False
-    )
+    #train_annotations_2 = preprocess.split_raster(
+        #numpy_image=training_image,
+        #annotations_file="Figures/training_annotations.csv",
+        #patch_size=patch_size,
+        #patch_overlap=0.05,
+        #base_dir="crops",
+        #image_name="CooperEelPond_53M.tif",
+        #allow_empty=False
+    #)
     
-    train_annotations= pd.concat([train_annotations_1, train_annotations_2])
+    train_annotations= pd.concat([train_annotations_1])
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False)
     
 def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=None):
@@ -258,7 +258,7 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretra
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 
         prepare_test(patch_size=patch_size)
-        prepare_train(patch_size=int(patch_size/ratio))
+        prepare_train(patch_size=int(patch_size))
     
     iteration_result = []
     futures = []    
@@ -294,6 +294,6 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretra
 
 if __name__ == "__main__":
     for x in [1000,1500,2000]:
-        run(patch_size=x, epochs=20, ratio=1, pretrained=False)
-        run(patch_size=x, epochs=20, ratio=1, pretrained=True, generate=False)
+        run(patch_size=x, epochs=20, ratio=0.75, pretrained=False)
+        run(patch_size=x, epochs=20, ratio=0.75, pretrained=True, generate=False)
 
