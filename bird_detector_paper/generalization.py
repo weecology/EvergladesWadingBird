@@ -41,13 +41,14 @@ def split_test_train(annotations, split = 0.9):
     return train, test
 
 
-def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False):
+def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False,buffer_size=1):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
     Args:
         shapefile: Path to a shapefile on disk. If a label column is present, it will be used, else all labels are assumed to be "Tree"
         rgb: Path to the RGB image on disk
         savedir: Directory to save csv files
+        buffer_size: size of point to box expansion in map units of the target object, meters for projected data, pixels for unprojected data 
     Returns:
         results: a pandas dataframe
     """
@@ -67,7 +68,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, conf
         gdf["geometry"] = gdf.geometry.boundary.centroid
         gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
     
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(buffer_size).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -109,7 +110,7 @@ def prepare_palmyra(generate=True):
     if generate:      
         df = shapefile_to_annotations(
             shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp",
-            rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif", box_points=True, confidence_filter=True)
+            rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif", box_points=True, confidence_filter=True, buffer_size=0.25)
         df.to_csv("Figures/test_annotations.csv",index=False)
         
         src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
@@ -131,7 +132,7 @@ def prepare_palmyra(generate=True):
         df = shapefile_to_annotations(
             shapefile="/orange/ewhite/everglades/Palmyra/TNC_Cooper_annotation_03192021.shp", 
             rgb="/orange/ewhite/everglades/Palmyra/CooperStrawn_53m_tile_clip_projected.tif", box_points=True,
-            confidence_filter=True
+            confidence_filter=True, buffer_size=0.25
         )
     
         df.to_csv("Figures/training_annotations.csv",index=False)
@@ -151,7 +152,8 @@ def prepare_palmyra(generate=True):
         numpy_image = np.moveaxis(numpy_image,0,2)
         training_image = numpy_image[:,:,:3].astype("uint8")
         
-        df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/CooperEelPond_53m_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif")
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/CooperEelPond_53m_annotation.shp", 
+                                      rgb="/orange/ewhite/everglades/Palmyra/CooperEelPond_53M.tif", buffer_size=0.25)
     
         df.to_csv("Figures/training_annotations.csv",index=False)        
         train_annotations_2 = preprocess.split_raster(
@@ -183,7 +185,7 @@ def prepare_penguin(generate=True):
         numpy_image = numpy_image[:,:,:3].astype("uint8")
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=800, patch_overlap=0.05,
-                                                   base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
+                                                   base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif", buffer_size=0.1)
         
         test_annotations.to_csv(test_path,index=False)
     
@@ -192,7 +194,7 @@ def prepare_penguin(generate=True):
         numpy_image = np.moveaxis(numpy_image,0,2)
         training_image = numpy_image[:,:,:3].astype("uint8")
         
-        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp", rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif")
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.shp", rgb="/orange/ewhite/b.weinstein/penguins/offshore_rocks_cape_wallace_survey_4.tif", buffer_size=0.1)
     
         df.to_csv("/orange/ewhite/b.weinstein/penguins/training_annotations.csv",index=False)
         
@@ -224,7 +226,8 @@ def prepare_terns(generate=True):
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/tern_test.csv"
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/terns_train.csv"        
     if generate:   
-        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/birds.shp", rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif")
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/terns/birds.shp",
+                                      rgb="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif", buffer_size=0.15)
         df.to_csv("/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv")
         
         annotations = preprocess.split_raster(
@@ -246,11 +249,60 @@ def prepare_terns(generate=True):
     
     return {"train":train_path, "test":test_path}
 
+def prepare_pfeifer(generate=True):
+    
+    train_path = "/orange/ewhite/b.weinstein/generalization/crops/pfeifer_train.csv"
+    test_path = "/orange/ewhite/b.weinstein/generalization/crops/pfeifer_test.csv"
+    
+    train_annotations = []
+    test_annotations = []
+    if generate:   
+        for x in glob.glob("/orange/ewhite/b.weinstein/generalization/*.shp")[:1]:
+            basename = os.path.splitext(os.path.basename(x))[0]
+            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.pfeifer/pfeifer/{}.shp".format(basename),
+                                          rgb="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename))
+            df.to_csv("/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename))
+            
+            annotations = preprocess.split_raster(
+                path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
+                annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
+                patch_size=1000,
+                patch_overlap=0,
+                base_dir="/orange/ewhite/b.weinstein/generalization/crops",
+                allow_empty=False
+            )
+            
+            test_annotations.append(annotations)
+        test_annotations = pd.concat(test_annotations)
+        test_annotations.to_csv(test_path)
+            
+        for x in glob.glob("/orange/ewhite/b.weinstein/generalization/*.shp")[1:]:
+            basename = os.path.splitext(os.path.basename(x))[0]
+            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.pfeifer/pfeifer/{}.shp".format(basename),
+                                          rgb="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename))
+            df.to_csv("/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename))
+            
+            annotations = preprocess.split_raster(
+                path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
+                annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
+                patch_size=1000,
+                patch_overlap=0,
+                base_dir="/orange/ewhite/b.weinstein/generalization/crops",
+                allow_empty=False
+            )
+            
+            train_annotations.append(annotations)
+        
+        train_annotations = pd.concat(train_annotations)
+        train_annotations.to_csv(train_path)
+        
+        return test_path, train_path
+        
 def prepare_murres(generate=True):
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/murres_test.csv"
     if generate:   
         df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/murres/DJI_0019.shp",
-                                      rgb="/orange/ewhite/b.weinstein/murres/DJI_0019.JPG")
+                                      rgb="/orange/ewhite/b.weinstein/murres/DJI_0019.JPG", buffer_size=25)
         df.to_csv("/orange/ewhite/b.weinstein/murres/DJI_0019.csv")
         
         annotations = preprocess.split_raster(
@@ -271,7 +323,7 @@ def prepare_pelicans(generate=True):
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/pelicans_test.csv"
     if generate:   
         df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.shp",
-                                      rgb="/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.JPG")
+                                      rgb="/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.JPG", buffer_size=30)
         df.to_csv("/orange/ewhite/b.weinstein/pelicans/AWPE_Pigeon_Lake_2020_DJI_0005.csv")
         
         annotations = preprocess.split_raster(
@@ -294,9 +346,16 @@ def prepare():
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
     paths["palmyra"] = prepare_palmyra(generate=True)
+<<<<<<< HEAD
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     
+=======
+    paths["pelicans"] = prepare_pelicans(generate=True)
+    paths["murres"] = prepare_murres(generate=True)
+    paths["pfeifer"] = prepare_pfeifer(generate=True)
+                                     
+>>>>>>> eb4053a695dcc2c303a2509f3fd8e3a7d95188e0
     return paths
 
 def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
@@ -386,13 +445,16 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     images = glob.glob("{}/*.png".format(model_savedir))
     for img in images:
         comet_logger.experiment.log_image(img)
-        
+    
+    with comet_logger.experiment.train():
+        model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
+        images = glob.glob("{}/*.png".format(model_savedir))
+        for img in images:
+            comet_logger.experiment.log_image(img)
+            
     comet_logger.experiment.end()
         
     model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
-    
-    return formatted_results        
-
 
 if __name__ =="__main__":
     path_dict = prepare()
