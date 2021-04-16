@@ -244,7 +244,7 @@ def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=N
 
     return formatted_results
 
-def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2):
+def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretrained=True):
     if generate:
         folder = 'crops/'
         for filename in os.listdir(folder):
@@ -263,8 +263,8 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2):
     iteration_result = []
     futures = []    
     print("ratio is {}".format(ratio))
-    result_df = training(proportion=1, epochs=epochs, patch_size=patch_size)
-    result_df = training(proportion=1,epochs=epochs,patch_size=patch_size)
+    result_df = training(proportion=1, epochs=epochs, patch_size=patch_size, pretrained=pretrained)
+    result_df = training(proportion=1,epochs=epochs,patch_size=patch_size, pretrained=pretrained)
     iteration_result.append(result_df)
         
     #future = client.submit(training, pretrained=True, patch_size=patch_size, proportion=0)
