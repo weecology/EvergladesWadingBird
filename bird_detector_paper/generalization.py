@@ -139,7 +139,7 @@ def prepare_palmyra(generate=True):
         train_annotations_1 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=1200,
+            patch_size=1000,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperStrawn_53m_tile_clip_projected.tif",
@@ -157,7 +157,7 @@ def prepare_palmyra(generate=True):
         train_annotations_2 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=1200,
+            patch_size=1000,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperEelPond_53M.tif",
@@ -293,9 +293,9 @@ def prepare():
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=False)
-    paths["pelicans"] = prepare_pelicans(generate=True)
-    paths["murres"] = prepare_murres(generate=True)
+    paths["palmyra"] = prepare_palmyra(generate=True)
+    paths["pelicans"] = prepare_pelicans(generate=False)
+    paths["murres"] = prepare_murres(generate=False)
     
     return paths
 
@@ -396,5 +396,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra","terns"], test_sets=["palmyra"])
+    result = train(path_dict=path_dict, train_sets=["everglades","palmyra"], test_sets=["palmyra"])
     
