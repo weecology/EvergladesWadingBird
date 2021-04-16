@@ -379,11 +379,11 @@ def prepare():
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=True)
+    paths["palmyra"] = prepare_palmyra(generate=False)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=True)
-    paths["Hayes"] = prepare_hayes(generate=True)
+    paths["hayes"] = prepare_hayes(generate=True)
 
     return paths
 
@@ -488,5 +488,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns"], test_sets=["pfeifer"])
+    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns","hayes"], test_sets=["pfeifer"])
     
