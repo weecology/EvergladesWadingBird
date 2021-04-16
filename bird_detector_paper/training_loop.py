@@ -294,6 +294,6 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretra
 
 if __name__ == "__main__":
     for x in [1000,1500,2000]:
-        run(patch_size=x, epochs=20, ratio=0.75, pretrained=False)
-        run(patch_size=x, epochs=20, ratio=0.75, pretrained=True, generate=False)
+        run(patch_size=x, epochs=2, ratio=0.75, pretrained=False, generate=False)
+        run(patch_size=x, epochs=2, ratio=0.75, pretrained=True, generate=False)
 
