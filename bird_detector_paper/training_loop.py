@@ -95,7 +95,8 @@ def prepare_test(patch_size=2000):
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
-    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv", patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
+    test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv",
+                                               patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False)
 
@@ -178,9 +179,10 @@ def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=N
         
     if pretrained:
         model = main.deepforest.load_from_checkpoint("/orange/ewhite/everglades/Zooniverse/predictions/20210414_225905/species_model.pl")
+        model.label_dict = {"Bird":0}
         
     else:
-        model = main.deepforest()
+        model = main.deepforest(label_dict={"Bird":0})
     try:
         os.mkdir("/orange/ewhite/everglades/Palmyra/{}/".format(proportion))
     except:
