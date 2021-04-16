@@ -45,7 +45,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     #define in image coordinates and buffer to create a box
     gdf["geometry"] = gdf.geometry.boundary.centroid
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
-    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
+    gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.25).bounds.values]
         
     #get coordinates
     df = gdf.geometry.bounds
@@ -141,8 +141,6 @@ def prepare_train(patch_size=2000):
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False)
     
 def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=None):
-
-    os.environ["SLURM_JOB_NAME"] = "bash"
 
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
@@ -243,10 +241,7 @@ def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=N
     comet_logger.experiment.end()
 
     formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall], "iteration":[iteration]})
-    
-    #close all figures
-    #plt.close("all")
-    #gc.collect()
+
     return formatted_results
 
 def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2):
@@ -298,6 +293,7 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2):
     #results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    #client = start_cluster.start(gpus=5, mem_size="25GB")
     for x in [1000,1500,2000]:
-        run(client=None, patch_size=1000, epochs=10, ratio=2)
+        run(patch_size=x, epochs=20, ratio=1, pretrained=False)
+        run(patch_size=x, epochs=20, ratio=1, pretrained=True, generate=False)
+
