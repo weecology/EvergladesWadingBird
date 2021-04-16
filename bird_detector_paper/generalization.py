@@ -257,7 +257,7 @@ def prepare_pfeifer(generate=True):
     train_annotations = []
     test_annotations = []
     if generate:   
-        for x in glob.glob("/orange/ewhite/b.weinstein/generalization/*.shp")[:1]:
+        for x in glob.glob("/orange/ewhite/b.weinstein/pfeifer/*.shp")[:1]:
             basename = os.path.splitext(os.path.basename(x))[0]
             df = shapefile_to_annotations(shapefile="/orange/ewhite/b.pfeifer/pfeifer/{}.shp".format(basename),
                                           rgb="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename))
@@ -276,9 +276,9 @@ def prepare_pfeifer(generate=True):
         test_annotations = pd.concat(test_annotations)
         test_annotations.to_csv(test_path)
             
-        for x in glob.glob("/orange/ewhite/b.weinstein/generalization/*.shp")[1:]:
+        for x in glob.glob("/orange/ewhite/b.weinstein/pfeifer/*.shp")[1:]:
             basename = os.path.splitext(os.path.basename(x))[0]
-            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.pfeifer/pfeifer/{}.shp".format(basename),
+            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/pfeifer/{}.shp".format(basename),
                                           rgb="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename))
             df.to_csv("/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename))
             
@@ -346,16 +346,10 @@ def prepare():
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
     paths["palmyra"] = prepare_palmyra(generate=True)
-<<<<<<< HEAD
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
-    
-=======
-    paths["pelicans"] = prepare_pelicans(generate=True)
-    paths["murres"] = prepare_murres(generate=True)
     paths["pfeifer"] = prepare_pfeifer(generate=True)
-                                     
->>>>>>> eb4053a695dcc2c303a2509f3fd8e3a7d95188e0
+
     return paths
 
 def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
@@ -458,5 +452,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["everglades","palmyra"], test_sets=["palmyra"])
+    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns"], test_sets=["pfeifer"])
     
