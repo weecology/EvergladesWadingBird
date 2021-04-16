@@ -14,6 +14,7 @@ import os
 import shutil
 from datetime import datetime
 import PIL
+import random
 
 def split_test_train(annotations, split = 0.9):
     """Split annotation in train and test by image"""
@@ -249,6 +250,39 @@ def prepare_terns(generate=True):
     
     return {"train":train_path, "test":test_path}
 
+def prepare_hayes(generate=True):
+    
+    train_path = "/orange/ewhite/b.weinstein/generalization/crops/hayes_train.csv"
+    test_path = "/orange/ewhite/b.weinstein/generalization/crops/hayes_test.csv"
+     
+    hayes_albatross_train = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_train_annotations_final.csv",
+                  names=["image_path","xmin","ymin","xmax","ymax","label"])
+               
+    hayes_albatross_test = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_test_annotations_final.csv",
+                  names=["image_path","xmin","ymin","xmax","ymax","label"])
+    
+    hayes_penguin_train = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_train_annotations_final.csv",
+                  names=["image_path","xmin","ymin","xmax","ymax","label"])
+               
+    hayes_penguin_val = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_val_annotations_final.csv",
+                  names=["image_path","xmin","ymin","xmax","ymax","label"])
+        
+    hayes_penguin_test = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_test_annotations_final.csv",
+                  names=["image_path","xmin","ymin","xmax","ymax","label"])
+    
+    
+    hayes_albatross_val = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_val_annotations_final.csv",
+                  names=["image_path","xmin","ymin","xmax","ymax","label"])    
+    
+    train_annotations = pd.concat([hayes_albatross_train, hayes_albatross_test, hayes_penguin_train, hayes_penguin_test, hayes_penguin_val])
+    train_annotations.label = "Bird"
+    
+    train_annotations.to_csv(train_path)
+    
+    hayes_albatross_val.label="Bird"
+    hayes_albatross_val.to_csv(test_path)
+    #TODO need to copy crops into directory directly.
+    
 def prepare_pfeifer(generate=True):
     
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/pfeifer_train.csv"
@@ -349,6 +383,7 @@ def prepare():
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=True)
+    paths["Hayes"] = prepare_hayes(generate=True)
 
     return paths
 
@@ -443,7 +478,8 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     with comet_logger.experiment.train():
         model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
         images = glob.glob("{}/*.png".format(model_savedir))
-        for img in images:
+        random.shuffle(images)
+        for img in images[:20]:
             comet_logger.experiment.log_image(img)
             
     comet_logger.experiment.end()
