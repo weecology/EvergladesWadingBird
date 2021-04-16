@@ -386,15 +386,18 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     images = glob.glob("{}/*.png".format(model_savedir))
     for img in images:
         comet_logger.experiment.log_image(img)
-        
+    
+    with comet_logger.experiment.train():
+        model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
+        images = glob.glob("{}/*.png".format(model_savedir))
+        for img in images:
+            comet_logger.experiment.log_image(img)
+            
     comet_logger.experiment.end()
         
     model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
-    
-    return formatted_results        
-
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra","terns"], test_sets=["palmyra"])
+    train(path_dict=path_dict, train_sets=["penguins","everglades","palmyra","terns"], test_sets=["palmyra"])
     
