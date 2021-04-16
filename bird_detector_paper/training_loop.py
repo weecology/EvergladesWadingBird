@@ -19,6 +19,7 @@ import os
 import shutil
 from datetime import datetime
 from matplotlib import pyplot as plt
+import random
 
 def shapefile_to_annotations(shapefile, rgb, savedir="."):
     """
@@ -235,7 +236,8 @@ def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=N
     #log training images
     model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
     images = glob.glob("{}/*.png".format(model_savedir))
-    for img in images:
+    random.shuffle(images)
+    for img in images[:20]:
         comet_logger.experiment.log_image(img)  
         
     comet_logger.experiment.end()
@@ -258,7 +260,7 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretra
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
                 
         prepare_test(patch_size=patch_size)
-        prepare_train(patch_size=int(patch_size))
+        prepare_train(patch_size=int(patch_size * ratio))
     
     iteration_result = []
     futures = []    
@@ -294,6 +296,6 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretra
 
 if __name__ == "__main__":
     for x in [1000,1500,2000]:
-        run(patch_size=x, epochs=2, ratio=0.75, pretrained=False, generate=False)
-        run(patch_size=x, epochs=2, ratio=0.75, pretrained=True, generate=False)
+        run(patch_size=x, epochs=10, ratio=1.25, pretrained=False, generate=False)
+        run(patch_size=x, epochs=10, ratio=1.25, pretrained=True, generate=False)
 
