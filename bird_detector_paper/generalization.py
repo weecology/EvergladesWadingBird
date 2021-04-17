@@ -384,15 +384,18 @@ def view_training(paths):
     
     comet_logger.experiment.add_tag("view_training")
     for site in paths:
-        for data in paths[site]:
-            for x in paths[site][data]:
+        for split in ["train","test"]:
+            try:
+                x = paths[site][split]
                 ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True)
                 for i in np.arange(3):
                     batch = next(iter(ds))
                     image_path, image, targets = batch
                     df = visualize.format_boxes(targets, scores=False)
                     img = visualize.plot_predictions(image, df)
-                    comet_logger.experiment.log_figure(figure=img, figure_name=image_path)
+                    comet_logger.experiment.log_figure(figure=img, figure_name=image_path)                
+            except:
+                continue
             
 def prepare():
     paths = {}
