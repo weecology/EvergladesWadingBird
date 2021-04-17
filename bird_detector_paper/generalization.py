@@ -251,37 +251,38 @@ def prepare_terns(generate=True):
     return {"train":train_path, "test":test_path}
 
 def prepare_hayes(generate=True):
-    
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/hayes_train.csv"
-    test_path = "/orange/ewhite/b.weinstein/generalization/crops/hayes_test.csv"
-     
-    hayes_albatross_train = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_train_annotations_final.csv",
-                  names=["image_path","xmin","ymin","xmax","ymax","label"])
-               
-    hayes_albatross_test = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_test_annotations_final.csv",
-                  names=["image_path","xmin","ymin","xmax","ymax","label"])
-    
-    hayes_penguin_train = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_train_annotations_final.csv",
-                  names=["image_path","xmin","ymin","xmax","ymax","label"])
-               
-    hayes_penguin_val = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_val_annotations_final.csv",
-                  names=["image_path","xmin","ymin","xmax","ymax","label"])
+    test_path = "/orange/ewhite/b.weinstein/generalization/crops/hayes_test.csv"    
+    if generate:
+        hayes_albatross_train = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_train_annotations_final.csv",
+                      names=["image_path","xmin","ymin","xmax","ymax","label"])
+                   
+        hayes_albatross_test = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_test_annotations_final.csv",
+                      names=["image_path","xmin","ymin","xmax","ymax","label"])
         
-    hayes_penguin_test = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_test_annotations_final.csv",
-                  names=["image_path","xmin","ymin","xmax","ymax","label"])
-    
-    
-    hayes_albatross_val = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_val_annotations_final.csv",
-                  names=["image_path","xmin","ymin","xmax","ymax","label"])    
-    
-    train_annotations = pd.concat([hayes_albatross_train, hayes_albatross_test, hayes_penguin_train, hayes_penguin_test, hayes_penguin_val])
-    train_annotations.label = "Bird"
-    
-    train_annotations.to_csv(train_path)
-    
-    hayes_albatross_val.label="Bird"
-    hayes_albatross_val.to_csv(test_path)
+        hayes_penguin_train = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_train_annotations_final.csv",
+                      names=["image_path","xmin","ymin","xmax","ymax","label"])
+                   
+        hayes_penguin_val = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_val_annotations_final.csv",
+                      names=["image_path","xmin","ymin","xmax","ymax","label"])
+            
+        hayes_penguin_test = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Penguin_Labels/penguin_test_annotations_final.csv",
+                      names=["image_path","xmin","ymin","xmax","ymax","label"])
+        
+        
+        hayes_albatross_val = pd.read_csv("/orange/ewhite/b.weinstein/Hayes/Label/Albatross_Labels/albatross_val_annotations_final.csv",
+                      names=["image_path","xmin","ymin","xmax","ymax","label"])    
+        
+        train_annotations = pd.concat([hayes_albatross_train, hayes_albatross_test, hayes_penguin_train, hayes_penguin_test, hayes_penguin_val])
+        train_annotations.label = "Bird"
+        
+        train_annotations.to_csv(train_path)
+        
+        hayes_albatross_val.label="Bird"
+        hayes_albatross_val.to_csv(test_path)
     #TODO need to copy crops into directory directly.
+    
+    return {"train":train_path, "test":test_path}
     
 def prepare_pfeifer(generate=True):
     
@@ -331,7 +332,7 @@ def prepare_pfeifer(generate=True):
         train_annotations = pd.concat(train_annotations)
         train_annotations.to_csv(train_path)
         
-        return test_path, train_path
+    return {"train":train_path, "test":test_path}
         
 def prepare_murres(generate=True):
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/murres_test.csv"
