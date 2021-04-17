@@ -4,6 +4,7 @@ import glob
 from pytorch_lightning.loggers import CometLogger
 from deepforest import main
 from deepforest import preprocess
+from deepforest import visualize
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
@@ -11,7 +12,6 @@ import pandas as pd
 import rasterio as rio
 import numpy as np
 import os
-import shutil
 from datetime import datetime
 import PIL
 import random
@@ -42,7 +42,7 @@ def split_test_train(annotations, split = 0.9):
     return train, test
 
 
-def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False,buffer_size=1):
+def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False,buffer_size=0.5):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
     Args:
@@ -301,7 +301,7 @@ def prepare_pfeifer(generate=True):
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
-                patch_size=1000,
+                patch_size=800,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
@@ -321,7 +321,7 @@ def prepare_pfeifer(generate=True):
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
-                patch_size=1000,
+                patch_size=800,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
@@ -376,14 +376,32 @@ def prepare_pelicans(generate=True):
     
     return {"test":test_path}
 
+def view_training(paths):
+    """For each site, grab three images and view annotations"""
+    m = main.deepforest()
+    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                  project_name="everglades", workspace="bw4sz")
+    
+    comet_logger.experiment.add_tag("view_training")
+    for site in paths:
+        for data in paths[site]:
+            for x in paths[site][data]:
+                ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True)
+                for i in np.arange(3):
+                    batch = next(iter(ds))
+                    image_path, image, targets = batch
+                    df = visualize.format_boxes(targets, scores=False)
+                    img = visualize.plot_predictions(image, df)
+                    comet_logger.experiment.log_figure(figure=img, figure_name=image_path)
+            
 def prepare():
     paths = {}
-    paths["terns"] = prepare_terns(generate=False)
+    paths["terns"] = prepare_terns(generate=True)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=False)
-    paths["pelicans"] = prepare_pelicans(generate=False)
-    paths["murres"] = prepare_murres(generate=False)
+    paths["penguins"] = prepare_penguin(generate=True)
+    paths["palmyra"] = prepare_palmyra(generate=True)
+    paths["pelicans"] = prepare_pelicans(generate=True)
+    paths["murres"] = prepare_murres(generate=True)
     paths["pfeifer"] = prepare_pfeifer(generate=True)
     paths["hayes"] = prepare_hayes(generate=True)
 
@@ -438,6 +456,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["train"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"    
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
+        
     
     model.create_trainer(logger=comet_logger)
     comet_logger.experiment.log_parameters(model.config)
@@ -490,5 +509,6 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns","hayes"], test_sets=["pfeifer"])
+    view_training(path_dict)
+    #result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns"], test_sets=["pfeifer"])
     
