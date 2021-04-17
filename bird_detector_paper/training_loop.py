@@ -297,7 +297,8 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretra
     #results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    for x in [1500,2000]:
-        run(patch_size=x, epochs=5, ratio=1.1, pretrained=False, generate=True)
-        run(patch_size=x, epochs=5, ratio=1.1, pretrained=True, generate=False)
-
+    for x in [1500, 1600]:
+        run(patch_size=x, epochs=1, ratio=0.75, pretrained=False, generate=True)
+        run(patch_size=x, epochs=1, ratio=0.75, pretrained=True, generate=False)
+        run(patch_size=x, epochs=30, ratio=0.75, pretrained=True, generate=False)
+        run(patch_size=x, epochs=30, ratio=0.75, pretrained=True, generate=False)
