@@ -139,7 +139,7 @@ def prepare_train(patch_size=2000):
         allow_empty=False
     )
     
-    train_annotations= pd.concat([train_annotations_1])
+    train_annotations= pd.concat([train_annotations_1, train_annotations_2])
     train_annotations.to_csv("crops/full_training_annotations.csv",index=False)
     
 def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=None):
