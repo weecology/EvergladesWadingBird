@@ -177,7 +177,7 @@ def prepare_penguin(generate=True):
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/penguins_train.csv"
     
     if generate:
-        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp", rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
+        df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.shp", rgb="/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif", buffer_size=0.15)
         df.to_csv("/orange/ewhite/b.weinstein/penguins/test_annotations.csv",index=False)
         
         src = rio.open("/orange/ewhite/b.weinstein/penguins/cape_wallace_survey_8.tif")
@@ -186,7 +186,7 @@ def prepare_penguin(generate=True):
         numpy_image = numpy_image[:,:,:3].astype("uint8")
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=800, patch_overlap=0.05,
-                                                   base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif", buffer_size=0.1)
+                                                   base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
         
         test_annotations.to_csv(test_path,index=False)
     
