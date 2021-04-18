@@ -391,11 +391,12 @@ def view_training(paths):
                 for i in np.arange(3):
                     batch = next(iter(ds))
                     image_path, image, targets = batch
-                    df = visualize.format_boxes(targets, scores=False)
+                    df = visualize.format_boxes(targets[0], scores=False)
+                    image = np.moveaxis(image[0],0,2)
                     img = visualize.plot_predictions(image, df)
                     comet_logger.experiment.log_figure(figure=img, figure_name=image_path)                
             except Exception as e:
-                print(e.with_traceback())
+                print(e)
                 continue
             
 def prepare():
