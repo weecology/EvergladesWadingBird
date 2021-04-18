@@ -344,7 +344,7 @@ def prepare_murres(generate=True):
         annotations = preprocess.split_raster(
             path_to_raster="/orange/ewhite/b.weinstein/murres/DJI_0019.JPG",
             annotations_file="/orange/ewhite/b.weinstein/murres/DJI_0019.csv",
-            patch_size=400,
+            patch_size=600,
             patch_overlap=0,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             allow_empty=False
@@ -392,7 +392,7 @@ def view_training(paths):
                     batch = next(iter(ds))
                     image_path, image, targets = batch
                     df = visualize.format_boxes(targets[0], scores=False)
-                    image = np.moveaxis(image[0],0,2)
+                    image = np.moveaxis(image[0].numpy(),0,2)
                     img = visualize.plot_predictions(image, df)
                     comet_logger.experiment.log_figure(figure=img, figure_name=image_path)                
             except Exception as e:
