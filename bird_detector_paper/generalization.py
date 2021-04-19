@@ -43,7 +43,7 @@ def split_test_train(annotations, split = 0.9):
     return train, test
 
 
-def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False,buffer_size=0.5):
+def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False,buffer_size=0.25):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
     Args:
@@ -302,7 +302,7 @@ def prepare_pfeifer(generate=True):
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
-                patch_size=800,
+                patch_size=1500,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
@@ -345,7 +345,7 @@ def prepare_murres(generate=True):
         annotations = preprocess.split_raster(
             path_to_raster="/orange/ewhite/b.weinstein/murres/DJI_0019.JPG",
             annotations_file="/orange/ewhite/b.weinstein/murres/DJI_0019.csv",
-            patch_size=600,
+            patch_size=900,
             patch_overlap=0,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             allow_empty=False
@@ -396,7 +396,7 @@ def view_training(paths):
                     image = np.moveaxis(image[0].numpy(),0,2)
                     plot, ax = visualize.plot_predictions(image, df)
                     with tempfile.TemporaryDirectory() as tmpdirname:
-                        plot.savefig("{}/{}".format(tmpdirname, image_path[0]))
+                        plot.savefig("{}/{}".format(tmpdirname, image_path[0]), dpi=300)
                         comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]))                
             except Exception as e:
                 print(e)
