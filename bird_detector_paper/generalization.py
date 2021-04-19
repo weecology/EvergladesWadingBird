@@ -43,7 +43,7 @@ def split_test_train(annotations, split = 0.9):
     return train, test
 
 
-def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False,buffer_size=0.25):
+def shapefile_to_annotations(shapefile, rgb, savedir=".", box_points=False, confidence_filter=False,buffer_size=0.2):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
     Args:
@@ -235,7 +235,7 @@ def prepare_terns(generate=True):
         annotations = preprocess.split_raster(
             path_to_raster="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif",
             annotations_file="/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv",
-            patch_size=800,
+            patch_size=900,
             patch_overlap=0,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             image_name="seabirds_rgb.tif",
