@@ -396,7 +396,7 @@ def view_training(paths):
                     image = np.moveaxis(image[0].numpy(),0,2)
                     plot, ax = visualize.plot_predictions(image, df)
                     with tempfile.TemporaryDirectory() as tmpdirname:
-                        plot.savefig("{}/{}.png".format(tmpdirname, image_path))
+                        plot.savefig("{}/{}.png".format(tmpdirname, image_path[0]))
                     comet_logger.experiment.log_image("{}/{}.png".format(tmpdirname, image_path))                
             except Exception as e:
                 print(e)
