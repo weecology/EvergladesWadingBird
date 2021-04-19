@@ -15,6 +15,7 @@ import os
 from datetime import datetime
 import PIL
 import random
+import tempfile
 
 def split_test_train(annotations, split = 0.9):
     """Split annotation in train and test by image"""
@@ -394,11 +395,12 @@ def view_training(paths):
                     df = visualize.format_boxes(targets[0], scores=False)
                     image = np.moveaxis(image[0].numpy(),0,2)
                     img = visualize.plot_predictions(image, df)
-                    comet_logger.experiment.log_figure(figure=img, figure_name=image_path)                
+                    with tempfile.TemporaryDirectory() as tmpdirname:
+                        img.figsave("{}/{}.png".format(tmpdirname, image_path))
+                    comet_logger.experiment.log_image("{}/{}.png".format(tmpdirname, image_path))                
             except Exception as e:
                 print(e)
                 continue
-            
 def prepare():
     paths = {}
     paths["terns"] = prepare_terns(generate=False)
