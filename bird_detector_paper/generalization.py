@@ -517,5 +517,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 if __name__ =="__main__":
     path_dict = prepare()
     view_training(path_dict)
-    #result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns"], test_sets=["pfeifer"])
+    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns"], test_sets=["pfeifer"])
     
