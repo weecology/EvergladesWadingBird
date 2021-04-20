@@ -403,7 +403,7 @@ def view_training(paths):
                 continue
 def prepare():
     paths = {}
-    paths["terns"] = prepare_terns(generate=False)
+    paths["terns"] = prepare_terns(generate=True)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
     paths["palmyra"] = prepare_palmyra(generate=False)
