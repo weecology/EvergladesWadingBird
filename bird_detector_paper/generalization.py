@@ -186,7 +186,7 @@ def prepare_penguin(generate=True):
         numpy_image = np.moveaxis(numpy_image,0,2)
         numpy_image = numpy_image[:,:,:3].astype("uint8")
         
-        test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=800, patch_overlap=0.05,
+        test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=600, patch_overlap=0.05,
                                                    base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
         
         test_annotations.to_csv(test_path,index=False)
@@ -203,7 +203,7 @@ def prepare_penguin(generate=True):
         train_annotations = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="/orange/ewhite/b.weinstein/penguins/training_annotations.csv",
-            patch_size=800,
+            patch_size=600,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             image_name="offshore_rocks_cape_wallace_survey_4.tif",
@@ -302,7 +302,7 @@ def prepare_pfeifer(generate=True):
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
-                patch_size=800,
+                patch_size=600,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
@@ -322,7 +322,7 @@ def prepare_pfeifer(generate=True):
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
-                patch_size=800,
+                patch_size=600,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
