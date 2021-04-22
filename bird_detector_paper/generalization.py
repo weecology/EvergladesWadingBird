@@ -407,16 +407,16 @@ def prepare():
     paths = {}
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin(generate=False)
+    paths["penguins"] = prepare_penguin(generate=True)
     paths["palmyra"] = prepare_palmyra(generate=False)
-    paths["pelicans"] = prepare_pelicans(generate=True)
+    paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=True)
     paths["hayes"] = prepare_hayes(generate=False)
 
     return paths
 
-def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
+def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra","hayes"],test_sets=["everglades"]):
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
     
@@ -505,12 +505,12 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     for img in images:
         comet_logger.experiment.log_image(img)
     
-    with comet_logger.experiment.train():
-        model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
-        images = glob.glob("{}/*.png".format(model_savedir))
-        random.shuffle(images)
-        for img in images[:20]:
-            comet_logger.experiment.log_image(img)
+    #with comet_logger.experiment.train():
+    #    model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
+    #    images = glob.glob("{}/*.png".format(model_savedir))
+    #    random.shuffle(images)
+    #    for img in images[:20]:
+    #        comet_logger.experiment.log_image(img)
             
     comet_logger.experiment.end()
         
@@ -519,5 +519,5 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 if __name__ =="__main__":
     path_dict = prepare()
     view_training(path_dict)
-    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns"], test_sets=["pfeifer"])
+    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns","hayes"], test_sets=["pfeifer"])
     
