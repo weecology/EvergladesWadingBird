@@ -279,11 +279,11 @@ def prepare_hayes(generate=True):
         train_annotations = pd.concat([hayes_albatross_train, hayes_albatross_test, hayes_penguin_train, hayes_penguin_test, hayes_penguin_val])
         train_annotations.label = "Bird"
         
+        train_annotations = train_annotations.sample(n=100)
         train_annotations.to_csv(train_path)
         
         hayes_albatross_val.label="Bird"
         hayes_albatross_val.to_csv(test_path)
-    #TODO need to copy crops into directory directly.
     
     return {"train":train_path, "test":test_path}
     
