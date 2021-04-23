@@ -128,7 +128,12 @@ new19 <- clean_nest_data(files[7], years[7])
 
 new20 <- clean_nest_data(files[8], years[8])
 
-
+nests <- dplyr::bind_rows(new10,new11,new12,new13,new14,new15,new16,new17,new18,new19) %>%
+  dplyr::mutate(date = as.Date(date),
+                eggs = as.numeric(eggs),
+                chicks = as.numeric(chicks))
+nests <- dplyr::bind_rows(old_data,nests) %>%
+  tidyr::drop_na(species)
 write.csv(nests, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = 9)
 
 species <- species %>% dplyr::arrange(species)

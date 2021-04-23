@@ -24,6 +24,7 @@ all_data <- setNames(data.frame(matrix(ncol = 9, nrow = 0)), c("year", "colony",
 tab_names <- readxl::excel_sheets(path = data_path)
 tab_names <- tab_names[tab_names != "key"]
 tab_names <- tab_names[!startsWith(tab_names ,"Other")]
+tab_names <- tab_names[!startsWith(tab_names ,"Overview")]
 tab_names <- tab_names[!startsWith(tab_names ,"Dataset Headers")]
 data_raw <- lapply(tab_names, function(x) readxl::read_excel(path = data_path, sheet = x, 
                                                              col_names = FALSE))
@@ -40,7 +41,7 @@ for(i in 1:length(tab_names)) {
   colnames1 <- tolower(colnames1[1:length(colnames2)])
   colnames <- paste(colnames1, colnames2, sep = "_")
   colnames[1:2] <- c("nest", "species")
-  #colnames[length(colnames)] <- "notes"
+  colnames[length(colnames)] <- "notes"
   #names(data_raw[[i]]) <- colnames
 
   new_data_colony <- tolower(tab_names[i]) %>%
@@ -70,6 +71,7 @@ for(i in 1:length(tab_names)) {
                                    "alley_north"),
                   colony = replace(colony, colony %in% c("big_pond_north_east"), "big_pond"),
                   colony = replace(colony, colony=="mud_canal_colony", "mud_canal"),
+                  colony = replace(colony, colony=="paurotis_pond", "paurotis"),
                   colony = replace(colony, colony=="jarrod", "jerrod"),
                   colony = replace(colony, colony %in% c("l67_east_side", "l67_north_end", "l_67",
                                                          "horus_(l67)"), "horus"),
@@ -81,13 +83,15 @@ for(i in 1:length(tab_names)) {
                   species = replace(species, species %in% c("?", "-","ge/nh?","ge/nh","unknown"), "unkn"),
                   species = replace(species, is.na(species), "unkn"),
                   species = replace(species, species %in% 
-                                      c("smwh", "smwt (prob greg)","smwht","greg/smwh"), "smwt"),
+                                      c("smwh", "smwt (prob greg)","smwht","greg/smwh","swhe","smwh*"), 
+                                    "smwt"),
                   species = replace(species, species %in% 
-                                      c("small heron/cormorant","small heron","sh","sh/an","smda"), "smhe"),
+                                      c("small heron/cormorant","small heron","sh","sh/an","smda",
+                                        "smhe*"), "smhe"),
                   species = replace(species, species %in% c("an","anhg","anhi?",""), "anhi"),
                   species = replace(species, species %in% c("gi","gi?"), "glib"),
                   species = replace(species, species %in% c("gb","gb (poss. ge)","gbhe?"), "gbhe"),
-                  species = replace(species, species %in% c("whib?","wi", "whip"), "whib"),
+                  species = replace(species, species %in% c("whib?","wi", "whip","whib*"), "whib"),
                   species = replace(species, species %in% c("ge","greg?","greg/smhe?"), "greg"),
                   species = replace(species, species=="green heron", "grhe"),
                   species = replace(species, species %in% c("sneg?"), "sneg"),
@@ -111,7 +115,7 @@ for(i in 1:length(tab_names)) {
                                        "had been pulled","c(\"x\", na)","c(\"x\", \"x\")","c(\"x\", \"2\")",
                                        "c(\"0\", \"0\")","ir","80", "yes","?","nnest gone", "na","fallen") 
                                       ~ "empty",
-                           eggs %in% c("fledged pulled", "fledged") ~ "fledged"),
+                           eggs %in% c("fledged pulled", "fledged","fledge") ~ "fledged"),
                   chicks = replace(chicks, chicks %in% c("5(+1 dead chick on ground)"), 5),
                   chicks = replace(chicks, chicks %in% c("4(certain)","4*","8 total w/145",
                     "8 total w/143","4(+1 dead chick on ground)","c(\"4\", \"0\")"), 4),
@@ -125,11 +129,11 @@ for(i in 1:length(tab_names)) {
                     "2 fledged","2 (both wet)","2 (1 wet)","2 (+1 dead)","2 (+1 long dead)","2 (2 wet)",
                     "2 greg +1 bcnh","c(\"2\", na)","2 (1wet)","2(+1 dead)","2(2wet)","2 (certain)",
                     "2 (big above nest)","2 (flew)","2 (around nest)","2 (2-3 days old)","2 or 3",
-                    "c(\"2\", \"0\")"), 2),
+                    "c(\"2\", \"0\")","c(\"2\", \"1\")","2, pulled"), 2),
                   chicks = replace(chicks, chicks %in% c("1alive,1dead","1?","1+","1 (wet)","1*","1(2)",
                     "1 fledged","note","1 (+1dead)","(1 long dead)","1(wet)","1 (1 wet)","1(+1 dead)",
                     "1 (+1 dead)","1(+1dead)","1(live) 1(dead)","1(ran)","1(dead) 1(alive)","1+ (+ 1 dead)",
-                    "1+(flew out)","c(\"1\", \"1\")"), 1),
+                    "1+(flew out)","c(\"1\", \"1\")","c(\"1\", \"0\")"), 1),
                   chicks = replace(chicks, chicks %in% c("nest gone","gone","flag pulled","empty,pulled",
                     "empty/ pulled","pulled","x","pulled flag","empty","fp","0/fp","0/ fp","empty/fp","-",
                     "fail","failed","c(\"x\", \"x\")","c(\"x\", \"0\")","c(\"x\", na)","c(\"0\", \"0\")",
@@ -141,12 +145,16 @@ for(i in 1:length(tab_names)) {
                     "(1dead)","dead(1)","(1 dead)","(2 dead)","1(dead)","predated","dead chick on ground",
                     "mt (1 big chick in area)","0 (pulled)","pull","mt (1 dead)","mt(1+ in area)",
                     "mt collapsed","mt (predated)","mt (1 dead c)","(1dead chick)","mt (pulled)",
-                    "on ground"), 0),
+                    "on ground","fledge?","c(na, \"empty\")","likely fledged","empty; pulled","fledge/pulled",
+                    "fledged; pulled","0, flag gone","fledged, pulled","nest fell","gone, pulled",
+                    "empty, pulled","empty, flag pulled","no birds, flag pulled, 1 bird in area",
+                    "gone; pulled"), 0),
                   chicks = replace(chicks, chicks %in% 
                     c("no data","comment","lost flag","not checked","flag gone","c(na, na)", "not found",
                     "missed","c(\"not checked\", \"not checked\")","missd","missed or couldn't get to?",
                     "missing","missed in the notebook says wost  not greg","miss","missed, likely mt",
-                    "missed?","na","n/a","c(\"n/a\", \"n/a\")"), NA),
+                    "missed?","na","n/a","c(\"n/a\", \"n/a\")","gone, flag pulled","couldn't find",
+                    "flag pulled, gone","flag not found","missed, no record"), NA),
                   eggs = replace(eggs, eggs %in% c("5 (2 pipping)"), 5),
                   eggs = replace(eggs, eggs %in% c("4 (1pipping)","4 (1p)","4(dead)","4 (1 pipping)",
                     "(4 anhi) pulled","c(\"4\", \"4\")"), 4),
@@ -155,11 +163,12 @@ for(i in 1:length(tab_names)) {
                     "3(1p)","3(pipping)"), 3),
                   eggs = replace(eggs, eggs %in% c("smhe(2 eggs)","2 (1p)","2(1 pipping)","2(renest)",
                     "2 (1 pipping)","2(broken)","2*","2 (1pipping)","2(pipping)","2(predated)",
-                    "2 (pipping)","2 (anhi)","2 (wost)","c(\"2\", \"2\")"), 2),
+                    "2 (pipping)","2 (anhi)","2 (wost)","c(\"2\", \"2\")","c(\"1\", \"2\")"), 2),
                   eggs = replace(eggs, eggs %in% c("1 broken egg","1?","1 (old)","1 (1pipping)","1(1p)",
                     "1 (pippng)","(1 broken or pipping)","1( pipping)","1 old egg","(dead) 1","(dead)1",
                     "1(pipping)","1+","1(dead)","1 (dead)","1 (+1cracked)","(1 broken)","1(broken)",
-                    "1 (pulled)","1 (pipping)","1 (dead, old)","1 (1p)","1 (cold)"), 1),
+                    "1 (pulled)","1 (pipping)","1 (dead, old)","1 (1p)","1 (cold)","c(\"1\", \"1\")",
+                    "c(\"0\", \"1\")"), 1),
                   eggs = replace(eggs, eggs %in% 
                   c("nest gone","gone","flag pulled","empty, pulled","empty/ pulled","pulled","x",
                     "pulled flag","empty","emty/pulled","empty/pulled","fp","0/fp","destroyed","0/ fp",
@@ -172,17 +181,22 @@ for(i in 1:length(tab_names)) {
                     "empty*","destroyed/pulled","predated","note","see note","collapsed pulled","mt","m",
                     "mt pull","mt pulled","collapsed and pulled","predated (1 broken)","*","mt (pulled)",
                     "pull","126/128/130","0+","collpased","abandoned","on ground",
-                    "*1 nest w/ 3 dead chicks, 1 nest w/ 2 dead chicks","feathers taken"), 0),
+                    "*1 nest w/ 3 dead chicks, 1 nest w/ 2 dead chicks","feathers taken","fledge?",
+                    "fledge","no birds, flag pulled, 1 bird in area","gone, pulled","empty, flag pulled",
+                    "gone; pulled","fledged, pulled","nest fell","0, flag gone","fledged; pulled",
+                    "fledge/pulled","empty; pulled","likely fledged","gone, flag pulled",
+                    "flag pulled, gone"), 0),
                   eggs = replace(eggs, eggs %in% c("no data","comment","lost flag","not checked",
                     "flag gone","c(na, na)","not found","not checkd","flag gone",
                     "not checked - whib in colony","missed","missed. pulled?",
                     "n/a see 376a","missed?","no longer on trail","nest missing","no nest","can't find",
                     "missed pulled","couldn’t check","too high","can't see","miss","n/a",
-                    "c(\"n/a\", \"n/a\")"), NA)) %>%
+                    "c(\"n/a\", \"n/a\")","flagging gone","missed, no record","flag not found","missing",
+                    "c(na, \"empty\")","couldn't find"), NA)) %>%
     dplyr::mutate(date = as.Date(date),
                   eggs = as.character(eggs),
                   chicks = as.character(chicks)) %>%
-    dplyr::select(year, colony, nest, species, date, eggs, chicks, stage)
+    dplyr::select(year, colony, nest, species, date, eggs, chicks, stage, notes)
 
     if(!all(new_data$colony %in% colonies$colony)| 
     !all(new_data$species %in% species$species)|
