@@ -1,4 +1,4 @@
-## Used to clean nest check data 1994 - 2019 into standard long format
+## Used to clean nest check data 1994 - 2020 into standard long format
 ## G. Yenni 2020-08
 
 source("~/EvergladesWadingBird/DataCleaningScripts/clean_nest_checks.R")
@@ -6,21 +6,26 @@ source("~/EvergladesWadingBird/DataCleaningScripts/clean_nest_checks.R")
 # Original files: 
 # [1] "2004 raw survey data all colonies_Found20130128 (Autosaved).xls"
 # [2] "2018NestChecks.xlsx"                                            
-# [3] "Nest Check Data_2019.xlsx"                                      
-# [4] "nest check original data 2013.xls"                              
-# [5] "nest check original data 2014.xlsm"                             
-# [6] "nest check original data 2015.xlsx"                             
-# [7] "nest check original data 2016_QAQC.xlsx"                        
-# [8] "nest check original data 2017_QAQC_JZ.xlsx"                     
-# [9] "Nest Checks 2005 11-22 KAW UPDATE.xls"                          
-# [10] "Nest Checks 2005.xls"                                           
-# [11] "Nest Checks 2006.xls"                                           
-# [12] "Nest Checks 2009.xls"                                           
-# [13] "nest data 1994.xlsx"                                            
-# [14] "Nest data 2002.xlsx"                                            
-# [15] "nest data 2003.xlsx"   
-files <- list.files("~/Desktop/nestdata", full.names = TRUE)
-years <- c(2004, 2018, 2019, 2013, 2014, 2015, 2016, 2017, 2005, 2005, 2006, 2009, 1994, 2002, 2003)
+# [3] "nest check 2010 raw only.xlsx"                                  
+# [4] "nest check 2011.xlsx"                                           
+# [5] "nest check 2012.xlsx"                                           
+# [6] "Nest Check Data_2019.xlsx"                                      
+# [7] "Nest Check Data_2020.xlsx"                                      
+# [8] "nest check original data 2013.xls"                              
+# [9] "nest check original data 2014.xlsm"                             
+# [10] "nest check original data 2015.xlsx"                             
+# [11] "nest check original data 2016_QAQC.xlsx"                        
+# [12] "nest check original data 2017_QAQC_JZ.xlsx"                     
+# [13] "Nest Checks 2005 11-22 KAW UPDATE.xls"                          
+# [14] "Nest Checks 2005.xls"                                           
+# [15] "Nest Checks 2006.xls"                                           
+# [16] "Nest Checks 2009.xls"                                           
+# [17] "nest data 1994.xlsx"                                            
+# [18] "Nest data 2002.xlsx"                                            
+# [19] "nest data 2003.xlsx"  
+files <- list.files("~/Downloads/nestdata", full.names = TRUE)
+years <- c(2004, 2018, 2010, 2011, 2012, 2019, 2020, 2013, 2014, 2015, 2016, 2017, 2005, 2005, 2006, 
+           2009, 1994, 2002, 2003)
 
 new94 <- clean_nest_data(files[13], years[13])
 

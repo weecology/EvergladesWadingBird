@@ -56,7 +56,7 @@ for(i in 1:length(tab_names)) {
                   colony = new_data_colony,
                   colony = replace(colony, colony %in% 
                                      c("tam_west", "tamw2015","tamw","tamiami_west_(whib)",
-                                       "tamiami_west_(new_trail)"), "tamiami_west"),
+                                       "tamiami_west_(new_trail)","tam_west_ibis_trail"), "tamiami_west"),
                   colony = replace(colony, colony=="tam_west_ibis_trail", "tamiami_west_ibis_trail"),
                   colony = replace(colony, colony=="6th_bridge_whib", "6th_bridge"),
                   colony = replace(colony, colony %in% c("alley_north_(trail_1)","alley_north_(trail_2)"), 
