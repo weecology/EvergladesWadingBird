@@ -1,19 +1,39 @@
-## Used to clean nest check data 1994 - 2019 into standard long format
+## Used to clean nest check data 1994 - 2020 into standard long format
+## Done one year at a time chronologically, errors get more complicated over time...
 ## G. Yenni 2020-08
 
 source("~/EvergladesWadingBird/DataCleaningScripts/clean_nest_checks.R")
-files <- list.files("~/Desktop/nestdata", full.names = TRUE)
-years <- c(2004, 2018, 2019, 2013, 2014, 2015, 2016, 2017, 2005, 2005, 2006, 2009, 1994, 2002, 2003)
+# All original data files containing nest check data were pulled into a separate directory
+# Original files: 
+# [1] "2004 raw survey data all colonies_Found20130128 (Autosaved).xls"
+# [2] "2018NestChecks.xlsx"                                            
+# [3] "nest check 2008.xlsx"                                           
+# [4] "nest check 2010 raw only.xlsx"                                  
+# [5] "nest check 2011.xlsx"                                           
+# [6] "nest check 2012.xlsx"                                           
+# [7] "Nest Check Data_2019.xlsx"                                      
+# [8] "Nest Check Data_2020.xlsx"                                      
+# [9] "nest check original data 2013.xls"                              
+# [10] "nest check original data 2014.xlsm"                             
+# [11] "nest check original data 2015.xlsx"                             
+# [12] "nest check original data 2016_QAQC.xlsx"                        
+# [13] "nest check original data 2017_QAQC_JZ.xlsx"                     
+# [14] "Nest Checks 2005 11-22 KAW UPDATE.xls"                          
+# [15] "Nest Checks 2005.xls"                                           
+# [16] "Nest Checks 2006.xls"                                           
+# [17] "Nest Checks 2009.xls"                                           
+# [18] "nest data 1994.xlsx"                                            
+# [19] "Nest data 2002.xlsx"                                            
+# [20] "nest data 2003.xlsx"   
+files <- list.files("~/Downloads/nestdata", full.names = TRUE)
+years <- c(2004, 2018, 2008, 2010, 2011, 2012, 2019, 2020, 2013, 2014, 2015, 2016, 2017, 2005, 2005, 2006, 
+           2009, 1994, 2002, 2003)
 
-new94 <- clean_nest_data(files[13], years[13])
+new94 <- clean_nest_data(files[18], years[18])
 
-new02 <- clean_nest_data(files[14], years[14])
+new02 <- clean_nest_data(files[19], years[19])
 
-new03 <- clean_nest_data(files[15], years[15])
-
-old_data <- dplyr::bind_rows(new94, new02, new03)
-old_data$chicks[which(old_data$chicks==33)] = 3 
-old_data$chicks[which(old_data$chicks=="*")] = 0 
+new03 <- clean_nest_data(files[20], years[20])
 
 ### 2004 and 2005 are single sheets
 ### 2004 data
@@ -29,20 +49,20 @@ new04 <- readxl::read_excel(path = files[1], sheet = tab_names04[2], col_names =
                 species = tolower(species),
                 year = 2004,
                 species = replace(species, species=="tric", "trhe"),
-                species = replace(species, species=="?", "unkn")) %>%
+                species = replace(species, species=="?", "unkn"),
+                stage = NA) %>%
   dplyr::group_by(nest, colony, species) %>%
   tidyr::pivot_longer(cols = dplyr::starts_with("3"),
                       names_to = "date",
                       values_to = "notes") %>%
   dplyr::mutate(date = as.Date(as.integer(date), origin="1899-12-30"),
-                eggs = as.numeric(gsub("E", "", stringr::str_extract(notes, "(\\d+)E"))),
-                chicks = as.numeric(gsub("C", "", stringr::str_extract(notes, "(\\d+)[C]")))) %>%
-  dplyr::select(year, colony, nest, species, date, eggs, chicks, notes)
-
+                eggs = as.character(gsub("E", "", stringr::str_extract(notes, "(\\d+)E"))),
+                chicks = as.character(gsub("C", "", stringr::str_extract(notes, "(\\d+)[C]")))) %>%
+  dplyr::select(year, colony, nest, species, date, eggs, chicks, stage, notes)
 
 ### 2005 data
-tab_names05 <- readxl::excel_sheets(path = files[9])
-new05 <- readxl::read_excel(path = files[9], sheet = tab_names05[1], col_names = TRUE, skip = 1) %>%
+tab_names05 <- readxl::excel_sheets(path = files[14])
+new05 <- readxl::read_excel(path = files[14], sheet = tab_names05[1], col_names = TRUE, skip = 1) %>%
   dplyr::select(-c("Nest Fate", "Cause of Failure", "# Fledged", "Transect", "...12")) %>%
   dplyr::rename(nest = "Nest #", colony = Colony, species = Species, date = Date,
                 eggs = "# Eggs", chicks = "# Chicks", notes = Comments) %>%
@@ -56,73 +76,68 @@ new05 <- readxl::read_excel(path = files[9], sheet = tab_names05[1], col_names =
                 species = replace(species, species=="tric", "trhe"),
                 species = replace(species, species=="?", "unkn"),
                 eggs = replace(eggs, eggs=="?", 0),
-                eggs = as.numeric(eggs),
-                chicks = as.numeric(chicks), 
-                date = as.Date(date, origin="1899-12-30")) %>%
-  dplyr::select(year, colony, nest, species, date, eggs, chicks, notes)
+                eggs = as.character(eggs),
+                chicks = as.character(chicks), 
+                date = as.Date(date, origin="1899-12-30"),
+                stage = NA) %>%
+  dplyr::select(year, colony, nest, species, date, eggs, chicks, stage, notes)
 
-old_data <- old_data %>%
-  dplyr::mutate(eggs = as.numeric(eggs),
-                chicks = as.numeric(chicks)) %>%
-  dplyr::bind_rows(new04, new05)
+old_data <- dplyr::bind_rows(new94, new02, new03, new04, new05)
 
-unique(old_data$species[!(old_data$species %in% species$species)])
+## Add weird 2006, 2008, 2009 data
+new06 <- extra_nest_data(files[16], years[16])
 
-old_data <- old_data %>%
-  dplyr::mutate(species = replace(species, is.na(species), "unkn"),
-                species = replace(species, species=="ge", "greg"),
-                species = replace(species, species=="wi", "whib"),
-                species = replace(species, species=="grbl", "gbhe"),
-                species = replace(species, species=="sh", "smhe"),
-                species = replace(species, species=="gb", "gbhe"),
-                species = replace(species, species=="gb (poss. ge)", "gbhe"),
-                species = replace(species, species=="tche", "trhe"),
-                species = replace(species, species=="sh?", "smhe"),
-                species = replace(species, species=="an", "anhi"),
-                species = replace(species, species=="sh/an", "smhe"),
-                species = replace(species, species=="anhg", "anhi"),
-                species = replace(species, species=="anhg", "anhi"),
-                species = replace(species, species=="gi", "glib"),
-                species = replace(species, species=="gi?", "glib"),
-                species = replace(species, species=="ge/nh", "unkn"),
-                species = replace(species, species=="ge/nh?", "unkn"))
+new08 <- extra_nest_data(files[3], years[3])
 
-## Add weird 2006 and 2009 data
-new06 <- extra_nest_data(files[11], years[11])
-
-new09 <- extra_nest_data(files[12], years[12])
+new09 <- extra_nest_data(files[17], years[17])
 
 old_data <- old_data %>%
   dplyr::mutate(date = as.Date(date),
                 eggs = as.numeric(eggs),
                 chicks = as.numeric(chicks)) %>%
-  dplyr::bind_rows(new06, new09)
+  dplyr::bind_rows(new06, new08, new09)
 
-### 2013 - 2019
+### 2010 - 2019
+new10 <- clean_nest_data(files[4], years[4])
 
-new13 <- clean_nest_data(files[4], years[4])
+new11 <- clean_nest_data(files[5], years[5])
 
-new14 <- clean_nest_data(files[5], years[5])
+new12 <- clean_nest_data(files[6], years[6])
 
-new15 <- clean_nest_data(files[6], years[6])
+new13 <- clean_nest_data(files[9], years[9])
 
-new16 <- clean_nest_data(files[7], years[7])
+new14 <- clean_nest_data(files[10], years[10])
 
-new17 <- clean_nest_data(files[8], years[8])
+new15 <- clean_nest_data(files[11], years[11])
+
+new16 <- clean_nest_data(files[12], years[12])
+
+new17 <- clean_nest_data(files[13], years[13])
+# several multispecies renests need to be correctly identified
+new17$species[(new17$species=="whib then smhe") & (new17$date<="2017-03-17")] = "whib"
+new17$species[(new17$species=="whib then smhe") & (new17$date>"2017-03-17")] = "smhe"
+new17$species[(new17$species=="bcnh then smhe") & (new17$date<="2017-03-17")] = "bcnh"
+new17$species[(new17$species=="bcnh then smhe") & (new17$date>"2017-03-17")] = "smhe"
+new17$species[(new17$species=="bcnh then greg?")] = "bcnh"
+# it's complicated
+new17$chicks[which(new17$date=="2017-04-21" & new17$nest=="744")] = 2
 
 new18 <- clean_nest_data(files[2], years[2])
 
-new19 <- clean_nest_data(files[3], years[3])
+new19 <- clean_nest_data(files[7], years[7])
 
+new20 <- clean_nest_data(files[8], years[8])
 
-write.csv(old_data, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = TRUE)
-
-species[17, 1:4]=c("smwt", "small white unidentified bird", "unknown", "no")
+nests <- dplyr::bind_rows(new10,new11,new12,new13,new14,new15,new16,new17,new18,new19) %>%
+  dplyr::mutate(date = as.Date(date),
+                eggs = as.numeric(eggs),
+                chicks = as.numeric(chicks))
+nests <- dplyr::bind_rows(old_data,nests) %>%
+  tidyr::drop_na(species)
+write.csv(nests, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = 9)
 
 species <- species %>% dplyr::arrange(species)
-write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "")
+write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", quote = 5:25)
 
-colonies[62, 1]="an2015"
-
-colonies <- colonies %>% dplyr::arrange(wca,colony)
+colonies <- colonies %>% dplyr::arrange(colony)
 write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = FALSE)
