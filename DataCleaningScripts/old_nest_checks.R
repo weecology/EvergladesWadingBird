@@ -133,7 +133,10 @@ nests <- dplyr::bind_rows(new10,new11,new12,new13,new14,new15,new16,new17,new18,
                 eggs = as.numeric(eggs),
                 chicks = as.numeric(chicks))
 nests <- dplyr::bind_rows(old_data,nests) %>%
-  tidyr::drop_na(species)
+  tidyr::drop_na(species) %>%
+  dplyr::filter_at(.vars = dplyr::vars(eggs, chicks, stage, notes), 
+                   .vars_predicate = dplyr::any_vars(!is.na(.)))
+
 write.csv(nests, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = 9)
 
 species <- species %>% dplyr::arrange(species)
