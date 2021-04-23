@@ -18,8 +18,8 @@ clean_nest_data <- function(data_path, year) {
 colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 
-all_data <- setNames(data.frame(matrix(ncol = 8, nrow = 0)), c("year", "colony", "nest", "species", "date",
-                                                               "eggs", "chicks","notes"))
+all_data <- setNames(data.frame(matrix(ncol = 9, nrow = 0)), c("year", "colony", "nest", "species", "date",
+                                                               "eggs", "chicks", "stage", "notes"))
 
 tab_names <- readxl::excel_sheets(path = data_path)
 tab_names <- tab_names[tab_names != "key"]
@@ -38,32 +38,42 @@ for(i in 1:length(tab_names)) {
   colnames1 <- colnames1[1:length(colnames2)]
   colnames <- paste(colnames1, colnames2, sep = "_")
   colnames[1:2] <- c("nest", "species")
-  colnames[length(colnames)] <- "notes"
+  #colnames[length(colnames)] <- "notes"
   #names(data_raw[[i]]) <- colnames
 
   new_data_colony <- tolower(tab_names[i]) %>%
     gsub(" ", "_", .) %>%
-    gsub("/.", "_", .) 
+    gsub("/.", "_", .) %>%
+    gsub("\\.", "_", .) %>%
+    gsub("-", "_", .) %>%
+    gsub("_colony$","",.) %>%
+    gsub("_$","",.)
 
   new_data <- as.data.frame(data_raw[[i]][,1:length(colnames)]) %>%
     setNames(colnames) %>%
     dplyr::slice(-c(1:2)) %>%
     tidyr::pivot_longer(cols = dplyr::starts_with(c("3", "4")), 
-                        names_to = c("date","stage"),
+                        names_to = c("date","type"),
                         names_pattern = "(.*)_(.*)",
                         values_to = "count") %>%
     dplyr::mutate(date = as.Date(as.integer(date), origin="1899-12-30"), 
                   colony = new_data_colony,
                   colony = replace(colony, colony %in% 
                                      c("tam_west", "tamw2015","tamw","tamiami_west_(whib)",
-                                       "tamiami_west_(new_trail)","tam_west_ibis_trail"), "tamiami_west"),
-                  colony = replace(colony, colony=="tam_west_ibis_trail", "tamiami_west_ibis_trail"),
+                                       "tamiami_west_(new_trail)","tam_west_ibis_trail",
+                                       "tamiami_west_east_side", "tamiami_west_west_side"), "tamiami_west"),
                   colony = replace(colony, colony=="6th_bridge_whib", "6th_bridge"),
-                  colony = replace(colony, colony %in% c("alley_north_(trail_1)","alley_north_(trail_2)"), 
+                  colony = replace(colony, colony %in% c("alley_north_(trail_1)","alley_north_(trail_2)",
+                                           "alley_north_west_side","alley_north_south", "an2015"), 
                                    "alley_north"),
+                  colony = replace(colony, colony %in% c("big_pond_north_east"), "big_pond"),
+                  colony = replace(colony, colony=="mud_canal_colony", "mud_canal"),
+                  colony = replace(colony, colony=="jarrod", "jerrod"),
+                  colony = replace(colony, colony %in% c("l67_east_side", "l67_north_end", "l_67",
+                                                         "horus_(l67)"), "horus"),
                   species = tolower(species),
-                  stage = tolower(stage),
-                  stage = replace(stage, stage=="comments", "notes"),
+                  type = tolower(type),
+                  type = replace(type, type=="comments", "notes"),
                   year = year,
                   species = replace(species, species %in% c("tric","tche","trhe?"), "trhe"),
                   species = replace(species, species %in% c("?", "-","ge/nh?","ge/nh","unknown"), "unkn"),
@@ -82,10 +92,24 @@ for(i in 1:length(tab_names)) {
                   species = replace(species, species %in% 
                                       c("smhe/greg/bcnh","smhe/bcnh","trhe/bcnh","trhe/bcnh?"), "bcnh"),
                   species = replace(species, species %in% c("whib/rospb"), "rosp")) %>%
-    dplyr::filter(!is.na(nest), !(stage == "notes" & is.na(count))) %>%
-    tidyr::pivot_wider(names_from = stage, values_from = count) %>%
+    dplyr::filter(!is.na(nest), !(type == "notes" & is.na(count))) %>%
+    tidyr::pivot_wider(names_from = type, values_from = count) %>%
     dplyr::mutate(eggs = tolower(eggs),
                   chicks = tolower(chicks),
+                  stage = dplyr::case_when(chicks %in% 
+                          c("nest gone","gone","flag pulled","empty,pulled","empty/ pulled","pulled","x",
+                            "pulled flag","empty","fp","0/fp","0/ fp","empty/fp","-",
+                             "c(\"x\", \"x\")","c(\"x\", \"0\")","c(\"x\", na)","c(\"0\", \"0\")","?",
+                              "fledged","nnest gone","1dc","*") ~ "empty",
+                           chicks %in% c("fail","failed") ~ "failed",
+                           eggs %in% c("1 broken egg", "fail", "failed", "1 dead") ~ "failed",
+                           eggs %in% c("nest gone","gone","flag pulled","empty, pulled","empty/ pulled",
+                                       "pulled","x","pulled flag","empty","emty/pulled","empty/pulled","fp",
+                                       "0/fp","destroyed","0/ fp","fallen down","empty/fp","-",
+                                       "had been pulled","c(\"x\", na)","c(\"x\", \"x\")","c(\"x\", \"2\")",
+                                       "c(\"0\", \"0\")","ir","80", "yes","?","nnest gone", "na","fallen") 
+                                      ~ "empty",
+                           eggs %in% c("fledged pulled", "fledged") ~ "fledged"),
                   chicks = replace(chicks, chicks %in% c("5(+1 dead chick on ground)"), 5),
                   chicks = replace(chicks, chicks %in% c("4(certain)","4*","8 total w/145",
                     "8 total w/143","4(+1 dead chick on ground)"), 4),
@@ -153,7 +177,7 @@ for(i in 1:length(tab_names)) {
     dplyr::mutate(date = as.Date(date),
                   eggs = as.numeric(eggs),
                   chicks = as.numeric(chicks)) %>%
-    dplyr::select(year, colony, nest, species, date, eggs, chicks, notes)
+    dplyr::select(year, colony, nest, species, date, eggs, chicks, stage)
 
     if(!all(new_data$colony %in% colonies$colony)| 
     !all(new_data$species %in% species$species)|
@@ -212,7 +236,7 @@ extra_nest_data <- function(data_path, year) {
       setNames(colnames) %>%
       dplyr::slice(-c(1:2)) %>%
       tidyr::pivot_longer(cols = dplyr::starts_with("3"), 
-                          names_to = c("date","stage"),
+                          names_to = c("date","type"),
                           names_pattern = "(.*)_(.*)",
                           values_to = "count") %>%
       dplyr::mutate(date = as.Date(as.integer(date), origin="1899-12-30"), 
@@ -229,7 +253,7 @@ extra_nest_data <- function(data_path, year) {
                     species = replace(species, species=="anhi?", "anhi"),
                     species = replace(species, is.na(species), "unkn"),
                     colony = replace(colony, colony=="alley_n_whib", "alley_north")) %>%
-      tidyr::pivot_wider(names_from = stage, values_from = count) %>%
+      tidyr::pivot_wider(names_from = type, values_from = count) %>%
       dplyr::rename(eggs = "E", chicks = "C", nest_gone = "NEST GONE", notes = NOTES) %>%
       dplyr::mutate(X = ifelse("X" %in% names(.), X, NA),
                     K = ifelse("K" %in% names(.), K, NA)) %>%
@@ -242,12 +266,13 @@ extra_nest_data <- function(data_path, year) {
                     notes = stringr::str_remove(notes, "(NA)$"),
                     chicks = replace(chicks, chicks=="1<", 1),
                     chicks = replace(chicks, chicks=="~2", 2),
-                    eggs = replace(eggs, eggs=="?", NA)) %>%
+                    eggs = replace(eggs, eggs=="?", NA),
+                    stage = dplyr::case_when(notes %in% c("empty","nest gone")~"empty")) %>%
       dplyr::filter(!is.na(nest)) %>%
       dplyr::mutate(date = as.Date(date),
                     eggs = as.numeric(eggs),
                     chicks = as.numeric(chicks)) %>%
-      dplyr::select(year, colony, nest, species, date, eggs, chicks, notes)
+      dplyr::select(year, colony, nest, species, date, eggs, chicks, stage, notes)
     
     stopifnot(
       all(new_data$colony %in% colonies$colony), 

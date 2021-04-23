@@ -9,7 +9,7 @@ nest_cols <- colnames(nests)
 test_that("required column names in nests df", {
   
   expect_identical(nest_cols, 
-                   c("year","colony","nest","species","date","eggs","chicks","notes" ))
+                   c("year","colony","nest","species","date","eggs","chicks","stage", "notes"))
 })
 
 test_that("Colony and species valid", {

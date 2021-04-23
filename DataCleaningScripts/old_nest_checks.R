@@ -27,11 +27,11 @@ files <- list.files("~/Downloads/nestdata", full.names = TRUE)
 years <- c(2004, 2018, 2010, 2011, 2012, 2019, 2020, 2013, 2014, 2015, 2016, 2017, 2005, 2005, 2006, 
            2009, 1994, 2002, 2003)
 
-new94 <- clean_nest_data(files[13], years[13])
+new94 <- clean_nest_data(files[17], years[17])
 
-new02 <- clean_nest_data(files[14], years[14])
+new02 <- clean_nest_data(files[18], years[18])
 
-new03 <- clean_nest_data(files[15], years[15])
+new03 <- clean_nest_data(files[19], years[19])
 
 ### 2004 and 2005 are single sheets
 ### 2004 data
@@ -47,7 +47,8 @@ new04 <- readxl::read_excel(path = files[1], sheet = tab_names04[2], col_names =
                 species = tolower(species),
                 year = 2004,
                 species = replace(species, species=="tric", "trhe"),
-                species = replace(species, species=="?", "unkn")) %>%
+                species = replace(species, species=="?", "unkn"),
+                stage = NA) %>%
   dplyr::group_by(nest, colony, species) %>%
   tidyr::pivot_longer(cols = dplyr::starts_with("3"),
                       names_to = "date",
@@ -55,11 +56,11 @@ new04 <- readxl::read_excel(path = files[1], sheet = tab_names04[2], col_names =
   dplyr::mutate(date = as.Date(as.integer(date), origin="1899-12-30"),
                 eggs = as.numeric(gsub("E", "", stringr::str_extract(notes, "(\\d+)E"))),
                 chicks = as.numeric(gsub("C", "", stringr::str_extract(notes, "(\\d+)[C]")))) %>%
-  dplyr::select(year, colony, nest, species, date, eggs, chicks, notes)
+  dplyr::select(year, colony, nest, species, date, eggs, chicks, stage, notes)
 
 ### 2005 data
-tab_names05 <- readxl::excel_sheets(path = files[9])
-new05 <- readxl::read_excel(path = files[9], sheet = tab_names05[1], col_names = TRUE, skip = 1) %>%
+tab_names05 <- readxl::excel_sheets(path = files[13])
+new05 <- readxl::read_excel(path = files[13], sheet = tab_names05[1], col_names = TRUE, skip = 1) %>%
   dplyr::select(-c("Nest Fate", "Cause of Failure", "# Fledged", "Transect", "...12")) %>%
   dplyr::rename(nest = "Nest #", colony = Colony, species = Species, date = Date,
                 eggs = "# Eggs", chicks = "# Chicks", notes = Comments) %>%
@@ -75,8 +76,11 @@ new05 <- readxl::read_excel(path = files[9], sheet = tab_names05[1], col_names =
                 eggs = replace(eggs, eggs=="?", 0),
                 eggs = as.numeric(eggs),
                 chicks = as.numeric(chicks), 
-                date = as.Date(date, origin="1899-12-30")) %>%
-  dplyr::select(year, colony, nest, species, date, eggs, chicks, notes)
+                date = as.Date(date, origin="1899-12-30"),
+                stage = NA) %>%
+  dplyr::select(year, colony, nest, species, date, eggs, chicks, stage, notes)
+
+old_data <- dplyr::bind_rows(new94, new02, new03, new04, new05)
 
 ## Add weird 2006 and 2009 data
 new06 <- extra_nest_data(files[11], years[11])
