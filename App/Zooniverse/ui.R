@@ -3,7 +3,6 @@
 # run the application by clicking 'Run App' above.
 #
 library(shiny)
-library(rgl)
 library(shinythemes)
 
 #Define thumbnail dir

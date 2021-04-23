@@ -2,8 +2,17 @@
 import glob
 import geopandas
 import rtree
+import rasterio
+import random
 import os
 import pandas as pd
+import cv2
+import numpy as np
+from panoptes_client import Panoptes, Project, SubjectSet, Subject
+import utils
+
+from rasterio.windows import from_bounds
+from PIL import Image, ImageDraw
 
 def load_files(dirname):
     """Load shapefiles and concat into large frame"""
@@ -106,5 +115,121 @@ def detect_nests(dirname, savedir):
         
     return filename
 
+def find_rgb_paths(site, paths):
+    paths = [x for x in paths if site in x]
+    paths.sort()
+    
+    return paths
+
+def crop(rgb_path, geom, extend_box=3):
+    src = rasterio.open(rgb_path)
+    left, bottom, right, top = geom.bounds    
+    window = from_bounds(left - extend_box,
+                             bottom - extend_box,
+                             right + extend_box,
+                             top + extend_box,
+                             transform=src.transform)
+    
+    numpy_array = src.read(window=window)
+    numpy_array_rgb = np.rollaxis(numpy_array, 0,3)    
+    numpy_array_bgr = numpy_array_rgb[:,:,::-1]    
+    return numpy_array_bgr
+    
+def crop_images(df, rgb_images):
+    """Crop images for a series of data"""
+    crops = {}
+    geom = df.geometry.iloc[0]
+    target_ind = df.target_ind.unique()[0]
+   
+    for tile in rgb_images:
+        #find rgb data
+        basename = os.path.splitext(os.path.basename(tile))[0]
+        datename = "{}_{}".format(target_ind, basename)
+        crops[datename] = crop(tile, geom)
+    
+    return crops
+
+def create_subject(filenames, everglades_watch):
+    subject = Subject()
+
+    subject.links.project = everglades_watch
+    print("adding subjects: {}".format(filenames))
+    for filename in filenames:
+        subject.add_location(filename)
+        subject.metadata.update({"filename":filename})
+
+    #Trigger upload
+    subject.save()    
+    
+    return subject
+    
+def create_subject_set(everglades_watch, name="Nest detections 2.0"):
+    subject_set = SubjectSet()
+    subject_set.links.project = everglades_watch
+    subject_set.display_name = name
+    subject_set.save()
+
+    return subject_set
+
+def write_timestamp(image, text):
+    text = text.replace("_projected","")
+    image = Image.fromarray(image)
+    draw = ImageDraw.Draw(image)  
+    draw.text((10, 10), text)  
+    return np.array(image)
+    
+def extract_nests(filename, rgb_pool, savedir, upload=False):
+    gdf = geopandas.read_file(filename)
+    grouped = gdf.groupby("target_ind")
+    if upload:
+        everglades_watch = utils.connect()
+        subject_set = create_subject_set(everglades_watch)
+        subjects = []
+    
+    for name, group in grouped:
+        #atleast three detections
+        if group.shape[0] < 3:
+            continue
+        
+        #Crop with date names as key
+        site = group.Site.unique()[0]
+        rgb_images = find_rgb_paths(site, rgb_pool)
+        crops = crop_images(group, rgb_images=rgb_images)
+        
+        #save output
+        dirname =  "{}/{}_{}".format(savedir,name,group["Site"].unique()[0])
+        if not os.path.exists(dirname):
+            os.mkdir(dirname)
+        
+        filenames = []
+        for datename in crops:
+            filename = "{}/{}.png".format(dirname, datename)
+            crop = crops[datename]
+            if not crop.shape[2] == 3:
+                continue      
+            
+            #Write timestamp as watermark
+            crop = write_timestamp(crop, datename)
+            
+            cv2.imwrite(filename, crop)
+            filenames.append(filename)
+            
+        if upload:
+            subject = create_subject(filenames, everglades_watch)
+            subjects.append(subject)
+            
+    if upload:
+        random.shuffle(subjects)
+        subject_set.add(subjects)
+            
+def find_files():
+    paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
+    paths = [x for x in paths if not "Cypress" in x]
+    
+    return paths
+
 if __name__=="__main__":
-    detect_nests("/orange/ewhite/everglades/predictions/", savedir="../App/Zooniverse/data/")
+    nest_shp = detect_nests("/orange/ewhite/everglades/predictions/", savedir="../App/Zooniverse/data/")
+    #Write nests into folders of clips
+    rgb_pool = find_files()
+    extract_nests(nest_shp, rgb_pool=rgb_pool, savedir="/orange/ewhite/everglades/nest_crops/", upload=True)

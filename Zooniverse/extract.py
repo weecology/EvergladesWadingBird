@@ -4,9 +4,11 @@ import paramiko
 import os
 import geopandas as gp
 import everglade_tokens
+import rasterio
 import requests
 import json
 from shapely.geometry import box
+from PIL import Image
 
 #source keys outside of git control
 import everglade_tokens
@@ -64,7 +66,16 @@ def extract_empty(parsed_data, image_data,save_dir="."):
         #Download image
         basename = "{}".format(group.subject_id.unique()[0])
         name = "{}.png".format(os.path.join(os.path.abspath(save_dir),basename))
-        download_from_zooniverse(name=name, url=download_url)    
+        download_from_zooniverse(name=name, url=download_url)   
+        
+        #confirm file can be opened 
+        try:
+            a = rasterio.open(name)
+            b = Image.open(name).convert('RGB')
+        except Exception as e:
+            print("{} failed with {}".format(name, e))
+            continue
+        
         empty_paths.append(name)
         
     #Write dict in retinanet format
@@ -79,7 +90,7 @@ def run(classification_shp, image_data ,savedir="."):
     """
     #Read in species data
     df = gp.read_file(classification_shp)
-    df = df[["subject_id","x","y","species","behavior","geometry"]]
+    df = df[["subject_id","x","y","species","behavior","geometry","selected_i"]]
     df.subject_id = df.subject_id.astype(int)
     
     #Read in image location data
@@ -88,7 +99,7 @@ def run(classification_shp, image_data ,savedir="."):
     
     #drop duplicates
     image_df = image_df.drop_duplicates()
-    
+    df.subject_id = df.subject_id.astype("int")
     joined_df = df.merge(image_df,on="subject_id")
     
     #assert single matches
@@ -110,6 +121,15 @@ def run(classification_shp, image_data ,savedir="."):
         basename = "{}".format(group.subject_id.unique()[0])
         name = "{}.png".format(os.path.join(savedir,basename))
         download_from_zooniverse(name=name, url=download_url)
+        
+        #Confirm file can be opened
+        try:
+            a = rasterio.open(name)
+            b = Image.open(name).convert('RGB')
+        except Exception as e:
+            print("{} failed with {}".format(name, e))
+            continue
+        
         group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]
         
         #Create a shapefile

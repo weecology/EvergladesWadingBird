@@ -1,0 +1,116 @@
+# Install packages, update data, test, and archive 
+
+name: CI
+
+on:
+
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: "0 18 * * 2"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: contains(toJson(github.event.commits), '[skip ci]') == false
+    
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      matrix:
+        config:
+          - {os: ubuntu-latest, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            fetch-depth: 3
+            
+      - uses: r-lib/actions/setup-r@master
+        
+      - name: Cache R packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
+            
+      - name: Install system dependencies
+        run: sudo apt-get install libgit2-dev
+          
+      - name: Install packages
+        run: Rscript install-packages.R        
+        
+      - name: Update data
+        run: Rscript update-data.R
+          
+      - name: Test
+        run: Rscript testthat.R
+        
+      - name: Check for new files
+        id: check_files
+        run: |
+          if [[ -z "$(git status --porcelain)" ]] ; then 
+            echo "Git status is empty"
+            echo "::set-output name=diff::FALSE"
+          else 
+            echo "::set-output name=diff::TRUE"
+          fi
+          
+      - name: Bump version
+        id: version
+        env: 
+          LOG: ${{ github.event_name == 'pull_request' && '$(git log --no-merges --format=%B -n 1 HEAD^2)' || '$(git log --no-merges --format=%B -n 1 HEAD)' }}
+          CRON: ${{ github.event_name == 'schedule' && 'TRUE' || 'FALSE' }}
+        run: |
+          R -e "source('version_bump.R'); bump_version('${{ env.LOG }}', ${{ env.CRON }}, ${{ steps.check_files.outputs.diff }})"
+          if echo "$(git status --porcelain)" | grep -q version.txt ; then 
+            echo "Version changed"
+            echo "::set-output name=new_ver::TRUE"
+          else 
+            echo "No version bump"
+            echo "::set-output name=new_ver::FALSE"
+          fi
+        
+      - name: Setup Tag
+        if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
+        id: tagging
+        run: |
+          value=`cat version.txt`
+          echo "::set-output name=tag::$value"
+          value="v${value}"
+          echo "::set-output name=release::$value"
+      
+      - name: Tag new version for release
+        if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
+        env: 
+          JOB_TAGS: ${{ github.event_name == 'schedule' && '[skip ci] [cron]' || '[skip ci]' }}
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Weecology Deploy Bot
+          author_email: weecologydeploy@weecology.org
+          message: "Update data and trigger archive: GitHub Build ${{ github.run_number }} ${{ env.JOB_TAGS }}"
+          tag: ${{ steps.tagging.outputs.tag }}
+          
+      - name: Create Release
+        if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
+        id: create_release
+        uses: zendesk/action-create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tagging.outputs.tag }}
+          release_name: ${{ steps.tagging.outputs.tag }}
+          body: ${{ steps.tagging.outputs.release }}

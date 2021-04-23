@@ -136,13 +136,13 @@ def summarize(paths):
     shapefiles = [load_shapefile(x) for x in paths]
     summary = geopandas.GeoDataFrame(pd.concat(shapefiles,ignore_index=True),crs=shapefiles[0].crs)
     summary["label"] = "Bird"
-    summary = summary[summary.score > 0.3]
+    #summary = summary[summary.score > 0.3]
     
     return summary
     
 if __name__ == "__main__":
     client = start(gpus=10,mem_size="30GB")    
-    model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20200724_103938.h5"
+    model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
     
     paths = find_files()
     print("Found {} files".format(len(paths)))

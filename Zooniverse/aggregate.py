@@ -45,7 +45,7 @@ def load_classifications(classifications_file, min_version):
     """
     df = pd.read_csv(classifications_file)
     df  = df[df.workflow_version > min_version]  
-    df  = df[df.workflow_name =="Counts and Nests"]          
+    df  = df[df.workflow_name =="Counts and Behavior"]          
     return df
     
 def parse_additional_response(x):
@@ -211,7 +211,14 @@ def project_point(df):
     geoms = [Point(x,y) for x,y in zip(df.utm_x, df.utm_y)]
     gdf = gpd.GeoDataFrame(df, geometry=geoms)
     
-    #set CRS
+    #set CRS, this is a bit complicated as we originally started uploading in epsg 32617 (UTM) and changed for mapbox to 3857 web mercator. We can infer from first digit, but its not ideal.
+    utm17 = gdf[gdf.utm_x.astype('str').str.startswith("5")]
+    web_mercator = gdf[gdf.utm_x.astype('str').str.startswith("-8")]
+    web_mercator.crs = 'epsg:3857'
+    reprojected_utm_points = web_mercator.to_crs(epsg=32617)
+    reprojected_utm_points["utm_x"] = reprojected_utm_points.geometry.apply(lambda x: x.coords[0][0])
+    reprojected_utm_points["utm_y"] = reprojected_utm_points.geometry.apply(lambda x: x.coords[0][1])
+    gdf = pd.concat([utm17,reprojected_utm_points], ignore_index=True)
     gdf.crs = 'epsg:32617'
     
     return gdf
@@ -226,33 +233,41 @@ def spatial_join(gdf, IoU_threshold = 0.2):
     #Turn buffered points into boxes
     gdf["bbox"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(1).bounds.values]
     
-    filtered_boxes = [ ]
-    for index, row in gdf.iterrows():
-        geom = row["bbox"]
-        #Spatial clip to window using spatial index for faster querying
-        possible_matches_index = list(spatial_index.intersection(geom.bounds))
-        possible_matches = gdf.iloc[possible_matches_index]
-        
-        boxes_to_merge = { }
-        labels = [ ]
-        
-        #Add target box to consider
-        boxes_to_merge[index] = geom
-        labels.append(row["species"])
-        
-        #Find intersection over union
-        for match_index, match_row in possible_matches.iterrows():
-            match_geom = match_row["bbox"]
-            IoU = calculate_IoU(geom, match_geom)
+    #for each overlapping image
+    for name, group in gdf.groupby("subject_ids"):
+        if len(group.classification_id.unique()) == 1:
+            gdf.loc[group.index.values,"selected_index"] = group.index.values
+        else:
+            for index, row in group.iterrows():
+                geom = row["bbox"]
+                #Spatial clip to window using spatial index for faster querying
+                possible_matches_index = list(spatial_index.intersection(geom.bounds))
+                possible_matches = gdf.iloc[possible_matches_index]
+                
+                #If just matches itself, skip indexing
+                if len(possible_matches) == 1:
+                    gdf.loc[index, "selected_index"] = index
+                else:
+                    boxes_to_merge = { }
+                    labels = []
+                    
+                    #Add target box to consider
+                    boxes_to_merge[index] = geom
+                    labels.append(row["species"])
+                    
+                    #Find intersection over union
+                    for match_index, match_row in possible_matches.iterrows():
+                        match_geom = match_row["bbox"]
+                        IoU = calculate_IoU(geom, match_geom)
+                        
+                        if IoU > IoU_threshold:
+                            boxes_to_merge[match_index] = match_geom
+                            labels.append(match_row["species"])
+                    
+                    #Choose final box and labels
+                    selected_key = choose_box(boxes_to_merge)
+                    gdf.loc[index, "selected_index"] = selected_key
             
-            if IoU > IoU_threshold:
-                boxes_to_merge[match_index] = match_geom
-                labels.append(match_row["species"])
-        
-        #Choose final box and labels
-        selected_key = choose_box(boxes_to_merge)
-        gdf.loc[index, "selected_index"] = selected_key
-    
     #remove duplicates
     return gdf
         
@@ -271,7 +286,7 @@ def calculate_IoU(geom, match):
     
     return iou
 
-def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=272.359, debug=False):
+def run(classifications_file=None, savedir=".", download=False, generate=False,min_version=300, debug=False):
     
     #Authenticate
     if download:
@@ -285,9 +300,9 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
         #Read file from zooniverse download
         df = load_classifications(classifications_file, min_version=min_version)        
     
-    #if debug for testing, just sample 50 rows    
+    #if debug for testing, just sample 20 rows    
     if debug:
-        df = df.sample(n=50)    
+        df = df.sample(n=20)        
     
     #Parse JSON and filter
     df = parse_birds(df)
@@ -316,4 +331,4 @@ if __name__ == "__main__":
     #Download from Zooniverse and parse
     
     fname = run(savedir="../App/Zooniverse/data/", download=True, 
-       generate=False, min_version=279.365)
+       generate=False, min_version=300)

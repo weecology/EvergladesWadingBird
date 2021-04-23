@@ -24,6 +24,9 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     #Read shapefile
     gdf = gp.read_file(shapefile)
     
+    #Drop any rounding errors duplicated
+    gdf = gdf.groupby("selected_i").apply(lambda x: x.head(1))
+    
     #define in image coordinates and buffer to create a box
     gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.x.astype(float), gdf.y.astype(float))]
     gdf["geometry"] = [box(int(left), int(bottom), int(right), int(top)) for left, bottom, right, top in gdf.geometry.buffer(25).bounds.values]
@@ -37,9 +40,14 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     df = df.rename(columns={"minx":"xmin","miny":"ymin","maxx":"xmax","maxy":"ymax"})
     
     #cut off on borders
-    with rasterio.open(rgb_path) as src:
-        height, width = src.shape
-        
+    try:
+        with rasterio.open(rgb_path) as src:
+            height, width = src.shape
+    except:
+        print("Image {} failed to open".format(rgb_path))
+        os.remove(rgb_path)
+        return None
+    
     df.ymax[df.ymax > height] = height
     df.xmax[df.xmax > width] = width
     df.ymin[df.ymin < 0] = 0
@@ -57,8 +65,7 @@ def shapefile_to_annotations(shapefile, rgb_path, savedir="."):
     
     #select columns
     result = df[["image_path","xmin","ymin","xmax","ymax","label"]]
-    
-    #Drop any rounding errors duplicated
+     
     result = result.drop_duplicates()
     
     return result
@@ -86,6 +93,9 @@ def format_shapefiles(shp_dir,image_dir=None):
     for shapefile in shapefiles:
         rgb_path = find_rgb_path(shapefile, image_dir)
         result = shapefile_to_annotations(shapefile, rgb_path)
+        #skip invalid files
+        if result is None:
+            continue
         annotations.append(result)
     annotations = pd.concat(annotations)
     
@@ -95,8 +105,22 @@ def split_test_train(annotations):
     """Split annotation in train and test by image"""
     #Currently want to mantain the random split
     np.random.seed(0)
+    
+    #unique annotations for the bird detector
+    #annotations = annotations.groupby("selected_i").apply(lambda x: x.head(1))
+    
+    #add to train_names until reach target split threshold
     image_names = annotations.image_path.unique()
-    train_names = np.random.choice(image_names, int(len(image_names) * 0.9))
+    target = int(annotations.shape[0] * 0.9)
+    counter = 0
+    train_names = []
+    for x in image_names:
+        if target > counter:
+            train_names.append(x)
+            counter+=annotations[annotations.image_path == x].shape[0]
+        else:
+            break
+        
     train = annotations[annotations.image_path.isin(train_names)]
     test = annotations[~(annotations.image_path.isin(train_names))]
     
@@ -177,6 +201,8 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
     #Set config and train
     model.config["validation_annotations"] = test_path
     model.config["save_path"] = save_dir
+    model.config["epochs"] = 9
+    
     model.train(train_path, comet_experiment=comet_experiment)
     
     #Create a positive bird recall curve
@@ -192,6 +218,21 @@ def train_model(train_path, test_path, empty_images_path=None, save_dir=".", com
         empty_images = empty_frame_df.image_path.unique()    
         predict_empty_frames(model, empty_images, comet_experiment)
     
+    #evaluaate at lower iou_thresholds
+    mAPs = []
+    threshold = []
+    for x in np.arange(0.1,0.5,.05):
+        mAP = model.evaluate_generator(test_path, 
+                                iou_threshold=x, comet_experiment=comet_experiment)
+        threshold.append(x)
+        mAPs.append(mAP)
+    
+    mAPdf = pd.DataFrame({"mAP":mAPs,"IoU_Threshold":threshold})
+    recall_plot = mAPdf.plot.scatter("mAP","IoU_Threshold")
+    recall_plot.set_xlabel("IoU Threshold")
+    recall_plot.set_ylabel("mAP")
+    comet_experiment.log_figure(recall_plot)
+        
     return model
     
 def run(shp_dir, empty_frames_path=None, save_dir="."):
@@ -205,6 +246,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     #Add some empty images to train and test
     empty_frames_df = pd.read_csv(empty_frames_path, index_col=0)
+    empty_frames_df.sample(n=10)
     
     #add some blank annotations
     empty_frames_df["xmin"] = pd.Series(dtype="Int64")
@@ -215,6 +257,7 @@ def run(shp_dir, empty_frames_path=None, save_dir="."):
     
     empty_train, empty_test = split_test_train(empty_frames_df)
     
+    #limit the number of empty
     train = pd.concat([train, empty_train])
     test = pd.concat([test, empty_test])
     

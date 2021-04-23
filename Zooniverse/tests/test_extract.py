@@ -10,13 +10,11 @@ from .. import aggregate
 def run_aggregate():
     aggregate.run("data/everglades-watch-classifications.csv", min_version=272.359, download=False, generate=False, savedir="output",debug=True)
     
-def test_run(run_aggregate):
+def test_run(run_aggregate, tmpdir):
     #create an output image folder is needed
     if not os.path.exists("output/images/"):
         os.mkdir("output/images/")
-    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir="output/images/")
+    extract.run(image_data="data/everglades-watch-subjects.csv",  classification_shp="output/everglades-watch-classifications.shp",savedir=tmpdir)
 
-def test_extract_empty(run_aggregate):
-    if not os.path.exists("output/images/"):
-        os.mkdir("output/images/")    
-    extract.extract_empty("output/parsed_annotations.csv", image_data="data/everglades-watch-subjects.csv", save_dir="output/images/")
+def test_extract_empty(run_aggregate, tmpdir):   
+    extract.extract_empty("output/parsed_annotations.csv", image_data="data/everglades-watch-subjects.csv", save_dir=tmpdir)

@@ -13,8 +13,11 @@ dependencies:
   - pip:
     - panoptescli
     - mapboxcli
+    - rasterio
     - deepforest
     - comet_ml
     - paramiko
+    - opencv-python
+
 
 
