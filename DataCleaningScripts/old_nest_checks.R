@@ -127,6 +127,37 @@ new18 <- clean_nest_data(files[2], years[2])
 new19 <- clean_nest_data(files[7], years[7])
 
 new20 <- clean_nest_data(files[8], years[8])
+# several multispecies renests need to be correctly identified
+new20$species[(new20$species=="greg/smhe") & (new20$date<="2020-04-06")] = "greg"
+new20$species[(new20$species=="greg/smhe") & (new20$date>"2020-04-06")] = "smhe"
+new20$species[(new20$species=="bcnh/smwh relay") & (new20$date<="2020-04-07")] = "bcnh"
+new20$species[(new20$species=="bcnh/smwh relay") & (new20$date>"2020-04-07")] = "smwt"
+new20$species[(new20$species=="bcnh/glib relay") & (new20$date<="2020-04-21")] = "bcnh"
+new20$species[(new20$species=="bcnh/glib relay") & (new20$date>"2020-04-21")] = "glib"
+new20$species[(new20$species=="bcnh/whib relay") & (new20$date<"2020-04-01")] = "bcnh"
+new20$species[(new20$species=="bcnh/whib relay") & (new20$date>="2020-04-01")] = "whib"
+new20$species[(new20$species=="rosp/smhe relay") & (new20$date<"2020-04-22")] = "rosp"
+new20$species[(new20$species=="rosp/smhe relay") & (new20$date>="2020-04-22")] = "smhe"
+new20$species[(new20$species=="smwh/glib relay") & (new20$date<"2020-05-06")] = "sneg"
+new20$species[(new20$species=="smwh/glib relay") & (new20$date>="2020-05-06")] = "glib"
+new20$species[(new20$species=="smhe/glib relay") & (new20$date<"2020-04-08")] = "smhe"
+new20$species[(new20$species=="smhe/glib relay") & (new20$date>="2020-04-08")] = "glib"
+new20$species[(new20$species=="bcnh/trhe") & (new20$date<"2020-04-22")] = "bcnh"
+new20$species[(new20$species=="bcnh/trhe") & (new20$date>="2020-04-22")] = "trhe"
+new20$species[(new20$species=="bcnh*/smwh relay") & (new20$date<"2020-04-09")] = "bcnh"
+new20$species[(new20$species=="bcnh*/smwh relay") & (new20$date>="2020-04-09")] = "smwt"
+new20$species[(new20$species=="rosp/glib relay") & (new20$date<"2020-05-06")] = "rosp"
+new20$species[(new20$species=="rosp/glib relay") & (new20$date>="2020-05-06")] = "glib"
+new20$species[(new20$species=="whib/glib relay") & (new20$date<"2020-05-06")] = "whib"
+new20$species[(new20$species=="whib/glib relay") & (new20$date>="2020-05-06")] = "glib"
+# Remove duplicate rows
+new20=new20[-which(new20$eggs=="same nest as 486"),]
+new20=new20[-which(new20$eggs=="nest 154"),]
+
+new20[new20$species=="whib/glib relay",]
+unique(new20$species[which(!(new20$species %in% species$species))])
+unique(new20$eggs)
+unique(new20$chicks)
 
 nests <- dplyr::bind_rows(new10,new11,new12,new13,new14,new15,new16,new17,new18,new19) %>%
   dplyr::mutate(date = as.Date(date),
