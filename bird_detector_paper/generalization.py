@@ -112,17 +112,17 @@ def prepare_palmyra(generate=True):
     if generate:      
         df = shapefile_to_annotations(
             shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp",
-            rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif", box_points=True, confidence_filter=True, buffer_size=0.25)
+            rgb="/orange/ewhite/everglades/Palmyra/dudley_projected.tif", box_points=True, confidence_filter=True, buffer_size=0.25)
         df.to_csv("Figures/test_annotations.csv",index=False)
         
-        src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
+        src = rio.open("/orange/ewhite/everglades/Palmyra/dudley_projected.tif")
         numpy_image = src.read()
         numpy_image = np.moveaxis(numpy_image,0,2)
         numpy_image = numpy_image[:,:,:3].astype("uint8")
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image,
                                                    annotations_file="Figures/test_annotations.csv",
-                                                   patch_size=1000, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="palmyra.tif")
+                                                   patch_size=1000, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="dudley_projected.tif")
         
         test_annotations.to_csv(test_path,index=False)
         
@@ -416,7 +416,7 @@ def prepare():
 
     return paths
 
-def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra","hayes"],test_sets=["everglades"]):
+def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
     
@@ -505,19 +505,32 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra","ha
     for img in images:
         comet_logger.experiment.log_image(img)
     
-    #with comet_logger.experiment.train():
-    #    model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
-    #    images = glob.glob("{}/*.png".format(model_savedir))
-    #    random.shuffle(images)
-    #    for img in images[:20]:
-    #        comet_logger.experiment.log_image(img)
+    with comet_logger.experiment.train():
+        model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
+        images = glob.glob("{}/*.png".format(model_savedir))
+        random.shuffle(images)
+        for img in images[:20]:
+            comet_logger.experiment.log_image(img)
             
     comet_logger.experiment.end()
         
     model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    
+    return recall, precision
 
 if __name__ =="__main__":
     path_dict = prepare()
     view_training(path_dict)
-    result = train(path_dict=path_dict, train_sets=["everglades","palmyra","penguins","terns","hayes"], test_sets=["pfeifer"])
+    #leave one out
+    train_list = ["everglades","palmyra","penguins","terns","pfeifer","hayes"]
+    results = []
+    for x in train_list:
+        train_sets = [y for y in train_list if not y== x]
+        test_sets = x
+        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=test_sets)
+        result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
+        results.append(result)
+    
+    results = pd.concat(results)
+    
     
