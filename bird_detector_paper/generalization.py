@@ -528,7 +528,7 @@ if __name__ =="__main__":
         train_sets = [y for y in train_list if not y== x]
         train_sets.append("everglades")
         test_sets = x
-        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets], fast_dev_run=True)
+        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets])
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
         results.append(result)
     
