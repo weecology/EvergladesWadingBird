@@ -416,7 +416,7 @@ def prepare():
 
     return paths
 
-def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"], fast_dev_run=False):
+def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
     
@@ -467,7 +467,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
     
-    model.create_trainer(logger=comet_logger, fast_dev_run=fast_dev_run)
+    model.create_trainer(logger=comet_logger)
     comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
