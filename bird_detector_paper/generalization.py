@@ -416,7 +416,7 @@ def prepare():
 
     return paths
 
-def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
+def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"], fast_dev_run=False):
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                   project_name="everglades", workspace="bw4sz")
     
@@ -467,7 +467,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
     
-    model.create_trainer(logger=comet_logger)
+    model.create_trainer(logger=comet_logger, fast_dev_run=fast_dev_run)
     comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
@@ -522,12 +522,13 @@ if __name__ =="__main__":
     path_dict = prepare()
     view_training(path_dict)
     #leave one out
-    train_list = ["everglades","palmyra","penguins","terns","pfeifer","hayes"]
+    train_list = ["palmyra","penguins","terns","pfeifer","hayes"]
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y== x]
+        train_sets.append("everglades")
         test_sets = x
-        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets])
+        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets], fast_dev_run=True)
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
         results.append(result)
     
