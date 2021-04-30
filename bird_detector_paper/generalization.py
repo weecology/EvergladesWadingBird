@@ -1,4 +1,5 @@
 #Prepare all training sets
+import pandas as pd
 import comet_ml
 import glob
 from pytorch_lightning.loggers import CometLogger
@@ -8,7 +9,6 @@ from deepforest import visualize
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
-import pandas as pd
 import rasterio as rio
 import numpy as np
 import os
