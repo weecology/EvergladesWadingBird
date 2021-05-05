@@ -407,7 +407,7 @@ def prepare():
     paths = {}
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin(generate=False)
+    paths["penguins"] = prepare_penguin(generate=True)
     paths["palmyra"] = prepare_palmyra(generate=False)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
@@ -466,7 +466,6 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
-    
     model.create_trainer(logger=comet_logger)
     comet_logger.experiment.log_parameters(model.config)
     
