@@ -87,7 +87,7 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
  
 def prepare_test(patch_size=2000):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/Dudley_projected.shp", rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")
     df.to_csv("Figures/test_annotations.csv",index=False)
     
     src = rio.open("/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")
