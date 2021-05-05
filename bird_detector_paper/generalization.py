@@ -189,7 +189,7 @@ def prepare_penguin(generate=True):
         numpy_image = numpy_image[:,:,:3].astype("uint8")
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="/orange/ewhite/b.weinstein/penguins/test_annotations.csv", patch_size=600, patch_overlap=0.05,
-                                                   base_dir="/orange/ewhite/b.weinstein/penguins/crops", image_name="cape_wallace_survey_8.tif")
+                                                   base_dir="/orange/ewhite/b.weinstein/generalization/crops", image_name="cape_wallace_survey_8.tif")
         
         test_annotations.to_csv(test_path,index=False)
     
