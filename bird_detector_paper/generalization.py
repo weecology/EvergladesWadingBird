@@ -505,12 +505,12 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     for img in images:
         comet_logger.experiment.log_image(img)
     
-    with comet_logger.experiment.train():
-        model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
-        images = glob.glob("{}/*.png".format(model_savedir))
-        random.shuffle(images)
-        for img in images[:20]:
-            comet_logger.experiment.log_image(img)
+    #with comet_logger.experiment.train():
+    #    model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
+    #    images = glob.glob("{}/*.png".format(model_savedir))
+    #    random.shuffle(images)
+    #    for img in images[:20]:
+    #        comet_logger.experiment.log_image(img)
             
     comet_logger.experiment.end()
         
