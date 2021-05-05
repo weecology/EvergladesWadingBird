@@ -112,7 +112,7 @@ def prepare_palmyra(generate=True):
     if generate:      
         df = shapefile_to_annotations(
             shapefile="/orange/ewhite/everglades/Palmyra/Dudley_projected.shp",
-            rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif", box_points=True, confidence_filter=True, buffer_size=0.25)
+            rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif", box_points=False, confidence_filter=False, buffer_size=0.25)
         df.to_csv("Figures/test_annotations.csv",index=False)
         
         src = rio.open("/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")

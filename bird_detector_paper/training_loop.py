@@ -21,7 +21,7 @@ from datetime import datetime
 from matplotlib import pyplot as plt
 import random
 
-def shapefile_to_annotations(shapefile, rgb, savedir="."):
+def shapefile_to_annotations(shapefile, rgb, box_points=True, savedir="."):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
     Args:
@@ -44,8 +44,9 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
         resolution = src.res[0]
         
     #define in image coordinates and buffer to create a box
-    gdf["geometry"] = gdf.geometry.boundary.centroid
-    gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
+    if box_points:
+        gdf["geometry"] = gdf.geometry.boundary.centroid
+        gdf["geometry"] =[Point(x,y) for x,y in zip(gdf.geometry.x.astype(float), gdf.geometry.y.astype(float))]
     gdf["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in gdf.geometry.buffer(0.15).bounds.values]
         
     #get coordinates
@@ -87,7 +88,8 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
  
 def prepare_test(patch_size=2000):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/Dudley_projected.shp", rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/Dudley_projected.shp",
+                                  rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif", box_points=False)
     df.to_csv("Figures/test_annotations.csv",index=False)
     
     src = rio.open("/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")
