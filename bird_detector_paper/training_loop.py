@@ -87,16 +87,16 @@ def shapefile_to_annotations(shapefile, rgb, savedir="."):
     return result
  
 def prepare_test(patch_size=2000):
-    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/palmyra.tif")
+    df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp", rgb="/orange/ewhite/everglades/Palmyra/dudley_projected.tif")
     df.to_csv("Figures/test_annotations.csv",index=False)
     
-    src = rio.open("/orange/ewhite/everglades/Palmyra/palmyra.tif")
+    src = rio.open("/orange/ewhite/everglades/Palmyra/dudley_projected.tif")
     numpy_image = src.read()
     numpy_image = np.moveaxis(numpy_image,0,2)
     numpy_image = numpy_image[:,:,:3].astype("uint8")
     
     test_annotations = preprocess.split_raster(numpy_image=numpy_image, annotations_file="Figures/test_annotations.csv",
-                                               patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="palmyra.tif")
+                                               patch_size=patch_size, patch_overlap=0.05, base_dir="crops", image_name="dudley_projected.tif")
     print(test_annotations.head())
     test_annotations.to_csv("crops/test_annotations.csv",index=False)
 
@@ -297,7 +297,7 @@ def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretra
     #results.to_csv("Figures/Palmyra_results_{}.csv".format(patch_size)) 
 
 if __name__ == "__main__":
-    for x in [1500, 1600]:
+    for x in [1000, 1500]:
         run(patch_size=x, epochs=1, ratio=0.75, pretrained=False, generate=True)
         run(patch_size=x, epochs=1, ratio=0.75, pretrained=True, generate=False)
         run(patch_size=x, epochs=30, ratio=0.75, pretrained=True, generate=False)
