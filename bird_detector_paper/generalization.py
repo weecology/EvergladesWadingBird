@@ -111,18 +111,18 @@ def prepare_palmyra(generate=True):
     train_path = "/orange/ewhite/b.weinstein/generalization/crops/palmyra_train.csv"      
     if generate:      
         df = shapefile_to_annotations(
-            shapefile="/orange/ewhite/everglades/Palmyra/TNC_Dudley_annotation.shp",
-            rgb="/orange/ewhite/everglades/Palmyra/dudley_projected.tif", box_points=True, confidence_filter=True, buffer_size=0.25)
+            shapefile="/orange/ewhite/everglades/Palmyra/Dudley_projected.shp",
+            rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif", box_points=True, confidence_filter=True, buffer_size=0.25)
         df.to_csv("Figures/test_annotations.csv",index=False)
         
-        src = rio.open("/orange/ewhite/everglades/Palmyra/dudley_projected.tif")
+        src = rio.open("/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")
         numpy_image = src.read()
         numpy_image = np.moveaxis(numpy_image,0,2)
         numpy_image = numpy_image[:,:,:3].astype("uint8")
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image,
                                                    annotations_file="Figures/test_annotations.csv",
-                                                   patch_size=1000, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="dudley_projected.tif")
+                                                   patch_size=1000, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="Dudley_projected.tif")
         
         test_annotations.to_csv(test_path,index=False)
         
@@ -521,7 +521,7 @@ if __name__ =="__main__":
     path_dict = prepare()
     view_training(path_dict)
     #leave one out
-    train_list = ["palmyra","penguins","terns","pfeifer","hayes"]
+    train_list = ["penguins","terns","pfeifer","hayes"]
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y== x]
