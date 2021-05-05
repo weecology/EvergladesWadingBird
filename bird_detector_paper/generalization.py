@@ -521,7 +521,7 @@ if __name__ =="__main__":
     path_dict = prepare()
     view_training(path_dict)
     #leave one out
-    train_list = ["palmyra","penguins","terns","pfeifer","hayes"]
+    train_list = ["penguins","terns","pfeifer","hayes"]
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y== x]
