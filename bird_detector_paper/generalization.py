@@ -524,7 +524,7 @@ if __name__ =="__main__":
     train_list = ["palmyra","penguins","terns","pfeifer","hayes"]
     results = []
     for x in train_list:
-        train_sets = [y for y in train_list if not y== x]
+        train_sets = [y for y in train_list if not y==x]
         train_sets.append("everglades")
         test_sets = x
         recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets])
@@ -532,5 +532,6 @@ if __name__ =="__main__":
         results.append(result)
     
     results = pd.concat(results)
+    results.to_csv("Figures/generalization.csv")
     
     
