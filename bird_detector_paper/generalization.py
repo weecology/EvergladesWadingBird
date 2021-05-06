@@ -15,6 +15,7 @@ import os
 from datetime import datetime
 import PIL
 import tempfile
+import random
 import torch
 
 def split_test_train(annotations, split = 0.9):
@@ -417,8 +418,8 @@ def prepare():
     return paths
 
 def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
-    #comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-    #                              project_name="everglades", workspace="bw4sz")
+    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                 project_name="everglades", workspace="bw4sz")
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     save_dir="/orange/ewhite/b.weinstein/generalization/"
@@ -429,11 +430,11 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     except Exception as e:
         print(e)
     
-    #comet_logger.experiment.log_parameter("timestamp",timestamp)
-    #comet_logger.experiment.log_parameter("train_set",train_sets)
-    #comet_logger.experiment.log_parameter("test_set",test_sets)
+    comet_logger.experiment.log_parameter("timestamp",timestamp)
+    comet_logger.experiment.log_parameter("train_set",train_sets)
+    comet_logger.experiment.log_parameter("test_set",test_sets)
     
-    #comet_logger.experiment.add_tag("Generalization")
+    comet_logger.experiment.add_tag("Generalization")
     
     all_sets = []
     for x in train_sets:
@@ -451,8 +452,8 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     test_annotations = pd.concat(all_val_sets)
     test_annotations.to_csv("/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv")
 
-    #comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
-    #comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
+    comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
+    comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
 
     model = main.deepforest(label_dict={"Bird":0})
 
@@ -466,33 +467,32 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
-    model.create_trainer()    
-    #model.create_trainer(logger=comet_logger)
-    #comet_logger.experiment.log_parameters(model.config)
+    model.create_trainer(logger=comet_logger)
+    comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
     
     test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
     
-    #for x in test_sets:
-        #df = pd.read_csv(path_dict[x]["test"])
-        #if comet_logger is not None:
-            #try:
-                #test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
-                #comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+    for x in test_sets:
+        df = pd.read_csv(path_dict[x]["test"])
+        if comet_logger is not None:
+            try:
+                test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+                comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
                 
-                #test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
-                #comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+                test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+                comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
                 
-                #for index, row in test_results["class_recall"].iterrows():
-                    #comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
-                    #comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
+                for index, row in test_results["class_recall"].iterrows():
+                    comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
+                    comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
                 
-                #comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
-                #comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
-                #comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
-            #except Exception as e:
-                #print(e)
+                comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
+                comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
+                comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
+            except Exception as e:
+                print(e)
         
     recall = test_results["box_recall"]
     precision = test_results["box_precision"]    
@@ -500,19 +500,19 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     print("{} Precision is {}".format(x, precision))
         
     #log images
-    #model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
-    #images = glob.glob("{}/*.png".format(model_savedir))
-    #for img in images:
-        #comet_logger.experiment.log_image(img)
+    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
+    images = glob.glob("{}/*.png".format(model_savedir))
+    for img in images:
+        comet_logger.experiment.log_image(img)
     
-    #with comet_logger.experiment.train():
-        #model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
-        #images = glob.glob("{}/*.png".format(model_savedir))
-        #random.shuffle(images)
-        #for img in images[:20]:
-            #comet_logger.experiment.log_image(img)
+    with comet_logger.experiment.train():
+        model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
+        images = glob.glob("{}/*.png".format(model_savedir))
+        random.shuffle(images)
+        for img in images[:20]:
+            comet_logger.experiment.log_image(img)
             
-    #comet_logger.experiment.end()
+    comet_logger.experiment.end()
         
     model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
@@ -524,7 +524,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    #view_training(path_dict)
+    view_training(path_dict)
     #leave one out
     #train_list = ['palmyra',"penguins","terns","pfeifer","hayes"]
     train_list = ["penguins","terns","pfeifer","hayes"]
