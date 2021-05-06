@@ -22,7 +22,7 @@ from matplotlib import pyplot as plt
 import random
 import torch
 
-def shapefile_to_annotations(shapefile, rgb, box_points=True, savedir="."):
+def shapefile_to_annotations(shapefile, rgb, box_points=True, savedir=".", confidence_filter=True):
     """
     Convert a shapefile of annotations into annotations csv file for DeepForest training and evaluation
     Args:
@@ -36,9 +36,10 @@ def shapefile_to_annotations(shapefile, rgb, box_points=True, savedir="."):
     gdf = gpd.read_file(shapefile)
     
     #confidence levels
-    gdf = gdf[gdf.Confidence==1]
-    gdf = gdf[~gdf.geometry.isnull()]
-        
+    if confidence_filter:
+        gdf = gdf[gdf.Confidence==1]
+        gdf = gdf[~gdf.geometry.isnull()]
+            
     #raster bounds
     with rio.open(rgb) as src:
         left, bottom, right, top = src.bounds
@@ -90,7 +91,7 @@ def shapefile_to_annotations(shapefile, rgb, box_points=True, savedir="."):
  
 def prepare_test(patch_size=2000):
     df = shapefile_to_annotations(shapefile="/orange/ewhite/everglades/Palmyra/Dudley_projected.shp",
-                                  rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif", box_points=False)
+                                  rgb="/orange/ewhite/everglades/Palmyra/Dudley_projected.tif", box_points=False, confidence_filter=False)
     df.to_csv("Figures/test_annotations.csv",index=False)
     
     src = rio.open("/orange/ewhite/everglades/Palmyra/Dudley_projected.tif")
