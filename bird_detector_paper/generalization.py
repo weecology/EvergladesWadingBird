@@ -1,6 +1,6 @@
 #Prepare all training sets
-from deepforest import main
 import comet_ml
+from deepforest import main
 import glob
 from pytorch_lightning.loggers import CometLogger
 from deepforest import preprocess
@@ -502,23 +502,10 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
     images = glob.glob("{}/*.png".format(model_savedir))
-<<<<<<< HEAD
-    #for img in images:
-    #    comet_logger.experiment.log_image(img)
-    
-    #with comet_logger.experiment.train():
-    #    model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
-    #    images = glob.glob("{}/*.png".format(model_savedir))
-    #    random.shuffle(images)
-    #    for img in images[:20]:
-    #        comet_logger.experiment.log_image(img)
-    #comet_logger.experiment.end()
-=======
     for img in images:
         comet_logger.experiment.log_image(img)
             
     comet_logger.experiment.end()
->>>>>>> 90db8610486d9ea7a059a9013c45d5c4c8596ef1
         
     #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
