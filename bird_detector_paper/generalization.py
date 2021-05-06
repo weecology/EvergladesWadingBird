@@ -14,8 +14,8 @@ import numpy as np
 import os
 from datetime import datetime
 import PIL
-import random
 import tempfile
+import torch
 
 def split_test_train(annotations, split = 0.9):
     """Split annotation in train and test by image"""
@@ -515,6 +515,10 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
         
     #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
+    #delete model and free up memory
+    del model
+    torch.cuda.empty_cache()
+
     return recall, precision
 
 if __name__ =="__main__":
