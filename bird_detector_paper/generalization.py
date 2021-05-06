@@ -500,10 +500,10 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     print("{} Precision is {}".format(x, precision))
         
     #log images
-    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
-    images = glob.glob("{}/*.png".format(model_savedir))
-    for img in images:
-        comet_logger.experiment.log_image(img)
+    #model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
+    #images = glob.glob("{}/*.png".format(model_savedir))
+    #for img in images:
+        #comet_logger.experiment.log_image(img)
             
     comet_logger.experiment.end()
         
