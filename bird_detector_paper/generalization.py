@@ -502,8 +502,8 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
     images = glob.glob("{}/*.png".format(model_savedir))
-    for img in images:
-        comet_logger.experiment.log_image(img)
+    #for img in images:
+    #    comet_logger.experiment.log_image(img)
     
     #with comet_logger.experiment.train():
     #    model.predict_file(csv_file = model.config["train"]["csv_file"], root_dir = model.config["train"]["root_dir"], savedir=model_savedir)
@@ -513,7 +513,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     #        comet_logger.experiment.log_image(img)
     #comet_logger.experiment.end()
         
-    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     return recall, precision
 
@@ -521,7 +521,7 @@ if __name__ =="__main__":
     path_dict = prepare()
     #view_training(path_dict)
     #leave one out
-    train_list = ["palmyra","penguins","terns","pfeifer","hayes"]
+    train_list = ["pfeifer","palmyra","penguins","terns","hayes"]
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y==x]
