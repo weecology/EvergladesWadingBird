@@ -418,9 +418,10 @@ def prepare():
     return paths
 
 def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
-    #comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                 #project_name="everglades", workspace="bw4sz")
-    comet_logger=None
+    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                 project_name="everglades", workspace="bw4sz")
+    
+    #comet_logger=None
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     save_dir="/orange/ewhite/b.weinstein/generalization/"
     model_savedir = "{}/{}".format(save_dir,timestamp)  
@@ -433,7 +434,6 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     #comet_logger.experiment.log_parameter("timestamp",timestamp)
     #comet_logger.experiment.log_parameter("train_set",train_sets)
     #comet_logger.experiment.log_parameter("test_set",test_sets)
-    
     #comet_logger.experiment.add_tag("Generalization")
     
     all_sets = []
@@ -467,8 +467,8 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
-    model.create_trainer()
-    #model.create_trainer(logger=comet_logger)
+    #model.create_trainer()
+    model.create_trainer(logger=comet_logger)
     #comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
