@@ -20,6 +20,7 @@ import shutil
 from datetime import datetime
 from matplotlib import pyplot as plt
 import random
+import torch
 
 def shapefile_to_annotations(shapefile, rgb, box_points=True, savedir="."):
     """
@@ -247,7 +248,11 @@ def training(proportion, epochs=20, patch_size=2000,pretrained=True, iteration=N
     comet_logger.experiment.end()
 
     formatted_results = pd.DataFrame({"proportion":[proportion], "pretrained": [pretrained], "annotations": [train_annotations.shape[0]],"precision": [precision],"recall": [recall], "iteration":[iteration]})
-
+    
+    #free up
+    del model
+    torch.cuda.empty_cache()
+    
     return formatted_results
 
 def run(patch_size=2500, generate=False, client=None, epochs=10, ratio=2, pretrained=True):
