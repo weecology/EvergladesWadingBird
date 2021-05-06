@@ -408,7 +408,7 @@ def prepare():
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=True)
+    paths["palmyra"] = prepare_palmyra(generate=False)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=False)
@@ -521,7 +521,7 @@ if __name__ =="__main__":
     path_dict = prepare()
     view_training(path_dict)
     #leave one out
-    train_list = ["penguins","terns","pfeifer","hayes"]
+    train_list = ["palmyra","penguins","terns","pfeifer","hayes"]
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y== x]
