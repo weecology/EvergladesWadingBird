@@ -505,7 +505,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     #for img in images:
         #comet_logger.experiment.log_image(img)
             
-    comet_logger.experiment.end()
+    #comet_logger.experiment.end()
         
     #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
@@ -517,7 +517,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    view_training(path_dict)
+    #view_training(path_dict)
     #leave one out
     train_list = ["pfeifer","palmyra","penguins","terns","hayes"]
     results = []
