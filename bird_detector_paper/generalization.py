@@ -519,7 +519,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    view_training(path_dict)
+    #view_training(path_dict)
     #leave one out
     train_list = ["pfeifer","palmyra","penguins","terns","hayes"]
     results = []
@@ -527,6 +527,7 @@ if __name__ =="__main__":
         print(x)
         train_sets = [y for y in train_list if not y==x]
         train_sets.append("everglades")
+        print(train_sets)
         test_sets = x
         recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets])
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
