@@ -1,14 +1,14 @@
 #Prepare all training sets
-import pandas as pd
 import comet_ml
+from deepforest import main
 import glob
 from pytorch_lightning.loggers import CometLogger
-from deepforest import main
 from deepforest import preprocess
 from deepforest import visualize
 from matplotlib import pyplot as plt
 from shapely.geometry import Point, box
 import geopandas as gpd
+import pandas as pd
 import rasterio as rio
 import numpy as np
 import os
@@ -409,7 +409,7 @@ def prepare():
     paths = {}
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin(generate=True)
+    paths["penguins"] = prepare_penguin(generate=False)
     paths["palmyra"] = prepare_palmyra(generate=False)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
@@ -419,9 +419,10 @@ def prepare():
     return paths
 
 def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
-    #comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                 #project_name="everglades", workspace="bw4sz")
-    comet_logger=None
+    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+                                 project_name="everglades", workspace="bw4sz")
+    
+    #comet_logger=None
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     save_dir="/orange/ewhite/b.weinstein/generalization/"
     model_savedir = "{}/{}".format(save_dir,timestamp)  
@@ -434,7 +435,6 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     #comet_logger.experiment.log_parameter("timestamp",timestamp)
     #comet_logger.experiment.log_parameter("train_set",train_sets)
     #comet_logger.experiment.log_parameter("test_set",test_sets)
-    
     #comet_logger.experiment.add_tag("Generalization")
     
     all_sets = []
@@ -468,8 +468,8 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
-    model.create_trainer()
-    #model.create_trainer(logger=comet_logger)
+    #model.create_trainer()
+    model.create_trainer(logger=comet_logger)
     #comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
@@ -509,7 +509,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
             
     #comet_logger.experiment.end()
         
-    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     #delete model and free up memory
     del model
@@ -519,11 +519,9 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    view_training(path_dict)
+    #view_training(path_dict)
     #leave one out
-    #train_list = ['palmyra',"penguins","terns","pfeifer","hayes"]
-    train_list = ["penguins","terns","pfeifer","hayes"]
-    
+    train_list = ["pfeifer","palmyra","penguins","terns","hayes"]
     results = []
     for x in train_list:
         print(x)

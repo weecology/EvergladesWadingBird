@@ -1,6 +1,7 @@
 """Script to take the trained everglades model and predict the Palmyra data"""
 #srun -p gpu --gpus=2 --mem 70GB --time 5:00:00 --pty -u bash -i
 # conda activate Zooniverse_pytorch
+import pandas as pd
 import comet_ml
 import gc
 import start_cluster
@@ -12,7 +13,6 @@ import glob
 from shapely.geometry import Point, box
 import geopandas as gpd
 
-import pandas as pd
 import rasterio as rio
 import numpy as np
 import os
