@@ -17,6 +17,7 @@ import PIL
 import tempfile
 import random
 import torch
+import gc
 
 def split_test_train(annotations, split = 0.9):
     """Split annotation in train and test by image"""
@@ -529,6 +530,8 @@ if __name__ =="__main__":
         train_sets.append("everglades")
         test_sets = x
         recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets])
+        torch.cuda.empty_cache()
+        gc.collect()
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
         results.append(result)
     
