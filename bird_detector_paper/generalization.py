@@ -123,7 +123,7 @@ def prepare_palmyra(generate=True):
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image,
                                                    annotations_file="Figures/test_annotations.csv",
-                                                   patch_size=1000, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="Dudley_projected.tif")
+                                                   patch_size=900, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="Dudley_projected.tif")
         
         test_annotations.to_csv(test_path,index=False)
         
@@ -143,7 +143,7 @@ def prepare_palmyra(generate=True):
         train_annotations_1 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=1000,
+            patch_size=900,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperStrawn_53m_tile_clip_projected.tif",
@@ -419,8 +419,8 @@ def prepare():
     return paths
 
 def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"]):
-    comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                 project_name="everglades", workspace="bw4sz")
+    #comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
+    #                             project_name="everglades", workspace="bw4sz")
     
     #comet_logger=None
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -468,33 +468,33 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
-    #model.create_trainer()
-    model.create_trainer(logger=comet_logger)
+    model.create_trainer()
+    #model.create_trainer(logger=comet_logger)
     #comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
     
     test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
     
-    for x in test_sets:
-        df = pd.read_csv(path_dict[x]["test"])
-        if comet_logger is not None:
-            try:
-                test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
-                comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+    #for x in test_sets:
+        #df = pd.read_csv(path_dict[x]["test"])
+        #if comet_logger is not None:
+            #try:
+                #test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+                #comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
                 
-                test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
-                comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+                #test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+                #comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
                 
-                for index, row in test_results["class_recall"].iterrows():
-                    comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
-                    comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
+                #for index, row in test_results["class_recall"].iterrows():
+                    #comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
+                    #comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
                 
-                comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
-                comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
-                comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
-            except Exception as e:
-                print(e)
+                #comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
+                #comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
+                #comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
+            #except Exception as e:
+                #print(e)
         
     recall = test_results["box_recall"]
     precision = test_results["box_precision"]    
@@ -519,7 +519,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 
 if __name__ =="__main__":
     path_dict = prepare()
-    #view_training(path_dict)
+    view_training(path_dict)
     #leave one out
     train_list = ["pfeifer","palmyra","penguins","terns","hayes"]
     results = []
