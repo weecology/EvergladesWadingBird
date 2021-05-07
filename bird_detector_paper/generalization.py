@@ -525,7 +525,7 @@ if __name__ =="__main__":
         train_sets.append("everglades")
         print(train_sets)
         test_sets = x
-        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets], logger=comet_logger)
+        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets], comet_logger=comet_logger)
         torch.cuda.empty_cache()
         gc.collect()
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
