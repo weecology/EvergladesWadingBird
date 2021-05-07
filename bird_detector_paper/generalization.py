@@ -414,7 +414,7 @@ def prepare():
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=False)
-    paths["hayes"] = prepare_hayes(generate=True)
+    paths["hayes"] = prepare_hayes(generate=False)
 
     return paths
 
@@ -504,7 +504,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
     images = glob.glob("{}/*.png".format(model_savedir))
-    for img in images:
+    for img in images[:5]:
         comet_logger.experiment.log_image(img)
             
     #comet_logger.experiment.end()
