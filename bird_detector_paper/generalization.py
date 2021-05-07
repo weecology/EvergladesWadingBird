@@ -280,10 +280,11 @@ def prepare_hayes(generate=True):
         train_annotations = pd.concat([hayes_albatross_train, hayes_albatross_test, hayes_penguin_train, hayes_penguin_test, hayes_penguin_val])
         train_annotations.label = "Bird"
         
-        train_annotations = train_annotations.sample(n=100)
+        train_annotations = train_annotations.sample(n=200)
         train_annotations.to_csv(train_path)
         
         hayes_albatross_val.label="Bird"
+        hayes_albatross_val = hayes_albatross_val.sample(n=100)
         hayes_albatross_val.to_csv(test_path)
     
     return {"train":train_path, "test":test_path}
@@ -413,7 +414,7 @@ def prepare():
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=False)
-    paths["hayes"] = prepare_hayes(generate=False)
+    paths["hayes"] = prepare_hayes(generate=True)
 
     return paths
 
