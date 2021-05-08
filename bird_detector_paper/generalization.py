@@ -539,5 +539,7 @@ if __name__ =="__main__":
     results = pd.concat(results)
     results.to_csv("Figures/generalization.csv")
     comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
+    comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
+    comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
     
     
