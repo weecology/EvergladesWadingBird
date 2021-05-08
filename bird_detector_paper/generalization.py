@@ -503,7 +503,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     for img in images[:5]:
         comet_logger.experiment.log_image(img)
             
-    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     #delete model and free up memory
     del model
@@ -538,5 +538,6 @@ if __name__ =="__main__":
     
     results = pd.concat(results)
     results.to_csv("Figures/generalization.csv")
+    comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
     
     
