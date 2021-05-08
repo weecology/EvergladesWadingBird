@@ -417,7 +417,7 @@ def prepare():
 
     return paths
 
-def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"], comet_logger=None):
+def train(path_dict, config, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"], comet_logger=None):
     
     #comet_logger=None
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -454,6 +454,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
 
     model = main.deepforest(label_dict={"Bird":0})
+    model.config = config
 
     try:
         os.mkdir(model_savedir)
@@ -511,6 +512,10 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
     return recall, precision
 
 if __name__ =="__main__":
+    #save original config during loop
+    model = main.deepforest(label_dict={"Bird":0})
+    config = model.config
+    
     path_dict = prepare()
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                 project_name="everglades", workspace="bw4sz",auto_output_logging = "simple")
@@ -525,7 +530,7 @@ if __name__ =="__main__":
         train_sets.append("everglades")
         print(train_sets)
         test_sets = x
-        recall, precision = train(path_dict=path_dict, train_sets=train_sets, test_sets=[test_sets], comet_logger=comet_logger)
+        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=[test_sets], comet_logger=comet_logger)
         torch.cuda.empty_cache()
         gc.collect()
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
