@@ -513,7 +513,7 @@ def train(path_dict, train_sets = ["penguins","terns","everglades","palmyra"],te
 if __name__ =="__main__":
     path_dict = prepare()
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
-                                project_name="everglades", workspace="bw4sz",)
+                                project_name="everglades", workspace="bw4sz",auto_output_logging = "simple")
     
     view_training(path_dict, comet_logger=comet_logger)
     #leave one out
