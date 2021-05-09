@@ -10,12 +10,13 @@
 #SBATCH --output=/home/b.weinstein/logs/DeepForest_%j.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/DeepForest_%j.err
 #SBATCH --partition=gpu
-#SBATCH --gpus=2
+#SBATCH --gpus=4
 
 source activate Zooniverse_pytorch
 
 
 #comet debug
-export COMET_LOGGING_FILE=comet.log
-export COMET_LOGGING_FILE_LEVEL=debug
+#export COMET_LOGGING_FILE=comet.log
+#export COMET_LOGGING_FILE_LEVEL=debug
 python generalization.py
+#python -m cProfile -o generalization.prof generalization.py
