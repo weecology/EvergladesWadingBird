@@ -11,6 +11,12 @@ def test_get_transform():
     ds = m.load_dataset(csv_file=csv_file, root_dir=os.path.dirname(csv_file), augment=True)
     
     step = next(iter(ds))
-    len(step) == 3
-    assert step[1][0].shape == (300,300, 3)
+    assert len(step) == 3
+    
+    m.config["train"]["fast_dev_run"] = True
+    m.config["train"]["csv_file"] = csv_file
+    m.config["train"]["root_dir"] = os.path.dirname(csv_file)
+    m.create_trainer()
+    
+    m.trainer.fit(m)
     
