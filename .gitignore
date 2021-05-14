@@ -7,7 +7,7 @@ Zooniverse/tests/output/*
 # Session Data files
 .RData
 source_token.txt
-
+*.pl
 # User-specific files
 .Ruserdata
 
