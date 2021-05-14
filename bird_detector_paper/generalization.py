@@ -412,14 +412,14 @@ def prepare_schedl(generate=True):
 
 def view_training(paths,comet_logger):
     """For each site, grab three images and view annotations"""
-    m = main.deepforest(label_dict={"Bird":0})
+    m = main.deepforest(label_dict={"Bird":0}, transforms=get_transform)
     
     comet_logger.experiment.add_tag("view_training")
     for site in paths:
         for split in ["train","test"]:
             try:
                 x = paths[site][split]
-                ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True)
+                ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=True)
                 for i in np.arange(5):
                     batch = next(iter(ds))
                     image_path, image, targets = batch
@@ -542,7 +542,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
 
 if __name__ =="__main__":
     #save original config during loop
-    model = main.deepforest(label_dict={"Bird":0})
+    model = main.deepforest(label_dict={"Bird":0}, transforms=get_transform)
     config = model.config
     
     path_dict = prepare()
