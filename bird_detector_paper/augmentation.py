@@ -16,9 +16,9 @@ def get_transform(augment):
     if augment:
         transform = A.Compose([
             A.OneOf([
-            A.RandomCrop(width=100, height=100, p=0.1),
-            A.RandomCrop(width=300, height=300, p=0.1),
-            A.RandomCrop(width=500, height=500, p=0.1)]
+            A.RandomCrop(width=100, height=100, p=0.2),
+            A.RandomCrop(width=300, height=300, p=0.2),
+            A.RandomCrop(width=500, height=500, p=0.2)]
             ),
             A.HorizontalFlip(p=0.5),
             A.RandomBrightnessContrast(p=0.2),
