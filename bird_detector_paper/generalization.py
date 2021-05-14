@@ -440,7 +440,7 @@ def prepare():
     paths["palmyra"] = prepare_palmyra(generate=False)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
-    paths["schedl"] = prepare_schedl(generate=True)
+    paths["schedl"] = prepare_schedl(generate=False)
     paths["pfeifer"] = prepare_schedl(generate=False)    
     paths["hayes"] = prepare_hayes(generate=False)
 
