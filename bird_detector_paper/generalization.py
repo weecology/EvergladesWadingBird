@@ -6,6 +6,7 @@ from pytorch_lightning.loggers import CometLogger
 from deepforest import preprocess
 from deepforest import visualize
 from matplotlib import pyplot as plt
+from .augmentation import get_transform
 from shapely.geometry import Point, box
 import geopandas as gpd
 import pandas as pd
@@ -382,6 +383,57 @@ def prepare_pelicans(generate=True):
     
     return {"test":test_path}
 
+def prepare_schedl(generate=True):
+    
+    train_path = "/orange/ewhite/b.weinstein/generalization/crops/schedl_train.csv"
+    test_path = "/orange/ewhite/b.weinstein/generalization/crops/schedl_test.csv"
+    
+    train_annotations = []
+    test_annotations = []
+    if generate:   
+        for x in glob.glob("/orange/ewhite/b.weinstein/schedl/*.shp")[:1]:
+            basename = os.path.splitext(os.path.basename(x))[0]
+            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/schedl/{}.shp".format(basename),
+                                          rgb="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename))
+            df.to_csv("/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename))
+            
+            annotations = preprocess.split_raster(
+                path_to_raster="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename),
+                annotations_file="/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename),
+                patch_size=500,
+                patch_overlap=0,
+                base_dir="/orange/ewhite/b.weinstein/generalization/crops",
+                allow_empty=False
+            )
+            
+            test_annotations.append(annotations)
+        test_annotations = pd.concat(test_annotations)
+        test_annotations.to_csv(test_path)
+            
+        for x in glob.glob("/orange/ewhite/b.weinstein/schedl/*.shp")[1:]:
+            print(x)
+            basename = os.path.splitext(os.path.basename(x))[0]
+            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/schedl/{}.shp".format(basename),
+                                          rgb="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename))
+            df.to_csv("/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename))
+            
+            annotations = preprocess.split_raster(
+                path_to_raster="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename),
+                annotations_file="/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename),
+                patch_size=500,
+                patch_overlap=0,
+                base_dir="/orange/ewhite/b.weinstein/generalization/crops",
+                allow_empty=False
+            )
+            
+            train_annotations.append(annotations)
+        
+        train_annotations = pd.concat(train_annotations)
+        train_annotations.to_csv(train_path)
+        
+    return {"train":train_path, "test":test_path}
+
+
 def view_training(paths,comet_logger):
     """For each site, grab three images and view annotations"""
     m = main.deepforest(label_dict={"Bird":0})
@@ -392,7 +444,7 @@ def view_training(paths,comet_logger):
             try:
                 x = paths[site][split]
                 ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True)
-                for i in np.arange(3):
+                for i in np.arange(5):
                     batch = next(iter(ds))
                     image_path, image, targets = batch
                     df = visualize.format_boxes(targets[0], scores=False)
@@ -412,7 +464,8 @@ def prepare():
     paths["palmyra"] = prepare_palmyra(generate=False)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
-    paths["pfeifer"] = prepare_pfeifer(generate=False)
+    paths["schedl"] = prepare_schedl(generate=True)
+    paths["pfeifer"] = prepare_schedl(generate=False)    
     paths["hayes"] = prepare_hayes(generate=False)
 
     return paths
@@ -453,7 +506,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     comet_logger.experiment.log_parameter("training_images",len(train_annotations.image_path.unique()))
     comet_logger.experiment.log_parameter("training_annotations",train_annotations.shape[0])
 
-    model = main.deepforest(label_dict={"Bird":0})
+    model = main.deepforest(label_dict={"Bird":0}, transforms = get_transform)
     model.config = config
 
     try:
@@ -525,12 +578,10 @@ if __name__ =="__main__":
     train_list = ["pfeifer","palmyra","penguins","terns","hayes"]
     results = []
     for x in train_list:
-        print(x)
         train_sets = [y for y in train_list if not y==x]
         train_sets.append("everglades")
-        print(train_sets)
-        test_sets = x
-        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=[test_sets], comet_logger=comet_logger)
+        test_sets = ["murres","pelicans","schedl"].append(x)
+        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger)
         torch.cuda.empty_cache()
         gc.collect()
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
