@@ -145,7 +145,7 @@ def prepare_palmyra(generate=True):
         train_annotations_1 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=900,
+            patch_size=1000,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperStrawn_53m_tile_clip_projected.tif",
@@ -208,7 +208,7 @@ def prepare_penguin(generate=True):
         train_annotations = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="/orange/ewhite/b.weinstein/penguins/training_annotations.csv",
-            patch_size=600,
+            patch_size=900,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             image_name="offshore_rocks_cape_wallace_survey_4.tif",
@@ -240,7 +240,7 @@ def prepare_terns(generate=True):
         annotations = preprocess.split_raster(
             path_to_raster="/orange/ewhite/b.weinstein/terns/seabirds_rgb.tif",
             annotations_file="/orange/ewhite/b.weinstein/terns/seabirds_rgb.csv",
-            patch_size=700,
+            patch_size=900,
             patch_overlap=0,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops",
             image_name="seabirds_rgb.tif",
@@ -308,7 +308,7 @@ def prepare_pfeifer(generate=True):
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
-                patch_size=500,
+                patch_size=800,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
@@ -328,7 +328,7 @@ def prepare_pfeifer(generate=True):
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/pfeifer/{}.tif".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/pfeifer/{}.csv".format(basename),
-                patch_size=500,
+                patch_size=800,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
@@ -417,9 +417,13 @@ def view_training(paths,comet_logger):
     comet_logger.experiment.add_tag("view_training")
     for site in paths:
         for split in ["train","test"]:
+            if split == "train":
+                augment = True
+            else:
+                augment = False
             try:
                 x = paths[site][split]
-                ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=True)
+                ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
                 for i in np.arange(5):
                     batch = next(iter(ds))
                     image_path, image, targets = batch
@@ -434,15 +438,15 @@ def view_training(paths,comet_logger):
                 continue
 def prepare():
     paths = {}
-    paths["terns"] = prepare_terns(generate=False)
+    paths["terns"] = prepare_terns(generate=True)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=False)
-    paths["pelicans"] = prepare_pelicans(generate=False)
-    paths["murres"] = prepare_murres(generate=False)
+    paths["penguins"] = prepare_penguin(generate=True)
+    paths["palmyra"] = prepare_palmyra(generate=True)
+    paths["pelicans"] = prepare_pelicans(generate=True)
+    paths["murres"] = prepare_murres(generate=True)
     paths["schedl"] = prepare_schedl(generate=True)
-    paths["pfeifer"] = prepare_schedl(generate=False)    
-    paths["hayes"] = prepare_hayes(generate=False)
+    paths["pfeifer"] = prepare_schedl(generate=True)    
+    paths["hayes"] = prepare_hayes(generate=True)
 
     return paths
 
