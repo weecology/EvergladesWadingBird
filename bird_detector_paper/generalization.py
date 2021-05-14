@@ -468,8 +468,13 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     comet_logger.experiment.add_tag("Generalization")
     
     all_sets = []
+    print("Train sets: {}".format(train_sets))
     for x in train_sets:
-        df = pd.read_csv(path_dict[x]["train"])
+        
+        try:
+            df = pd.read_csv(path_dict[x]["train"])
+        except:
+            raise ValueError("No training path supplied for {}".format(x))
         all_sets.append(df)
     
     train_annotations = pd.concat(all_sets)
