@@ -391,13 +391,13 @@ def prepare_schedl(generate=True):
         for x in glob.glob("/orange/ewhite/b.weinstein/schedl/*.shp")[:1]:
             basename = os.path.splitext(os.path.basename(x))[0]
             df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/schedl/{}.shp".format(basename),
-                                          rgb="/orange/ewhite/b.weinstein/schedl/{}.JPG".format(basename))
+                                          rgb="/orange/ewhite/b.weinstein/schedl/{}.JPG".format(basename), buffer_size=30)
             df.to_csv("/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename))
             
             annotations = preprocess.split_raster(
                 path_to_raster="/orange/ewhite/b.weinstein/schedl/{}.JPG".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename),
-                patch_size=500,
+                patch_size=1000,
                 patch_overlap=0,
                 base_dir="/orange/ewhite/b.weinstein/generalization/crops",
                 allow_empty=False
