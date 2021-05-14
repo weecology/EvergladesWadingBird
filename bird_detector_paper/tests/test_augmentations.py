@@ -12,5 +12,5 @@ def test_get_transform():
     
     step = next(iter(ds))
     len(step) == 3
-    assert step[1][0].shape == [3,450,450]
+    assert step[1][0].shape == (300,300, 3)
     
