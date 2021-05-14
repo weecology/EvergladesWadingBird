@@ -384,21 +384,18 @@ def prepare_pelicans(generate=True):
     return {"test":test_path}
 
 def prepare_schedl(generate=True):
-    
-    train_path = "/orange/ewhite/b.weinstein/generalization/crops/schedl_train.csv"
     test_path = "/orange/ewhite/b.weinstein/generalization/crops/schedl_test.csv"
     
-    train_annotations = []
     test_annotations = []
     if generate:   
         for x in glob.glob("/orange/ewhite/b.weinstein/schedl/*.shp")[:1]:
             basename = os.path.splitext(os.path.basename(x))[0]
             df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/schedl/{}.shp".format(basename),
-                                          rgb="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename))
+                                          rgb="/orange/ewhite/b.weinstein/schedl/{}.JPEG".format(basename))
             df.to_csv("/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename))
             
             annotations = preprocess.split_raster(
-                path_to_raster="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename),
+                path_to_raster="/orange/ewhite/b.weinstein/schedl/{}.JPEG".format(basename),
                 annotations_file="/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename),
                 patch_size=500,
                 patch_overlap=0,
@@ -409,29 +406,8 @@ def prepare_schedl(generate=True):
             test_annotations.append(annotations)
         test_annotations = pd.concat(test_annotations)
         test_annotations.to_csv(test_path)
-            
-        for x in glob.glob("/orange/ewhite/b.weinstein/schedl/*.shp")[1:]:
-            print(x)
-            basename = os.path.splitext(os.path.basename(x))[0]
-            df = shapefile_to_annotations(shapefile="/orange/ewhite/b.weinstein/schedl/{}.shp".format(basename),
-                                          rgb="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename))
-            df.to_csv("/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename))
-            
-            annotations = preprocess.split_raster(
-                path_to_raster="/orange/ewhite/b.weinstein/schedl/{}.tif".format(basename),
-                annotations_file="/orange/ewhite/b.weinstein/schedl/{}.csv".format(basename),
-                patch_size=500,
-                patch_overlap=0,
-                base_dir="/orange/ewhite/b.weinstein/generalization/crops",
-                allow_empty=False
-            )
-            
-            train_annotations.append(annotations)
         
-        train_annotations = pd.concat(train_annotations)
-        train_annotations.to_csv(train_path)
-        
-    return {"train":train_path, "test":test_path}
+    return {"test":test_path}
 
 
 def view_training(paths,comet_logger):
