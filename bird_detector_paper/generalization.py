@@ -6,7 +6,7 @@ from pytorch_lightning.loggers import CometLogger
 from deepforest import preprocess
 from deepforest import visualize
 from matplotlib import pyplot as plt
-from .augmentation import get_transform
+from augmentation import get_transform
 from shapely.geometry import Point, box
 import geopandas as gpd
 import pandas as pd
