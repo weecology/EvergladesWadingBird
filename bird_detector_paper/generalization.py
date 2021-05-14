@@ -504,9 +504,14 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     
     model.trainer.fit(model)
     test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
+    recall = test_results["box_recall"]
+    precision = test_results["box_precision"]    
+    print("{} Recall is {}".format(x, recall))
+    print("{} Precision is {}".format(x, precision))
     
     for x in test_sets:
-        df = pd.read_csv(path_dict[x]["test"])
+        test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
+        
         if comet_logger is not None:
             try:
                 test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
@@ -525,10 +530,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
             except Exception as e:
                 print(e)
         
-    recall = test_results["box_recall"]
-    precision = test_results["box_precision"]    
-    print("{} Recall is {}".format(x, recall))
-    print("{} Precision is {}".format(x, precision))
+
         
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
