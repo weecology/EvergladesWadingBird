@@ -465,7 +465,7 @@ def prepare():
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["schedl"] = prepare_schedl(generate=True)
-    paths["pfeifer"] = prepare_schedl(generate=True)    
+    paths["pfeifer"] = prepare_schedl(generate=False)    
     paths["hayes"] = prepare_hayes(generate=False)
 
     return paths
@@ -580,7 +580,7 @@ if __name__ =="__main__":
     for x in train_list:
         train_sets = [y for y in train_list if not y==x]
         train_sets.append("everglades")
-        test_sets = ["murres","pelicans"].append(x)
+        test_sets = ["murres","pelicans","schedl"].append(x)
         recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger)
         torch.cuda.empty_cache()
         gc.collect()
