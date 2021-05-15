@@ -536,10 +536,11 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
                 print(e)
         
     #log images
-    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
-    images = glob.glob("{}/*.png".format(model_savedir))
-    for img in images[:5]:
-        comet_logger.experiment.log_image(img)
+    with comet_logger.experiment.context_manager("validation"):
+        model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
+        images = glob.glob("{}/*.png".format(model_savedir))
+        for img in images[:5]:
+            comet_logger.experiment.log_image(img)
             
     #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
