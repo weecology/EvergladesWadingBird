@@ -21,6 +21,7 @@ def get_transform(augment):
     """Albumentations transformation of bounding boxs"""
     if augment:
         transform = A.Compose([
+            A.LongestMaxSize(800),
             #A.PadIfNeeded(800,800),
             #A.OneOf([
             #A.RandomCrop(width=300, height=300, p=0.2),
@@ -32,6 +33,6 @@ def get_transform(augment):
         ], bbox_params=A.BboxParams(format='pascal_voc',label_fields=["category_ids"]))
         
     else:
-        transform = A.Compose([A.pytorch.ToTensorV2()])
+        transform = A.Compose([A.LongestMaxSize(800), A.pytorch.ToTensorV2()])
         
     return transform
