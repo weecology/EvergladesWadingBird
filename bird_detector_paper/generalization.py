@@ -414,28 +414,28 @@ def view_training(paths,comet_logger):
     """For each site, grab three images and view annotations"""
     m = main.deepforest(label_dict={"Bird":0}, transforms=get_transform)
     
-    comet_logger.experiment.add_tag("view_training")
-    for site in paths:
-        for split in ["train","test"]:
-            if split == "train":
-                augment = True
-            else:
-                augment = False
-            try:
-                x = paths[site][split]
-                ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
-                for i in np.arange(5):
-                    batch = next(iter(ds))
-                    image_path, image, targets = batch
-                    df = visualize.format_boxes(targets[0], scores=False)
-                    image = np.moveaxis(image[0].numpy(),0,2)
-                    plot, ax = visualize.plot_predictions(image, df)
-                    with tempfile.TemporaryDirectory() as tmpdirname:
-                        plot.savefig("{}/{}".format(tmpdirname, image_path[0]), dpi=300)
-                        comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]))                
-            except Exception as e:
-                print(e)
-                continue
+    with comet_logger.experiment.context_manager("view_training"):
+        for site in paths:
+            for split in ["train","test"]:
+                if split == "train":
+                    augment = True
+                else:
+                    augment = False
+                try:
+                    x = paths[site][split]
+                    ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
+                    for i in np.arange(5):
+                        batch = next(iter(ds))
+                        image_path, image, targets = batch
+                        df = visualize.format_boxes(targets[0], scores=False)
+                        image = np.moveaxis(image[0].numpy(),0,2)
+                        plot, ax = visualize.plot_predictions(image, df)
+                        with tempfile.TemporaryDirectory() as tmpdirname:
+                            plot.savefig("{}/{}".format(tmpdirname, image_path[0]), dpi=300)
+                            comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]))                
+                except Exception as e:
+                    print(e)
+                    continue
 def prepare():
     paths = {}
     paths["terns"] = prepare_terns(generate=True)
