@@ -535,8 +535,6 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
             except Exception as e:
                 print(e)
         
-
-        
     #log images
     model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
     images = glob.glob("{}/*.png".format(model_savedir))
@@ -548,8 +546,9 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     #delete model and free up memory
     del model
     torch.cuda.empty_cache()
-
-    return recall, precision
+    
+    #The last position in the loop is the LOO score
+    return test_results["box_recall"], test_results["box_precision"]
 
 if __name__ =="__main__":
     #save original config during loop
