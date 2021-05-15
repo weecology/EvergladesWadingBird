@@ -424,14 +424,14 @@ def view_training(paths,comet_logger):
                 try:
                     x = paths[site][split]
                     ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
-                    for i in np.arange(5):
+                    for i in np.arange(100):
                         batch = next(iter(ds))
                         image_path, image, targets = batch
                         df = visualize.format_boxes(targets[0], scores=False)
                         image = np.moveaxis(image[0].numpy(),0,2)
                         plot, ax = visualize.plot_predictions(image, df)
                         with tempfile.TemporaryDirectory() as tmpdirname:
-                            plot.savefig("{}/{}".format(tmpdirname, image_path[0]), dpi=300)
+                            plot.savefig("{}/{}".format(tmpdirname, image_path[0]), dpi=150)
                             comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]))                
                 except Exception as e:
                     print(e)
@@ -561,23 +561,23 @@ if __name__ =="__main__":
                                 project_name="everglades", workspace="bw4sz",auto_output_logging = "simple")
     
     view_training(path_dict, comet_logger=comet_logger)
-    #leave one out
-    train_list = ["pfeifer","palmyra","penguins","terns"]
-    results = []
-    for x in train_list:
-        train_sets = [y for y in train_list if not y==x]
-        train_sets.append("everglades")
-        test_sets = ["murres","pelicans","schedl", x]
-        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger)
-        torch.cuda.empty_cache()
-        gc.collect()
-        result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
-        results.append(result)
+    ##leave one out
+    #train_list = ["pfeifer","palmyra","penguins","terns"]
+    #results = []
+    #for x in train_list:
+        #train_sets = [y for y in train_list if not y==x]
+        #train_sets.append("everglades")
+        #test_sets = ["murres","pelicans","schedl", x]
+        #recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger)
+        #torch.cuda.empty_cache()
+        #gc.collect()
+        #result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
+        #results.append(result)
     
-    results = pd.concat(results)
-    results.to_csv("Figures/generalization.csv")
-    comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
-    comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
-    comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
+    #results = pd.concat(results)
+    #results.to_csv("Figures/generalization.csv")
+    #comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
+    #comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
+    #comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
     
     
