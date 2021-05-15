@@ -23,7 +23,7 @@ def get_transform(augment):
         transform = A.Compose([
             A.LongestMaxSize(1000),
             A.OneOf([
-            A.RandomCrop(width=300, height=300, p=0.2),
+            A.RandomCrop(width=200, height=200, p=0.2),
             A.RandomCrop(width=500, height=500, p=0.2),
             A.RandomCrop(width=700, height=700, p=0.2)]
             ),
