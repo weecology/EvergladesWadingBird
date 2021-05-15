@@ -6,7 +6,7 @@ from pytorch_lightning.loggers import CometLogger
 from deepforest import preprocess
 from deepforest import visualize
 from matplotlib import pyplot as plt
-from .augmentation import get_transform
+from augmentation import get_transform
 from shapely.geometry import Point, box
 import geopandas as gpd
 import pandas as pd
@@ -438,15 +438,15 @@ def view_training(paths,comet_logger):
                     continue
 def prepare():
     paths = {}
-    paths["terns"] = prepare_terns(generate=True)
+    paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin(generate=True)
-    paths["palmyra"] = prepare_palmyra(generate=True)
-    paths["pelicans"] = prepare_pelicans(generate=True)
-    paths["murres"] = prepare_murres(generate=True)
-    paths["schedl"] = prepare_schedl(generate=True)
-    paths["pfeifer"] = prepare_pfeifer(generate=True)    
-    paths["hayes"] = prepare_hayes(generate=True)
+    paths["penguins"] = prepare_penguin(generate=False)
+    paths["palmyra"] = prepare_palmyra(generate=False)
+    paths["pelicans"] = prepare_pelicans(generate=False)
+    paths["murres"] = prepare_murres(generate=False)
+    paths["schedl"] = prepare_schedl(generate=False)
+    paths["pfeifer"] = prepare_pfeifer(generate=False)    
+    paths["hayes"] = prepare_hayes(generate=False)
 
     return paths
 
