@@ -21,8 +21,7 @@ def get_transform(augment):
     """Albumentations transformation of bounding boxs"""
     if augment:
         transform = A.Compose([
-            A.LongestMaxSize(800),
-            A.PadIfNeeded(800,800),
+            A.LongestMaxSize(1000),
             A.OneOf([
             A.RandomCrop(width=300, height=300, p=0.2),
             A.RandomCrop(width=500, height=500, p=0.2),
