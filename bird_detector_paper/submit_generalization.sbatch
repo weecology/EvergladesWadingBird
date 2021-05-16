@@ -5,7 +5,7 @@
 #SBATCH --account=ewhite
 #SBATCH --nodes=1                 # Number of MPI ran
 #SBATCH --cpus-per-task=5
-#SBATCH --mem=60GB
+#SBATCH --mem=70GB
 #SBATCH --time=24:00:00       #Time limit hrs:min:sec
 #SBATCH --output=/home/b.weinstein/logs/DeepForest_%j.out   # Standard output and error log
 #SBATCH --error=/home/b.weinstein/logs/DeepForest_%j.err
