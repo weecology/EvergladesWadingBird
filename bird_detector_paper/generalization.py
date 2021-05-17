@@ -531,14 +531,13 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
                 print(e)
         
     #log images
-    #TODO CHANGE SIZE ON LOG OR ELSE IT HANGS WAITING ON UPLOAD
-    #with comet_logger.experiment.context_manager("validation"):
-    #    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
-    #    images = glob.glob("{}/*.png".format(model_savedir))
-    #    for img in images[:5]:
-    #        comet_logger.experiment.log_image(img)
+    with comet_logger.experiment.context_manager("validation"):
+        model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
+        images = glob.glob("{}/*.png".format(model_savedir))
+        for img in images[:5]:
+            comet_logger.experiment.log_image(img, image_scale=0.25)
             
-    #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     #delete model and free up memory
     del model
