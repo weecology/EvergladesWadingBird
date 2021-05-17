@@ -438,15 +438,15 @@ def view_training(paths,comet_logger):
                     continue
 def prepare():
     paths = {}
-    paths["terns"] = prepare_terns(generate=True)
+    paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
-    paths["penguins"] = prepare_penguin(generate=True)
-    paths["palmyra"] = prepare_palmyra(generate=True)
-    paths["pelicans"] = prepare_pelicans(generate=True)
-    paths["murres"] = prepare_murres(generate=True)
-    paths["schedl"] = prepare_schedl(generate=True)
-    paths["pfeifer"] = prepare_pfeifer(generate=True)    
-    paths["hayes"] = prepare_hayes(generate=True)
+    paths["penguins"] = prepare_penguin(generate=False)
+    paths["palmyra"] = prepare_palmyra(generate=False)
+    paths["pelicans"] = prepare_pelicans(generate=False)
+    paths["murres"] = prepare_murres(generate=False)
+    paths["schedl"] = prepare_schedl(generate=False)
+    paths["pfeifer"] = prepare_pfeifer(generate=False)    
+    paths["hayes"] = prepare_hayes(generate=False)
 
     return paths
 
@@ -560,7 +560,7 @@ if __name__ =="__main__":
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                 project_name="everglades", workspace="bw4sz",auto_output_logging = "simple")
     
-    view_training(path_dict, comet_logger=comet_logger)
+    #view_training(path_dict, comet_logger=comet_logger)
     ##leave one out
     train_list = ["pfeifer","palmyra","penguins","terns"]
     results = []
