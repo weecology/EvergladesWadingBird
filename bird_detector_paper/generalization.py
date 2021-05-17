@@ -19,6 +19,7 @@ import tempfile
 import random
 import torch
 import gc
+from pytorch_lightning.plugins import DDPPlugin
 
 def split_test_train(annotations, split = 0.9):
     """Split annotation in train and test by image"""
@@ -504,7 +505,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
     model.config["validation"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"
         
-    model.create_trainer(logger=comet_logger)
+    model.create_trainer(logger=comet_logger, DDPPlugin(find_unused_parameters=False))
     comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
