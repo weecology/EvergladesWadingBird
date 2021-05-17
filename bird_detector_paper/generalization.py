@@ -284,11 +284,11 @@ def prepare_hayes(generate=True):
         train_annotations.label = "Bird"
         
         train_annotations = train_annotations.sample(n=200)
-        train_annotations.to_csv(train_path)
+        train_annotations.to_csv(train_path, index=False)
         
         hayes_albatross_val.label="Bird"
         hayes_albatross_val = hayes_albatross_val.sample(n=100)
-        hayes_albatross_val.to_csv(test_path)
+        hayes_albatross_val.to_csv(test_path, index=False)
     
     return {"train":train_path, "test":test_path}
     
@@ -317,7 +317,7 @@ def prepare_pfeifer(generate=True):
             
             test_annotations.append(annotations)
         test_annotations = pd.concat(test_annotations)
-        test_annotations.to_csv(test_path)
+        test_annotations.to_csv(test_path, index=False)
             
         for x in glob.glob("/orange/ewhite/b.weinstein/pfeifer/*.shp")[1:]:
             print(x)
@@ -338,7 +338,7 @@ def prepare_pfeifer(generate=True):
             train_annotations.append(annotations)
         
         train_annotations = pd.concat(train_annotations)
-        train_annotations.to_csv(train_path)
+        train_annotations.to_csv(train_path, index=False)
         
     return {"train":train_path, "test":test_path}
         
@@ -509,32 +509,26 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     comet_logger.experiment.log_parameters(model.config)
     
     model.trainer.fit(model)
-    test_results = model.evaluate(csv_file="/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv", root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
-    recall = test_results["box_recall"]
-    precision = test_results["box_precision"]    
-    print("{} Recall is {}".format(x, recall))
-    print("{} Precision is {}".format(x, precision))
     
-    #for x in test_sets:
-    #    test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
-    #   
-    #    if comet_logger is not None:
-    #        try:
-    #            test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
-    #            comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
-    #            
-    #            test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
-    #            comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
-    #            
-    #            for index, row in test_results["class_recall"].iterrows():
-    #                comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
-    #                comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
-    #            
-    #            comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
-    #            comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
-    #            comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
-    #        except Exception as e:
-    #            print(e)
+    for x in test_sets:
+        test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
+        if comet_logger is not None:
+            try:
+                test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
+                comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+                
+                test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
+                comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+                
+                for index, row in test_results["class_recall"].iterrows():
+                    comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
+                    comet_logger.experiment.log_metric("{}_Precision".format(row["label"]),row["precision"])
+                
+                comet_logger.experiment.log_metric("Average Class Recall",test_results["class_recall"].recall.mean())
+                comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
+                comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
+            except Exception as e:
+                print(e)
         
     #log images
     #with comet_logger.experiment.context_manager("validation"):
