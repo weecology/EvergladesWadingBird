@@ -462,7 +462,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
         os.mkdir(model_savedir)
     except Exception as e:
         print(e)
-    
+        
     comet_logger.experiment.log_parameter("timestamp",timestamp)
     comet_logger.experiment.log_parameter("train_set",train_sets)
     comet_logger.experiment.log_parameter("test_set",test_sets)
@@ -531,6 +531,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
                 print(e)
         
     #log images
+    #TODO CHANGE SIZE ON LOG OR ELSE IT HANGS WAITING ON UPLOAD
     #with comet_logger.experiment.context_manager("validation"):
     #    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
     #    images = glob.glob("{}/*.png".format(model_savedir))
@@ -540,8 +541,8 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     #model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
     
     #delete model and free up memory
-    #del model
-    #torch.cuda.empty_cache()
+    del model
+    torch.cuda.empty_cache()
     
     #The last position in the loop is the LOO score
     return test_results["box_recall"], test_results["box_precision"]
@@ -557,7 +558,7 @@ if __name__ =="__main__":
     
     #view_training(path_dict, comet_logger=comet_logger)
     ##leave one out
-    train_list = ["pfeifer","palmyra","penguins","terns"]
+    train_list = ["penguins","pfeifer","palmyra","terns"]
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y==x]
