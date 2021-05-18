@@ -284,10 +284,10 @@ def prepare_hayes(generate=True):
         train_annotations.label = "Bird"
         
         #A couple illegal boxes, make slightly smaller
-        train_annotations["xmin"] = train_annotations["xmin"] + 5
-        train_annotations["xmax"] = train_annotations["xmax"] -5
-        train_annotations["ymin"] = train_annotations["ymin"] + 5
-        train_annotations["ymax"] = train_annotations["ymax"] + -5
+        train_annotations["xmin"] = train_annotations["xmin"] + 2
+        train_annotations["xmax"] = train_annotations["xmax"] -2
+        train_annotations["ymin"] = train_annotations["ymin"] + 2
+        train_annotations["ymax"] = train_annotations["ymax"] + -2
         
         train_annotations = train_annotations[~(train_annotations.xmin == train_annotations.xmax)]
         train_annotations = train_annotations[~(train_annotations.ymin == train_annotations.ymax)]
