@@ -283,7 +283,7 @@ def prepare_hayes(generate=True):
         train_annotations = pd.concat([hayes_albatross_train, hayes_albatross_test, hayes_penguin_train, hayes_penguin_test, hayes_penguin_val])
         train_annotations.label = "Bird"
         
-        train_annotations = train_annotations.sample(n=200)
+        train_annotations = train_annotations.sample(n=500)
         train_annotations.to_csv(train_path, index=False)
         
         hayes_albatross_val.label="Bird"
@@ -425,7 +425,7 @@ def view_training(paths,comet_logger):
                 try:
                     x = paths[site][split]
                     ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
-                    for i in np.arange(3):
+                    for i in np.arange(5):
                         batch = next(iter(ds))
                         image_path, image, targets = batch
                         df = visualize.format_boxes(targets[0], scores=False)
@@ -496,7 +496,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     model.trainer.fit(model)
     
     for x in test_sets:
-        test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
+        test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25, savedir=savedir)
         if comet_logger is not None:
             try:
                 test_results["results"].to_csv("{}/iou_dataframe.csv".format(savedir))
@@ -513,9 +513,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
                 comet_logger.experiment.log_metric("{} Box Recall".format(x),test_results["box_recall"])
                 comet_logger.experiment.log_metric("{} Box Precision".format(x),test_results["box_precision"])
             except Exception as e:
-                print(e)
-        
-            
+                print(e)    
     if save_dir:
         model.trainer.save_checkpoint("{}/species_model.pl".format(save_dir))
     
@@ -547,7 +545,7 @@ if __name__ =="__main__":
     
     view_training(path_dict, comet_logger=comet_logger)
     ###leave one out
-    train_list = ["penguins","pfeifer","palmyra","terns"]
+    train_list = ["penguins","pfeifer","palmyra","terns", "hayes"]
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y==x]
@@ -568,7 +566,6 @@ if __name__ =="__main__":
     
     #log images
     with comet_logger.experiment.context_manager("validation"):
-        model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=savedir)
         images = glob.glob("{}/*.png".format(savedir))
         for img in images:
             comet_logger.experiment.log_image(img, image_scale=0.25)    
