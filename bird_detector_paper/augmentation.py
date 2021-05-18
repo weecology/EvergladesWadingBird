@@ -22,9 +22,9 @@ def get_transform(augment):
     if augment:
         transform = A.Compose([
             A.OneOf([
-            A.RandomCrop(width=400, height=400),
-            A.RandomCrop(width=300, height=300),
-            A.RandomCrop(width=500, height=500)], p=0.5
+            A.RandomSizedBBoxSafeCrop(width=400, height=400),
+            A.RandomSizedBBoxSafeCrop(width=300, height=300),
+            A.RandomSizedBBoxSafeCrop(width=500, height=500)], p=0.5
             ),
             A.HorizontalFlip(p=0.5),
             A.pytorch.ToTensorV2(),
