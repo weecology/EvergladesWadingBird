@@ -283,6 +283,12 @@ def prepare_hayes(generate=True):
         train_annotations = pd.concat([hayes_albatross_train, hayes_albatross_test, hayes_penguin_train, hayes_penguin_test, hayes_penguin_val])
         train_annotations.label = "Bird"
         
+        #A couple illegal boxes, make slightly smaller
+        train_annotations["xmin"] = train_annotations["xmin"] + 5
+        train_annotations["xmin"] = train_annotations["xmax"] -5
+        train_annotations["xmin"] = train_annotations["ymin"] + 5
+        train_annotations["xmin"] = train_annotations["ymax"] + -5
+        
         train_images = train_annotations.image_path.sample(n=500)
         train_annotations = train_annotations[train_annotations.image_path.isin(train_images)]
         train_annotations.to_csv(train_path, index=False)
