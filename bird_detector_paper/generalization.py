@@ -289,6 +289,9 @@ def prepare_hayes(generate=True):
         train_annotations["ymin"] = train_annotations["ymin"] + 5
         train_annotations["ymax"] = train_annotations["ymax"] + -5
         
+        train_annotations = train_annotations[~(train_annotations.xmin == train_annotations.xmax)]
+        train_annotations = train_annotations[~(train_annotations.ymin == train_annotations.ymax)]
+        
         train_images = train_annotations.image_path.sample(n=500)
         train_annotations = train_annotations[train_annotations.image_path.isin(train_images)]
         train_annotations.to_csv(train_path, index=False)
