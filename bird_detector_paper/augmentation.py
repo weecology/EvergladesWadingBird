@@ -22,6 +22,7 @@ def get_transform(augment):
     if augment:
         transform = A.Compose([
             A.OneOf([
+            A.RandomSizedBBoxSafeCrop(width=200, height=200),                
             A.RandomSizedBBoxSafeCrop(width=400, height=400),
             A.RandomSizedBBoxSafeCrop(width=300, height=300),
             A.RandomSizedBBoxSafeCrop(width=500, height=500)], p=0.5
