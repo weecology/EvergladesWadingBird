@@ -425,7 +425,7 @@ def view_training(paths,comet_logger):
                 try:
                     x = paths[site][split]
                     ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
-                    for i in np.arange(3):
+                    for i in np.arange(30):
                         batch = next(iter(ds))
                         image_path, image, targets = batch
                         df = visualize.format_boxes(targets[0], scores=False)
@@ -433,7 +433,7 @@ def view_training(paths,comet_logger):
                         plot, ax = visualize.plot_predictions(image, df)
                         with tempfile.TemporaryDirectory() as tmpdirname:
                             plot.savefig("{}/{}".format(tmpdirname, image_path[0]), dpi=150)
-                            comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]), image_scale=0.25)                
+                            comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]))                
                 except Exception as e:
                     print(e)
                     continue
@@ -546,29 +546,29 @@ if __name__ =="__main__":
                                 project_name="everglades", workspace="bw4sz",auto_output_logging = "simple")
     
     view_training(path_dict, comet_logger=comet_logger)
-    ##leave one out
-    train_list = ["penguins","pfeifer","palmyra","terns"]
-    results = []
-    for x in train_list:
-        train_sets = [y for y in train_list if not y==x]
-        train_sets.append("everglades")
-        test_sets = [x]
-        #["murres","pelicans","schedl", x]
-        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger, save_dir=savedir)
-        torch.cuda.empty_cache()
-        gc.collect()
-        result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
-        results.append(result)
+    ###leave one out
+    #train_list = ["penguins","pfeifer","palmyra","terns"]
+    #results = []
+    #for x in train_list:
+        #train_sets = [y for y in train_list if not y==x]
+        #train_sets.append("everglades")
+        #test_sets = [x]
+        ##["murres","pelicans","schedl", x]
+        #recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger, save_dir=savedir)
+        #torch.cuda.empty_cache()
+        #gc.collect()
+        #result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
+        #results.append(result)
     
-    results = pd.concat(results)
-    results.to_csv("Figures/generalization.csv")
-    comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
-    comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
-    comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
+    #results = pd.concat(results)
+    #results.to_csv("Figures/generalization.csv")
+    #comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
+    #comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
+    #comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
     
-    #log images
-    with comet_logger.experiment.context_manager("validation"):
-        model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=savedir)
-        images = glob.glob("{}/*.png".format(savedir))
-        for img in images:
-            comet_logger.experiment.log_image(img, image_scale=0.25)    
+    ##log images
+    #with comet_logger.experiment.context_manager("validation"):
+        #model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=savedir)
+        #images = glob.glob("{}/*.png".format(savedir))
+        #for img in images:
+            #comet_logger.experiment.log_image(img, image_scale=0.25)    
