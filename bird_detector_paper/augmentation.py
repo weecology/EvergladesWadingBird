@@ -22,12 +22,10 @@ def get_transform(augment):
     if augment:
         transform = A.Compose([
             A.CLAHE(),
-            A.Cutout(),
+            A.Cutout(max_h_size=20, max_w_size=20),
             A.GaussianBlur(),
             A.Flip(p=0.5),
             A.RandomBrightnessContrast(),
-            A.RandomShadow(),
-            A.RGBShift(),
             A.pytorch.ToTensorV2(),
         ], bbox_params=A.BboxParams(format='pascal_voc',label_fields=["category_ids"]))
         
