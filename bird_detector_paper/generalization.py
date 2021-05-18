@@ -146,7 +146,7 @@ def prepare_palmyra(generate=True):
         train_annotations_1 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=1000,
+            patch_size=900,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperStrawn_53m_tile_clip_projected.tif",
@@ -425,7 +425,7 @@ def view_training(paths,comet_logger):
                 try:
                     x = paths[site][split]
                     ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
-                    for i in np.arange(2):
+                    for i in np.arange(3):
                         batch = next(iter(ds))
                         image_path, image, targets = batch
                         df = visualize.format_boxes(targets[0], scores=False)
@@ -451,17 +451,7 @@ def prepare():
 
     return paths
 
-def train(path_dict, config, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"], comet_logger=None):
-    
-    #comet_logger=None
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    save_dir="/orange/ewhite/b.weinstein/generalization/"
-    model_savedir = "{}/{}".format(save_dir,timestamp)  
-    
-    try:
-        os.mkdir(model_savedir)
-    except Exception as e:
-        print(e)
+def train(path_dict, config, train_sets = ["penguins","terns","everglades","palmyra"],test_sets=["everglades"], comet_logger=None, save_dir=None):
         
     comet_logger.experiment.log_parameter("timestamp",timestamp)
     comet_logger.experiment.log_parameter("train_set",train_sets)
@@ -495,11 +485,6 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     model = main.deepforest(label_dict={"Bird":0}, transforms = get_transform)
     model.config = config
 
-    try:
-        os.mkdir(model_savedir)
-    except:
-        pass
-    
     model.config["train"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/training_annotations.csv"
     model.config["train"]["root_dir"] = "/orange/ewhite/b.weinstein/generalization/crops"    
     model.config["validation"]["csv_file"] = "/orange/ewhite/b.weinstein/generalization/crops/test_annotations.csv"
@@ -514,11 +499,11 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
         test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
         if comet_logger is not None:
             try:
-                test_results["results"].to_csv("{}/iou_dataframe.csv".format(model_savedir))
-                comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(model_savedir))
+                test_results["results"].to_csv("{}/iou_dataframe.csv".format(savedir))
+                comet_logger.experiment.log_asset("{}/iou_dataframe.csv".format(savedir))
                 
-                test_results["class_recall"].to_csv("{}/class_recall.csv".format(model_savedir))
-                comet_logger.experiment.log_asset("{}/class_recall.csv".format(model_savedir))
+                test_results["class_recall"].to_csv("{}/class_recall.csv".format(savedir))
+                comet_logger.experiment.log_asset("{}/class_recall.csv".format(savedir))
                 
                 for index, row in test_results["class_recall"].iterrows():
                     comet_logger.experiment.log_metric("{}_Recall".format(row["label"]),row["recall"])
@@ -530,14 +515,9 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
             except Exception as e:
                 print(e)
         
-    #log images
-    #with comet_logger.experiment.context_manager("validation"):
-    #    model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=model_savedir)
-    #    images = glob.glob("{}/*.png".format(model_savedir))
-    #    for img in images[:5]:
-    #        comet_logger.experiment.log_image(img, image_scale=0.25)
             
-    model.trainer.save_checkpoint("{}/species_model.pl".format(model_savedir))
+    if save_dir:
+        model.trainer.save_checkpoint("{}/species_model.pl".format(save_dir))
     
     #delete model and free up memory
     del model
@@ -548,6 +528,16 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
 
 if __name__ =="__main__":
     #save original config during loop
+    #comet_logger=None
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    save_dir="/orange/ewhite/b.weinstein/generalization/"
+    savedir = "{}/{}".format(save_dir,timestamp)  
+    
+    try:
+        os.mkdir(savedir)
+    except Exception as e:
+        print(e)
+        
     model = main.deepforest(label_dict={"Bird":0}, transforms=get_transform)
     config = model.config
     
@@ -555,7 +545,7 @@ if __name__ =="__main__":
     comet_logger = CometLogger(api_key="ypQZhYfs3nSyKzOfz13iuJpj2",
                                 project_name="everglades", workspace="bw4sz",auto_output_logging = "simple")
     
-    #view_training(path_dict, comet_logger=comet_logger)
+    view_training(path_dict, comet_logger=comet_logger)
     ##leave one out
     train_list = ["penguins","pfeifer","palmyra","terns"]
     results = []
@@ -564,7 +554,7 @@ if __name__ =="__main__":
         train_sets.append("everglades")
         test_sets = [x]
         #["murres","pelicans","schedl", x]
-        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger)
+        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger, save_dir=savedir)
         torch.cuda.empty_cache()
         gc.collect()
         result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
@@ -576,4 +566,9 @@ if __name__ =="__main__":
     comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
     comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
     
-    
+    #log images
+    with comet_logger.experiment.context_manager("validation"):
+        model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=savedir)
+        images = glob.glob("{}/*.png".format(savedir))
+        for img in images:
+            comet_logger.experiment.log_image(img, image_scale=0.25)    
