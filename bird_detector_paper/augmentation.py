@@ -21,13 +21,13 @@ def get_transform(augment):
     """Albumentations transformation of bounding boxs"""
     if augment:
         transform = A.Compose([
-            A.OneOf([
-            A.RandomSizedBBoxSafeCrop(width=200, height=200),                
-            A.RandomSizedBBoxSafeCrop(width=400, height=400),
-            A.RandomSizedBBoxSafeCrop(width=300, height=300),
-            A.RandomSizedBBoxSafeCrop(width=500, height=500)], p=0.5
-            ),
-            A.HorizontalFlip(p=0.5),
+            A.CLAHE(),
+            A.Cutout(),
+            A.GaussianBlur(),
+            A.Flip(p=0.5),
+            A.RandomBrightnessContrast(),
+            A.RandomShadow(),
+            A.RGBShift(),
             A.pytorch.ToTensorV2(),
         ], bbox_params=A.BboxParams(format='pascal_voc',label_fields=["category_ids"]))
         
