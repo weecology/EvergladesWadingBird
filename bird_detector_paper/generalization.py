@@ -547,28 +547,28 @@ if __name__ =="__main__":
     
     view_training(path_dict, comet_logger=comet_logger)
     ###leave one out
-    #train_list = ["penguins","pfeifer","palmyra","terns"]
-    #results = []
-    #for x in train_list:
-        #train_sets = [y for y in train_list if not y==x]
-        #train_sets.append("everglades")
-        #test_sets = [x]
-        ##["murres","pelicans","schedl", x]
-        #recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger, save_dir=savedir)
-        #torch.cuda.empty_cache()
-        #gc.collect()
-        #result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
-        #results.append(result)
+    train_list = ["penguins","pfeifer","palmyra","terns"]
+    results = []
+    for x in train_list:
+        train_sets = [y for y in train_list if not y==x]
+        train_sets.append("everglades")
+        test_sets = [x]
+        #["murres","pelicans","schedl", x]
+        recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger, save_dir=savedir)
+        torch.cuda.empty_cache()
+        gc.collect()
+        result = pd.DataFrame({"test_sets":[x],"recall":[recall],"precision":[precision]})
+        results.append(result)
     
-    #results = pd.concat(results)
-    #results.to_csv("Figures/generalization.csv")
-    #comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
-    #comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
-    #comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
+    results = pd.concat(results)
+    results.to_csv("Figures/generalization.csv")
+    comet_logger.experiment.log_asset(file_data="Figures/generalization.csv", file_name="results.csv")
+    comet_logger.experiment.log_metric(name="Mean LOO Recall", value=results.recall.mean())
+    comet_logger.experiment.log_metric(name="Mean LOO Precision", value=results.precision.mean())
     
-    ##log images
-    #with comet_logger.experiment.context_manager("validation"):
-        #model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=savedir)
-        #images = glob.glob("{}/*.png".format(savedir))
-        #for img in images:
-            #comet_logger.experiment.log_image(img, image_scale=0.25)    
+    #log images
+    with comet_logger.experiment.context_manager("validation"):
+        model.predict_file(csv_file = model.config["validation"]["csv_file"], root_dir = model.config["validation"]["root_dir"], savedir=savedir)
+        images = glob.glob("{}/*.png".format(savedir))
+        for img in images:
+            comet_logger.experiment.log_image(img, image_scale=0.25)    
