@@ -288,7 +288,8 @@ def prepare_hayes(generate=True):
         train_annotations.to_csv(train_path, index=False)
         
         hayes_albatross_val.label="Bird"
-        hayes_albatross_val = hayes_albatross_val.sample(n=100)
+        hayes_albatross_val_images = hayes_albatross_val.image_path.sample(n=100)
+        hayes_albatross_val = hayes_albatross_val[hayes_albatross_val.image_path.isin(hayes_albatross_val_images)]
         hayes_albatross_val.to_csv(test_path, index=False)
     
     return {"train":train_path, "test":test_path}
@@ -448,7 +449,7 @@ def prepare():
     paths["murres"] = prepare_murres(generate=False)
     paths["schedl"] = prepare_schedl(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=False)    
-    paths["hayes"] = prepare_hayes(generate=False)
+    paths["hayes"] = prepare_hayes(generate=True)
 
     return paths
 
