@@ -126,7 +126,7 @@ def prepare_palmyra(generate=True):
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image,
                                                    annotations_file="Figures/test_annotations.csv",
-                                                   patch_size=900, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="Dudley_projected.tif")
+                                                   patch_size=1500, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="Dudley_projected.tif")
         
         test_annotations.to_csv(test_path,index=False)
         
@@ -146,7 +146,7 @@ def prepare_palmyra(generate=True):
         train_annotations_1 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=900,
+            patch_size=1500,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperStrawn_53m_tile_clip_projected.tif",
@@ -165,7 +165,7 @@ def prepare_palmyra(generate=True):
         train_annotations_2 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=1000,
+            patch_size=1500,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperEelPond_53M.tif",
@@ -453,12 +453,12 @@ def prepare():
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=False)
+    paths["palmyra"] = prepare_palmyra(generate=True)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["schedl"] = prepare_schedl(generate=False)
     paths["pfeifer"] = prepare_pfeifer(generate=False)    
-    paths["hayes"] = prepare_hayes(generate=True)
+    paths["hayes"] = prepare_hayes(generate=False)
 
     return paths
 
