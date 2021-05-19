@@ -1,11 +1,11 @@
 #Prepare all training sets
 import comet_ml
+import cv2
 from deepforest import main
 import glob
 from pytorch_lightning.loggers import CometLogger
 from deepforest import preprocess
 from deepforest import visualize
-from matplotlib import pyplot as plt
 from augmentation import get_transform
 from shapely.geometry import Point, box
 import geopandas as gpd
@@ -126,7 +126,7 @@ def prepare_palmyra(generate=True):
         
         test_annotations = preprocess.split_raster(numpy_image=numpy_image,
                                                    annotations_file="Figures/test_annotations.csv",
-                                                   patch_size=1500, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="Dudley_projected.tif")
+                                                   patch_size=1300, patch_overlap=0.05, base_dir="/orange/ewhite/b.weinstein/generalization/crops/", image_name="Dudley_projected.tif")
         
         test_annotations.to_csv(test_path,index=False)
         
@@ -146,7 +146,7 @@ def prepare_palmyra(generate=True):
         train_annotations_1 = preprocess.split_raster(
             numpy_image=training_image,
             annotations_file="Figures/training_annotations.csv",
-            patch_size=1500,
+            patch_size=1300,
             patch_overlap=0.05,
             base_dir="/orange/ewhite/b.weinstein/generalization/crops/",
             image_name="CooperStrawn_53m_tile_clip_projected.tif",
@@ -440,11 +440,11 @@ def view_training(paths,comet_logger):
                         batch = next(iter(ds))
                         image_path, image, targets = batch
                         df = visualize.format_boxes(targets[0], scores=False)
-                        image = np.moveaxis(image[0].numpy(),0,2)
-                        plot, ax = visualize.plot_predictions(image, df)
+                        image = np.moveaxis(image[0].numpy(),0,2)[:,:,::-1]
+                        image = visualize.plot_predictions(image, df)
                         with tempfile.TemporaryDirectory() as tmpdirname:
-                            plot.savefig("{}/{}".format(tmpdirname, image_path[0]), dpi=150)
-                            comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]))                
+                            cv2.imwrite("{}/{}".format(tmpdirname, image_path[0]), image)
+                            comet_logger.experiment.log_image("{}/{}".format(tmpdirname, image_path[0]),image_scale=0.25)                
                 except Exception as e:
                     print(e)
                     continue
@@ -453,7 +453,7 @@ def prepare():
     paths["terns"] = prepare_terns(generate=False)
     paths["everglades"] = prepare_everglades()
     paths["penguins"] = prepare_penguin(generate=False)
-    paths["palmyra"] = prepare_palmyra(generate=False)
+    paths["palmyra"] = prepare_palmyra(generate=True)
     paths["pelicans"] = prepare_pelicans(generate=False)
     paths["murres"] = prepare_murres(generate=False)
     paths["schedl"] = prepare_schedl(generate=False)
