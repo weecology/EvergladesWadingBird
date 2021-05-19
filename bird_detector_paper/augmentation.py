@@ -26,7 +26,6 @@ def get_transform(augment):
     """Albumentations transformation of bounding boxs"""
     if augment:
         transform = A.Compose([
-            A.RandomCropNearBBox(max_part_shift=0.5),
             A.GaussianBlur(),
             A.Flip(p=0.5),
             A.RandomBrightnessContrast(),
