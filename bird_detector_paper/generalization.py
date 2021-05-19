@@ -507,7 +507,7 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
     model.trainer.fit(model)
     
     for x in test_sets:
-        test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25)
+        test_results = model.evaluate(csv_file=path_dict[x]["test"], root_dir="/orange/ewhite/b.weinstein/generalization/crops/", iou_threshold=0.25, savedir=savedir)
         if comet_logger is not None:
             try:
                 test_results["results"].to_csv("{}/iou_dataframe.csv".format(savedir))
