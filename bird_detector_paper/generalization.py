@@ -436,7 +436,7 @@ def view_training(paths,comet_logger):
                 try:
                     x = paths[site][split]
                     ds = m.load_dataset(csv_file=x, root_dir=os.path.dirname(x), shuffle=True, augment=augment)
-                    for i in np.arange(5):
+                    for i in np.arange(10):
                         batch = next(iter(ds))
                         image_path, image, targets = batch
                         df = visualize.format_boxes(targets[0], scores=False)
