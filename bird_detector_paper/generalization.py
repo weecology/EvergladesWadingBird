@@ -440,7 +440,7 @@ def view_training(paths,comet_logger):
                         batch = next(iter(ds))
                         image_path, image, targets = batch
                         df = visualize.format_boxes(targets[0], scores=False)
-                        image = np.moveaxis(image[0].numpy(),0,2)[:,:,::-1]
+                        image = np.moveaxis(image[0].numpy(),0,2)[:,:,::-1].astype("uint8")
                         image = visualize.plot_predictions(image, df)
                         with tempfile.TemporaryDirectory() as tmpdirname:
                             cv2.imwrite("{}/{}".format(tmpdirname, image_path[0]), image)
@@ -578,4 +578,4 @@ if __name__ =="__main__":
     with comet_logger.experiment.context_manager("validation"):
         images = glob.glob("{}/*.png".format(savedir))
         for img in images:
-            comet_logger.experiment.log_image(img, image_scale=0.25)    
+            comet_logger.experiment.log_image(img.astype("uint8"), image_scale=0.25)    
