@@ -560,7 +560,8 @@ if __name__ =="__main__":
     results = []
     for x in train_list:
         train_sets = [y for y in train_list if not y==x]
-        test_sets = ["murres","pelicans","schedl", x]
+        train_sets.append("everglades")
+        test_sets = [x]
         recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger, save_dir=savedir)
         torch.cuda.empty_cache()
         gc.collect()
