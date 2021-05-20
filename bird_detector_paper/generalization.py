@@ -3,6 +3,7 @@ import comet_ml
 import cv2
 from deepforest import main
 import glob
+from PIL import ImageFile
 from pytorch_lightning.loggers import CometLogger
 from deepforest import preprocess
 from deepforest import visualize
@@ -538,6 +539,8 @@ def train(path_dict, config, train_sets = ["penguins","terns","everglades","palm
 if __name__ =="__main__":
     #save original config during loop
     #comet_logger=None
+    ImageFile.LOAD_TRUNCATED_IMAGES = True
+    
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     save_dir="/orange/ewhite/b.weinstein/generalization/"
     savedir = "{}/{}".format(save_dir,timestamp)  
