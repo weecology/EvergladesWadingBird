@@ -556,12 +556,11 @@ if __name__ =="__main__":
     
     view_training(path_dict, comet_logger=comet_logger)
     ###leave one out
-    train_list = ["terns","palmyra"]
+    train_list = ["terns","palmyra","penguins","pfeifer","hayes"]
     results = []
     for x in train_list:
-        train_sets = [y for y in train_list if not y==x] + ["penguins","pfeifer", "hayes", "everglades"]
-        test_sets = [x]
-        #["murres","pelicans","schedl", x]
+        train_sets = [y for y in train_list if not y==x]
+        test_sets = ["murres","pelicans","schedl", x]
         recall, precision = train(path_dict=path_dict, config=config, train_sets=train_sets, test_sets=test_sets, comet_logger=comet_logger, save_dir=savedir)
         torch.cuda.empty_cache()
         gc.collect()
