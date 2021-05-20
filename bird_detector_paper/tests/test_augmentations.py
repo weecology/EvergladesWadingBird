@@ -3,6 +3,10 @@ import augmentation
 import os
 from deepforest import main
 from deepforest import get_data
+from PIL import Image
+import numpy as np
+from matplotlib import pyplot
+import pandas as pd
     
 def test_get_transform():
     csv_file = get_data("OSBS_029.csv")    
@@ -20,3 +24,10 @@ def test_get_transform():
     
     m.trainer.fit(m)
     
+def test_ZoomSafe():
+    z = augmentation.ZoomSafe(height=400, width=400)
+    image = np.array(Image.open(get_data("OSBS_029.png")))
+    df = pd.read_csv(get_data("OSBS_029.csv"))
+    bboxes = df[["xmin", "ymin", "xmax","ymax"]].values.astype(float)    
+    augmented_image = z(image=image, bboxes=bboxes)["image"]
+    pyplot.imshow(augmented_image)
