@@ -7,7 +7,9 @@ import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from PIL import Image
 import numpy as np
+
 from deepforest import deepforest
+from deepforest import utilities
 
 import tile_raster
 import utils
@@ -74,12 +76,6 @@ def find_files(path):
         numpy_image = d.read()
         left, bottom, right, top = d.bounds
 
-        #Check if image is all white
-        #white_flag = is_white(i)
-
-        #if white_flag:
-        #    continue
-
         #Write as a png
         basename = os.path.splitext(i)[0]
         png_name = "{}.png".format(basename)
@@ -87,7 +83,9 @@ def find_files(path):
         img.save(png_name)
 
         #Create dict
-        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":d.crs.to_epsg(),"site":site_name,"resolution":d.res,"filename":png_name}
+        #crs = d.crs.to_epsg()
+        crs = None
+        images[png_name] = {"subject_reference":counter, "bounds":[left,bottom,right,top],"crs":crs,"site":site_name,"resolution":d.res,"filename":png_name}
         counter +=1
 
     return images
@@ -120,21 +118,22 @@ def upload(subject_set, images, everglades_watch):
     subject_set.add(new_subjects)
 
 def screen_blanks(images, model):
-    #Load bird detection model
+    #Load detection model
     model = deepforest.deepforest(weights=model)
+    #model.classes_file = utilities.create_classes("/orange/ewhite/everglades/Zooniverse/parsed_images/test.csv")    
+    #model.read_classes()
     screened_images = {}
     for filename, metadata in images.items():
         boxes = model.predict_image(filename, return_plot=False)
 
         #small score filter
         boxes = boxes[boxes.score > 0.4]
-
+        
         if not boxes.empty:
+            #if any([x in boxes.label.unique() for x in ["Great Blue Heron","Snowy Egret","Wood Stork","Roseate Spoonbill"]]):
             screened_images[filename] = metadata
         else:
             print("Remove {}, screened empty".format(filename))
-
-    #return keys for dict
 
     return screened_images
 
@@ -143,7 +142,10 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
         path: a .tif to run
     """
     #Create new directory in save_dir
+    
     basename = os.path.splitext(os.path.basename(path))[0]
+    event = os.path.basename(os.path.dirname(os.path.dirname(path))).replace(" ","")
+    basename = "{}_{}".format(event,basename)
     dirname = "{}/{}".format(save_dir,basename)
 
     try:
@@ -155,11 +157,11 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
     #Crop tif
     #Project from longlat to utm
     #check if exists
-    projected_raster_path = "{}_projected.tif".format(os.path.splitext(path)[0])
-    if not os.path.exists(projected_raster_path):
-        projected_raster_path = utm_project(path)
+    #projected_raster_path = "{}_projected.tif".format(os.path.splitext(path)[0])
+    #if not os.path.exists(projected_raster_path):
+        #projected_raster_path = utm_project(path)
 
-    saved_file = tile_raster.run(path=projected_raster_path, save_dir=dirname,)
+    saved_file = tile_raster.run(path=path, save_dir=dirname)
     print("Created cropped files at {}".format(saved_file))
 
     #Generate metadata
@@ -171,9 +173,9 @@ def main(path, everglades_watch, model=None, save_dir="/orange/ewhite/everglades
         print("{} images ready for upload".format(len(screened_images)))
     else:
         screened_images = images
-
+    
     #Create a new subject set
-    subject_set = create_subject_set(name=basename, everglades_watch=everglades_watch)
+    subject_set = create_subject_set(name="{}".format(basename), everglades_watch=everglades_watch)
 
     #Upload
     upload(subject_set, screened_images, everglades_watch)
@@ -184,38 +186,12 @@ if __name__ == "__main__":
 
     #auth
     everglades_watch = utils.connect()
-
-    #set model
-    model = "/orange/ewhite/everglades/Zooniverse/predictions/20201110_161912.h5"
+    
+    model = "/orange/ewhite/everglades/Zooniverse/predictions/20210224_121421.h5"
 
     #Currently debugging with just one site
-    paths = ["/orange/ewhite/everglades/WadingBirds2020/6thBridge/6thBridge_03_25_2020.tif"]
-
+    paths = glob.glob("/orange/ewhite/everglades/WadingBirds2020/Raw/Cypress City_03_25_2020/Mapping Photos/*.JPG")
+    paths = [x for x in paths if "projected" not in x]
     for path in paths:
         print(path)
         saved_file = main(path, everglades_watch, model)
-
-        ##Which files have already been run
-        #uploaded = pd.read_csv("uploaded.csv")
-
-        ##Compare names of completed tiles
-        #uploaded["basename"] = uploaded.path.apply(lambda x: os.path.basename(x))
-
-        ##Files to process
-        #file_pool = glob.glob("/orange/ewhite/everglades/WadingBirds2020/**/*.tif",recursive=True)
-        #file_pool_basenames = [os.path.basename(x) for x in file_pool]
-        #paths = [file_pool[index] for index, x in enumerate(file_pool_basenames) if not x in uploaded.basename.values]
-
-        #print("Running files:{}".format(paths))
-        #for path in paths:
-            ##Run .tif
-            #try:
-                #saved_file = main(path, everglades_watch, model)
-                ##Confirm it exists and write to the csv file
-                #assert os.path.exists(saved_file)
-                #uploaded["path"] = uploaded.path.append(pd.Series({"path":saved_file}),ignore_index=True)
-            #except Exception as e:
-                #print("{} failed with exception {}".format(path, e))
-
-        #Overwrite uploaded manifest
-        #uploaded.to_csv("uploaded.csv",index=False)

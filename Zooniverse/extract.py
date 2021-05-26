@@ -7,8 +7,10 @@ import everglade_tokens
 import rasterio
 import requests
 import json
+from skimage import io
 from shapely.geometry import box
 from PIL import Image
+import numpy as np
 
 #source keys outside of git control
 import everglade_tokens
@@ -70,8 +72,10 @@ def extract_empty(parsed_data, image_data,save_dir="."):
         
         #confirm file can be opened 
         try:
-            a = rasterio.open(name)
-            b = Image.open(name).convert('RGB')
+            img = io.imread(name)
+            if img.shape[2] == 4:
+                img[:,:,:3].save(name)
+            
         except Exception as e:
             print("{} failed with {}".format(name, e))
             continue
@@ -85,7 +89,7 @@ def extract_empty(parsed_data, image_data,save_dir="."):
     
 def run(classification_shp, image_data ,savedir="."):
     """
-    classification_shp: path to a processed .shp, see aggregate.py
+    classification_shp: path to a processed .csv, see aggregate.py
     image_data: subject id download from zooniverse everglades-watch-subjects.csv
     """
     #Read in species data
@@ -124,13 +128,17 @@ def run(classification_shp, image_data ,savedir="."):
         
         #Confirm file can be opened
         try:
-            a = rasterio.open(name)
-            b = Image.open(name).convert('RGB')
+            numpy_image = rasterio.open(name).read()
+            if numpy_image.shape[0] == 4:
+                numpy_image = np.moveaxis(numpy_image,0,2)
+                numpy_image = numpy_image[:,:,:3].astype("uint8")
+                image = Image.fromarray(numpy_image)
+                image.save(name)
         except Exception as e:
             print("{} failed with {}".format(name, e))
             continue
         
-        group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]
+        #group["geometry"] = [box(left, bottom, right, top) for left, bottom, right, top in group.geometry.buffer(1).bounds.values]
         
         #Create a shapefile
         shpname = "{}.shp".format(os.path.join(savedir,basename))
@@ -139,7 +147,7 @@ def run(classification_shp, image_data ,savedir="."):
 if __name__=="__main__":
     #Download images
     run(
-        classification_shp="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-classifications.shp",
+        classification_shp="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-classifications_unprojected.shp",
         image_data="/home/b.weinstein/EvergladesWadingBird/App/Zooniverse/data/everglades-watch-subjects.csv",
         savedir="/orange/ewhite/everglades/Zooniverse/parsed_images/"
     ) 

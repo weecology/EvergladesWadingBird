@@ -2,7 +2,6 @@ name: Zooniverse
 channels: 
   - defaults
 dependencies:
-  - python==3.7
   - geopandas
   - shapely
   - pandas
@@ -10,6 +9,7 @@ dependencies:
   - pip
   - dask
   - distributed
+  - tensorflow-gpu==1.14.0
   - pip:
     - panoptescli
     - mapboxcli

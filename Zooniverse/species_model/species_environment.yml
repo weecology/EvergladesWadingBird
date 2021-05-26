@@ -1,0 +1,24 @@
+name: Zooniverse_pytorch
+channels: 
+  - pytorch
+  - conda-forge
+dependencies:
+  - geopandas
+  - shapely
+  - pytorch
+  - torchvision
+  - pandas
+  - pytest
+  - pip
+  - dask
+  - distributed
+  - pip:
+    - panoptescli
+    - mapboxcli
+    - rasterio
+    - comet_ml
+    - paramiko
+    - opencv-python
+
+
+
