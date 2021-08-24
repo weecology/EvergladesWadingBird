@@ -10,6 +10,7 @@ dependencies:
   - dask
   - distributed
   - pip:
+    - dask_jobqueue
     - DeepForest
     - panoptescli
     - mapboxcli
