@@ -96,9 +96,9 @@ def run(tile_path, checkpoint_path, savedir="."):
     
     #Read bigtiff using rasterio and rollaxis and set to BGR
     try:
-        boxes = model.predict_tile(numpy_image=numpy_array_bgr, patch_overlap=0, patch_size=1500)
+        boxes = model.predict_tile(raster_path = projected_path, patch_overlap=0, patch_size=1500)
     except Exception as e:
-        return "Tile {} returned {}".format(tile_path, e)
+        print("Tile {} returned {}".format(tile_path, e))
         
     #Project
     if project_boxes:
