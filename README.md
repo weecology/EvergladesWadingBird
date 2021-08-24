@@ -61,7 +61,7 @@ Conda or mamba (faster)
 ```
 mamba env create -f=environment.yml
 ```
-
+The environment can be sensitive to the new CUDA version. Its often useful to first install torch and torch vision from -c pytorch and then install the rest of the environment. 
 0. Sync dropbox to hipergator
 
 ```
