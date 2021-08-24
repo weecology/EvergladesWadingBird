@@ -83,7 +83,11 @@ def run(tile_path, checkpoint_path, savedir="."):
     """Apply trained model to a drone tile"""
     
     #optionally project
-    projected_path = utm_project_raster(tile_path)
+    try:
+        projected_path = utm_project_raster(tile_path)
+    except Exception as e:
+        print("{} could not be projected {}, using unprojected data".format(tile_path, e))
+        projected_path = tile_path
     
     model = deepforest.main.deepforest.load_from_checkpoint(checkpoint_path)
     
@@ -107,10 +111,14 @@ def run(tile_path, checkpoint_path, savedir="."):
     
     return fn
 
-def find_files():
+def find_files(sites=None):
+    """Args:
+        sites: a list of sites to filter
+    """
     paths = glob.glob("/orange/ewhite/everglades/2021/**/*.tif",recursive=True)
-    #sites = ["Joule","CypressCity","Vacation","JetPort","Jerrod","StartMel","OtherColonies","6th Bridge"]
-    #paths = [x for x in paths if any(w in x for w in sites)]
+    
+    if sites is not None:
+        paths = [x for x in paths if any(w in x for w in sites)]
     paths = [x for x in paths if not "projected" in x]
     
     return paths
@@ -143,7 +151,8 @@ def summarize(paths):
 if __name__ == "__main__":
     client = start(gpus=10,mem_size="30GB")    
     checkpoint_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210526_132010/bird_detector.pl"    
-    paths = find_files()
+    #Start with a known site, sites = None for all data
+    paths = find_files(sites=["Joule"])
     print("Found {} files".format(len(paths)))
     
     #for path in paths:
