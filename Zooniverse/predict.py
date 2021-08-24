@@ -90,7 +90,7 @@ def run(tile_path, checkpoint_path, savedir="."):
         projected_path = tile_path
     
     model = main.deepforest.load_from_checkpoint(checkpoint_path)
-    
+    model.label_dict = {"Bird":0}
     #Read bigtiff using rasterio and rollaxis and set to BGR
     src = rasterio.open(projected_path)
     numpy_array = src.read()
