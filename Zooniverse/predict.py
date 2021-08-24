@@ -126,7 +126,6 @@ def find_files(sites=None):
     paths = [x for x in paths if not "projected" in x]
     paths = [x for x in paths if not "Identified Nests" in x]
     
-    
     return paths
 
 def get_site(path):
@@ -140,6 +139,7 @@ def get_event(path):
     return regex.match(path).group(1)
 
 def load_shapefile(x):
+    print(x)
     shp = geopandas.read_file(x)
     shp["site"] = get_site(x)
     shp["event"] = get_event(x)
@@ -155,25 +155,27 @@ def summarize(paths):
     return summary
     
 if __name__ == "__main__":
-    client = start(gpus=4,mem_size="30GB")    
+    #client = start(gpus=4,mem_size="30GB")    
     checkpoint_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210526_132010/bird_detector.pl"    
     #Start with a known site, sites = None for all data
     paths = find_files(sites=["Joule"])
     print("Found {} files".format(len(paths)))
     
-    #for path in paths[:2]:
-        #run(checkpoint_path=checkpoint_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
-        
-    futures = client.map(run, paths[:2], checkpoint_path=checkpoint_path, savedir="/orange/ewhite/everglades/predictions")
-    wait(futures)
     completed_predictions = []
-    for x in futures:
-        try:
-            fn = x.result()
-            if os.path.exists(fn):
-                completed_predictions.append(fn)
-        except Exception as e:
-            print("{}".format(e))
+    for path in paths[:2]:
+        result = run(checkpoint_path=checkpoint_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
+        completed_predictions.append(result)
+    
+    #futures = client.map(run, paths[:2], checkpoint_path=checkpoint_path, savedir="/orange/ewhite/everglades/predictions")
+    #wait(futures)
+    #completed_predictions = []
+    #for x in futures:
+        #try:
+            #fn = x.result()
+            #if os.path.exists(fn):
+                #completed_predictions.append(fn)
+        #except Exception as e:
+            #print("{}".format(e))
     
     #write output to zooniverse app
     df = summarize(completed_predictions)
