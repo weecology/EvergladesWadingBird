@@ -1,6 +1,6 @@
 name: Zooniverse
 channels: 
-  - defaults
+  - conda-forge
 dependencies:
   - geopandas
   - shapely
@@ -9,8 +9,8 @@ dependencies:
   - pip
   - dask
   - distributed
-  - tensorflow-gpu==1.14.0
   - pip:
+    - DeepForest
     - panoptescli
     - mapboxcli
     - rasterio
