@@ -149,7 +149,7 @@ if __name__ == "__main__":
     #for path in paths:
         #run(model_path=model_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
         
-    futures = client.map(run, paths[:2], model_path=model_path, savedir="/orange/ewhite/everglades/predictions")
+    futures = client.map(run, paths[:2], checkpoint_path=checkpoint_path, savedir="/orange/ewhite/everglades/predictions")
     wait(futures)
     completed_predictions = []
     for x in futures:
