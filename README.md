@@ -24,18 +24,18 @@ Project Organization
     |-- SuperPopulationModel <- Data Exploration and Simulations for a Wading Bird Population Model
     |-- Water              <-
     |-- Weather            <-
-    |-- Zooniverse         <- Main directory for bird detection model training, bird-bird-bird prediction and parsing Zooniverse annotations
-        |-- SLURM         <- SLURM scripts for submitting jobs on Hipergator
-        |-- species_model <- Multi-class species model
-        |-- aggregate.py  <- Main script for downloading and cleaning Zooniverse annotatiosn
-        |-- extract.py    <- Download images that match annotations from Zooniverse
-        |-- cron.txt     <- Cron job to run a model and sync the dropbox
-        |-- manifest.py  <- upload images to Zooniverse
+    |-- Zooniverse         <- bird detection model training, bird-bird-bird prediction and parsing Zooniverse annotations
+        |-- SLURM            <- SLURM scripts for submitting jobs on Hipergator
+        |-- species_model    <- Multi-class species model
+        |-- aggregate.py     <- Main script for downloading and cleaning Zooniverse annotatiosn
+        |-- extract.py       <- Download images that match annotations from Zooniverse
+        |-- cron.txt         <- Cron job to run a model and sync the dropbox
+        |-- manifest.py      <- upload images to Zooniverse
         |-- nest_aggregate.py <- Download and clean nest label series from Zooniverse
-        |-- nest_detection.py <- Given a set of predictions in /orange/ewhite/everglades/predictions/, generate predicted nests using Bird-Bird-Bird
-        |-- predict.py <- Predict bird locations
+        |-- nest_detection.py <- Generate predicted nests using Bird-Bird-Bird
+        |-- predict.py       <- Predict bird locations
         |-- start_cluster.py <- Useful dask utilities for parallel data processing
-        |-- tile_raster.py <- Split a large orthomosaic into smaller tiles
+        |-- tile_raster.py   <- Split a large orthomosaic into smaller tiles
         |-- upload_mapbox.py <- Upload data to mapbox for visualization server
     ├── environment.yml   <- Conda requirements
     │
