@@ -210,7 +210,10 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
                 continue      
             
             #Write timestamp as watermark
-            crop = write_timestamp(crop, datename)
+            try:
+                crop = write_timestamp(crop, datename)
+            except Exception as e:
+                print("{} raises {}".format(filename, e))
             
             cv2.imwrite(filename, crop)
             filenames.append(filename)
