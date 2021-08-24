@@ -157,8 +157,8 @@ if __name__ == "__main__":
     paths = find_files(sites=["Joule"])
     print("Found {} files".format(len(paths)))
     
-    for path in paths[:2]:
-        run(checkpoint_path=checkpoint_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
+    #for path in paths[:2]:
+        #run(checkpoint_path=checkpoint_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
         
     futures = client.map(run, paths[:2], checkpoint_path=checkpoint_path, savedir="/orange/ewhite/everglades/predictions")
     wait(futures)
