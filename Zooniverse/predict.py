@@ -124,6 +124,8 @@ def find_files(sites=None):
     if sites is not None:
         paths = [x for x in paths if any(w in x for w in sites)]
     paths = [x for x in paths if not "projected" in x]
+    paths = [x for x in paths if not "Identified Nests" in x]
+    
     
     return paths
 
