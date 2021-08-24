@@ -89,7 +89,7 @@ def run(tile_path, checkpoint_path, savedir="."):
         print("{} could not be projected {}, using unprojected data".format(tile_path, e))
         projected_path = tile_path
     
-    model = deepforest.main.deepforest.load_from_checkpoint(checkpoint_path)
+    model = main.deepforest.load_from_checkpoint(checkpoint_path)
     
     #Read bigtiff using rasterio and rollaxis and set to BGR
     src = rasterio.open(projected_path)
