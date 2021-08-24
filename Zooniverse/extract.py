@@ -1,4 +1,4 @@
-#Extract old zooniverse annotations. We had a test workflow on bounding boxes, let's salvage what we an
+#Download images that match annotations from Zooniverse
 import pandas as pd
 import paramiko
 import os
