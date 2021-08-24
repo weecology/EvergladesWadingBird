@@ -1,4 +1,5 @@
 #Bird Bird Bird Detector
+# Given a set of predictions in /orange/ewhite/everglades/predictions/, generate predicted nests
 import glob
 import geopandas
 import rtree
