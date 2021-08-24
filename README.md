@@ -87,11 +87,13 @@ python Zooniverse/nest_detection.py
 
 This will save nest series images to 
 
+```
 /orange/ewhite/everglades/nest_crops/
-
+```
 and a aggregate shapefile at /orange/ewhite/everglades/nest_crops/nest_detections.shp
 
 Both steps are run together in 
+
 ```
 sbatch Zooniverse/SLURM/predict.sbatch
 ```
