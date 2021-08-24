@@ -1,4 +1,4 @@
-#aggregation script
+#Download and clean nest label series from Zooniverse
 import pandas as pd
 import geopandas as gpd
 from panoptes_client import Panoptes
