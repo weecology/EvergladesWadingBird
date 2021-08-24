@@ -39,7 +39,30 @@ Project Organization
         |-- upload_mapbox.py <- Upload data to mapbox for visualization server
 --------
 
-# Bird-Bird-Bird
+# Download and clean Zooniverse annotations
+
+To download the image crops and corresponding annotations
+```
+python aggregate.py
+```
+This saves the raw zooniverse data to 
+```
+/App/Zooniverse/data/everglades-watch-classifications.csv
+```
+
+followed by
+
+```
+python extract.py
+```
+
+which saves image crops and annotation shapefiles to
+
+```
+/orange/ewhite/everglades/Zooniverse/parsed_images/
+```
+
+# Bird-Bird-Bird Workflow
 
 ## Environment
 
