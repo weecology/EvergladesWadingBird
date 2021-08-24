@@ -39,7 +39,7 @@ Project Organization
         |-- upload_mapbox.py <- Upload data to mapbox for visualization server
 --------
 
-# Bird-Bird-Bird Workflow
+# Bird-Bird-Bird
 
 ## Environment
 
@@ -48,21 +48,33 @@ Conda or mamba (faster)
 mamba env create -f=environment.yml
 ```
 The environment can be sensitive to the new CUDA version. Its often useful to first install torch and torch vision from -c pytorch and then install the rest of the environment. 
+
 0. Sync dropbox to hipergator
 
 ```
 rclone sync everglades2021:"Wading Bird 2021/Deliverables/" /orange/ewhite/everglades/2021
 ```
 
-1. Predict bird locations using trained model using predict.py. If you need to train a new model see the [BirdDetectorRepo](https://github.com/weecology/BirdDetector/blob/main/everglades.py)
+1. Predict bird locations using trained model using predict.py. If you need to train a new model see the [BirdDetectorRepo](https://github.com/weecology/BirdDetector/blob/main/everglades.py). To create the annotations for the bird detector model run [this](https://github.com/weecology/EvergladesWadingBird/blob/main/Zooniverse/create_bird_detector_annotations.py)
 
 ```
 python Zooniverse/predict.py
 ```
-This will run the everglades bird detector on all files in /orange/ewhite/everglades/2021 and save predicted bird locations to /orange/ewhite/everglades/predictions. An aggregate .shp of all bird detections is written to
+This will run the everglades bird detector on all selected files in /orange/ewhite/everglades/2021 and save predicted bird locations to /orange/ewhite/everglades/predictions. A subset of sites can be selected using the find_files() function. An aggregate .shp of all bird detections is written this repo at
 
 ```
 App/Zooniverse/data/PredictedBirds.shp
+```
+The output shapefile contains the predicted polygon, confidence score, site and event date.
+```
+>>> import geopandas as gpd
+>>> gdf[["score","site","event"]]
+          score     site       event
+0      0.246132   Jerrod  03_24_2020
+1      0.349666   Jerrod  03_24_2020
+...         ...      ...         ...
+14033  0.270656  Yonteau  04_27_2020
+14034  0.237832  Yonteau  04_27_2020
 ```
 
 2. Predict nest-locations using bird-bird-bird 
@@ -78,8 +90,13 @@ This will save nest series images to
 ```
 and a aggregate shapefile at /orange/ewhite/everglades/nest_crops/nest_detections.shp
 
-Both steps are run together in 
-
+The shapefile contains the predicted next polygon, site, date and a unique identifier.
 ```
-sbatch Zooniverse/SLURM/predict.sbatch
+>>> gdf[["Site","Date","target_ind"]].head()
+          Site        Date  target_ind
+0        Aerie  04_27_2020         880
+1        Aerie  04_27_2020         880
+2  CypressCity  03_11_2020           7
+3  CypressCity  04_29_2020           7
+4  CypressCity  04_01_2020           8
 ```
