@@ -85,24 +85,24 @@ def run(tile_path, checkpoint_path, savedir="."):
     #optionally project
     try:
         projected_path = utm_project_raster(tile_path)
+        project_boxes = True
     except Exception as e:
         print("{} could not be projected {}, using unprojected data".format(tile_path, e))
         projected_path = tile_path
-    
+        project_boxes = False
+
     model = main.deepforest.load_from_checkpoint(checkpoint_path)
     model.label_dict = {"Bird":0}
+    
     #Read bigtiff using rasterio and rollaxis and set to BGR
-    src = rasterio.open(projected_path)
-    numpy_array = src.read()
-    numpy_array_rgb = np.rollaxis(numpy_array, 0,3)    
-    numpy_array_bgr = numpy_array_rgb[:,:,::-1]
     try:
         boxes = model.predict_tile(numpy_image=numpy_array_bgr, patch_overlap=0, patch_size=1500)
     except Exception as e:
         return "Tile {} returned {}".format(tile_path, e)
         
     #Project
-    projected_boxes = project(projected_path, boxes)
+    if project_boxes:
+        projected_boxes = project(projected_path, boxes)
     
     #Get filename
     basename = os.path.splitext(os.path.basename(projected_path))[0]
