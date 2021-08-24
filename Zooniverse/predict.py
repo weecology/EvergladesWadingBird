@@ -151,7 +151,7 @@ def summarize(paths):
     return summary
     
 if __name__ == "__main__":
-    client = start(gpus=10,mem_size="30GB")    
+    client = start(gpus=4,mem_size="30GB")    
     checkpoint_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210526_132010/bird_detector.pl"    
     #Start with a known site, sites = None for all data
     paths = find_files(sites=["Joule"])
