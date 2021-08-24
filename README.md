@@ -37,20 +37,6 @@ Project Organization
         |-- start_cluster.py <- Useful dask utilities for parallel data processing
         |-- tile_raster.py   <- Split a large orthomosaic into smaller tiles
         |-- upload_mapbox.py <- Upload data to mapbox for visualization server
-    ├── environment.yml   <- Conda requirements
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   ├── data           <- Pytorch Lighting data module for creating dataloaders for model training
-    │   ├── dataset        <- Pytorch dataset for generating batches of data
-    │   ├── generate       <- Convert csv of point files to tree crowns
-    │   ├── main           <- Pytorch Lightning Module for model training
-    │   ├── neon_paths     <- Utilities for getting paths and metadata from NEON HSI data
-    │   ├── patches        <- Convert tree crowns into a set of pixels with overlapping windows
-    │   ├── start_cluster  <- dask utilities for SLURM parallel processing
-
-
 --------
 
 # Bird-Bird-Bird Workflow
