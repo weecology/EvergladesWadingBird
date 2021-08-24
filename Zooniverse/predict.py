@@ -103,6 +103,8 @@ def run(tile_path, checkpoint_path, savedir="."):
     #Project
     if project_boxes:
         projected_boxes = project(projected_path, boxes)
+    else:
+        projected_boxes = boxes
     
     #Get filename
     basename = os.path.splitext(os.path.basename(projected_path))[0]
