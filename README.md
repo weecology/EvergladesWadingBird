@@ -73,14 +73,23 @@ rclone sync everglades2021:"Wading Bird 2021/Deliverables/" /orange/ewhite/everg
 ```
 python Zooniverse/predict.py
 ```
-This will run the everglades bird detector on all files in /orange/ewhite/everglades/2021 and save predicted bird locations to /orange/ewhite/everglades/predictions. 
+This will run the everglades bird detector on all files in /orange/ewhite/everglades/2021 and save predicted bird locations to /orange/ewhite/everglades/predictions. An aggregate .shp of all bird detections is written to
 
+```
+App/Zooniverse/data/PredictedBirds.shp
+```
 
 2. Predict nest-locations using bird-bird-bird 
 
 ```
 python Zooniverse/nest_detection.py
 ```
+
+This will save nest series images to 
+
+/orange/ewhite/everglades/nest_crops/
+
+and a aggregate shapefile at /orange/ewhite/everglades/nest_crops/nest_detections.shp
 
 Both steps are run together in 
 ```
