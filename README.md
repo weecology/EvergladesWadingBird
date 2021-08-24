@@ -55,6 +55,13 @@ Project Organization
 
 # Bird-Bird-Bird Workflow
 
+## Environment
+
+Conda or mamba (faster)
+```
+mamba env create -f=environment.yml
+```
+
 0. Sync dropbox to hipergator
 
 ```
