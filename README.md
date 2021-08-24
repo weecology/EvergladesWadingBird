@@ -39,7 +39,7 @@ Project Organization
         |-- upload_mapbox.py <- Upload data to mapbox for visualization server
 --------
 
-# Bird-Bird-Bird Workflow
+# Bird-Bird-Bird
 
 ## Environment
 
@@ -48,13 +48,14 @@ Conda or mamba (faster)
 mamba env create -f=environment.yml
 ```
 The environment can be sensitive to the new CUDA version. Its often useful to first install torch and torch vision from -c pytorch and then install the rest of the environment. 
+
 0. Sync dropbox to hipergator
 
 ```
 rclone sync everglades2021:"Wading Bird 2021/Deliverables/" /orange/ewhite/everglades/2021
 ```
 
-1. Predict bird locations using trained model using predict.py. If you need to train a new model see the [BirdDetectorRepo](https://github.com/weecology/BirdDetector/blob/main/everglades.py)
+1. Predict bird locations using trained model using predict.py. If you need to train a new model see the [BirdDetectorRepo](https://github.com/weecology/BirdDetector/blob/main/everglades.py). To create the annotations for the bird detector model run [this](https://github.com/weecology/EvergladesWadingBird/blob/main/Zooniverse/create_bird_detector_annotations.py)
 
 ```
 python Zooniverse/predict.py
@@ -64,7 +65,6 @@ This will run the everglades bird detector on all files in /orange/ewhite/evergl
 ```
 App/Zooniverse/data/PredictedBirds.shp
 ```
-
 2. Predict nest-locations using bird-bird-bird 
 
 ```
