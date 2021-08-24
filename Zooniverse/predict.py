@@ -1,6 +1,6 @@
 #Predict birds in imagery
 import os
-from deepforest import deepforest
+from deepforest import main
 from deepforest import preprocess
 from distributed import wait
 import geopandas
@@ -79,13 +79,13 @@ def utm_project_raster(path, savedir="/orange/ewhite/everglades/utm_projected/")
 
     return dest_name
 
-def run(tile_path, model_path, savedir="."):
+def run(tile_path, checkpoint_path, savedir="."):
     """Apply trained model to a drone tile"""
     
     #optionally project
     projected_path = utm_project_raster(tile_path)
     
-    model = deepforest.deepforest(weights=model_path)
+    model = deepforest.main.deepforest.load_from_checkpoint(checkpoint_path)
     
     #Read bigtiff using rasterio and rollaxis and set to BGR
     src = rasterio.open(projected_path)
@@ -142,15 +142,14 @@ def summarize(paths):
     
 if __name__ == "__main__":
     client = start(gpus=10,mem_size="30GB")    
-    model_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210131_015711.h5"
-    
+    checkpoint_path = "/orange/ewhite/everglades/Zooniverse/predictions/20210526_132010/bird_detector.pl"    
     paths = find_files()
     print("Found {} files".format(len(paths)))
     
     #for path in paths:
         #run(model_path=model_path, tile_path=path, savedir="/orange/ewhite/everglades/predictions")
         
-    futures = client.map(run, paths, model_path=model_path, savedir="/orange/ewhite/everglades/predictions")
+    futures = client.map(run, paths[:2], model_path=model_path, savedir="/orange/ewhite/everglades/predictions")
     wait(futures)
     completed_predictions = []
     for x in futures:
