@@ -104,7 +104,9 @@ def run(tile_path, checkpoint_path, savedir="."):
     if project_boxes:
         projected_boxes = project(projected_path, boxes)
     else:
-        projected_boxes = boxes
+        # combine column to a shapely Box() object, save shapefile
+        boxes['geometry'] = boxes.apply(lambda x: shapely.geometry.box(x.xmin,x.ymin,x.xmax,x.ymax), axis=1)
+        projected_boxes = geopandas.GeoDataFrame(boxes, geometry='geometry')        
     
     #Get filename
     basename = os.path.splitext(os.path.basename(projected_path))[0]
@@ -168,8 +170,8 @@ if __name__ == "__main__":
             fn = x.result()
             if os.path.exists(fn):
                 completed_predictions.append(fn)
-        except:
-            pass
+        except Exception as e:
+            print("{}".format(e))
     
     #write output to zooniverse app
     df = summarize(completed_predictions)
