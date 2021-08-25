@@ -111,9 +111,13 @@ This will save nest series images to
 ```
 /orange/ewhite/everglades/nest_crops/
 ```
-and a aggregate shapefile at /orange/ewhite/everglades/nest_crops/nest_detections.shp
+and a aggregate shapefile at 
 
-The shapefile contains the predicted next polygon, site, date and a unique identifier.
+```
+/orange/ewhite/everglades/nest_crops/nest_detections.shp
+```
+
+The shapefile contains the predicted nest polygon, site, date and a unique identifier.
 ```
 >>> gdf[["Site","Date","target_ind"]].head()
           Site        Date  target_ind
