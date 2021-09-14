@@ -2,14 +2,17 @@ name: Zooniverse
 channels: 
   - defaults
 dependencies:
-  - python==3.7
-  - geopandas
-  - shapely
-  - pandas
-  - pytest
-  - rasterio
+  - pytorch::pytorch
+  - pytorch::torchvision
+  - nvidia::cudatoolkit=11.1
+  - dask
+  - distributed
   - pip
   - pip:
+    - deepforest
+    - pandas
+    - geopandas
+    - dask_jobqueue
     - panoptescli
     - comet_ml
     - paramiko
@@ -20,6 +23,6 @@ dependencies:
     - xmltodict
     - Panoptes
     - PyYAML
-
-
-
+    - shapely
+    - pytest
+    - rasterio
