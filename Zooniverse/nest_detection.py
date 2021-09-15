@@ -215,7 +215,11 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             except Exception as e:
                 print("{} raises {}".format(filename, e))
             
-            cv2.imwrite(filename, crop)
+            try:
+                cv2.imwrite(filename, crop)
+            except:
+                raise ValueError("The crop has shape {} with size {} and values {}".format(crop.shape, crop.size, crop))
+                
             filenames.append(filename)
             
         if upload:
