@@ -295,7 +295,7 @@ def run(classifications_file=None, savedir=".", download=False, generate=False,m
     
     #Connect to index
     fname = "{}/{}.csv".format(savedir, "nest_aggregate")
-    selected_annotations.to_csv(fname)
+    #selected_annotations.to_csv(fname)
     
     return fname
 
