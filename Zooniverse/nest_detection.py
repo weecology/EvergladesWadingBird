@@ -207,16 +207,10 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
             filename = "{}/{}.png".format(dirname, datename)
             crop = crops[datename]
             if not crop.shape[2] == 3:
-                continue      
-            
-            #Write timestamp as watermark
-            try:
-                crop = write_timestamp(crop, datename)
-            except Exception as e:
-                print("{} raises {}".format(filename, e))
-            
-            if crop.size == 0:
-                print("The crop has shape {} with size {} and values {} and group {}".format(crop.shape, crop.size, crop, group))                
+                print(f"[SKIP] Crop does not have three channels: {filename}")
+                continue
+            if (crop.shape[0] == 0) or (crop.shape[1] == 0):
+                print(f"[SKIP] Crop overlaps edge of tile: {filename}")
                 continue
             
             cv2.imwrite(filename, crop)
@@ -233,6 +227,7 @@ def extract_nests(filename, rgb_pool, savedir, upload=False):
 def find_files():
     paths = glob.glob("/orange/ewhite/everglades/utm_projected/*.tif")
     paths = [x for x in paths if not "Cypress" in x]
+    paths = [x for x in paths if not "Joule_05_05_2021" in x] # Joul 05_05_2021 is current not projected properly
     
     return paths
 
