@@ -6,13 +6,14 @@
 
 Data from the Everglades breeding bird monitoring project
 
-Detailed descriptions of individual data components are located in README.md files in the individual data folders.
+Detailed descriptions of individual data components are located in README.md files in the individual data folders. Please see the [methods](../SiteandMethods/methods.md) for details about collection aand how to use the data.
 
 Additional data to complement the wading bird data can be found at [Florida Coastal Everglades LTER](http://fcelter.fiu.edu/).
 
 
 ### Data Organization
 ------------
+    |-- Counts              <- Time series of count data from aerial and UAV images, and ground transects
     |-- DataCleaningScripts <- Scripts used to add new data
     |-- Hg                  <- Time series of feather mercury content
     |-- Nesting             <- Time series of nest checks and nest success

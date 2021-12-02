@@ -2,10 +2,34 @@
 
 Measurements for Hg levels in individual feathers. 
 
-### Field Collection Methods
+Field collection methods are described in [Feather_Mercury_Collection](../SiteandMethods/Feather_Mercury_Collection.md).
 
-Field collection methods are described in Feather_Mercury_Collection.
+A quick guide to protocol is listed in [DMA_Protocol](../SiteandMethods/DMA_Protocol.md).
 
-### Hg Analyzer Methods
+### Feather HG
+order
+year
+colony
+nest_feather_id
+hg
+colony_year
+unique_feather_id
+culmen
+mass
+tarsus
+clutch
+brood
+nestlings14days
+fledged
+DatQal_1_Good
+MinDepth_20
+MaxDepth_20
+RecLength_20
+RecRange_20
+Avg_CrFish_20
+Avg_Shrimp_20
+Avg_TotBiomass_20
+NbGages
+NbPSUs
+Notes
 
-A quick guide to protocol is listed in DMA_Protocol.
