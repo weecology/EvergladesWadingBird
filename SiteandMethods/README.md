@@ -1,5 +1,11 @@
 # Site and Methods Data
 
+### colonies
+Colony locations
+
+### methods
+Project description and sampling design. 
+
 ### species_list
 Non-target species are noted but are not systematically counted.
 
