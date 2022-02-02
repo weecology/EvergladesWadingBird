@@ -8,9 +8,12 @@ These indicators are used to judge the progress of the Comprehensive Everglades 
 * species - see [species table](../SiteandMethods/species_list.csv)
 * count - Max estimate of nesting pairs
 
-### Forager Ratio
+### Coastal Nesting
+Proportion of all species nesting in coastal Everglades National Park colonies, as opposed to the sawgrass Everglades. The data for this calculation only include numbers reported in the South Florida Wading Bird report. Florida Bay is not included.
 
+### Forager Ratio
 The ratio of tactile/sight foraging species, calculated as (whib + wost)/greg.
+
 
 
 Please see the [methods](../SiteandMethods/methods.md) for details about collection and how to use the data.
