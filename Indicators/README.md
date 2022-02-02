@@ -14,6 +14,22 @@ Proportion of all species nesting in coastal Everglades National Park colonies, 
 ### Forager Ratio
 The ratio of tactile/sight foraging species, calculated as (whib + wost)/greg.
 
+### Stork Initiation Date
+Earliest nesting date for Wood Storks each year, across all colonies. Before 2010, only a month and score were recorded. Score indicates how early/late in the month nesting began:
+
+|month|score for middle of the month|
+|_____|_____________________________|
+|Nov  |	5                           |
+|Dec  |	4                           |
+|Jan  |	3                           |
+|Feb  |	2                           |
+|Mar  |	1                           |
+|examples:                          | 	
+|Early February|	2.5               |
+|Early January |	3.5               |
+|Early December|	4.5               |
+|Mid December  |	4                 |  
+
 
 
 Please see the [methods](../SiteandMethods/methods.md) for details about collection and how to use the data.
