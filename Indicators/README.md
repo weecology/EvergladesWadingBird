@@ -3,16 +3,17 @@
 These indicators are used to judge the progress of the Comprehensive Everglades Restoration Plan (CERP) (as well as non-CERP restoration projects) toward achieving restoration goals. Indicators are based on the maximum estimated counts of nesting pairs. These counts are coordinated across groups working in Loxahatchee NWR (aka WCA 1), Water Conservation Areas 2 and 3, and Everglades National Park.
 
 ### Max Counts
-* year - 1980 indicates a pre-1980 rough estimate
-* region - Loxahatchee NWR (aka WCA 1), Water Conservation areas 2 and 3, Everglades National Park, or total for all regions
+These are the yearly reported maximum observed number of nesting pairs. These counts are used to calculate 4 other indicators of restoration progress, including the ratio of tactile/sight foraging species, calculated as (whib + wost)/greg. Reported values for the other 3 indicators are provided here.
+
+* year
+* region - Loxahatchee NWR, Water Conservation areas 2 and 3, Everglades National Park
 * species - see [species table](../SiteandMethods/species_list.csv)
 * count - Max estimate of nesting pairs
 
+Max_count_all.csv is also provided to record the reported number of nesting pairs across all regions (in most cases, equivalent to sums of numbers in max_count.csv).
+
 ### Coastal Nesting
 Proportion of all species nesting in coastal Everglades National Park colonies, as opposed to the sawgrass Everglades. The data for this calculation only include numbers reported in the South Florida Wading Bird report. Florida Bay is not included.
-
-### Forager Ratio
-The ratio of tactile/sight foraging species, calculated as (whib + wost)/greg.
 
 ### Stork Initiation Date
 Earliest nesting date for Wood Storks each year, across all colonies. Before 2010, only a month and score were recorded. Score indicates how early/late in the month nesting began:
@@ -30,6 +31,7 @@ Earliest nesting date for Wood Storks each year, across all colonies. Before 201
 |Early December|	4.5               |
 |Mid December  |	4                 |  
 
+### Supercolony Threshold
 
 
 Please see the [methods](../SiteandMethods/methods.md) for details about collection and how to use the data.
