@@ -18,7 +18,7 @@ The ratio of tactile/sight foraging species, calculated as (whib + wost)/greg.
 Earliest nesting date for Wood Storks each year, across all colonies. Before 2010, only a month and score were recorded. Score indicates how early/late in the month nesting began:
 
 |month|score for middle of the month|
-|_____|_____________________________|
+|---------------|:-------------------------------:|
 |Nov  |	5                           |
 |Dec  |	4                           |
 |Jan  |	3                           |
