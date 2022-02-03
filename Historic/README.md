@@ -12,6 +12,9 @@ These data are collected from multiple sources in an attempt to extend the time 
 ### Max Count Totals
 Total reported counts, for all species, and for only CERP-focused species and locations.
 
+### Supercolony Threshold
+Indicator of years in which White Ibis or Wood Storks exceeded the supercolony threshold. The threshold is 16977 for White Ibis, 1458 for Wood Storks. Data are from Crozier and Gawlik 2003.
+
 ### Sources
 * Gaea E. Crozier and Dale E. Gawlik "Wading Bird Nesting Effort as an Index to Wetland Ecosystem Integrity," Waterbirds 26(3), 303-324, (1 September 2003). https://doi.org/10.1675/1524-4695(2003)026[0303:WBNEAA]2.0.CO;2 
 

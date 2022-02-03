@@ -31,7 +31,5 @@ Earliest nesting date for Wood Storks each year, across all colonies. Before 201
 |Early December|	4.5               |
 |Mid December  |	4                 |  
 
-### Supercolony Threshold
-
 
 Please see the [methods](../SiteandMethods/methods.md) for details about collection and how to use the data.
