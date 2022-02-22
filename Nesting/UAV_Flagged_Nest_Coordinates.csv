@@ -1,0 +1,44 @@
+nest_id,site,year,species,field_nest_id,lat,long,tiff,notes
+1,Joule,2021,greg,120,26.0117665,-80.6305733,Joule_05_05_2021-0-1,pink paper marker
+2,Joule,2021,greg,152,26.0116869,-80.6306046,Joule_05_05_2021-0-1,orange paper marker
+3,Joule,2021,greg,237,26.0116147,-80.6307125,Joule_05_05_2021-0-1,"pink flagging, may need buffer around waypoint, not sure which nest goes with flag, 2 chicks sw of flag"
+4,Joule,2021,greg,77,26.0116426,-80.6309507,Joule_05_05_2021-0-1,blue flagging plus pink paper in nest
+5,Joule,2021,greg,108,26.0117449,-80.6311519,Joule_05_05_2021-0-1,blue flagging plus pink paper in nest
+6,Joule,2021,greg,,26.0117358,-80.6310859,Joule_05_05_2021-0-1,"Nest beside 108 pink paper in nest, to east of 108"
+7,Joule,2021,greg,161,26.0118004,-80.6312035,Joule_05_05_2021-0-0,Pink flagging 2' plus a touch of blue
+8,Joule,2021,greg,,26.0118389,-80.6312183,Joule_05_05_2021-0-0,pink paper in nest with blue star of flagging above(is this nest below or just above flagging? 299 or 229?
+9,Joule,2021,greg,,26.0118552,-80.6314176,Joule_05_05_2021-0-0,pink paper? In nest and orange flag stripe below
+10,Joule,2021,greg,,26.0119225,-80.6314688,Joule_05_05_2021-0-0,"pink and blue flagging twisted together, straight line below nest"
+11,Joule,2021,greg,104,26.0120936,-80.6313753,Joule_05_05_2021-0-0,"pink and orange zig zag flagging, maybe a touch of old blue?"
+12,Joule,2021,greg,102,26.0121057,-80.631309,Joule_05_05_2021-0-0,"orange paper marker plus blue flagging x, right next to GBHE or hawk nest"
+13,Joule,2021,greg,223,26.0120943,-80.6312566,Joule_05_05_2021-0-0,"small flagging, orange with lil blue"
+14,Joule,2021,greg,100,26.01211,-80.6312433,Joule_05_05_2021-0-0,"no flagging, next to 223"
+15,Joule,2021,greg,219,26.0122733,-80.631082,Joule_05_05_2021-0-0,pink X with square center
+16,Joule,2021,greg,159,26.0123126,-80.6307449,Joule_05_05_2021-0-0,"pink paper in nest, two orange flag stripes below"
+17,Joule,2021,greg,96,26.0123706,-80.6307527,Joule_05_05_2021-0-0,orange? Paper with 3 small strips of blue flagging beside it
+18,Joule,2021,greg,71,26.0120491,-80.6305118,Joule_05_05_2021-0-0,"orange paper below, large blue x of flagging, not quite sure where actual nest is "
+19,Jerrod,2021,greg,185,26.0037907,-80.5970397,Jerrod_05_05_2021,"orange flagging cross, and pink paper"
+20,Jerrod,2021,greg,79,26.0036829,-80.5969929,Jerrod_05_05_2021,small pink bundle or paper
+21,Jerrod,2021,greg,81,26.0036003,-80.5969241,Jerrod_05_05_2021,pink paper and blue flagging around
+22,Jerrod,2021,greg,246,26.0035968,-80.5968819,Jerrod_05_05_2021,"L shaped pink flagging, actual nest is hard to determine"
+23,Jerrod,2021,gbhe,176,26.0034595,-80.5969665,Jerrod_05_05_2021,"no flagging, south of 246"
+24,Jerrod,2021,greg,85,26.0034046,-80.5968563,Jerrod_05_05_2021,orange with two parrellel strips of blue flagging
+25,Jerrod,2021,greg,165,26.0033439,-80.5968827,Jerrod_05_05_2021,"pink flagging in nest, maybe a touch of purple"
+26,Jerrod,2021,greg,178,26.0033384,-80.596859,Jerrod_05_05_2021,"pink paper in nest, orange ""y"" of flagging beside nest "
+27,Jerrod,2021,greg,87,26.003365,-80.5968129,Jerrod_05_05_2021,pink blob of flagging in nest
+28,Jerrod,2021,greg,167,26.003373,-80.596778,Jerrod_05_05_2021,pink paper in nest with long orange line of flagging across going east west
+29,Jerrod,2021,greg,182,26.0033288,-80.596766,Jerrod_05_05_2021,orange paper in nest with short blue line of flagging across
+30,Jerrod,2021,greg,91,26.003329,-80.5967376,Jerrod_05_05_2021,"blue flagging, extremely close to 89, one foot east of 89"
+31,Jerrod,2021,greg,89,26.0033312,-80.5967414,Jerrod_05_05_2021,"pink or orange paper, one foot west of 91 "
+32,Jerrod,2021,greg,180,26.0032702,-80.5968528,Jerrod_05_05_2021,pink paper in nest and blue triangle of flagging nw of it
+33,Jerrod,2021,greg,184,26.0034043,-80.5966897,Jerrod_05_05_2021,"beside 186, coordinates may need to be adjusted, paper may need to be adjusted and orange line of flagging beside"
+34,Jerrod,2021,greg,186,26.0034135,-80.5966876,Jerrod_05_05_2021,"directly beside 184, coordinates may need to be adjusted, paper blew out of nest, white, with orange line"
+35,Jerrod,2021,greg,171,26.003413,-80.5966287,Jerrod_05_05_2021,"no flagging, near 186 and 184, nest not visible"
+36,Jerrod,2021,greg,194,26.0036607,-80.596635,Jerrod_05_05_2021,small blue flagging in nest
+37,Jerrod,2021,greg,192,26.0036481,-80.5966237,Jerrod_05_05_2021,orange paper in nest with blue x of flagging below
+38,Jerrod,2021,greg,175,26.0036284,-80.5965912,Jerrod_05_05_2021,"no flagging, nest not visible, may need to move coordinates, a nest to the east could be correct location?"
+39,Jerrod,2021,gbhe,500,26.0037347,-80.5966279,Jerrod_05_05_2021,"no flagging, nest easy to see"
+40,Jerrod,2021,greg,196,26.0037628,-80.5965816,Jerrod_05_05_2021,"no flagging, two juvies easy to see in nest"
+41,Jerrod,2021,greg,181,26.0038501,-80.5966327,Jerrod_05_05_2021,"pink flagging in v shape, circle in photoshop is not on very visible nest just a foot north, may need corrections"
+42,Jerrod,2021,greg,183,26.0038891,-80.59671,Jerrod_05_05_2021,no flagging
+43,Jerrod,2021,greg,103,26.0039448,-80.5967794,Jerrod_05_05_2021,"small piece of orange flagging visible, no nest visible"
