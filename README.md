@@ -13,9 +13,8 @@ Additional data to complement the wading bird data can be found at [South Florid
 
 ### Data Organization
 ------------
-    |-- Aerial              <- Time series of count data from aerial and UAV images
+    |-- Counts              <- Time series of count data from aerial and UAV images, and ground transects
     |-- DataCleaningScripts <- Scripts used to add new data
-    |-- Ground              <- Time series of count data from ground transects
     |-- Hg                  <- Time series of feather mercury content
     |-- Historic            <- Pre-1986 data, or outside data sources
     |-- Indicators          <- Time series of indicators used in restoration assessment
