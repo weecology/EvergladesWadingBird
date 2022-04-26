@@ -1,323 +1,323 @@
 station,agency,latitude,longitude,easting,northing,datum,zone,area,description,real_time,vertical_datum,vertical_conversion,locationtype,watertype,used_in_surfacing_program
-2A300,SFWMD,"26.14'47""","-80.24'29""",559111.6747,2903114.435,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.5,Marsh,Freshwater,No
-3A-5,USGS,"26.03'24""","-80.42'19""",529481.0277,2881992.645,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.48,Marsh,Freshwater,No
-3A10,SFWMD,"26.16'46""","-80.44'23""",525980.0503,2906666.287,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
-3A11,SFWMD,"26.13'06""","-80.44'37""",525605.1424,2899897.817,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
-3A12,SFWMD,"26.10'09""","-80.40'32""",532417.1521,2894468.134,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
-3A9,SFWMD,"26.07'23""","-80.38'51""",535234.7766,2889368.949,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.47,Marsh,Freshwater,No
-3AN1W1,SFWMD,"26.11'17""","-80.44'24""",525972.5783,2896545.474,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
-3ANE,SFWMD,"26.16'44""","-80.36'17""",539459.0686,2906638.87,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,No
-3ANW,SFWMD,"26.16'00""","-80.46'49""",521937.2121,2905238.337,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.4,Marsh,Freshwater,No
-3AS,SFWMD,"26.04'55.534""","-80.41'29.551""",531579.5391,2884991.384,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
-3AS3W1,SFWMD,"25.51'27""","-80.46'15""",522955.7515,2859933.841,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
-3ASW,SFWMD,"25.59'24""","-80.50'09""",516424.3787,2874596.982,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
-3B-SE,SFWMD,"25.47'17""","-80.29'58""",550178.6919,2852319.048,NAD83,17N,Water Conservation Area 3B,,No,NAVD88,-1.56,Marsh,Freshwater,Yes
-3BS1W1,SFWMD,"25.46'50""","-80.30'40""",549012.0536,2851484.116,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
-A13,ENP,"25.29'50""","-80.42'45""",528887.427,2820049.808,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-BCA1,BCNP,"26.14'33""","-81.19'14""",467985.5963,2902579.231,NAD83,17N,Big Cypress National Preserve,"Okaloacooche Slough, North Bear Island",Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
-BCA10,BCNP,"25.42'49""","-81.01'19""",497798.554,2843968.889,NAD83,17N,Big Cypress National Preserve,Gum Slough,Yes,NAVD88,-1.43,Marsh,Freshwater,Yes
-BCA11,BCNP,"25.47'21""","-81.06'00""",489974.4338,2852339.526,NAD83,17N,Big Cypress National Preserve,Roberts Lake Strand,Yes,NAVD88,-1.43,Marsh,Freshwater,Yes
-BCA12,BCNP,"26.11'29""","-81.05'12""",491340.7023,2896882.12,NAD83,17N,Big Cypress National Preserve,Kissimmee Billy Strand,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
-BCA13,BCNP,"26.05'35""","-81.03'13""",494638.9588,2885990.323,NAD83,17N,Big Cypress National Preserve,Mullet Slough,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
-BCA14,BCNP,"26.02'40""","-81.18'00""",469987.9212,2880640.293,NAD83,17N,Big Cypress National Preserve,Deep Lake Strand,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
-BCA15,BCNP,"26.02'23""","-81.01'36""",497325.257,2880093.253,NAD83,17N,Big Cypress National Preserve,Aqua House,Yes,NAVD88,-1.42,Marsh,Freshwater,Yes
-BCA16,BCNP,"26.03'24""","-81.09'20""",484432.6009,2881978.748,NAD83,17N,Big Cypress National Preserve,West Mud Lake,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
-BCA17,BCNP,"26.12'18""","-81.10'05""",483203.4871,2898406.983,NAD83,17N,Big Cypress National Preserve,Little Marsh,Yes,NAVD88,-1.36,Marsh,Freshwater,Yes
-BCA18,BCNP,"26.12'24""","-80.58'59""",501686.0553,2898580.73,NAD83,17N,Big Cypress National Preserve,Cowbell Strand,Yes,NAVD88,-1.41,Marsh,Freshwater,Yes
-BCA19,BCNP,"25.47'35""","-81.12'08""",479719.2243,2852793.274,NAD83,17N,Big Cypress National Preserve,Gator Hook Strand,Yes,NAVD88,-1.41,Marsh,Freshwater,Yes
-BCA2,BCNP,"26.11'46""","-81.17'19""",471164.5243,2897434.259,NAD83,17N,Big Cypress National Preserve,East Hinson Marsh,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
-BCA20,BCNP,"25.42'23""","-80.56'05""",506542.1218,2843182.064,NAD83,17N,Big Cypress National Preserve,North Bear Island,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
-BCA3,BCNP,"26.09'24""","-81.13'18""",477845.5903,2893052.762,NAD83,17N,Big Cypress National Preserve,East Crossing Strand,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
-BCA4,BCNP,"25.57'26""","-81.06'14""",489599.276,2870950.611,NAD83,17N,Big Cypress National Preserve,Monument Road,Yes,NAVD88,-1.43,Marsh,Freshwater,Yes
-BCA5,BCNP,"25.58'06""","-80.55'35""",507368.8034,2872179.036,NAD83,17N,Big Cypress National Preserve,Racoon Point,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
-BCA8,BCNP,"25.53'25""","-81.16'13""",472926.09,2863560.772,NAD83,17N,Big Cypress National Preserve,Turner River at Bridge 83 on US41 (Tamiami Trail),Yes,NAVD88,-1.39,Marsh,Freshwater,No
-BCA9,BCNP,"25.46'42""","-80.54'44""",508801.0183,2851138.964,NAD83,17N,Big Cypress National Preserve,Pinecrest Hammock,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
-C111_wetland_east_of_FIU_LTER_TSPH5,USGS,"25.17'40""","-80.31'12""",548320.9515,2797638.292,NAD83,17N,Everglades National Park,,No,NAVD88,-1.56,Marsh,Freshwater,No
-CP,ENP,"25.13'39""","-80.42'14""",529818.8073,2790185.111,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
-CR2,ENP,"25.29'55""","-80.37'18""",538016.0574,2820226.398,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
-CR3,ENP,"25.29'48""","-80.39'46""",533884.8323,2819999.994,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
-CT27R,ENP,"25.18'03""","-80.29'19""",551472.2769,2798370.432,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
-CT50R,ENP,"25.18'46""","-80.31'15""",548223.8231,2799681.092,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
-CV5NR,ENP,"25.18'08""","-80.29'15""",551583.543,2798524.653,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
-CY2,ENP,"25.19'39""","-80.40'58""",531919.1421,2801262.927,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-CY3,ENP,"25.19'40""","-80.45'02""",525097.6604,2801279.287,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-DO1,ENP,"25.22'19""","-80.41'27""",531097.0595,2806182.406,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-DO2,ENP,"25.23'18""","-80.44'39""",525727.8807,2807985.852,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-E112,ENP,"25.25'26""","-80.36'35""",539240.685,2811955.633,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-E146,ENP,"25.15'09.20""","-80.39'58.54""",533588.8902,2793085.202,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
-EDEN_1,USGS,"25.51'38""","-80.53'42""",510514.9741,2860236.368,NAD83,17N,Big Cypress National Preserve,,No,NAVD88,-1.47,Marsh,Freshwater,No
-EDEN_10,USGS,"25.47'07""","-80.37'02""",538377.0579,2851960.827,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
-EDEN_11,USGS,"26.22'35""","-80.27'19""",553893.7959,2918188.099,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
-EDEN_12,USGS,"26.00'42""","-80.35'17""",541222.5858,2877040.84,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
-EDEN_13,USGS,"26.10'35""","-80.22'17""",562816.4626,2895370.047,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
-EDEN_14,USGS,"26.04'10""","-80.45'27""",524254.5926,2883396.965,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
-EDEN_3,USGS,"25.30'43.65""","-80.55'59.35""",506727.0695,2821669.04,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
-EDEN_4,USGS,"26.05'36""","-80.30'25""",549305.1693,2886113.293,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.48,Marsh,Freshwater,Yes
-EDEN_5,USGS,"26.07'25""","-80.45'10""",524715.5199,2889396.583,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
-EDEN_6,USGS,"26.03'55""","-80.54'14""",509613.2564,2882916.516,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
-EDEN_7,USGS,"25.57'08""","-80.29'55""",550198.5087,2870488.89,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
-EDEN_8,USGS,"25.52'00""","-80.40'50""",532005.3603,2860957.077,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-EDEN_9,USGS,"26.13'19""","-80.35'32""",540732.6705,2900327.206,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
-EPSW,ENP,"25.16'17""","-80.30'29""",549526.7884,2795102.691,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
-EVER6,ENP,"25.17'49""","-80.30'41""",549180.859,2797931.268,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
-EVER7,ENP,"25.18'31""","-80.32'32""",546072.444,2799212.195,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
-EVER8,ENP,"25.20'42""","-80.28'42""",552487.8991,2803265.091,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
-G119_H,SFWMD,"25.45'40""","-80.28'39""",552405.3657,2849342.856,NAD83,17N,Tamiami Canal,southern boundary of Pennsuco Wetlands,Yes,NAVD88,-1.59,Canal structure,Freshwater,No
-G119_T,SFWMD,"25.45'40""","-80.28'37""",552454.3457,2849344.071,NAD83,17N,Tamiami Canal,southern boundary of Pennsuco Wetlands,Yes,NAVD88,-1.59,Canal structure,Freshwater,No
-G211_H,SFWMD,"25.39'36""","-80.29'52""",550398.4161,2838121.171,NAD83,17N,L31N Canal,borders Everglades National Park,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
-G211_T,SFWMD,"25.39'33""","-80.29'52""",550404.0596,2838047.228,NAD83,17N,L31N Canal,borders Everglades National Park,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
-G300_T,SFWMD,"26.40'37""","-80.21'48""",563360.3014,2950824.018,NAD83,17N,L40 Canal,Levee 40 Canal along WCA1,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
-G301_T,SFWMD,"26.40'31""","-80.22'49""",561649.234,2950621.874,NAD83,17N,L7 Canal,Levee 7 Canal along WCA1,Yes,NAVD88,-1.48,Canal structure,Freshwater,No
-G339_H,SFWMD,"26.27'48""","-80.27'09""",554571.6779,2927121.843,NAD83,17N,L6 Canal,Levee 6 Canal along WCA2A,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
-G339_T,SFWMD,"26.27'48""","-80.27'10""",554557.9189,2927098.969,NAD83,17N,L6 Canal,Levee 6 Canal along WCA2A,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
-L28_GAP,SFWMD,"26.07'28""","-80.59'00""",501659.4398,2889475.269,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.42,Marsh,Freshwater,Yes
-L28S1,SFWMD,"26.05'38""","-80.50'34""",515715.505,2886100.826,NAD83,17N,L28 Canal,L28 Canal in WCA3A,Yes,NAVD88,-1.46,Canal,Freshwater,Yes
-L28S2,SFWMD,"26.05'38""","-80.50'05""",516521.0671,2886101.819,NAD83,17N,L28 Canal,L28 Canal in WCA3A,Yes,NAVD88,-1.46,Canal,Freshwater,Yes
-L31NN,SFWMD,"25.44'46.526""","-80.29'52.591""",550352.7,2847679.7,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NAVD88,-1.56,Canal,Freshwater,No
-L31NS,SFWMD,"25.42'07.12""","-80.29'46.495""",550541.2,2842776.8,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NAVD88,-1.56,Canal,Freshwater,No
-L31W,ENP,"25.26'13""","-80.35'23""",541247.5459,2813407.335,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-LOOP1_H,SFWMD,"25.45'41""","-80.54'28""",509238.9634,2849262.522,NAD83,17N,Big Cypress National Preserve,Loop Road,No,NAVD88,-1.48,Marsh structure,Freshwater,No
-LOOP1_T,SFWMD,"25.45'40""","-80.54'28""",509241.2556,2849228.291,NAD83,17N,Big Cypress National Preserve,Loop Road,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-LOOP2_H,SFWMD,"25.44'48""","-80.57'14""",504624.731,2847630.735,NAD83,17N,Big Cypress National Preserve,Loop Road,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
-LOOP2_T,SFWMD,"25.44'48""","-80.57'15""",504601.4227,2847616.897,NAD83,17N,Big Cypress National Preserve,Loop Road,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
-MET-1,USGS,"25.43'13""","-80.35'18""",541300.2039,2844777.686,NAD83,17N,Everglades National Park,,No,NAVD88,-1.55,Marsh,Freshwater,No
-NCL,ENP,"25.14'33""","-80.44'40""",525730.6366,2791837.675,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
-NESRS3,SFWMD,"25.44'26""","-80.30'16""",549697.1391,2847057.074,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,No
-NORTH_CA1,USGS,"26.35'38""","-80.21'13""",564356.194,2941626.139,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.44,Marsh,Freshwater,Yes
-NP201,ENP,"25.43'00""","-80.43'10""",528138.1404,2844348.344,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NP202,ENP,"25.39'43""","-80.42'31""",529238.2794,2838290.997,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NP203,ENP,"25.37'22""","-80.44'19""",526235.8574,2833947.609,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NP205,ENP,"25.41'19""","-80.50'52""",515267.3468,2841220.576,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
-NP206,ENP,"25.32'39""","-80.40'19""",532950.5896,2825257.529,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
-NP44,ENP,"25.26'00""","-80.43'13""",528120.541,2812973.576,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
-NP46,ENP,"25.19'06""","-80.47'45""",520542.3135,2800225.815,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NP62,ENP,"25.26'18""","-80.46'58""",521834.8739,2813515.566,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NP67,ENP,"25.19'46""","-80.39'01""",535189.5207,2801486.366,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NP72,ENP,"25.23'41""","-80.42'11""",529861.8273,2808701.836,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
-NTS1,ENP,"25.26'12""","-80.35'34""",540940.3907,2813375.636,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NTS10,ENP,"25.27'37""","-80.36'18""",539703.6655,2815986.475,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-NTS14,ENP,"25.24'59""","-80.38'19""",536337.7252,2811116.973,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.57,Marsh,Freshwater,Yes
-NTS18,ENP,"25.29'02""","-80.33'59""",543576.9308,2818613.069,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
-OL,ENP,"25.15'49""","-80.36'47""",538956.6647,2794206.886,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-OT,ENP,"25.34'43""","-80.57'52""",503563.8859,2829031.627,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
-P33,ENP,"25.36'50""","-80.42'08""",529891.4544,2832970.997,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-P34,ENP,"25.36'27""","-80.56'27""",505933.8534,2832231.413,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
-P35,ENP,"25.27'35""","-80.51'52""",513620.732,2815873.19,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-P36,ENP,"25.31'38""","-80.47'44""",520534.9867,2823356.406,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-P37,ENP,"25.17'03""","-80.41'18""",531371.1349,2796463.309,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-P38,ENP,"25.22'10""","-80.50'00""",516760.8718,2805880.152,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-R127,ENP,"25.21'11""","-80.36'22""",539626.9067,2804113.177,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.57,Marsh,Freshwater,Yes
-R3110,ENP,"25.26'46""","-80.37'34""",537585.6584,2814411.647,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-RG1,ENP,"25.34'53""","-80.36'28""",539384.9034,2829396.758,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
-RG2,ENP,"25.32'33""","-80.36'21""",539592.9609,2825090.995,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
-S140_H,SFWMD,"26.10'18""","-80.49'40""",517207.4042,2894700.008,NAD83,17N,L28 Canal,borders WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,Yes
-S140_T,SFWMD,"26.10'18""","-80.49'38""",517275.0336,2894702.874,NAD83,17N,Water Conservation Area 3A,C60 Canal in WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,Yes
-S141_H,SFWMD,"26.09'02""","-80.26'32""",555755.4401,2892486.864,NAD83,17N,Water Conservation Area 2B,,No,NAVD88,-1.57,Marsh structure,Freshwater,Yes
-S141_T,SFWMD,"26.09'03""","-80.26'33""",555712.99,2892496.306,NAD83,17N,L38E Canal,North New River along WCA2B,No,NAVD88,-1.57,Canal structure,Freshwater,Yes
-S142_H,SFWMD,"26.09'36""","-80.26'47""",555326.9252,2893522.651,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
-S142_T,SFWMD,"26.09'37""","-80.26'41""",555489.7133,2893542.979,NAD83,17N,L38E Canal,North New River along WCA2B,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-S143_T,SFWMD,"26.10'34""","-80.26'54""",555136.9248,2895305.445,NAD83,17N,L38E Canal,North New River along WCA2B,Yes,NAVD88,-1.49,Canal structure,Freshwater,Yes
-S144_H,SFWMD,"26.13'06""","-80.23'52""",560158.6774,2900008.912,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-S144_T,SFWMD,"26.13'05""","-80.23'52""",560164.6011,2899975.541,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-S145_H,SFWMD,"26.13'19""","-80.21'57""",563348.9088,2900416.901,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-S145_T,SFWMD,"26.13'18""","-80.21'57""",563352.0734,2900385.748,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-S146_H,SFWMD,"26.13'32""","-80.20'01""",566576.2429,2900838.887,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-S146_T,SFWMD,"26.13'31""","-80.20'00""",566581.4133,2900799.442,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
-S150_T,SFWMD,"26.20'05""","-80.32'22""",545964.1225,2912820.628,NAD83,17N,Water Conservation Area 3A,L38W Canal at L5,Yes,NAVD88,-1.46,Marsh structure,Freshwater,Yes
-S151_H,SFWMD,"26.00'42""","-80.30'36""",549024.2755,2877054.845,NAD83,17N,Miami Canal,Miami Canal in WCA3B,Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
-S151_T,SFWMD,"26.00'40""","-80.30'35""",549066.0729,2877020.918,NAD83,17N,Miami Canal,Miami Canal in WCA3B,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
-S175_H,SFWMD,"25.25'05""","-80.34'26""",542862.3576,2811294.509,NAD83,17N,L31W Canal,borders Everglades National Park,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
-S175_T,SFWMD,"25.25'03""","-80.34'26""",542863.8314,2811249.805,NAD83,17N,L31W Canal,borders Everglades National Park,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
-S190_H,SFWMD,"26.17'03""","-80.58'05""",503190.1235,2907144.68,NAD83,17N,North Feeder Canal,North Feeder Canal near Big Cypress,Yes,NAVD88,-1.57,Canal structure,Freshwater,No
-S190_T,SFWMD,"26.16'60""","-80.58'04""",503213.055,2907051.935,NAD83,17N,L28 Interceptor Canal,L28 Interceptor near Big Cypress,Yes,NAVD88,-1.57,Canal structure,Freshwater,Yes
-S31_H,SFWMD,"25.56'33""","-80.26'26""",556014.0034,2869447.143,NAD83,17N,Miami Canal,Miami Canal along WCA3B,Yes,NAVD88,-1.55,Canal structure,Freshwater,No
-S332_T,SFWMD,"25.25'19""","-80.35'26""",541179.9996,2811722.3,NAD83,17N,Everglades National Park,Pump station from L31N into ENP,Yes,NAVD88,-1.55,Marsh structure,Freshwater,No
-S332B_T,SFWMD,"25.32'58""","-80.33'38""",544138.7576,2825874.613,NAD83,17N,Everglades National Park,Pump station from L31N into ENP,Yes,NAVD88,-1.58,Marsh structure,Freshwater,No
-S332D_T,SFWMD,"25.28'59""","-80.33'51""",543818.9148,2818498.428,NAD83,17N,L31W Canal,Pump station borders Everglades National Park,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
-S333_H,SFWMD,"25.45'43""","-80.40'27""",532668.1489,2849372.816,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park at L67A",Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
-S333_T,SFWMD,"25.45'42""","-80.40'23""",532774.0729,2849335.35,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park at L67A",Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
-S334_H,SFWMD,"25.45'41""","-80.30'10""",549864.3667,2849342.306,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,Yes
-S334_T,SFWMD,"25.45'41""","-80.30'05""",549992.4468,2849340.372,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,Yes
-S335_H,SFWMD,"25.46'34""","-80.28'59""",551839.5002,2851000.692,NAD83,17N,L30 Canal,L30 Canal along WCA3B,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
-S335_T,SFWMD,"25.46'32""","-80.28'59""",551832.1136,2850930.555,NAD83,17N,L30 Canal,L30 Canal along WCA3B,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
-S336_H,SFWMD,"25.45'40""","-80.29'50""",550405.9695,2849339.799,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,No
-S336_T,SFWMD,"25.45'40""","-80.29'48""",550486.9902,2849335.273,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,No
-S337_T,SFWMD,"25.56'30""","-80.26'28""",555970.7807,2869350.635,NAD83,17N,L30 Canal,L30 Canal along WCA3B,Yes,NAVD88,-1.43,Canal structure,Freshwater,No
-S339_H,SFWMD,"26.13'04""","-80.41'27""",530880.3786,2899828.623,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,No
-S339_T,SFWMD,"26.13'01""","-80.41'25""",530927.8377,2899756.023,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,No
-S34_H,SFWMD,"26.09'02""","-80.26'33""",555714.4996,2892479.605,NAD83,17N,L38E Canal,North New River along WCA2B,Yes,NAVD88,-1.5,Canal structure,Freshwater,No
-S340_H,SFWMD,"26.07'09""","-80.36'48""",538669.8043,2888945.872,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.34,Canal structure,Freshwater,No
-S340_T,SFWMD,"26.07'06""","-80.36'45""",538735.4362,2888851.65,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.34,Canal structure,Freshwater,No
-S343A_H,SFWMD,"25.47'21""","-80.51'19""",514522.2177,2852358.686,NAD83,17N,Water Conservation Area 3A,L28 canal,Yes,NAVD88,-1.54,Marsh structure,Freshwater,Yes
-S343A_T,SFWMD,"25.47'20""","-80.51'20""",514478.4589,2852324.337,NAD83,17N,L28 Canal,Big Cypress National Preserve,Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
-S343B_H,SFWMD,"25.46'42""","-80.50'38""",515652.0486,2851135.295,NAD83,17N,Water Conservation Area 3A,L28 canal,Yes,NAVD88,-1.53,Marsh structure,Freshwater,Yes
-S343B_T,SFWMD,"25.46'41""","-80.50'39""",515620.3471,2851104.986,NAD83,17N,L28 Canal,Big Cypress National Preserve,Yes,NAVD88,-1.53,Canal structure,Freshwater,Yes
-S344_H,SFWMD,"25.55'08""","-80.50'11""",516395.1772,2866714.379,NAD83,17N,Water Conservation Area 3A,L28 Canal in WCA3A,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
-S344_T,SFWMD,"25.55'08""","-80.50'12""",516353.5461,2866724.152,NAD83,17N,Big Cypress National Preserve,L28 Canal in BCNP,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
-S380_H,SFWMD,"25.45'41""","-80.26'54""",555313.8105,2849371.902,NAD83,17N,Pennsuco Wetlands,Tamiami Canal,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
-S39_H,SFWMD,"26.21'21""","-80.17'53""",570050.0733,2915284.569,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
-S7_T,SFWMD,"26.20'07""","-80.32'12""",546248.3818,2912887.485,NAD83,17N,L38E Canal,Between WCA2A and WCA3A,Yes,NAVD88,-1.46,Canal structure,Freshwater,Yes
-S9A_T,SFWMD,"26.03'41""","-80.26'38""",555630.4603,2882614.65,NAD83,17N,Water Conservation Area 3B,Pump station from C11 into WCA3B,Yes,NAVD88,-1.4,Marsh structure,Freshwater,Yes
-SOUTH_CA1,USGS,"26.25'17.0""","-80.20'16.3""",565752.4085,2922897.266,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.48,Marsh,Freshwater,Yes
-SP,ENP,"25.23'19""","-80.47'50""",520390.7787,2808007.486,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
-Taylor_Slough_wetland_at_E146,USGS,"25.15'09.20""","-80.39'58.54""",533624.4872,2792579.872,NAD83,17N,Everglades National Park,,No,NAVD88,-1.55,Marsh,Freshwater,No
-TI-8,USGS,"25.49'57""","-80.32'28""",545989.7679,2857214.738,NAD83,17N,Water Conservation Area 3B,,No,NAVD88,-1.54,Marsh,Freshwater,No
-TI-9,USGS,"25.50'14""","-80.35'58""",540141.9542,2857718.584,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
-TMC,ENP,"25.36'50""","-80.52'20""",512822.4721,2832943.69,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
-TS2,ENP,"25.24'00""","-80.36'24""",539555.7423,2809311.26,NAD83,17N,Everglades National Park,,No,NAVD88,-1.51,Marsh,Freshwater,No
-TSH,ENP,"25.18'39""","-80.37'50""",537180.0913,2799430.863,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
-W11,USGS,"25.56'34""","-80.45'00""",525031.575,2869370.755,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
-W14,USGS,"25.56'14""","-80.40'06""",533210.1641,2868773.669,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.5,Marsh,Freshwater,No
-W15,USGS,"26.00'51""","-80.40'40""",532243.4848,2877292.475,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.48,Marsh,Freshwater,No
-W18,USGS,"26.00'07""","-80.46'44""",522127.9539,2875917.892,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
-W2,USGS,"25.47'59""","-80.48'32""",519158.2904,2853518.554,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
-W5,USGS,"25.47'21""","-80.41'43""",530550.2084,2852371.064,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.52,Marsh,Freshwater,No
-WCA1ME,SFWMD,"26.30'39""","-80.18'36""",568748.3085,2932450.179,NAD83,17N,Water Conservation Area 1,,No,NAVD88,-1.47,Marsh,Freshwater,No
-WCA2E1,SFWMD,"26.21'07""","-80.21'10""",564574.0244,2914830.951,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.57,Marsh,Freshwater,No
-WCA2E4,SFWMD,"26.18'35""","-80.21'23""",564236.9726,2910153.081,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
-WCA2F1,SFWMD,"26.21'36""","-80.22'11""",562878.8895,2915714.735,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.54,Marsh,Freshwater,No
-WCA2F4,SFWMD,"26.19'02""","-80.23'05""",561404.7927,2910969.93,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
-WCA2RT,SFWMD,"26.19'48""","-80.30'35""",548922.8519,2912331.696,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.53,Marsh,Freshwater,No
-WCA2U1,SFWMD,"26.14'29""","-80.21'21""",564330.0635,2902585.567,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.5,Marsh,Freshwater,No
-WCA2U3,SFWMD,"26.17'17""","-80.24'39""",558813.2662,2907727.644,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.56,Marsh,Freshwater,No
-MO-215,USGS,"25.28'20.65""","-80.50'53.59""",515257.06,2817266.59,NAD83,17N,Everglades National Park,Shark River,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
-MO-214,USGS,"25.36'44.10""","-81.01'30.94""",497463.68,2832744.37,NAD83,17N,Everglades National Park,Lostmans River,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
-TSB,ENP,"25.24'10.7""","-80.36'26.3""",539496.657,2809627.565,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh structure,Freshwater,Yes
-BARW4,SFWMD,"25.59'41.57""","-81.20'49.25""",465270.0225,2875162.989,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.37,Canal,Freshwater,Yes
-BARW6A,SFWMD,"26.03'04.29""","-81.20'40.7""",465524.1775,2881398.55,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.39,Canal,Freshwater,Yes
-SR1,ENP,"25.22'43.68""","-80.48'41.4""",518962.7691,2806906.174,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
-G251_T,SFWMD,"26.36'00.24""","-80.26'23.18""",555695.902,2942262.398,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.48,Marsh,Freshwater,No
-G338_T,SFWMD,"26.28'12.15""","-80.26'43.26""",555285.814,2927858.866,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.48,Marsh,Freshwater,No
-WC2AN1,SFWMD,"26.26'51.93""","-80.27'21.92""",554225.819,2925386.42,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
-WC2AS1,SFWMD,"26.23'24.81""","-80.29'33.08""",550618.6016,2918999.539,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
-EP1R,ENP,"25.17'14.892""","-80.27'11.232""",555056.9,2796891.8,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
-NMP,ENP,"25.15'13.86""","-80.47'53.268""",520328.6,2793072,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
-G-3273,SFWMD,"25.37'49.381""","-80.34'33.21""",542575.9,2834820.4,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
-ANGEL,SFWMD,"25.37'21.38""","-80.32'30.207""",546009,2833971,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
-RG3,ENP,"25.32'39.696""","-80.34'30.396""",542685,2825294,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.57,Marsh,Freshwater,Yes
-3ANE_GW,SFWMD,"26.16'44""","-80.36'17""",539459.0686,2906638.87,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
-3ANW_GW,SFWMD,"26.16'00""","-80.46'49""",521937.2121,2905238.337,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.4,Marsh,Freshwater,Yes
-MO-216,USGS,"25.43'44.276""","-81.09'51.595""",483516,2845679,NAD83,17N,Big Cypress National Preserve,Chatham River,Yes,NAVD88,-1.42,Marsh,Freshwater,Yes
-L28_GAPG1,SFWMD,"26.07'25.105""","-80.59'02.341""",501602,2889376,NAD83,17N,Big Cypress National Preserve,,No,NAVD88,-1.42,Marsh,Freshwater,No
-USSO_T,SFWMD,"26.19'49.16""","-80.52'54.98""",511782.06,2912271.16,NAD83,17N,L28 Canal,,No,NAVD88,-1.42,Canal structure,Freshwater,No
-WFEED_O,SFWMD,"26.18'09""","-81.04'28""",492563.216,2909183.815,NAD83,17N,North Feeder Canal,,No,NAVD88,-1.38,Canal structure,Freshwater,No
-S34E_H,SFWMD,"26.09'01""","-80.26'33""",555734.452,2892448.411,NAD83,17N,L38E Canal,,No,NAVD88,-1.49,Canal structure,Freshwater,Yes
-G737_T,SFWMD,"25.25'05""","-80.34'25""",542868.293,2811315.702,NAD83,17N,L31W Canal,,No,NAVD88,-1.51,Canal structure,Freshwater,Yes
-OKAL29,SFWMD,"26.12'18""","-81.20'45""",465443.874,2898436.521,NAD83,17N,Big Cypress National Preserve,,No,NAVD88,-1.34,Canal,Freshwater,No
-3AS3_GW,SFWMD,"25.51'26""","-80.46'17""",522907.113,2859902.403,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.5,Marsh,Freshwater,No
-3AN1_GW4,SFWMD,"26.11'11""","-80.44'22""",526035.461,2896359.22,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.45,Marsh,Freshwater,No
-3BS1_GW2,SFWMD,"25.46'50""","-80.30'26""",549419.916,2851476.145,NAD83,17N,Water Conservation Area 3B,,No,NAVD88,-1.56,Marsh,Freshwater,No
-Tamiami_Canal_40-Mile_Bend_to_Monroe,USGS,"25.51'05""","-80.58'50""",501948,2859226,NAD83,17N,Big Cypress National Preserve,Bridge 105 on US41 (Tamiami Trail),Yes,NGVD29,-1.46,Marsh,Freshwater,Yes
-Tamiami_Canal_Monroe_to_Carnestown,USGS,"25.53'14.44""","-81.15'42.61""",473771,2863234,NAD83,17N,Big Cypress National Preserve,Bridge 84 on US41 (Tamiami Trail),Yes,NGVD29,-1.39,Marsh,Freshwater,Yes
-EVER4,USGS,"25.20'19.5""","-80.32'48.0""",545619.8,2802535.1,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.57,Marsh,Freshwater,Yes
-L31N_1,USGS,"25.44'46.8""","-80.29'51.5""",550383,2847688.3,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
-L31N_3,USGS,"25.43'03.3""","-80.29'47.6""",550503.8,2844504.8,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
-L31N_4,USGS,"25.42'07.8""","-80.29'45.5""",550568.9,2842797.9,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
-L31N_5,USGS,"25.41'09""","-80.29'50""",550450.3,2840988.5,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
-L31N_7,USGS,"25.39'48.2""","-80.29'53.4""",550364.9,2838502.7,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
-NESRS1,USGS,"25.41'31""","-80.38'04""",536672.9167,2841631.531,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.53,Marsh,Freshwater,Yes
-NESRS2,USGS,"25.43'11""","-80.33'26""",544745.0757,2844886.16,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
-NESRS4,USGS,"25.38'24""","-80.39'10""",534848.0074,2836028.273,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.52,Marsh,Freshwater,Yes
-NESRS5,USGS,"25.37'55""","-80.39'42""",534153.6651,2834949.874,NAD83,17N,Everglades National Park,,No,NGVD29,-1.52,Marsh,Freshwater,No
-NWWF,USGS,"25.53'28""","-80.25'13""",558093.5016,2863794.891,NAD83,17N,Pennsuco Wetlands,Northwest Well Field Canal,Yes,NGVD29,-1.54,Canal,Freshwater,No
-S10A_T,USGS,"26.21'33""","-80.18'46""",568563.4482,2915633.12,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.49,Marsh structure,Freshwater,Yes
-S10A_H,USGS,"26.21'36""","-80.18'45""",568592.5526,2915744.442,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NGVD29,-1.49,Canal structure,Freshwater,Yes
-S10C_T,USGS,"26.22'16""","-80.21'09""",564583.8555,2916947.986,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.47,Marsh structure,Freshwater,Yes
-S10C_H,USGS,"26.22'18""","-80.21'09""",564597.9074,2917008.867,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NGVD29,-1.47,Canal structure,Freshwater,Yes
-S10D_T,USGS,"26.23'18""","-80.22'55""",561635.8137,2918827.896,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.46,Marsh structure,Freshwater,Yes
-S10D_H,USGS,"26.23'19""","-80.22'54""",561683.2987,2918858.313,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NGVD29,-1.46,Canal structure,Freshwater,Yes
-S11A_T,USGS,"26.10'37""","-80.26'57""",555030.7821,2895390.867,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
-S11A_H,USGS,"26.10'37""","-80.26'54""",555115.4609,2895405.335,NAD83,17N,Water Conservation Area 2A,L38E Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
-S11B_T,USGS,"26.12'09""","-80.27'18""",554456.5452,2898221.28,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
-S11B_H,USGS,"26.12'09""","-80.27'14""",554557.9222,2898235.154,NAD83,17N,Water Conservation Area 2A,L38E Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
-S11C_T,USGS,"26.13'46""","-80.27'39""",553853.047,2901210.422,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
-S11C_H,USGS,"26.13'47""","-80.27'35""",553950.8571,2901225.214,NAD83,17N,Water Conservation Area 2A,L38E Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
-S12A_T,USGS,"25.45'41""","-80.49'16""",517941.1978,2849281.23,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
-S12A_H,USGS,"25.45'44""","-80.49'16""",517940.0342,2849363.574,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
-S12B_T,USGS,"25.45'42""","-80.46'10""",523113.3036,2849299.59,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
-S12B_H,USGS,"25.45'44""","-80.46'10""",523115.6191,2849372.194,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
-S12C_T,USGS,"25.45'42""","-80.43'37""",527381.6271,2849310.262,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
-S12C_H,USGS,"25.45'44""","-80.43'37""",527382.653,2849386.199,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
-S12D_T,USGS,"25.45'42""","-80.40'55""",531907.9417,2849325.48,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.52,Marsh structure,Freshwater,Yes
-S12D_H,USGS,"25.45'44""","-80.40'54""",531912.8957,2849401.658,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.52,Marsh structure,Freshwater,Yes
-S18C_T,USGS,"25.19'49""","-80.31'31""",547801.2715,2800571.619,NAD83,17N,C111 Canal,borders Everglades National Park,Yes,NGVD29,-1.56,Canal structure,Freshwater,Yes
-S8_T,SFWMD,"26.19'52""","-80.46'27""",522523.9034,2912387.176,NAD83,17N,Miami Canal,Miami Canal in WCA3A,No,NGVD29,-1.44,Canal structure,Freshwater,Yes
-SITE_17,USGS,"26.17'12""","-80.24'39""",558813.9666,2907573.828,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.49,Marsh,Freshwater,Yes
-SITE_19,USGS,"26.16'53.3""","-80.18'23.9""",569272.0378,2907133.427,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
-SITE_62,USGS,"26.10'29""","-80.45'04""",524865.1692,2895066.73,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.46,Marsh,Freshwater,Yes
-SITE_63,USGS,"26.11'20""","-80.31'51""",546872.501,2896696.403,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
-SITE_64,USGS,"25.58'32""","-80.40'09""",533109.9625,2873028.913,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.52,Marsh,Freshwater,Yes
-SITE_65,USGS,"25.48'50.0""","-80.43'11.4""",528087.2289,2855206.635,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.58,Marsh,Freshwater,Yes
-SITE_69E,USGS,"25.54'24""","-80.35'19.6""",541187.06,2865412.2,NAD83,17N,Water Conservation Area 3B,Site 69E,Yes,NGVD29,-1.66,Marsh,Freshwater,No
-SITE_7,USGS,"26.31'11""","-80.20'49""",565061.8785,2933415.386,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.46,Marsh,Freshwater,Yes
-SITE_71,USGS,"25.53'05""","-80.33'24""",544405.4667,2863003.279,NAD83,17N,Water Conservation Area 3B,,Yes,NGVD29,-1.57,Marsh,Freshwater,Yes
-SITE_76,USGS,"26.00'28""","-80.28'57""",551781.6765,2876657.809,NAD83,17N,Water Conservation Area 3B,,Yes,NGVD29,-1.5,Marsh,Freshwater,Yes
-SITE_8C,USGS,"26.29'57.4""","-80.13'19.6""",577474.7976,2931309.203,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
-SITE_8T,USGS,"26.29'59""","-80.14'05""",576266.93,2931241.7,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
-SITE_9,USGS,"26.27'35.3""","-80.17'25.9""",570077.5333,2927288.801,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.48,Marsh,Freshwater,Yes
-SITE_99,USGS,"26.08'11.2""","-80.22'01.5""",563276.5269,2891044,NAD83,17N,Water Conservation Area 2B,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
-SRS1,USGS,"25.47'55""","-80.34'42""",542265.4614,2853460.28,NAD83,17N,Water Conservation Area 3B,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
-G-1251,USGS,"25.19'15.9""","-80.33'56.7""",543705.7,2800572.4,NAD83,17N,Everglades National Park,,No,NGVD29,-1.58,Canal,Freshwater,Yes
-G-1502,USGS,"25.36'56.6""","-80.34'58.6""",541873.1,2833194.5,NAD83,17N,Everglades National Park,,No,NGVD29,-1.56,Marsh,Freshwater,No
-G-620,USGS,"25.39'22""","-80.45'59.2""",523441.4,2837621.9,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh,Freshwater,Yes
-G-3272,USGS,"25.39'53.8""","-80.32'20.1""",546274.5,2838660,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.56,Marsh,Freshwater,Yes
-EVER5A,USGS,"25.17'10""","-80.34'21.2""",543033.1,2796697.6,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.57,Marsh,Freshwater,Yes
-EVER5B,USGS,"25.17'18.2""","-80.34'09.4""",543362.3,2796950.9,NAD83,17N,Everglades National Park,,No,NGVD29,-1.57,Marsh,Freshwater,No
-SITE_69W,USGS,"25.54'24.7""","-80.35'21.1""",541144.94,2865433.8,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.52,Marsh,Freshwater,Yes
-G-3437,USGS,"25.34'01.2""","-80.34'01.5""",543483,2827804,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3574,USGS,"25.44'46.9""","-80.29'52.4""",550358,2847691,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3575,USGS,"25.42'07.6""","-80.29'46.3""",550547,2842792,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3576,USGS,"25.44'45.0""","-80.30'51.3""",548717,2847627,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3577,USGS,"25.42'09.4""","-80.30'02.0""",550109,2842845,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3578,USGS,"25.42'10""","-80.30'48""",548827,2842859,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3626,USGS,"25.37'06.93""","-80.30'40.58""",549068,2833537,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3628,USGS,"25.35'38.83""","-80.32'04.74""",546730,2830818,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3818,USGS,"25.50'36.8""","-80.27'04.3""",554996.2523,2858473.611,NAD83,17N,Pennsuco Wetlands,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
-G-596,USGS,"25.38'16.8""","-80.30'43.1""",548990,2835686,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-975,USGS,"25.52'12.0""","-80.27'23.3""",554455.2332,2861399.992,NAD83,17N,Pennsuco Wetlands,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
-G-3567,USGS,"25.54'00.2""","-80.26'09.0""",556509,2864737,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.54,Marsh,Freshwater,Yes
-G-1488,USGS,"25.49'06.7""","-80.28'56.4""",551887,2855689,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3761,USGS,"25.50'30.1""","-80.26'00.7""",556768,2858275,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.55,Marsh,Freshwater,Yes
-G-3676,USGS,"25.47'15.5""","-80.25'25.9""",557763,2852293,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.57,Marsh,Freshwater,Yes
-SPARO,ENP,"25.44'02.879""","-80.49'44.552""",517147,2846252,NAD83,17N,Everglades National Park,,No,NGVD29,-1.49,Marsh,Freshwater,Yes
-USSO_O,SFWMD,"26.19'48.302""","-80.52'55.228""",511775,2912245,NAD83,17N,L28 Canal,,No,NGVD29,-1.42,Canal structure,Freshwater,No
-WC2A159,SFWMD,"26.22'48""","-80.26'42""",555363.72,2917886.69,NAD83,17N,Water Conservation Area 2A,,No,NGVD29,-1.46,Marsh structure,Freshwater,No
-New_River_at_Sunday_Bay,USGS,"25.47'52""","-81.15'19""",474401.14,2853325.476,NAD83,17N,Coast of Gulf of Mexico,,Yes,Arbitrary,,River,Tidal,No
-Turner_River_nr_Chokoloskee_Island,USGS,"25.49'44""","-81.20'29""",465777.307,2856790.238,NAD83,17N,Coast of Gulf of Mexico,,Yes,Arbitrary,,River,Tidal,No
-Bottle_Creek_at_Rookery_Branch,USGS,"25.28'04.72""","-80.51'16.30""",514652.9637,2816827.798,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.51,River,Tidal,No
-Broad_River_near_the_Cutoff,USGS,"25.30'06""","-81.04'36""",492287.9112,2820513.181,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.44,River,Tidal,No
-Upstream_Broad_River,USGS,"25.30'04.65""","-80.55'56""",506811.4254,2820460.213,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.47,River,Tidal,No
-Chatham_River_near_the_Watson_Place,USGS,"25.42'34""","-81.14'58""",474967.3734,2843542.644,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.4,River,Tidal,No
-Harney_River,USGS,"25.25'50""","-81.05'09.45""",491388.6082,2812700.523,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.44,River,Tidal,No
-Joe_Bay_2E,USGS,"25.13'57.45""","-80.31'29.52""",547898.0454,2790715.763,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
-Lopez_River_Near_Lopez_Campsite,USGS,"25.47'30""","-81.17'58""",469971.8181,2852658.093,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.38,River,Tidal,No
-Lostmans_River_below_Second_Bay,USGS,"25.33'21""","-81.09'52""",483473.7772,2826506.904,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.42,River,Tidal,No
-Upstream_Lostmans_River,USGS,"25.33'57.06""","-80.59'48.71""",500530.1143,2827604.073,NAD83,17N,Coast of Gulf of Mexico,,No,NAVD88,-1.45,River,Tidal,No
-McCormick_Creek_at_mouth,USGS,"25.10'05.50""","-80.44'00.92""",527034.0187,2783566.317,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.52,River,Tidal,Yes
-Mud_Creek_at_mouth,USGS,"25.12'11.89""","-80.35'02.80""",541970.2747,2787541.303,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
-North_River_Upstream_of_Cutoff,USGS,"25.20'19""","-80.54'47""",508742.2847,2802458.421,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.5,River,Tidal,No
-Upstream_North_River,USGS,"25.21'29""","-80.54'00""",510026,2804598,NAD83,17N,Coast of Gulf of Mexico,,No,NAVD88,-1.51,River,Tidal,No
-Shark_River_Below_Gunboat_Island,USGS,"25.22'29.75""","-81.02'12.11""",496303.9008,2806516.258,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.44,River,Tidal,No
-Stillwater_Creek,USGS,"25.13'41.88""","-80.29'09.41""",551726.6506,2790343.28,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
-Taylor_River_at_mouth,USGS,"25.11'26.14""","-80.38'20.59""",536376.844,2786171.796,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
-Upstream_Taylor_River,USGS,"25.12'37.07""","-80.38'51.60""",535475.2798,2788445.512,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
-Trout_Creek_at_mouth,USGS,"25.12'53.66""","-80.32'00.61""",547003.1731,2788849.665,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
-West_Highway_Creek,USGS,"25.14'31.59""","-80.26'51.26""",555693.2337,2791958.468,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
-BSC,USGS,"25.15'58.16""","-81.09'44.16""",483661.15,2794429.18,NAD83,17N,Coast of Gulf of Mexico,Big Sable Creek,No,NAVD88,-1.42,River,Tidal,No
-SH2,USGS,"25.24'36.22""","-80.57'47.88""",503691,2810354.99,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.47,Marsh,Tidal,No
-SH3,USGS,"25.21'50.74""","-81.04'42.53""",492104.05,2805266.71,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.44,Forest,Tidal,No
-SH4,USGS,"25.25'24.55""","-81.03'37.61""",493921.36,2811842.48,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.44,Forest,Tidal,No
-SH5,USGS,"25.25'16.77""","-81.03'34.89""",493997.23,2811603.13,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.44,Marsh,Tidal,No
-LO2,USGS,"25.35'35.39""","-81.02'29.53""",495828.95,2830631.23,NAD83,17N,Coast of Gulf of Mexico,Lostmans River,No,NAVD88,-1.45,Marsh,Tidal,No
-LO3,USGS,"25.32'21.21""","-81.11'03.44""",481485.43,2824670.68,NAD83,17N,Coast of Gulf of Mexico,Lostmans River,No,NAVD88,-1.42,Forest,Tidal,No
-Alligator_Creek,USGS,"25.10'32""","-80.47'34""",520881,2784403,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,River,Tidal,No
-East_Side_Creek,USGS,"25.08'13.09""","-81.03'51.77""",493511,2780116,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.44,River,Tidal,No
-G-3777,USGS,"25.15'09.20""","-80.39'58.54""",533608,2792955,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Tidal,No
-Manatee_Bay_Creek,USGS,"25.15'51.16""","-80.25'12.66""",558384,2794330,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,River,Tidal,No
-Raulerson_Brothers_Canal,USGS,"25.11'15.55""","-81.07'58""",486622,2785733,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.43,River,Tidal,No
-Barron_River,USGS,"25.52'11""","-81.22'57""",461678,2861312,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.38,River,Tidal,No
-CN,ENP,"25.25'12""","-80.56'32""",505785.4452,2811458.529,NAD83,17N,Coast of Gulf of Mexico,Coast of Gulf of Mexico River,Yes,NGVD29,-1.48,River,Tidal,No
-NR,ENP,"25.20'17""","-80.54'41""",508914.9611,2802409.922,NAD83,17N,Coast of Gulf of Mexico,Coast of Gulf of Mexico River,Yes,NGVD29,-1.5,River,Tidal,No
-WW,ENP,"25.35'06""","-81.02'38""",495576.2095,2829741.656,NAD83,17N,Coast of Gulf of Mexico,Coast of Gulf of Mexico River,Yes,NGVD29,-1.44,River,Tidal,No
-TE,ENP,"25.24'29""","-80.57'51""",503603.9,2810132.9,NAD83,17N,Coast of Gulf of Mexico,,Yes,NGVD29,-1.47,River,Tidal,No
-BR,ENP,"25.28'35""","-80.59'23""",501033.1,2817699.4,NAD83,17N,Coast of Gulf of Mexico,,Yes,NGVD29,-1.46,River,Tidal,No
+2A300,SFWMD,26.246389,-80.408056,559111.6747,2903114.435,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.5,Marsh,Freshwater,No
+3A-5,USGS,26.056667,-80.705278,529481.0277,2881992.645,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.48,Marsh,Freshwater,No
+3A10,SFWMD,26.279444,-80.739722,525980.0503,2906666.287,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
+3A11,SFWMD,26.218333,-80.743611,525605.1424,2899897.817,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
+3A12,SFWMD,26.169167,-80.075556,532417.1521,2894468.134,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
+3A9,SFWMD,26.123056,-80.6475,535234.7766,2889368.949,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.47,Marsh,Freshwater,No
+3AN1W1,SFWMD,26.188056,-80.74,525972.5783,2896545.474,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
+3ANE,SFWMD,26.278889,-80.604722,539459.0686,2906638.87,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,No
+3ANW,SFWMD,26.266667,-80.780278,521937.2121,2905238.337,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.4,Marsh,Freshwater,No
+3AS,SFWMD,26.082093,-80.691542,531579.5391,2884991.384,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
+3AS3W1,SFWMD,25.8575,-80.770833,522955.7515,2859933.841,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
+3ASW,SFWMD,25.99,-80.085833,516424.3787,2874596.982,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
+3B-SE,SFWMD,25.788056,-80.499444,550178.6919,2852319.048,NAD83,17N,Water Conservation Area 3B,,No,NAVD88,-1.56,Marsh,Freshwater,Yes
+3BS1W1,SFWMD,25.780556,-80.061111,549012.0536,2851484.116,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
+A13,ENP,25.497222,-80.7125,528887.427,2820049.808,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+BCA1,BCNP,26.2425,-81.320556,467985.5963,2902579.231,NAD83,17N,Big Cypress National Preserve,"Okaloacooche Slough, North Bear Island",Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
+BCA10,BCNP,25.713611,-81.021944,497798.554,2843968.889,NAD83,17N,Big Cypress National Preserve,Gum Slough,Yes,NAVD88,-1.43,Marsh,Freshwater,Yes
+BCA11,BCNP,25.789167,-81.1,489974.4338,2852339.526,NAD83,17N,Big Cypress National Preserve,Roberts Lake Strand,Yes,NAVD88,-1.43,Marsh,Freshwater,Yes
+BCA12,BCNP,26.191389,-81.086667,491340.7023,2896882.12,NAD83,17N,Big Cypress National Preserve,Kissimmee Billy Strand,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
+BCA13,BCNP,26.093056,-81.053611,494638.9588,2885990.323,NAD83,17N,Big Cypress National Preserve,Mullet Slough,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
+BCA14,BCNP,26.044444,-81.3,469987.9212,2880640.293,NAD83,17N,Big Cypress National Preserve,Deep Lake Strand,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
+BCA15,BCNP,26.039722,-81.026667,497325.257,2880093.253,NAD83,17N,Big Cypress National Preserve,Aqua House,Yes,NAVD88,-1.42,Marsh,Freshwater,Yes
+BCA16,BCNP,26.056667,-81.155556,484432.6009,2881978.748,NAD83,17N,Big Cypress National Preserve,West Mud Lake,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
+BCA17,BCNP,26.205,-81.018056,483203.4871,2898406.983,NAD83,17N,Big Cypress National Preserve,Little Marsh,Yes,NAVD88,-1.36,Marsh,Freshwater,Yes
+BCA18,BCNP,26.206667,-80.983056,501686.0553,2898580.73,NAD83,17N,Big Cypress National Preserve,Cowbell Strand,Yes,NAVD88,-1.41,Marsh,Freshwater,Yes
+BCA19,BCNP,25.793056,-81.202222,479719.2243,2852793.274,NAD83,17N,Big Cypress National Preserve,Gator Hook Strand,Yes,NAVD88,-1.41,Marsh,Freshwater,Yes
+BCA2,BCNP,26.196111,-81.288611,471164.5243,2897434.259,NAD83,17N,Big Cypress National Preserve,East Hinson Marsh,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
+BCA20,BCNP,25.706389,-80.934722,506542.1218,2843182.064,NAD83,17N,Big Cypress National Preserve,North Bear Island,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
+BCA3,BCNP,26.156667,-81.221667,477845.5903,2893052.762,NAD83,17N,Big Cypress National Preserve,East Crossing Strand,Yes,NAVD88,-1.39,Marsh,Freshwater,Yes
+BCA4,BCNP,25.957222,-81.103889,489599.276,2870950.611,NAD83,17N,Big Cypress National Preserve,Monument Road,Yes,NAVD88,-1.43,Marsh,Freshwater,Yes
+BCA5,BCNP,25.968333,-80.926389,507368.8034,2872179.036,NAD83,17N,Big Cypress National Preserve,Racoon Point,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
+BCA8,BCNP,25.890278,-81.270278,472926.09,2863560.772,NAD83,17N,Big Cypress National Preserve,Turner River at Bridge 83 on US41 (Tamiami Trail),Yes,NAVD88,-1.39,Marsh,Freshwater,No
+BCA9,BCNP,25.778333,-80.912222,508801.0183,2851138.964,NAD83,17N,Big Cypress National Preserve,Pinecrest Hammock,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
+C111_wetland_east_of_FIU_LTER_TSPH5,USGS,25.294444,-80.52,548320.9515,2797638.292,NAD83,17N,Everglades National Park,,No,NAVD88,-1.56,Marsh,Freshwater,No
+CP,ENP,25.2275,-80.703889,529818.8073,2790185.111,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
+CR2,ENP,25.498611,-80.621667,538016.0574,2820226.398,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
+CR3,ENP,25.496667,-80.662778,533884.8323,2819999.994,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
+CT27R,ENP,25.300833,-80.488611,551472.2769,2798370.432,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
+CT50R,ENP,25.312778,-80.520833,548223.8231,2799681.092,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
+CV5NR,ENP,25.302222,-80.4875,551583.543,2798524.653,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
+CY2,ENP,25.3275,-80.082778,531919.1421,2801262.927,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+CY3,ENP,25.327778,-80.750556,525097.6604,2801279.287,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+DO1,ENP,25.371944,-80.690833,531097.0595,2806182.406,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+DO2,ENP,25.388333,-80.744167,525727.8807,2807985.852,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+E112,ENP,25.423889,-80.609722,539240.685,2811955.633,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+E146,ENP,25.252556,-80.666261,533588.8902,2793085.202,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
+EDEN_1,USGS,25.860556,-80.895,510514.9741,2860236.368,NAD83,17N,Big Cypress National Preserve,,No,NAVD88,-1.47,Marsh,Freshwater,No
+EDEN_10,USGS,25.785278,-80.617222,538377.0579,2851960.827,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
+EDEN_11,USGS,26.376389,-80.455278,553893.7959,2918188.099,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
+EDEN_12,USGS,26.011667,-80.588056,541222.5858,2877040.84,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
+EDEN_13,USGS,26.176389,-80.371389,562816.4626,2895370.047,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
+EDEN_14,USGS,26.069444,-80.7575,524254.5926,2883396.965,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
+EDEN_3,USGS,25.512125,-80.933153,506727.0695,2821669.04,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
+EDEN_4,USGS,26.093333,-80.056944,549305.1693,2886113.293,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.48,Marsh,Freshwater,Yes
+EDEN_5,USGS,26.123611,-80.752778,524715.5199,2889396.583,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
+EDEN_6,USGS,26.065278,-80.903889,509613.2564,2882916.516,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
+EDEN_7,USGS,25.952222,-80.498611,550198.5087,2870488.89,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
+EDEN_8,USGS,25.866667,-80.080556,532005.3603,2860957.077,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+EDEN_9,USGS,26.221944,-80.592222,540732.6705,2900327.206,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
+EPSW,ENP,25.271389,-80.058056,549526.7884,2795102.691,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
+EVER6,ENP,25.296944,-80.061389,549180.859,2797931.268,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
+EVER7,ENP,25.308611,-80.542222,546072.444,2799212.195,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
+EVER8,ENP,25.345,-80.478333,552487.8991,2803265.091,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
+G119_H,SFWMD,25.761111,-80.4775,552405.3657,2849342.856,NAD83,17N,Tamiami Canal,southern boundary of Pennsuco Wetlands,Yes,NAVD88,-1.59,Canal structure,Freshwater,No
+G119_T,SFWMD,25.761111,-80.476944,552454.3457,2849344.071,NAD83,17N,Tamiami Canal,southern boundary of Pennsuco Wetlands,Yes,NAVD88,-1.59,Canal structure,Freshwater,No
+G211_H,SFWMD,25.66,-80.497778,550398.4161,2838121.171,NAD83,17N,L31N Canal,borders Everglades National Park,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
+G211_T,SFWMD,25.659167,-80.497778,550404.0596,2838047.228,NAD83,17N,L31N Canal,borders Everglades National Park,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
+G300_T,SFWMD,26.676944,-80.363333,563360.3014,2950824.018,NAD83,17N,L40 Canal,Levee 40 Canal along WCA1,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
+G301_T,SFWMD,26.675278,-80.380278,561649.234,2950621.874,NAD83,17N,L7 Canal,Levee 7 Canal along WCA1,Yes,NAVD88,-1.48,Canal structure,Freshwater,No
+G339_H,SFWMD,26.463333,-80.4525,554571.6779,2927121.843,NAD83,17N,L6 Canal,Levee 6 Canal along WCA2A,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
+G339_T,SFWMD,26.463333,-80.452778,554557.9189,2927098.969,NAD83,17N,L6 Canal,Levee 6 Canal along WCA2A,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
+L28_GAP,SFWMD,26.124444,-80.983333,501659.4398,2889475.269,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.42,Marsh,Freshwater,Yes
+L28S1,SFWMD,26.093889,-80.092778,515715.505,2886100.826,NAD83,17N,L28 Canal,L28 Canal in WCA3A,Yes,NAVD88,-1.46,Canal,Freshwater,Yes
+L28S2,SFWMD,26.093889,-80.084722,516521.0671,2886101.819,NAD83,17N,L28 Canal,L28 Canal in WCA3A,Yes,NAVD88,-1.46,Canal,Freshwater,Yes
+L31NN,SFWMD,25.746257,-80.497942,550352.7,2847679.7,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NAVD88,-1.56,Canal,Freshwater,No
+L31NS,SFWMD,25.701978,-80.496249,550541.2,2842776.8,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NAVD88,-1.56,Canal,Freshwater,No
+L31W,ENP,25.436944,-80.589722,541247.5459,2813407.335,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+LOOP1_H,SFWMD,25.761389,-80.907778,509238.9634,2849262.522,NAD83,17N,Big Cypress National Preserve,Loop Road,No,NAVD88,-1.48,Marsh structure,Freshwater,No
+LOOP1_T,SFWMD,25.761111,-80.907778,509241.2556,2849228.291,NAD83,17N,Big Cypress National Preserve,Loop Road,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+LOOP2_H,SFWMD,25.746667,-80.953889,504624.731,2847630.735,NAD83,17N,Big Cypress National Preserve,Loop Road,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
+LOOP2_T,SFWMD,25.746667,-80.954167,504601.4227,2847616.897,NAD83,17N,Big Cypress National Preserve,Loop Road,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
+MET-1,USGS,25.720278,-80.588333,541300.2039,2844777.686,NAD83,17N,Everglades National Park,,No,NAVD88,-1.55,Marsh,Freshwater,No
+NCL,ENP,25.2425,-80.744444,525730.6366,2791837.675,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
+NESRS3,SFWMD,25.740556,-80.054444,549697.1391,2847057.074,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,No
+NORTH_CA1,USGS,26.593889,-80.353611,564356.194,2941626.139,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.44,Marsh,Freshwater,Yes
+NP201,ENP,25.716667,-80.719444,528138.1404,2844348.344,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NP202,ENP,25.661944,-80.708611,529238.2794,2838290.997,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NP203,ENP,25.622778,-80.738611,526235.8574,2833947.609,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NP205,ENP,25.688611,-80.097778,515267.3468,2841220.576,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
+NP206,ENP,25.544167,-80.071944,532950.5896,2825257.529,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
+NP44,ENP,25.433333,-80.720278,528120.541,2812973.576,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
+NP46,ENP,25.318333,-80.795833,520542.3135,2800225.815,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NP62,ENP,25.438333,-80.782778,521834.8739,2813515.566,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NP67,ENP,25.329444,-80.650278,535189.5207,2801486.366,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NP72,ENP,25.394722,-80.703056,529861.8273,2808701.836,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
+NTS1,ENP,25.436667,-80.592778,540940.3907,2813375.636,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NTS10,ENP,25.460278,-80.605,539703.6655,2815986.475,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+NTS14,ENP,25.416389,-80.638611,536337.7252,2811116.973,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.57,Marsh,Freshwater,Yes
+NTS18,ENP,25.483889,-80.566389,543576.9308,2818613.069,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
+OL,ENP,25.263611,-80.613056,538956.6647,2794206.886,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+OT,ENP,25.578611,-80.964444,503563.8859,2829031.627,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
+P33,ENP,25.613889,-80.702222,529891.4544,2832970.997,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+P34,ENP,25.6075,-80.940833,505933.8534,2832231.413,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
+P35,ENP,25.459722,-80.864444,513620.732,2815873.19,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+P36,ENP,25.527222,-80.795556,520534.9867,2823356.406,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+P37,ENP,25.284167,-80.688333,531371.1349,2796463.309,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+P38,ENP,25.369444,-80.083333,516760.8718,2805880.152,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+R127,ENP,25.353056,-80.606111,539626.9067,2804113.177,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.57,Marsh,Freshwater,Yes
+R3110,ENP,25.446111,-80.626111,537585.6584,2814411.647,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+RG1,ENP,25.581389,-80.607778,539384.9034,2829396.758,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
+RG2,ENP,25.5425,-80.605833,539592.9609,2825090.995,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh,Freshwater,Yes
+S140_H,SFWMD,26.171667,-80.827778,517207.4042,2894700.008,NAD83,17N,L28 Canal,borders WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,Yes
+S140_T,SFWMD,26.171667,-80.827222,517275.0336,2894702.874,NAD83,17N,Water Conservation Area 3A,C60 Canal in WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,Yes
+S141_H,SFWMD,26.150556,-80.442222,555755.4401,2892486.864,NAD83,17N,Water Conservation Area 2B,,No,NAVD88,-1.57,Marsh structure,Freshwater,Yes
+S141_T,SFWMD,26.150833,-80.4425,555712.99,2892496.306,NAD83,17N,L38E Canal,North New River along WCA2B,No,NAVD88,-1.57,Canal structure,Freshwater,Yes
+S142_H,SFWMD,26.16,-80.446389,555326.9252,2893522.651,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NAVD88,-1.48,Canal structure,Freshwater,Yes
+S142_T,SFWMD,26.160278,-80.444722,555489.7133,2893542.979,NAD83,17N,L38E Canal,North New River along WCA2B,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+S143_T,SFWMD,26.176111,-80.448333,555136.9248,2895305.445,NAD83,17N,L38E Canal,North New River along WCA2B,Yes,NAVD88,-1.49,Canal structure,Freshwater,Yes
+S144_H,SFWMD,26.218333,-80.397778,560158.6774,2900008.912,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+S144_T,SFWMD,26.218056,-80.397778,560164.6011,2899975.541,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+S145_H,SFWMD,26.221944,-80.365833,563348.9088,2900416.901,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+S145_T,SFWMD,26.221667,-80.365833,563352.0734,2900385.748,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+S146_H,SFWMD,26.225556,-80.033611,566576.2429,2900838.887,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+S146_T,SFWMD,26.225278,-80.033333,566581.4133,2900799.442,NAD83,17N,Water Conservation Area 2B,,Yes,NAVD88,-1.48,Marsh structure,Freshwater,Yes
+S150_T,SFWMD,26.334722,-80.539444,545964.1225,2912820.628,NAD83,17N,Water Conservation Area 3A,L38W Canal at L5,Yes,NAVD88,-1.46,Marsh structure,Freshwater,Yes
+S151_H,SFWMD,26.011667,-80.06,549024.2755,2877054.845,NAD83,17N,Miami Canal,Miami Canal in WCA3B,Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
+S151_T,SFWMD,26.011111,-80.059722,549066.0729,2877020.918,NAD83,17N,Miami Canal,Miami Canal in WCA3B,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
+S175_H,SFWMD,25.418056,-80.573889,542862.3576,2811294.509,NAD83,17N,L31W Canal,borders Everglades National Park,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
+S175_T,SFWMD,25.4175,-80.573889,542863.8314,2811249.805,NAD83,17N,L31W Canal,borders Everglades National Park,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
+S190_H,SFWMD,26.284167,-80.968056,503190.1235,2907144.68,NAD83,17N,North Feeder Canal,North Feeder Canal near Big Cypress,Yes,NAVD88,-1.57,Canal structure,Freshwater,No
+S190_T,SFWMD,26.283333,-80.967778,503213.055,2907051.935,NAD83,17N,L28 Interceptor Canal,L28 Interceptor near Big Cypress,Yes,NAVD88,-1.57,Canal structure,Freshwater,Yes
+S31_H,SFWMD,25.9425,-80.440556,556014.0034,2869447.143,NAD83,17N,Miami Canal,Miami Canal along WCA3B,Yes,NAVD88,-1.55,Canal structure,Freshwater,No
+S332_T,SFWMD,25.421944,-80.590556,541179.9996,2811722.3,NAD83,17N,Everglades National Park,Pump station from L31N into ENP,Yes,NAVD88,-1.55,Marsh structure,Freshwater,No
+S332B_T,SFWMD,25.549444,-80.560556,544138.7576,2825874.613,NAD83,17N,Everglades National Park,Pump station from L31N into ENP,Yes,NAVD88,-1.58,Marsh structure,Freshwater,No
+S332D_T,SFWMD,25.483056,-80.564167,543818.9148,2818498.428,NAD83,17N,L31W Canal,Pump station borders Everglades National Park,Yes,NAVD88,-1.54,Canal structure,Freshwater,No
+S333_H,SFWMD,25.761944,-80.074167,532668.1489,2849372.816,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park at L67A",Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
+S333_T,SFWMD,25.761667,-80.073056,532774.0729,2849335.35,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park at L67A",Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
+S334_H,SFWMD,25.761389,-80.052778,549864.3667,2849342.306,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,Yes
+S334_T,SFWMD,25.761389,-80.051389,549992.4468,2849340.372,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,Yes
+S335_H,SFWMD,25.776111,-80.483056,551839.5002,2851000.692,NAD83,17N,L30 Canal,L30 Canal along WCA3B,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
+S335_T,SFWMD,25.775556,-80.483056,551832.1136,2850930.555,NAD83,17N,L30 Canal,L30 Canal along WCA3B,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
+S336_H,SFWMD,25.761111,-80.497222,550405.9695,2849339.799,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,No
+S336_T,SFWMD,25.761111,-80.496667,550486.9902,2849335.273,NAD83,17N,Tamiami Canal,"borders WCA3B, Everglades National Park",Yes,NAVD88,-1.56,Canal structure,Freshwater,No
+S337_T,SFWMD,25.941667,-80.441111,555970.7807,2869350.635,NAD83,17N,L30 Canal,L30 Canal along WCA3B,Yes,NAVD88,-1.43,Canal structure,Freshwater,No
+S339_H,SFWMD,26.217778,-80.690833,530880.3786,2899828.623,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,No
+S339_T,SFWMD,26.216944,-80.690278,530927.8377,2899756.023,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.45,Canal structure,Freshwater,No
+S34_H,SFWMD,26.150556,-80.4425,555714.4996,2892479.605,NAD83,17N,L38E Canal,North New River along WCA2B,Yes,NAVD88,-1.5,Canal structure,Freshwater,No
+S340_H,SFWMD,26.119167,-80.613333,538669.8043,2888945.872,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.34,Canal structure,Freshwater,No
+S340_T,SFWMD,26.118333,-80.6125,538735.4362,2888851.65,NAD83,17N,Miami Canal,Miami Canal in WCA3A,Yes,NAVD88,-1.34,Canal structure,Freshwater,No
+S343A_H,SFWMD,25.789167,-80.855278,514522.2177,2852358.686,NAD83,17N,Water Conservation Area 3A,L28 canal,Yes,NAVD88,-1.54,Marsh structure,Freshwater,Yes
+S343A_T,SFWMD,25.788889,-80.855556,514478.4589,2852324.337,NAD83,17N,L28 Canal,Big Cypress National Preserve,Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
+S343B_H,SFWMD,25.778333,-80.093889,515652.0486,2851135.295,NAD83,17N,Water Conservation Area 3A,L28 canal,Yes,NAVD88,-1.53,Marsh structure,Freshwater,Yes
+S343B_T,SFWMD,25.778056,-80.094167,515620.3471,2851104.986,NAD83,17N,L28 Canal,Big Cypress National Preserve,Yes,NAVD88,-1.53,Canal structure,Freshwater,Yes
+S344_H,SFWMD,25.918889,-80.086389,516395.1772,2866714.379,NAD83,17N,Water Conservation Area 3A,L28 Canal in WCA3A,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
+S344_T,SFWMD,25.918889,-80.086667,516353.5461,2866724.152,NAD83,17N,Big Cypress National Preserve,L28 Canal in BCNP,Yes,NAVD88,-1.47,Marsh structure,Freshwater,Yes
+S380_H,SFWMD,25.761389,-80.448333,555313.8105,2849371.902,NAD83,17N,Pennsuco Wetlands,Tamiami Canal,Yes,NAVD88,-1.56,Canal structure,Freshwater,No
+S39_H,SFWMD,26.355833,-80.298056,570050.0733,2915284.569,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NAVD88,-1.54,Canal structure,Freshwater,Yes
+S7_T,SFWMD,26.335278,-80.536667,546248.3818,2912887.485,NAD83,17N,L38E Canal,Between WCA2A and WCA3A,Yes,NAVD88,-1.46,Canal structure,Freshwater,Yes
+S9A_T,SFWMD,26.061389,-80.443889,555630.4603,2882614.65,NAD83,17N,Water Conservation Area 3B,Pump station from C11 into WCA3B,Yes,NAVD88,-1.4,Marsh structure,Freshwater,Yes
+SOUTH_CA1,USGS,26.421389,-80.037861,565752.4085,2922897.266,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.48,Marsh,Freshwater,Yes
+SP,ENP,25.388611,-80.797222,520390.7787,2808007.486,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,Marsh,Freshwater,Yes
+Taylor_Slough_wetland_at_E146,USGS,25.252556,-80.666261,533624.4872,2792579.872,NAD83,17N,Everglades National Park,,No,NAVD88,-1.55,Marsh,Freshwater,No
+TI-8,USGS,25.8325,-80.541111,545989.7679,2857214.738,NAD83,17N,Water Conservation Area 3B,,No,NAVD88,-1.54,Marsh,Freshwater,No
+TI-9,USGS,25.837222,-80.599444,540141.9542,2857718.584,NAD83,17N,Water Conservation Area 3B,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
+TMC,ENP,25.613889,-80.872222,512822.4721,2832943.69,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
+TS2,ENP,25.4,-80.606667,539555.7423,2809311.26,NAD83,17N,Everglades National Park,,No,NAVD88,-1.51,Marsh,Freshwater,No
+TSH,ENP,25.310833,-80.630556,537180.0913,2799430.863,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
+W11,USGS,25.942778,-80.75,525031.575,2869370.755,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.49,Marsh,Freshwater,Yes
+W14,USGS,25.937222,-80.068333,533210.1641,2868773.669,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.5,Marsh,Freshwater,No
+W15,USGS,26.014167,-80.077778,532243.4848,2877292.475,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.48,Marsh,Freshwater,No
+W18,USGS,26.001944,-80.778889,522127.9539,2875917.892,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.47,Marsh,Freshwater,Yes
+W2,USGS,25.799722,-80.808889,519158.2904,2853518.554,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.5,Marsh,Freshwater,Yes
+W5,USGS,25.789167,-80.695278,530550.2084,2852371.064,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.52,Marsh,Freshwater,No
+WCA1ME,SFWMD,26.510833,-80.31,568748.3085,2932450.179,NAD83,17N,Water Conservation Area 1,,No,NAVD88,-1.47,Marsh,Freshwater,No
+WCA2E1,SFWMD,26.351944,-80.352778,564574.0244,2914830.951,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.57,Marsh,Freshwater,No
+WCA2E4,SFWMD,26.309722,-80.356389,564236.9726,2910153.081,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
+WCA2F1,SFWMD,26.36,-80.369722,562878.8895,2915714.735,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.54,Marsh,Freshwater,No
+WCA2F4,SFWMD,26.317222,-80.384722,561404.7927,2910969.93,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
+WCA2RT,SFWMD,26.33,-80.059722,548922.8519,2912331.696,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.53,Marsh,Freshwater,No
+WCA2U1,SFWMD,26.241389,-80.355833,564330.0635,2902585.567,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.5,Marsh,Freshwater,No
+WCA2U3,SFWMD,26.288056,-80.410833,558813.2662,2907727.644,NAD83,17N,Water Conservation Area 2A,,No,NAVD88,-1.56,Marsh,Freshwater,No
+MO-215,USGS,25.472403,-80.098219,515257.06,2817266.59,NAD83,17N,Everglades National Park,Shark River,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
+MO-214,USGS,25.61225,-81.025261,497463.68,2832744.37,NAD83,17N,Everglades National Park,Lostmans River,Yes,NAVD88,-1.45,Marsh,Freshwater,Yes
+TSB,ENP,25.402972,-80.607306,539496.657,2809627.565,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.51,Marsh structure,Freshwater,Yes
+BARW4,SFWMD,25.994881,-81.047014,465270.0225,2875162.989,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.37,Canal,Freshwater,Yes
+BARW6A,SFWMD,26.051192,-81.044639,465524.1775,2881398.55,NAD83,17N,Big Cypress National Preserve,,Yes,NAVD88,-1.39,Canal,Freshwater,Yes
+SR1,ENP,25.3788,-80.8115,518962.7691,2806906.174,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.53,Marsh,Freshwater,Yes
+G251_T,SFWMD,26.600067,-80.439772,555695.902,2942262.398,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.48,Marsh,Freshwater,No
+G338_T,SFWMD,26.470042,-80.44535,555285.814,2927858.866,NAD83,17N,Water Conservation Area 1,,Yes,NAVD88,-1.48,Marsh,Freshwater,No
+WC2AN1,SFWMD,26.447758,-80.456089,554225.819,2925386.42,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
+WC2AS1,SFWMD,26.390225,-80.492522,550618.6016,2918999.539,NAD83,17N,Water Conservation Area 2A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
+EP1R,ENP,25.28747,-80.45312,555056.9,2796891.8,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Freshwater,Yes
+NMP,ENP,25.25385,-80.79813,520328.6,2793072,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.52,Marsh,Freshwater,Yes
+G-3273,SFWMD,25.630384,-80.575892,542575.9,2834820.4,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
+ANGEL,SFWMD,25.622606,-80.541724,546009,2833971,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.56,Marsh,Freshwater,Yes
+RG3,ENP,25.54436,-80.57511,542685,2825294,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.57,Marsh,Freshwater,Yes
+3ANE_GW,SFWMD,26.278889,-80.604722,539459.0686,2906638.87,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.46,Marsh,Freshwater,Yes
+3ANW_GW,SFWMD,26.266667,-80.780278,521937.2121,2905238.337,NAD83,17N,Water Conservation Area 3A,,Yes,NAVD88,-1.4,Marsh,Freshwater,Yes
+MO-216,USGS,25.728966,-81.164332,483516,2845679,NAD83,17N,Big Cypress National Preserve,Chatham River,Yes,NAVD88,-1.42,Marsh,Freshwater,Yes
+L28_GAPG1,SFWMD,26.12364,-80.983984,501602,2889376,NAD83,17N,Big Cypress National Preserve,,No,NAVD88,-1.42,Marsh,Freshwater,No
+USSO_T,SFWMD,26.330322,-80.881939,511782.06,2912271.16,NAD83,17N,L28 Canal,,No,NAVD88,-1.42,Canal structure,Freshwater,No
+WFEED_O,SFWMD,26.3025,-81.074444,492563.216,2909183.815,NAD83,17N,North Feeder Canal,,No,NAVD88,-1.38,Canal structure,Freshwater,No
+S34E_H,SFWMD,26.150278,-80.4425,555734.452,2892448.411,NAD83,17N,L38E Canal,,No,NAVD88,-1.49,Canal structure,Freshwater,Yes
+G737_T,SFWMD,25.418056,-80.573611,542868.293,2811315.702,NAD83,17N,L31W Canal,,No,NAVD88,-1.51,Canal structure,Freshwater,Yes
+OKAL29,SFWMD,26.205,-81.045833,465443.874,2898436.521,NAD83,17N,Big Cypress National Preserve,,No,NAVD88,-1.34,Canal,Freshwater,No
+3AS3_GW,SFWMD,25.857222,-80.771389,522907.113,2859902.403,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.5,Marsh,Freshwater,No
+3AN1_GW4,SFWMD,26.186389,-80.739444,526035.461,2896359.22,NAD83,17N,Water Conservation Area 3A,,No,NAVD88,-1.45,Marsh,Freshwater,No
+3BS1_GW2,SFWMD,25.780556,-80.057222,549419.916,2851476.145,NAD83,17N,Water Conservation Area 3B,,No,NAVD88,-1.56,Marsh,Freshwater,No
+Tamiami_Canal_40-Mile_Bend_to_Monroe,USGS,25.851389,-80.980556,501948,2859226,NAD83,17N,Big Cypress National Preserve,Bridge 105 on US41 (Tamiami Trail),Yes,NGVD29,-1.46,Marsh,Freshwater,Yes
+Tamiami_Canal_Monroe_to_Carnestown,USGS,25.887344,-81.261836,473771,2863234,NAD83,17N,Big Cypress National Preserve,Bridge 84 on US41 (Tamiami Trail),Yes,NGVD29,-1.39,Marsh,Freshwater,Yes
+EVER4,USGS,25.33875,-80.546667,545619.8,2802535.1,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.57,Marsh,Freshwater,Yes
+L31N_1,USGS,25.746333,-80.497639,550383,2847688.3,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
+L31N_3,USGS,25.717583,-80.496556,550503.8,2844504.8,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
+L31N_4,USGS,25.702167,-80.495972,550568.9,2842797.9,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
+L31N_5,USGS,25.685833,-80.497222,550450.3,2840988.5,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
+L31N_7,USGS,25.663389,-80.498167,550364.9,2838502.7,NAD83,17N,L31N Canal,"borders NESRS, Everglades National Park",Yes,NGVD29,-1.56,Canal,Freshwater,No
+NESRS1,USGS,25.691944,-80.634444,536672.9167,2841631.531,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.53,Marsh,Freshwater,Yes
+NESRS2,USGS,25.719722,-80.557222,544745.0757,2844886.16,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
+NESRS4,USGS,25.64,-80.652778,534848.0074,2836028.273,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.52,Marsh,Freshwater,Yes
+NESRS5,USGS,25.631944,-80.661667,534153.6651,2834949.874,NAD83,17N,Everglades National Park,,No,NGVD29,-1.52,Marsh,Freshwater,No
+NWWF,USGS,25.891111,-80.420278,558093.5016,2863794.891,NAD83,17N,Pennsuco Wetlands,Northwest Well Field Canal,Yes,NGVD29,-1.54,Canal,Freshwater,No
+S10A_T,USGS,26.359167,-80.312778,568563.4482,2915633.12,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.49,Marsh structure,Freshwater,Yes
+S10A_H,USGS,26.36,-80.3125,568592.5526,2915744.442,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NGVD29,-1.49,Canal structure,Freshwater,Yes
+S10C_T,USGS,26.371111,-80.3525,564583.8555,2916947.986,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.47,Marsh structure,Freshwater,Yes
+S10C_H,USGS,26.371667,-80.3525,564597.9074,2917008.867,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NGVD29,-1.47,Canal structure,Freshwater,Yes
+S10D_T,USGS,26.388333,-80.381944,561635.8137,2918827.896,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.46,Marsh structure,Freshwater,Yes
+S10D_H,USGS,26.388611,-80.381667,561683.2987,2918858.313,NAD83,17N,L39 Canal,Hillsboro Canal along WCA1,Yes,NGVD29,-1.46,Canal structure,Freshwater,Yes
+S11A_T,USGS,26.176944,-80.449167,555030.7821,2895390.867,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
+S11A_H,USGS,26.176944,-80.448333,555115.4609,2895405.335,NAD83,17N,Water Conservation Area 2A,L38E Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
+S11B_T,USGS,26.2025,-80.455,554456.5452,2898221.28,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
+S11B_H,USGS,26.2025,-80.453889,554557.9222,2898235.154,NAD83,17N,Water Conservation Area 2A,L38E Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
+S11C_T,USGS,26.229444,-80.460833,553853.047,2901210.422,NAD83,17N,Water Conservation Area 3A,L38W Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
+S11C_H,USGS,26.229722,-80.459722,553950.8571,2901225.214,NAD83,17N,Water Conservation Area 2A,L38E Canal,Yes,NGVD29,-1.48,Marsh structure,Freshwater,Yes
+S12A_T,USGS,25.761389,-80.821111,517941.1978,2849281.23,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
+S12A_H,USGS,25.762222,-80.821111,517940.0342,2849363.574,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
+S12B_T,USGS,25.761667,-80.769444,523113.3036,2849299.59,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
+S12B_H,USGS,25.762222,-80.769444,523115.6191,2849372.194,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
+S12C_T,USGS,25.761667,-80.726944,527381.6271,2849310.262,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
+S12C_H,USGS,25.762222,-80.726944,527382.653,2849386.199,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.51,Marsh structure,Freshwater,Yes
+S12D_T,USGS,25.761667,-80.081944,531907.9417,2849325.48,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.52,Marsh structure,Freshwater,Yes
+S12D_H,USGS,25.762222,-80.081667,531912.8957,2849401.658,NAD83,17N,Tamiami Canal,"borders WCA3A, Everglades National Park",Yes,NGVD29,-1.52,Marsh structure,Freshwater,Yes
+S18C_T,USGS,25.330278,-80.525278,547801.2715,2800571.619,NAD83,17N,C111 Canal,borders Everglades National Park,Yes,NGVD29,-1.56,Canal structure,Freshwater,Yes
+S8_T,SFWMD,26.331111,-80.774167,522523.9034,2912387.176,NAD83,17N,Miami Canal,Miami Canal in WCA3A,No,NGVD29,-1.44,Canal structure,Freshwater,Yes
+SITE_17,USGS,26.286667,-80.410833,558813.9666,2907573.828,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.49,Marsh,Freshwater,Yes
+SITE_19,USGS,26.281472,-80.306639,569272.0378,2907133.427,NAD83,17N,Water Conservation Area 2A,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
+SITE_62,USGS,26.174722,-80.751111,524865.1692,2895066.73,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.46,Marsh,Freshwater,Yes
+SITE_63,USGS,26.188889,-80.530833,546872.501,2896696.403,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
+SITE_64,USGS,25.975556,-80.069167,533109.9625,2873028.913,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.52,Marsh,Freshwater,Yes
+SITE_65,USGS,25.813889,-80.719833,528087.2289,2855206.635,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.58,Marsh,Freshwater,Yes
+SITE_69E,USGS,25.906667,-80.588778,541187.06,2865412.2,NAD83,17N,Water Conservation Area 3B,Site 69E,Yes,NGVD29,-1.66,Marsh,Freshwater,No
+SITE_7,USGS,26.519722,-80.046944,565061.8785,2933415.386,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.46,Marsh,Freshwater,Yes
+SITE_71,USGS,25.884722,-80.556667,544405.4667,2863003.279,NAD83,17N,Water Conservation Area 3B,,Yes,NGVD29,-1.57,Marsh,Freshwater,Yes
+SITE_76,USGS,26.007778,-80.4825,551781.6765,2876657.809,NAD83,17N,Water Conservation Area 3B,,Yes,NGVD29,-1.5,Marsh,Freshwater,Yes
+SITE_8C,USGS,26.499278,-80.222111,577474.7976,2931309.203,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
+SITE_8T,USGS,26.499722,-80.234722,576266.93,2931241.7,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.47,Marsh,Freshwater,Yes
+SITE_9,USGS,26.459806,-80.290528,570077.5333,2927288.801,NAD83,17N,Water Conservation Area 1,,Yes,NGVD29,-1.48,Marsh,Freshwater,Yes
+SITE_99,USGS,26.136444,-80.367083,563276.5269,2891044,NAD83,17N,Water Conservation Area 2B,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
+SRS1,USGS,25.798611,-80.578333,542265.4614,2853460.28,NAD83,17N,Water Conservation Area 3B,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
+G-1251,USGS,25.321083,-80.56575,543705.7,2800572.4,NAD83,17N,Everglades National Park,,No,NGVD29,-1.58,Canal,Freshwater,Yes
+G-1502,USGS,25.615722,-80.582944,541873.1,2833194.5,NAD83,17N,Everglades National Park,,No,NGVD29,-1.56,Marsh,Freshwater,No
+G-620,USGS,25.656111,-80.766444,523441.4,2837621.9,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.51,Marsh,Freshwater,Yes
+G-3272,USGS,25.664944,-80.538917,546274.5,2838660,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.56,Marsh,Freshwater,Yes
+EVER5A,USGS,25.286111,-80.572556,543033.1,2796697.6,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.57,Marsh,Freshwater,Yes
+EVER5B,USGS,25.288389,-80.569278,543362.3,2796950.9,NAD83,17N,Everglades National Park,,No,NGVD29,-1.57,Marsh,Freshwater,No
+SITE_69W,USGS,25.906861,-80.589194,541144.94,2865433.8,NAD83,17N,Water Conservation Area 3A,,Yes,NGVD29,-1.52,Marsh,Freshwater,Yes
+G-3437,USGS,25.567,-80.567083,543483,2827804,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3574,USGS,25.746361,-80.497889,550358,2847691,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3575,USGS,25.702111,-80.496194,550547,2842792,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3576,USGS,25.745833,-80.06425,548717,2847627,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3577,USGS,25.702611,-80.050556,550109,2842845,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3578,USGS,25.702778,-80.063333,548827,2842859,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3626,USGS,25.618592,-80.061272,549068,2833537,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3628,USGS,25.594119,-80.53465,546730,2830818,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3818,USGS,25.843556,-80.451194,554996.2523,2858473.611,NAD83,17N,Pennsuco Wetlands,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
+G-596,USGS,25.638,-80.061972,548990,2835686,NAD83,17N,Everglades National Park,,Yes,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-975,USGS,25.87,-80.456472,554455.2332,2861399.992,NAD83,17N,Pennsuco Wetlands,,Yes,NGVD29,-1.54,Marsh,Freshwater,Yes
+G-3567,USGS,25.900056,-80.435833,556509,2864737,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.54,Marsh,Freshwater,Yes
+G-1488,USGS,25.818528,-80.482333,551887,2855689,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3761,USGS,25.841694,-80.433528,556768,2858275,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.55,Marsh,Freshwater,Yes
+G-3676,USGS,25.787639,-80.423861,557763,2852293,NAD83,17N,Pennsuco Wetlands,,No,NGVD29,-1.57,Marsh,Freshwater,Yes
+SPARO,ENP,25.734133,-80.829042,517147,2846252,NAD83,17N,Everglades National Park,,No,NGVD29,-1.49,Marsh,Freshwater,Yes
+USSO_O,SFWMD,26.330084,-80.882008,511775,2912245,NAD83,17N,L28 Canal,,No,NGVD29,-1.42,Canal structure,Freshwater,No
+WC2A159,SFWMD,26.38,-80.445,555363.72,2917886.69,NAD83,17N,Water Conservation Area 2A,,No,NGVD29,-1.46,Marsh structure,Freshwater,No
+New_River_at_Sunday_Bay,USGS,25.797778,-81.255278,474401.14,2853325.476,NAD83,17N,Coast of Gulf of Mexico,,Yes,Arbitrary,,River,Tidal,No
+Turner_River_nr_Chokoloskee_Island,USGS,25.828889,-81.041389,465777.307,2856790.238,NAD83,17N,Coast of Gulf of Mexico,,Yes,Arbitrary,,River,Tidal,No
+Bottle_Creek_at_Rookery_Branch,USGS,25.467978,-80.854528,514652.9637,2816827.798,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.51,River,Tidal,No
+Broad_River_near_the_Cutoff,USGS,25.501667,-81.076667,492287.9112,2820513.181,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.44,River,Tidal,No
+Upstream_Broad_River,USGS,25.501292,-80.932222,506811.4254,2820460.213,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.47,River,Tidal,No
+Chatham_River_near_the_Watson_Place,USGS,25.709444,-81.249444,474967.3734,2843542.644,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.4,River,Tidal,No
+Harney_River,USGS,25.430556,-81.085958,491388.6082,2812700.523,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.44,River,Tidal,No
+Joe_Bay_2E,USGS,25.232625,-80.524867,547898.0454,2790715.763,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
+Lopez_River_Near_Lopez_Campsite,USGS,25.791667,-81.299444,469971.8181,2852658.093,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.38,River,Tidal,No
+Lostmans_River_below_Second_Bay,USGS,25.555833,-81.164444,483473.7772,2826506.904,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.42,River,Tidal,No
+Upstream_Lostmans_River,USGS,25.56585,-80.996864,500530.1143,2827604.073,NAD83,17N,Coast of Gulf of Mexico,,No,NAVD88,-1.45,River,Tidal,No
+McCormick_Creek_at_mouth,USGS,25.168194,-80.733589,527034.0187,2783566.317,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.52,River,Tidal,Yes
+Mud_Creek_at_mouth,USGS,25.203303,-80.584111,541970.2747,2787541.303,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
+North_River_Upstream_of_Cutoff,USGS,25.338611,-80.913056,508742.2847,2802458.421,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.5,River,Tidal,No
+Upstream_North_River,USGS,25.358056,-80.9,510026,2804598,NAD83,17N,Coast of Gulf of Mexico,,No,NAVD88,-1.51,River,Tidal,No
+Shark_River_Below_Gunboat_Island,USGS,25.374931,-81.036697,496303.9008,2806516.258,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.44,River,Tidal,No
+Stillwater_Creek,USGS,25.2283,-80.485947,551726.6506,2790343.28,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
+Taylor_River_at_mouth,USGS,25.190594,-80.639053,536376.844,2786171.796,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
+Upstream_Taylor_River,USGS,25.210297,-80.647667,535475.2798,2788445.512,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
+Trout_Creek_at_mouth,USGS,25.214906,-80.533503,547003.1731,2788849.665,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
+West_Highway_Creek,USGS,25.242108,-80.447572,555693.2337,2791958.468,NAD83,17N,Coast of Florida Bay,,Yes,NAVD88,-1.54,River,Tidal,Yes
+BSC,USGS,25.266156,-81.162267,483661.15,2794429.18,NAD83,17N,Coast of Gulf of Mexico,Big Sable Creek,No,NAVD88,-1.42,River,Tidal,No
+SH2,USGS,25.410061,-80.9633,503691,2810354.99,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.47,Marsh,Tidal,No
+SH3,USGS,25.364094,-81.078481,492104.05,2805266.71,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.44,Forest,Tidal,No
+SH4,USGS,25.423486,-81.060447,493921.36,2811842.48,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.44,Forest,Tidal,No
+SH5,USGS,25.421325,-81.059692,493997.23,2811603.13,NAD83,17N,Coast of Gulf of Mexico,Shark River,No,NAVD88,-1.44,Marsh,Tidal,No
+LO2,USGS,25.593164,-81.041536,495828.95,2830631.23,NAD83,17N,Coast of Gulf of Mexico,Lostmans River,No,NAVD88,-1.45,Marsh,Tidal,No
+LO3,USGS,25.539225,-81.184289,481485.43,2824670.68,NAD83,17N,Coast of Gulf of Mexico,Lostmans River,No,NAVD88,-1.42,Forest,Tidal,No
+Alligator_Creek,USGS,25.175556,-80.792778,520881,2784403,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.5,River,Tidal,No
+East_Side_Creek,USGS,25.136969,-81.064381,493511,2780116,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.44,River,Tidal,No
+G-3777,USGS,25.252556,-80.666261,533608,2792955,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.55,Marsh,Tidal,No
+Manatee_Bay_Creek,USGS,25.264211,-80.420183,558384,2794330,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.54,River,Tidal,No
+Raulerson_Brothers_Canal,USGS,25.187653,-81.132778,486622,2785733,NAD83,17N,Everglades National Park,,Yes,NAVD88,-1.43,River,Tidal,No
+Barron_River,USGS,25.869722,-81.3825,461678,2861312,NAD83,17N,Coast of Gulf of Mexico,,Yes,NAVD88,-1.38,River,Tidal,No
+CN,ENP,25.42,-80.942222,505785.4452,2811458.529,NAD83,17N,Coast of Gulf of Mexico,Coast of Gulf of Mexico River,Yes,NGVD29,-1.48,River,Tidal,No
+NR,ENP,25.338056,-80.911389,508914.9611,2802409.922,NAD83,17N,Coast of Gulf of Mexico,Coast of Gulf of Mexico River,Yes,NGVD29,-1.5,River,Tidal,No
+WW,ENP,25.585,-81.043889,495576.2095,2829741.656,NAD83,17N,Coast of Gulf of Mexico,Coast of Gulf of Mexico River,Yes,NGVD29,-1.44,River,Tidal,No
+TE,ENP,25.408056,-80.964167,503603.9,2810132.9,NAD83,17N,Coast of Gulf of Mexico,,Yes,NGVD29,-1.47,River,Tidal,No
+BR,ENP,25.476389,-80.989722,501033.1,2817699.4,NAD83,17N,Coast of Gulf of Mexico,,Yes,NGVD29,-1.46,River,Tidal,No
