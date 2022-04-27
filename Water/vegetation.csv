@@ -1,285 +1,285 @@
-"station","communitytype","community","avg_ground_elev","max_ground_elev","min_ground_elev","measurements","agency","date"
-"2A300","Major","Wet prairie",8.7,8.93,8.52,6,"USGS"," August 2005"
-"2A300","Secondary","Ridge or sawgrass and emergent marsh",9.56,9.7,9.48,3,"USGS"," August 2005"
-"3A-5","Major","Wet prairie",7.71,8.07,7.45,6,"USGS"," Sept. 2007"
-"3A-5","Secondary","Ridge or sawgrass and emergent marsh",8.36,8.43,8.3,3,"USGS"," Sept. 2007"
-"3A10","Major","Exotics and cattail",9.13,9.24,8.95,6,"USGS"," August 2005"
-"3A11","Major","Wet prairie",9.85,9.98,9.7,6,"USGS"," August 2005"
-"3A11","Secondary","Ridge or sawgrass and emergent marsh",9.53,9.63,9.45,3,"USGS"," August 2005"
-"3A12","Major","Wet prairie",7.86,8.02,7.76,6,"USGS"," August 2005"
-"3A12","Secondary","Ridge or sawgrass and emergent marsh",7.74,7.85,7.6,3,"USGS"," August 2005"
-"3A9","Major","Slough or open water",8.19,8.28,8.09,6,"USGS"," August 2005"
-"3A9","Secondary","Ridge or sawgrass and emergent marsh",8.38,8.71,8.19,3,"USGS"," August 2005"
-"3AN1W1","Major","Wet prairie",8.79,8.96,8.68,6,"USGS"," August 2005"
-"3AN1W1","Secondary","Ridge or sawgrass and emergent marsh",8.77,8.88,8.65,3,"USGS"," August 2005"
-"3ANE","Major","Exotics and cattail",8.42,8.58,8.23,6,"USACE"," October 2009"
-"3ANE","Secondary","Ridge or sawgrass and emergent marsh",9,9.19,8.83,3,"USGS"," August 2005"
-"3ANE_GW","Major","Exotics and cattail",8.42,8.58,8.23,6,"USACE"," October 2009"
-"3ANE_GW","Secondary","Ridge or sawgrass and emergent marsh",9,9.19,8.83,3,"USGS"," August 2005"
-"3ANW","Major","Slough or open water",9.86,10.08,9.76,6,"USGS"," October 2007"
-"3ANW","Secondary","Ridge or sawgrass and emergent marsh",10.12,10.25,10.02,3,"USGS"," October 2007"
-"3ANW_GW","Major","Slough or open water",9.86,10.08,9.76,6,"USGS"," October 2007"
-"3ANW_GW","Secondary","Ridge or sawgrass and emergent marsh",10.12,10.25,10.02,3,"USGS"," October 2007"
-"3AS","Major","Slough or open water",7.85,8.07,7.65,6,"USGS"," August 2005"
-"3AS","Secondary","Ridge or sawgrass and emergent marsh",8.38,8.47,8.21,3,"USGS"," August 2005"
-"3AS3W1","Major","Ridge or sawgrass and emergent marsh",7.48,7.83,7.12,6,"USGS"," August 2005"
-"3AS3W1","Secondary","Slough or open water",6.3,6.42,6.08,3,"USGS"," August 2005"
-"3ASW","Major","Wet prairie",7.87,7.92,7.77,6,"USGS"," August 2005"
-"3ASW","Secondary","Ridge or sawgrass and emergent marsh",7.42,7.52,7.32,3,"USGS"," August 2005"
-"3B-SE","Major","Wet prairie",3.86,4,3.79,6,"USGS"," August 2005"
-"3B-SE","Secondary","Ridge or sawgrass and emergent marsh",3.51,4.12,2.9,3,"USGS"," August 2005"
-"3BS1W1","Major","Wet prairie",3.83,3.89,3.78,6,"USGS"," August 2005"
-"3BS1W1","Secondary","Ridge or sawgrass and emergent marsh",4.14,4.28,4.04,3,"USGS"," August 2005"
-"A13","Major","Ridge or sawgrass and emergent marsh",3.24,3.31,3.17,6,"ENP"," July 2007"
-"ANGEL","Major","N/A",4.73,,,1,"SFWMD"," N/A"
-"BARW4","Major","Canal",,,,,"USACE"," October 2009"
-"BARW6A","Major","Canal",,,,,"USACE"," October 2009"
-"BCA1","Major","Slough or open water",12.71,12.88,12.38,10,"BCNP"," June 2010"
-"BCA1","Secondary","Ridge or sawgrass and emergent marsh",12.41,12.48,12.38,3,"BCNP"," June 2010"
-"BCA10","Major","Other (mostly wetland shrub and wetland forested)",2.07,2.23,1.92,6,"USGS"," July 2007"
-"BCA10","Secondary","Wet prairie",1.61,1.76,1.49,3,"USGS"," July 2007"
-"BCA11","Major","Canal",2.86,2.88,2.85,6,"USGS"," July 2007"
-"BCA12","Major","Other (mostly wetland shrub and wetland forested)",12.08,12.43,11.48,6,"USGS"," July 2007"
-"BCA12","Secondary","Upland",,,,,"USGS"," July 2007"
-"BCA13","Major","Other (mostly wetland shrub and wetland forested)",10.71,10.83,10.5,6,"USGS"," July 2007"
-"BCA13","Secondary","Upland",,,,,"USGS"," July 2007"
-"BCA14","Major","Wet prairie",8.55,8.96,8.14,6,"USGS"," July 2007"
-"BCA14","Secondary","Upland",,,,,"USGS"," July 2007"
-"BCA15","Major","Other (mostly wetland shrub and wetland forested)",9.57,9.66,9.46,5,"USGS"," July 2007"
-"BCA15","Secondary","Upland",,,,,"USGS"," July 2007"
-"BCA16","Major","Wet prairie",9.61,9.73,9.52,6,"USGS"," August 2005"
-"BCA17","Major","Ridge or sawgrass and emergent marsh",12.41,12.54,12.24,6,"USACE"," October 2009"
-"BCA17","Secondary","Exotics and cattail",12.01,12.09,11.94,3,"USACE"," October 2009"
-"BCA18","Major","Wet prairie",11.28,11.41,11.08,6,"USGS"," July 2007"
-"BCA18","Secondary","Other (mostly wetland shrub and wetland forested)",12.29,12.4,12.17,3,"USGS"," July 2007"
-"BCA19","Major","Wet prairie",0.21,0.31,0.05,6,"USGS"," July 2007"
-"BCA19","Secondary","Other (mostly wetland shrub and wetland forested)",-0.16,-0.05,-0.31,3,"USGS"," July 2007"
-"BCA2","Major","Other (mostly wetland shrub and wetland forested)",11.46,11.96,10.88,6,"USGS"," August 2005"
-"BCA2","Secondary","Ridge or sawgrass and emergent marsh",12.26,12.38,12.16,3,"USGS"," August 2005"
-"BCA20","Major","Wet prairie",3.51,3.58,3.43,6,"USGS"," July 2007"
-"BCA20","Secondary","Ridge or sawgrass and emergent marsh",2.55,2.76,2.42,3,"USGS"," July 2007"
-"BCA3","Major","Wet prairie",12.21,12.3,12.13,6,"USGS"," August 2005"
-"BCA4","Major","Wet prairie",6.76,6.91,6.63,6,"USGS"," July 2007"
-"BCA4","Secondary","Upland",,,,,"USGS"," July 2007"
-"BCA5","Major","Other (mostly wetland shrub and wetland forested)",8.19,8.28,8.08,6,"USGS"," July 2007"
-"BCA8","Major","Canal",1.03,1.31,0.7,6,"USGS"," July 2007"
-"BCA9","Major","Other (mostly wetland shrub and wetland forested)",5.47,5.81,5.01,6,"USACE"," October 2009"
-"BCA9","Secondary","Upland",5.85,5.86,5.85,3,"USACE"," October 2009"
-"BSC","Major","Open water (river, canal, bay, etc.)",,,,,"USGS"," July 2008"
-"BSC","Secondary","Forest",,,,,"USGS"," July 2008"
-"C111_wetland_east_of_FIU_LTER_TSPH5","Major","Ridge or sawgrass and emergent marsh",0.02,0.13,-0.04,6,"ENP"," July 2007"
-"CP","Major","Slough or open water",-1.49,-1.42,-1.58,6,"ENP"," July 2007"
-"CP","Secondary","Other (mostly wetland shrub and wetland forested)",-0.54,-0.46,-0.7,3,"ENP"," July 2007"
-"CR2","Major","Other (mostly wetland shrub and wetland forested)",4.12,4.55,3.12,6,"USGS"," August 2005"
-"CR3","Major","Wet prairie",4.03,4.26,3.91,5,"USGS"," August 2005"
-"CT27R","Major","Ridge or sawgrass and emergent marsh",0.21,0.26,0.14,6,"ENP"," July 2007"
-"CT27R","Secondary","Exotics and cattail",0.42,0.54,0.18,3,"ENP"," July 2007"
-"CT50R","Major","Ridge or sawgrass and emergent marsh",0.32,0.52,0.18,6,"ENP"," July 2007"
-"CT50R","Secondary","Other (mostly wetland shrub and wetland forested)",0.47,0.53,0.38,3,"ENP"," July 2007"
-"CV5NR","Major","Slough or open water",-4.25,-3.04,-4.89,3,"ENP"," July 2007"
-"CV5NR","Secondary","Upland",,,,,"ENP"," July 2007"
-"CY2","Major","Other (mostly wetland shrub and wetland forested)",1.05,1.11,1,4,"ENP"," July 2007"
-"CY3","Major","Ridge or sawgrass and emergent marsh",0.7,0.84,0.54,6,"ENP"," July 2007"
-"CY3","Secondary","Other (mostly wetland shrub and wetland forested)",,,,,"ENP"," July 2007"
-"DO1","Major","Wet prairie",1.48,1.67,1.31,6,"ENP"," June 2007"
-"DO2","Major","Other (mostly wetland shrub and wetland forested)",1.83,1.91,1.75,6,"ENP"," June 2007"
-"E112","Major","Wet prairie",2.43,2.72,1.98,6,"USGS"," August 2005"
-"E112","Secondary","Ridge or sawgrass and emergent marsh",2.71,3.02,2.42,3,"USGS"," August 2005"
-"E146","Major","Ridge or sawgrass and emergent marsh",-0.95,-0.83,-1.02,6,"ENP"," July 2007"
-"E146","Secondary","Other (mostly wetland shrub and wetland forested)",-0.46,-0.32,-0.56,3,"ENP"," July 2007"
-"EDEN_1","Major","Wet prairie",7.06,7.15,6.99,6,"USGS"," July 2007"
-"EDEN_10","Major","Ridge or sawgrass and emergent marsh",4.87,5.02,4.69,6,"USGS"," September 2007"
-"EDEN_11","Major","Ridge or sawgrass and emergent marsh",11.04,11.18,10.98,6,"USGS"," September 2007"
-"EDEN_12","Major","Slough or open water",5.59,5.77,5.44,6,"USGS"," Sept. 2007"
-"EDEN_12","Secondary","Ridge or sawgrass and emergent marsh",5.66,5.71,5.64,3,"USGS"," Sept. 2007"
-"EDEN_13","Major","Ridge or sawgrass and emergent marsh",7.26,7.55,6.87,6,"USGS"," August 07"
-"EDEN_13","Secondary","Slough or open water",6.41,6.47,6.31,3,"USGS"," August 07"
-"EDEN_14","Major","Slough or open water",7.96,8.09,7.79,6,"USACE"," October 2009"
-"EDEN_14","Secondary","Ridge or sawgrass and emergent marsh",8.48,8.58,8.41,3,"USACE"," October 2009"
-"EDEN_3","Major","Ridge or sawgrass and emergent marsh",-0.18,-0.12,-0.25,6,"ENP"," July 2007"
-"EDEN_3","Secondary","Exotics and cattail",-0.4,-0.28,-0.57,3,"ENP"," July 2007"
-"EDEN_4","Major","Slough or open water",5.77,5.94,5.45,6,"USGS"," Sept. 2007"
-"EDEN_4","Secondary","Ridge or sawgrass and emergent marsh",6.02,6.53,5.71,3,"USGS"," Sept. 2007"
-"EDEN_5","Major","Wet prairie",7.9,7.94,7.84,6,"USGS"," Sept. 2007"
-"EDEN_5","Secondary","Ridge or sawgrass and emergent marsh",8.1,8.24,7.91,3,"USGS"," Sept. 2007"
-"EDEN_6","Major","Wet prairie",9.05,9.09,9.02,6,"USACE"," October 2009"
-"EDEN_6","Secondary","Other (mostly wetland shrub and wetland forested)",9.33,9.42,9.26,3,"USACE"," October 2009"
-"EDEN_7","Major","Slough or open water",4.84,4.9,4.8,3,"USGS"," Sept. 2007"
-"EDEN_7","Secondary","Ridge or sawgrass and emergent marsh",4.8,4.86,4.7,6,"USGS"," Sept. 2007"
-"EDEN_8","Major","Slough or open water",5.73,5.93,5.61,6,"USGS"," Sept. 2007"
-"EDEN_8","Secondary","Ridge or sawgrass and emergent marsh",7.03,7.21,6.82,3,"USGS"," Sept. 2007"
-"EDEN_9","Major","Ridge or sawgrass and emergent marsh",8.11,8.27,7.97,6,"USGS"," September 2007"
-"EP1R","Major","N/A",-0.88,,,1,"ENP"," N/A"
-"EPSW","Major","Other (mostly wetland shrub and wetland forested)",-0.21,-0.15,-0.36,6,"ENP"," July 2007"
-"EVER4","Major","Ridge or sawgrass and emergent marsh",-0.5,-0.43,-0.57,6,"ENP"," July 2007"
-"EVER5A","Major","N/A",-0.62,,,1,"USGS"," N/A"
-"EVER6","Major","Ridge or sawgrass and emergent marsh",0.34,0.43,0.29,6,"ENP"," July 2007"
-"EVER6","Secondary","Other (mostly wetland shrub and wetland forested)",-0.08,0.01,-0.2,3,"ENP"," July 2007"
-"EVER7","Major","Ridge or sawgrass and emergent marsh",0.51,0.63,0.42,6,"ENP"," July 2007"
-"EVER7","Secondary","Other (mostly wetland shrub and wetland forested)",0.5,0.64,0.33,3,"ENP"," July 2007"
-"EVER8","Major","N/A",-0.21,,,1,"ENP"," N/A"
-"G-1251","Major","N/A",1.62,,,1,"USGS"," N/A"
-"G-1488","Major","N/A",5.85,,,1,"USGS"," N/A"
-"G-1502","Major","N/A",6.72,,,1,"USGS"," N/A"
-"G-3272","Major","N/A",5.44,,,1,"USGS"," N/A"
-"G-3273","Major","N/A",5.21,,,1,"SFWMD"," N/A"
-"G-3437","Major","N/A",5.27,,,1,"USGS"," N/A"
-"G-3567","Major","N/A",5.06,,,1,"USGS"," N/A"
-"G-3574","Major","N/A",4.65,,,1,"USGS"," N/A"
-"G-3575","Major","N/A",5.05,,,1,"USGS"," N/A"
-"G-3576","Major","N/A",5.05,,,1,"USGS"," N/A"
-"G-3577","Major","N/A",5.05,,,1,"USGS"," N/A"
-"G-3578","Major","N/A",5.05,,,1,"USGS"," N/A"
-"G-3626","Major","N/A",5.75,,,1,"USGS"," N/A"
-"G-3628","Major","N/A",5.55,,,1,"USGS"," N/A"
-"G-3676","Major","N/A",6.73,,,1,"USGS"," N/A"
-"G-3761","Major","N/A",3.25,,,1,"USGS"," N/A"
-"G-3818","Major","N/A",3.56,,,1,"USGS"," N/A"
-"G-596","Major","N/A",6.45,,,1,"USGS"," N/A"
-"G-620","Major","N/A",5.29,,,1,"USGS"," N/A"
-"G-975","Major","N/A",5.86,,,1,"USGS"," N/A"
-"G251_T","Major","Canal",,,,,"USGS"," March 2010"
-"G338_T","Major","Canal",,,,,"USGS"," March 2010"
-"L28_GAP","Major","Slough or open water",10.12,10.21,9.8,6,"USGS"," July 2007"
-"L28_GAP","Secondary","Wet prairie",,,,,"USGS"," July 2007"
-"L31W","Major","Canal",,,,,"ENP"," July 2007"
-"L31W","Secondary","Ridge or sawgrass and emergent marsh",3.33,3.43,3.27,3,"ENP"," July 2007"
-"LO2","Major","Marsh",-0.66,-0.52,-0.74,6,"USGS"," August 2008"
-"LO3","Major","Forest",1.17,1.39,0.96,6,"USGS"," August 2008"
-"MET-1","Major","Ridge or sawgrass and emergent marsh",4.3,4.41,4.24,6,"ENP"," July 2007"
-"MET-1","Secondary","Slough or open water",4.15,4.23,4.01,3,"ENP"," July 2007"
-"MO-214","Major","Wet prairie",-0.05,0.07,-0.21,6,"USGS"," August 2008"
-"MO-215","Major","Ridge or sawgrass and emergent marsh",-0.32,-0.24,-0.49,6,"USGS"," August 2007"
-"MO-215","Secondary","Wet prairie",-0.28,-0.2,-0.39,3,"USGS"," August 2007"
-"MO-216","Major","Wet prairie",-0.07,0.02,-0.16,7,"USGS"," July 2007"
-"NCL","Major","Slough or open water",-1.29,-1.22,-1.4,6,"ENP"," July 2007"
-"NCL","Secondary","Other (mostly wetland shrub and wetland forested)",-1.07,-0.96,-1.12,3,"ENP"," July 2007"
-"NESRS1","Major","Ridge or sawgrass and emergent marsh",4.33,4.36,4.27,6,"ENP"," July 2007"
-"NESRS1","Secondary","Slough or open water",4.21,4.25,4.14,3,"ENP"," July 2007"
-"NESRS2","Major","Ridge or sawgrass and emergent marsh",4.29,4.49,4.19,6,"ENP"," July 2007"
-"NESRS2","Secondary","Wet prairie",4.08,4.14,4.03,3,"ENP"," July 2007"
-"NESRS3","Major","Ridge or sawgrass and emergent marsh",4.4,4.43,4.33,6,"ENP"," July 2007"
-"NESRS4","Major","Ridge or sawgrass and emergent marsh",4.14,4.23,4.02,6,"ENP"," July 2007"
-"NESRS4","Secondary","Wet prairie",4.06,4.21,3.97,3,"ENP"," July 2007"
-"NESRS5","Major","Ridge or sawgrass and emergent marsh",4.41,4.55,4.34,6,"ENP"," July 2007"
-"NESRS5","Secondary","Wet prairie",4.21,4.38,4.01,3,"ENP"," July 2007"
-"NMP","Major","N/A",-0.32,,,1,"ENP"," N/A"
-"NORTH_CA1","Major","Wet prairie",13.11,13.23,12.95,6,"USGS"," August 2005"
-"NORTH_CA1","Secondary","Ridge or sawgrass and emergent marsh",13.02,13.11,12.97,3,"USGS"," August 2005"
-"NP201","Major","Ridge or sawgrass and emergent marsh",5.41,5.53,5.32,6,"ENP"," June 2007"
-"NP201","Secondary","Wet prairie",5.09,5.15,4.98,3,"ENP"," June 2007"
-"NP202","Major","Wet prairie",3.8,3.88,3.73,6,"ENP"," June 2007"
-"NP202","Secondary","Slough or open water",1.53,,,1,"ENP"," June 2007"
-"NP203","Major","Wet prairie",3.13,3.37,3.01,6,"ENP"," June 2007"
-"NP205","Major","Wet prairie",4.51,4.65,4.28,6,"ENP"," June 2007"
-"NP205","Secondary","Slough or open water",1.7,2.13,1.38,3,"ENP"," June 2007"
-"NP206","Major","Ridge or sawgrass and emergent marsh",4.01,4.23,3.36,6,"ENP"," June 2007"
-"NP206","Secondary","Other (mostly wetland shrub and wetland forested)",2.73,2.91,2.56,2,"ENP"," June 2007"
-"NP44","Major","Upland",2.86,3.04,2.59,6,"ENP"," July 2007"
-"NP46","Major","Ridge or sawgrass and emergent marsh",-0.07,-0.01,-0.15,6,"ENP"," July 2007"
-"NP62","Major","Other (mostly wetland shrub and wetland forested)",0.99,,,1,"ENP"," July 2007"
-"NP62","Secondary","Ridge or sawgrass and emergent marsh",0.75,0.9,0.53,4,"ENP"," July 2007"
-"NP67","Major","Other (mostly wetland shrub and wetland forested)",0.34,0.54,-0.08,6,"ENP"," July 2007"
-"NP67","Secondary","Ridge or sawgrass and emergent marsh",0.66,0.72,0.63,3,"ENP"," July 2007"
-"NP72","Major","Upland",2.85,,,1,"ENP"," July 2007"
-"NTS1","Major","Wet prairie",2.9,3.32,2.01,6,"USGS"," August 2005"
-"NTS10","Major","Wet prairie",3.79,3.89,3.71,6,"ENP"," July 2007"
-"NTS14","Major","N/A",3.48,,,1,"ENP"," N/A"
-"NTS18","Major","Other (mostly wetland shrub and wetland forested)",3.62,,,1,"USGS"," August 2005"
-"OL","Major","Ridge or sawgrass and emergent marsh",-0.39,-0.35,-0.41,6,"ENP"," July 2007"
-"OL","Secondary","Other (mostly wetland shrub and wetland forested)",-0.84,-0.8,-0.9,3,"ENP"," July 2007"
-"OT","Major","Wet prairie",0.05,0.11,-0.04,6,"ENP"," June 2007"
-"OT","Secondary","Slough or open water",-1.78,-1.52,-1.96,3,"ENP"," June 2007"
-"P33","Major","Ridge or sawgrass and emergent marsh",3.92,4.04,3.81,6,"ENP"," June 2007"
-"P34","Major","Wet prairie",0.69,0.84,0.56,6,"ENP"," June 2007"
-"P35","Major","Ridge or sawgrass and emergent marsh",-0.23,-0.18,-0.34,6,"ENP"," June 2007"
-"P36","Major","Ridge or sawgrass and emergent marsh",1.74,1.88,1.65,6,"ENP"," June 2007"
-"P36","Secondary","Slough or open water",0.23,0.71,-0.15,3,"ENP"," June 2007"
-"P37","Major","Ridge or sawgrass and emergent marsh",-0.24,-0.12,-0.31,6,"ENP"," July 2007"
-"P37","Secondary","Other (mostly wetland shrub and wetland forested)",-0.35,-0.17,-0.45,3,"ENP"," July 2007"
-"P38","Major","Wet prairie",-0.48,-0.43,-0.53,6,"ENP"," June 2007"
-"R127","Major","Wet prairie",0.08,0.11,0,6,"ENP"," July 2007"
-"R127","Secondary","Ridge or sawgrass and emergent marsh",0.2,0.21,0.19,3,"ENP"," July 2007"
-"R3110","Major","Wet prairie",3.65,3.73,3.41,6,"ENP"," July 2007"
-"RG1","Major","Wet prairie",3.76,3.99,3.49,6,"USGS"," August 2005"
-"RG1","Secondary","Ridge or sawgrass and emergent marsh",3.68,3.84,3.49,3,"USGS"," August 2005"
-"RG2","Major","Wet prairie",4.61,4.86,4.3,6,"USGS"," August 2005"
-"RG2","Secondary","Ridge or sawgrass and emergent marsh",4.01,4.35,3.64,3,"USGS"," August 2005"
-"RG3","Major","N/A",5.09,,,1,"ENP"," N/A"
-"SH2","Major","Marsh",-0.52,-0.32,-0.69,6,"USGS"," July 2008"
-"SH2","Secondary","Forest",,,,,"USGS"," July 2008"
-"SH3","Major","Forest",0.27,0.36,0.13,6,"USGS"," July 2008"
-"SH4","Major","Forest",0.37,0.42,0.32,6,"USGS"," July 2008"
-"SH5","Major","Marsh",0.16,0.31,0.1,6,"USGS"," July 2008"
-"SH5","Secondary","Forest",,,,,"USGS"," July 2008"
-"SITE_17","Major","Wet prairie",9.27,9.59,9.09,6,"USGS"," August 2005"
-"SITE_17","Secondary","Ridge or sawgrass and emergent marsh",9.66,9.7,9.61,3,"USGS"," August 2005"
-"SITE_19","Major","Exotics and cattail",9.68,10.01,9.49,6,"USGS"," August 2005"
-"SITE_19","Secondary","Slough or open water",9.16,9.24,9.13,3,"USGS"," August 2005"
-"SITE_62","Major","Ridge or sawgrass and emergent marsh",8.39,8.62,8.2,6,"USGS"," August 2005"
-"SITE_62","Secondary","Slough or open water",8.32,8.38,8.27,3,"USGS"," August 2005"
-"SITE_63","Major","Exotics and cattail",7.51,7.75,7.3,6,"USGS"," August 2005"
-"SITE_63","Secondary","Slough or open water",7.33,7.38,7.28,3,"USGS"," August 2005"
-"SITE_64","Major","Slough or open water",6.97,7.2,6.73,6,"USGS"," August 2005"
-"SITE_64","Secondary","Ridge or sawgrass and emergent marsh",7.61,7.66,7.55,3,"USGS"," August 2005"
-"SITE_65","Major","Slough or open water",5.86,6,5.67,6,"USGS"," August 2005"
-"SITE_65","Secondary","Ridge or sawgrass and emergent marsh",6.37,6.83,6.09,3,"USGS"," August 2005"
-"SITE_69W","Major","Canal",,,,,"USGS"," July 2007"
-"SITE_7","Major","Slough or open water",13.55,13.66,13.33,6,"USGS"," August 2005"
-"SITE_7","Secondary","Other (mostly wetland shrub and wetland forested)",13.28,13.32,13.26,3,"USGS"," August 2005"
-"SITE_71","Major","Ridge or sawgrass and emergent marsh",5.06,5.12,4.99,6,"USGS"," August 2005"
-"SITE_71","Secondary","Slough or open water",4.43,4.87,3.98,3,"USGS"," August 2005"
-"SITE_76","Major","Ridge or sawgrass and emergent marsh",5.32,5.74,5.14,6,"USGS"," August 2005"
-"SITE_8C","Major","Canal",,,,,"USGS"," July 2007"
-"SITE_8T","Major","Wet prairie",13.52,13.57,13.45,6,"USGS"," August 2005"
-"SITE_8T","Secondary","Other (mostly wetland shrub and wetland forested)",13.63,13.71,13.53,3,"USGS"," August 2005"
-"SITE_9","Major","Slough or open water",13.22,13.81,12.61,6,"USGS"," August 2005"
-"SITE_9","Secondary","Other (mostly wetland shrub and wetland forested)",14.07,14.17,13.93,3,"USGS"," August 2005"
-"SITE_99","Major","Wet prairie",4.84,5.18,4.62,7,"USGS"," August 07"
-"SITE_99","Secondary","Slough or open water",4.71,4.79,4.62,3,"USGS"," August 07"
-"SOUTH_CA1","Major","Slough or open water",11.05,11.14,10.95,6,"USGS"," August 2005"
-"SOUTH_CA1","Secondary","Ridge or sawgrass and emergent marsh",12.12,12.24,12.06,3,"USGS"," August 2005"
-"SP","Major","N/A",0.86,,,1,"ENP"," N/A"
-"SPARO","Major","N/A",5.49,,,1,"USGS"," N/A"
-"SR1","Major","N/A",-0.17,,,1,"ENP"," N/A"
-"SRS1","Major","Canal",1.1,1.79,0.51,3,"USGS"," Sept. 2007"
-"SRS1","Secondary","Ridge or sawgrass and emergent marsh",5.07,5.23,4.77,3,"USGS"," Sept. 2007"
-"Tamiami_Canal_40-Mile_Bend_to_Monroe","Major","Canal",6.12,6.61,5.4,5,"USGS"," July 2007"
-"Tamiami_Canal_Monroe_to_Carnestown","Major","Canal",,,,,"USGS"," July 2007"
-"Taylor_Slough_wetland_at_E146","Major","N/A",-1.02,,,1,"USGS"," N/A"
-"TI-8","Major","Slough or open water",4.16,4.3,4.04,6,"USGS"," September 2007"
-"TI-8","Secondary","Ridge or sawgrass and emergent marsh",4.52,4.57,4.47,3,"USGS"," September 2007"
-"TI-9","Major","Slough or open water",4.78,5,4.35,5,"USGS"," Sept. 2007"
-"TI-9","Secondary","Ridge or sawgrass and emergent marsh",4.75,4.77,4.74,3,"USGS"," Sept. 2007"
-"TMC","Major","Ridge or sawgrass and emergent marsh",2.61,2.67,2.52,6,"ENP"," June 2007"
-"TSB","Major","Ridge or sawgrass and emergent marsh",1.43,1.61,1.29,6,"ENP"," June 2007"
-"TSB","Secondary","Wet prairie",0.92,1.01,0.81,3,"ENP"," June 2007"
-"TSH","Major","N/A",-0.15,,,1,"ENP"," N/A"
-"W11","Major","Slough or open water",6.92,7.3,6.22,6,"USGS"," August 2005"
-"W11","Secondary","Ridge or sawgrass and emergent marsh",7.85,7.9,7.8,3,"USGS"," August 2005"
-"W14","Major","Other (mostly wetland shrub and wetland forested)",7.24,7.61,7.09,6,"USGS"," August 2005"
-"W14","Secondary","Slough or open water",6.63,6.72,6.52,3,"USGS"," August 2005"
-"W14","Secondary","Ridge or sawgrass and emergent marsh",7.64,7.89,7.51,3,"USGS"," August 2005"
-"W15","Major","Slough or open water",7.74,7.9,7.55,6,"USGS"," August 2005"
-"W15","Secondary","Wet prairie",7.02,7.29,6.5,3,"USGS"," August 2005"
-"W18","Major","Ridge or sawgrass and emergent marsh",7.7,7.87,7.53,6,"USACE"," October 2009"
-"W18","Secondary","Slough or open water",7.55,7.58,7.5,3,"USACE"," October 2009"
-"W2","Major","Ridge or sawgrass and emergent marsh",6.54,6.64,6.4,6,"USGS"," August 2005"
-"W2","Secondary","Wet prairie",6.11,6.7,5.31,3,"USGS"," August 2005"
-"W5","Major","Slough or open water",6.1,6.18,6.03,6,"USGS"," August 2005"
-"W5","Secondary","Ridge or sawgrass and emergent marsh",6.48,6.82,6.28,3,"USGS"," August 2005"
-"WC2AN1","Major","Ridge or sawgrass and emergent marsh",10.9,11.1,10.8,6,"SFWMD"," September 2010"
-"WC2AS1","Major","Ridge or sawgrass and emergent marsh",11.1,11.2,11,6,"SFWMD"," September 2010"
-"WCA1ME","Major","Slough or open water",13.7,13.95,13.53,6,"USGS"," August 2005"
-"WCA1ME","Secondary","Other (mostly wetland shrub and wetland forested)",14.4,14.57,14.27,3,"USGS"," August 2005"
-"WCA2E1","Major","Exotics and cattail",10.33,10.39,10.29,6,"USGS"," Sept. 2007"
-"WCA2E4","Major","Exotics and cattail",10.35,10.37,10.33,6,"USACE"," October 2009"
-"WCA2E4","Secondary","Slough or open water",9.76,9.83,9.64,3,"USACE"," October 2009"
-"WCA2F1","Major","Exotics and cattail",10.56,10.74,10.38,6,"USGS"," Sept. 2007"
-"WCA2F4","Major","Exotics and cattail",10.38,10.53,10.31,6,"USACE"," October 2009"
-"WCA2F4","Secondary","Slough or open water",9.93,10.13,9.79,3,"USACE"," October 2009"
-"WCA2RT","Major","Exotics and cattail",7.71,7.77,7.65,6,"USACE"," October 2009"
-"WCA2U1","Major","Ridge or sawgrass and emergent marsh",9.5,10.24,9.19,6,"USGS"," Sept. 2007"
-"WCA2U1","Secondary","Slough or open water",8.2,8.24,8.04,3,"USGS"," Sept. 2007"
-"WCA2U3","Major","Ridge or sawgrass and emergent marsh",9.93,10.04,9.74,6,"USGS"," Sept. 2007"
-"WCA2U3","Secondary","Slough or open water",9.38,9.94,8.95,3,"USGS"," Sept. 2007"
+station,communitytype,community,ave_elevation,max_elevation,min_elevation,measurements,agency,date
+2A300,Major,Wet prairie,8.7,8.93,8.52,6,USGS, August 2005
+2A300,Secondary,Ridge or sawgrass and emergent marsh,9.56,9.7,9.48,3,USGS, August 2005
+3A-5,Major,Wet prairie,7.71,8.07,7.45,6,USGS, Sept. 2007
+3A-5,Secondary,Ridge or sawgrass and emergent marsh,8.36,8.43,8.3,3,USGS, Sept. 2007
+3A10,Major,Exotics and cattail,9.13,9.24,8.95,6,USGS, August 2005
+3A11,Major,Wet prairie,9.85,9.98,9.7,6,USGS, August 2005
+3A11,Secondary,Ridge or sawgrass and emergent marsh,9.53,9.63,9.45,3,USGS, August 2005
+3A12,Major,Wet prairie,7.86,8.02,7.76,6,USGS, August 2005
+3A12,Secondary,Ridge or sawgrass and emergent marsh,7.74,7.85,7.6,3,USGS, August 2005
+3A9,Major,Slough or open water,8.19,8.28,8.09,6,USGS, August 2005
+3A9,Secondary,Ridge or sawgrass and emergent marsh,8.38,8.71,8.19,3,USGS, August 2005
+3AN1W1,Major,Wet prairie,8.79,8.96,8.68,6,USGS, August 2005
+3AN1W1,Secondary,Ridge or sawgrass and emergent marsh,8.77,8.88,8.65,3,USGS, August 2005
+3ANE,Major,Exotics and cattail,8.42,8.58,8.23,6,USACE, October 2009
+3ANE,Secondary,Ridge or sawgrass and emergent marsh,9,9.19,8.83,3,USGS, August 2005
+3ANE_GW,Major,Exotics and cattail,8.42,8.58,8.23,6,USACE, October 2009
+3ANE_GW,Secondary,Ridge or sawgrass and emergent marsh,9,9.19,8.83,3,USGS, August 2005
+3ANW,Major,Slough or open water,9.86,10.08,9.76,6,USGS, October 2007
+3ANW,Secondary,Ridge or sawgrass and emergent marsh,10.12,10.25,10.02,3,USGS, October 2007
+3ANW_GW,Major,Slough or open water,9.86,10.08,9.76,6,USGS, October 2007
+3ANW_GW,Secondary,Ridge or sawgrass and emergent marsh,10.12,10.25,10.02,3,USGS, October 2007
+3AS,Major,Slough or open water,7.85,8.07,7.65,6,USGS, August 2005
+3AS,Secondary,Ridge or sawgrass and emergent marsh,8.38,8.47,8.21,3,USGS, August 2005
+3AS3W1,Major,Ridge or sawgrass and emergent marsh,7.48,7.83,7.12,6,USGS, August 2005
+3AS3W1,Secondary,Slough or open water,6.3,6.42,6.08,3,USGS, August 2005
+3ASW,Major,Wet prairie,7.87,7.92,7.77,6,USGS, August 2005
+3ASW,Secondary,Ridge or sawgrass and emergent marsh,7.42,7.52,7.32,3,USGS, August 2005
+3B-SE,Major,Wet prairie,3.86,4,3.79,6,USGS, August 2005
+3B-SE,Secondary,Ridge or sawgrass and emergent marsh,3.51,4.12,2.9,3,USGS, August 2005
+3BS1W1,Major,Wet prairie,3.83,3.89,3.78,6,USGS, August 2005
+3BS1W1,Secondary,Ridge or sawgrass and emergent marsh,4.14,4.28,4.04,3,USGS, August 2005
+A13,Major,Ridge or sawgrass and emergent marsh,3.24,3.31,3.17,6,ENP, July 2007
+ANGEL,Major,N/A,4.73,,,1,SFWMD,
+BARW4,Major,Canal,,,,,USACE, October 2009
+BARW6A,Major,Canal,,,,,USACE, October 2009
+BCA1,Major,Slough or open water,12.71,12.88,12.38,10,BCNP, June 2010
+BCA1,Secondary,Ridge or sawgrass and emergent marsh,12.41,12.48,12.38,3,BCNP, June 2010
+BCA10,Major,Other (mostly wetland shrub and wetland forested),2.07,2.23,1.92,6,USGS, July 2007
+BCA10,Secondary,Wet prairie,1.61,1.76,1.49,3,USGS, July 2007
+BCA11,Major,Canal,2.86,2.88,2.85,6,USGS, July 2007
+BCA12,Major,Other (mostly wetland shrub and wetland forested),12.08,12.43,11.48,6,USGS, July 2007
+BCA12,Secondary,Upland,,,,,USGS, July 2007
+BCA13,Major,Other (mostly wetland shrub and wetland forested),10.71,10.83,10.5,6,USGS, July 2007
+BCA13,Secondary,Upland,,,,,USGS, July 2007
+BCA14,Major,Wet prairie,8.55,8.96,8.14,6,USGS, July 2007
+BCA14,Secondary,Upland,,,,,USGS, July 2007
+BCA15,Major,Other (mostly wetland shrub and wetland forested),9.57,9.66,9.46,5,USGS, July 2007
+BCA15,Secondary,Upland,,,,,USGS, July 2007
+BCA16,Major,Wet prairie,9.61,9.73,9.52,6,USGS, August 2005
+BCA17,Major,Ridge or sawgrass and emergent marsh,12.41,12.54,12.24,6,USACE, October 2009
+BCA17,Secondary,Exotics and cattail,12.01,12.09,11.94,3,USACE, October 2009
+BCA18,Major,Wet prairie,11.28,11.41,11.08,6,USGS, July 2007
+BCA18,Secondary,Other (mostly wetland shrub and wetland forested),12.29,12.4,12.17,3,USGS, July 2007
+BCA19,Major,Wet prairie,0.21,0.31,0.05,6,USGS, July 2007
+BCA19,Secondary,Other (mostly wetland shrub and wetland forested),-0.16,-0.05,-0.31,3,USGS, July 2007
+BCA2,Major,Other (mostly wetland shrub and wetland forested),11.46,11.96,10.88,6,USGS, August 2005
+BCA2,Secondary,Ridge or sawgrass and emergent marsh,12.26,12.38,12.16,3,USGS, August 2005
+BCA20,Major,Wet prairie,3.51,3.58,3.43,6,USGS, July 2007
+BCA20,Secondary,Ridge or sawgrass and emergent marsh,2.55,2.76,2.42,3,USGS, July 2007
+BCA3,Major,Wet prairie,12.21,12.3,12.13,6,USGS, August 2005
+BCA4,Major,Wet prairie,6.76,6.91,6.63,6,USGS, July 2007
+BCA4,Secondary,Upland,,,,,USGS, July 2007
+BCA5,Major,Other (mostly wetland shrub and wetland forested),8.19,8.28,8.08,6,USGS, July 2007
+BCA8,Major,Canal,1.03,1.31,0.7,6,USGS, July 2007
+BCA9,Major,Other (mostly wetland shrub and wetland forested),5.47,5.81,5.01,6,USACE, October 2009
+BCA9,Secondary,Upland,5.85,5.86,5.85,3,USACE, October 2009
+BSC,Major,"Open water (river, canal, bay, etc.)",,,,,USGS, July 2008
+BSC,Secondary,Forest,,,,,USGS, July 2008
+C111_wetland_east_of_FIU_LTER_TSPH5,Major,Ridge or sawgrass and emergent marsh,0.02,0.13,-0.04,6,ENP, July 2007
+CP,Major,Slough or open water,-1.49,-1.42,-1.58,6,ENP, July 2007
+CP,Secondary,Other (mostly wetland shrub and wetland forested),-0.54,-0.46,-0.7,3,ENP, July 2007
+CR2,Major,Other (mostly wetland shrub and wetland forested),4.12,4.55,3.12,6,USGS, August 2005
+CR3,Major,Wet prairie,4.03,4.26,3.91,5,USGS, August 2005
+CT27R,Major,Ridge or sawgrass and emergent marsh,0.21,0.26,0.14,6,ENP, July 2007
+CT27R,Secondary,Exotics and cattail,0.42,0.54,0.18,3,ENP, July 2007
+CT50R,Major,Ridge or sawgrass and emergent marsh,0.32,0.52,0.18,6,ENP, July 2007
+CT50R,Secondary,Other (mostly wetland shrub and wetland forested),0.47,0.53,0.38,3,ENP, July 2007
+CV5NR,Major,Slough or open water,-4.25,-3.04,-4.89,3,ENP, July 2007
+CV5NR,Secondary,Upland,,,,,ENP, July 2007
+CY2,Major,Other (mostly wetland shrub and wetland forested),1.05,1.11,1,4,ENP, July 2007
+CY3,Major,Ridge or sawgrass and emergent marsh,0.7,0.84,0.54,6,ENP, July 2007
+CY3,Secondary,Other (mostly wetland shrub and wetland forested),,,,,ENP, July 2007
+DO1,Major,Wet prairie,1.48,1.67,1.31,6,ENP, June 2007
+DO2,Major,Other (mostly wetland shrub and wetland forested),1.83,1.91,1.75,6,ENP, June 2007
+E112,Major,Wet prairie,2.43,2.72,1.98,6,USGS, August 2005
+E112,Secondary,Ridge or sawgrass and emergent marsh,2.71,3.02,2.42,3,USGS, August 2005
+E146,Major,Ridge or sawgrass and emergent marsh,-0.95,-0.83,-1.02,6,ENP, July 2007
+E146,Secondary,Other (mostly wetland shrub and wetland forested),-0.46,-0.32,-0.56,3,ENP, July 2007
+EDEN_1,Major,Wet prairie,7.06,7.15,6.99,6,USGS, July 2007
+EDEN_10,Major,Ridge or sawgrass and emergent marsh,4.87,5.02,4.69,6,USGS, September 2007
+EDEN_11,Major,Ridge or sawgrass and emergent marsh,11.04,11.18,10.98,6,USGS, September 2007
+EDEN_12,Major,Slough or open water,5.59,5.77,5.44,6,USGS, Sept. 2007
+EDEN_12,Secondary,Ridge or sawgrass and emergent marsh,5.66,5.71,5.64,3,USGS, Sept. 2007
+EDEN_13,Major,Ridge or sawgrass and emergent marsh,7.26,7.55,6.87,6,USGS, August 07
+EDEN_13,Secondary,Slough or open water,6.41,6.47,6.31,3,USGS, August 07
+EDEN_14,Major,Slough or open water,7.96,8.09,7.79,6,USACE, October 2009
+EDEN_14,Secondary,Ridge or sawgrass and emergent marsh,8.48,8.58,8.41,3,USACE, October 2009
+EDEN_3,Major,Ridge or sawgrass and emergent marsh,-0.18,-0.12,-0.25,6,ENP, July 2007
+EDEN_3,Secondary,Exotics and cattail,-0.4,-0.28,-0.57,3,ENP, July 2007
+EDEN_4,Major,Slough or open water,5.77,5.94,5.45,6,USGS, Sept. 2007
+EDEN_4,Secondary,Ridge or sawgrass and emergent marsh,6.02,6.53,5.71,3,USGS, Sept. 2007
+EDEN_5,Major,Wet prairie,7.9,7.94,7.84,6,USGS, Sept. 2007
+EDEN_5,Secondary,Ridge or sawgrass and emergent marsh,8.1,8.24,7.91,3,USGS, Sept. 2007
+EDEN_6,Major,Wet prairie,9.05,9.09,9.02,6,USACE, October 2009
+EDEN_6,Secondary,Other (mostly wetland shrub and wetland forested),9.33,9.42,9.26,3,USACE, October 2009
+EDEN_7,Major,Slough or open water,4.84,4.9,4.8,3,USGS, Sept. 2007
+EDEN_7,Secondary,Ridge or sawgrass and emergent marsh,4.8,4.86,4.7,6,USGS, Sept. 2007
+EDEN_8,Major,Slough or open water,5.73,5.93,5.61,6,USGS, Sept. 2007
+EDEN_8,Secondary,Ridge or sawgrass and emergent marsh,7.03,7.21,6.82,3,USGS, Sept. 2007
+EDEN_9,Major,Ridge or sawgrass and emergent marsh,8.11,8.27,7.97,6,USGS, September 2007
+EP1R,Major,N/A,-0.88,,,1,ENP,
+EPSW,Major,Other (mostly wetland shrub and wetland forested),-0.21,-0.15,-0.36,6,ENP, July 2007
+EVER4,Major,Ridge or sawgrass and emergent marsh,-0.5,-0.43,-0.57,6,ENP, July 2007
+EVER5A,Major,N/A,-0.62,,,1,USGS,
+EVER6,Major,Ridge or sawgrass and emergent marsh,0.34,0.43,0.29,6,ENP, July 2007
+EVER6,Secondary,Other (mostly wetland shrub and wetland forested),-0.08,0.01,-0.2,3,ENP, July 2007
+EVER7,Major,Ridge or sawgrass and emergent marsh,0.51,0.63,0.42,6,ENP, July 2007
+EVER7,Secondary,Other (mostly wetland shrub and wetland forested),0.5,0.64,0.33,3,ENP, July 2007
+EVER8,Major,N/A,-0.21,,,1,ENP,
+G-1251,Major,N/A,1.62,,,1,USGS,
+G-1488,Major,N/A,5.85,,,1,USGS,
+G-1502,Major,N/A,6.72,,,1,USGS,
+G-3272,Major,N/A,5.44,,,1,USGS,
+G-3273,Major,N/A,5.21,,,1,SFWMD,
+G-3437,Major,N/A,5.27,,,1,USGS,
+G-3567,Major,N/A,5.06,,,1,USGS,
+G-3574,Major,N/A,4.65,,,1,USGS,
+G-3575,Major,N/A,5.05,,,1,USGS,
+G-3576,Major,N/A,5.05,,,1,USGS,
+G-3577,Major,N/A,5.05,,,1,USGS,
+G-3578,Major,N/A,5.05,,,1,USGS,
+G-3626,Major,N/A,5.75,,,1,USGS,
+G-3628,Major,N/A,5.55,,,1,USGS,
+G-3676,Major,N/A,6.73,,,1,USGS,
+G-3761,Major,N/A,3.25,,,1,USGS,
+G-3818,Major,N/A,3.56,,,1,USGS,
+G-596,Major,N/A,6.45,,,1,USGS,
+G-620,Major,N/A,5.29,,,1,USGS,
+G-975,Major,N/A,5.86,,,1,USGS,
+G251_T,Major,Canal,,,,,USGS, March 2010
+G338_T,Major,Canal,,,,,USGS, March 2010
+L28_GAP,Major,Slough or open water,10.12,10.21,9.8,6,USGS, July 2007
+L28_GAP,Secondary,Wet prairie,,,,,USGS, July 2007
+L31W,Major,Canal,,,,,ENP, July 2007
+L31W,Secondary,Ridge or sawgrass and emergent marsh,3.33,3.43,3.27,3,ENP, July 2007
+LO2,Major,Marsh,-0.66,-0.52,-0.74,6,USGS, August 2008
+LO3,Major,Forest,1.17,1.39,0.96,6,USGS, August 2008
+MET-1,Major,Ridge or sawgrass and emergent marsh,4.3,4.41,4.24,6,ENP, July 2007
+MET-1,Secondary,Slough or open water,4.15,4.23,4.01,3,ENP, July 2007
+MO-214,Major,Wet prairie,-0.05,0.07,-0.21,6,USGS, August 2008
+MO-215,Major,Ridge or sawgrass and emergent marsh,-0.32,-0.24,-0.49,6,USGS, August 2007
+MO-215,Secondary,Wet prairie,-0.28,-0.2,-0.39,3,USGS, August 2007
+MO-216,Major,Wet prairie,-0.07,0.02,-0.16,7,USGS, July 2007
+NCL,Major,Slough or open water,-1.29,-1.22,-1.4,6,ENP, July 2007
+NCL,Secondary,Other (mostly wetland shrub and wetland forested),-1.07,-0.96,-1.12,3,ENP, July 2007
+NESRS1,Major,Ridge or sawgrass and emergent marsh,4.33,4.36,4.27,6,ENP, July 2007
+NESRS1,Secondary,Slough or open water,4.21,4.25,4.14,3,ENP, July 2007
+NESRS2,Major,Ridge or sawgrass and emergent marsh,4.29,4.49,4.19,6,ENP, July 2007
+NESRS2,Secondary,Wet prairie,4.08,4.14,4.03,3,ENP, July 2007
+NESRS3,Major,Ridge or sawgrass and emergent marsh,4.4,4.43,4.33,6,ENP, July 2007
+NESRS4,Major,Ridge or sawgrass and emergent marsh,4.14,4.23,4.02,6,ENP, July 2007
+NESRS4,Secondary,Wet prairie,4.06,4.21,3.97,3,ENP, July 2007
+NESRS5,Major,Ridge or sawgrass and emergent marsh,4.41,4.55,4.34,6,ENP, July 2007
+NESRS5,Secondary,Wet prairie,4.21,4.38,4.01,3,ENP, July 2007
+NMP,Major,N/A,-0.32,,,1,ENP,
+NORTH_CA1,Major,Wet prairie,13.11,13.23,12.95,6,USGS, August 2005
+NORTH_CA1,Secondary,Ridge or sawgrass and emergent marsh,13.02,13.11,12.97,3,USGS, August 2005
+NP201,Major,Ridge or sawgrass and emergent marsh,5.41,5.53,5.32,6,ENP, June 2007
+NP201,Secondary,Wet prairie,5.09,5.15,4.98,3,ENP, June 2007
+NP202,Major,Wet prairie,3.8,3.88,3.73,6,ENP, June 2007
+NP202,Secondary,Slough or open water,1.53,,,1,ENP, June 2007
+NP203,Major,Wet prairie,3.13,3.37,3.01,6,ENP, June 2007
+NP205,Major,Wet prairie,4.51,4.65,4.28,6,ENP, June 2007
+NP205,Secondary,Slough or open water,1.7,2.13,1.38,3,ENP, June 2007
+NP206,Major,Ridge or sawgrass and emergent marsh,4.01,4.23,3.36,6,ENP, June 2007
+NP206,Secondary,Other (mostly wetland shrub and wetland forested),2.73,2.91,2.56,2,ENP, June 2007
+NP44,Major,Upland,2.86,3.04,2.59,6,ENP, July 2007
+NP46,Major,Ridge or sawgrass and emergent marsh,-0.07,-0.01,-0.15,6,ENP, July 2007
+NP62,Major,Other (mostly wetland shrub and wetland forested),0.99,,,1,ENP, July 2007
+NP62,Secondary,Ridge or sawgrass and emergent marsh,0.75,0.9,0.53,4,ENP, July 2007
+NP67,Major,Other (mostly wetland shrub and wetland forested),0.34,0.54,-0.08,6,ENP, July 2007
+NP67,Secondary,Ridge or sawgrass and emergent marsh,0.66,0.72,0.63,3,ENP, July 2007
+NP72,Major,Upland,2.85,,,1,ENP, July 2007
+NTS1,Major,Wet prairie,2.9,3.32,2.01,6,USGS, August 2005
+NTS10,Major,Wet prairie,3.79,3.89,3.71,6,ENP, July 2007
+NTS14,Major,N/A,3.48,,,1,ENP,
+NTS18,Major,Other (mostly wetland shrub and wetland forested),3.62,,,1,USGS, August 2005
+OL,Major,Ridge or sawgrass and emergent marsh,-0.39,-0.35,-0.41,6,ENP, July 2007
+OL,Secondary,Other (mostly wetland shrub and wetland forested),-0.84,-0.8,-0.9,3,ENP, July 2007
+OT,Major,Wet prairie,0.05,0.11,-0.04,6,ENP, June 2007
+OT,Secondary,Slough or open water,-1.78,-1.52,-1.96,3,ENP, June 2007
+P33,Major,Ridge or sawgrass and emergent marsh,3.92,4.04,3.81,6,ENP, June 2007
+P34,Major,Wet prairie,0.69,0.84,0.56,6,ENP, June 2007
+P35,Major,Ridge or sawgrass and emergent marsh,-0.23,-0.18,-0.34,6,ENP, June 2007
+P36,Major,Ridge or sawgrass and emergent marsh,1.74,1.88,1.65,6,ENP, June 2007
+P36,Secondary,Slough or open water,0.23,0.71,-0.15,3,ENP, June 2007
+P37,Major,Ridge or sawgrass and emergent marsh,-0.24,-0.12,-0.31,6,ENP, July 2007
+P37,Secondary,Other (mostly wetland shrub and wetland forested),-0.35,-0.17,-0.45,3,ENP, July 2007
+P38,Major,Wet prairie,-0.48,-0.43,-0.53,6,ENP, June 2007
+R127,Major,Wet prairie,0.08,0.11,0,6,ENP, July 2007
+R127,Secondary,Ridge or sawgrass and emergent marsh,0.2,0.21,0.19,3,ENP, July 2007
+R3110,Major,Wet prairie,3.65,3.73,3.41,6,ENP, July 2007
+RG1,Major,Wet prairie,3.76,3.99,3.49,6,USGS, August 2005
+RG1,Secondary,Ridge or sawgrass and emergent marsh,3.68,3.84,3.49,3,USGS, August 2005
+RG2,Major,Wet prairie,4.61,4.86,4.3,6,USGS, August 2005
+RG2,Secondary,Ridge or sawgrass and emergent marsh,4.01,4.35,3.64,3,USGS, August 2005
+RG3,Major,N/A,5.09,,,1,ENP,
+SH2,Major,Marsh,-0.52,-0.32,-0.69,6,USGS, July 2008
+SH2,Secondary,Forest,,,,,USGS, July 2008
+SH3,Major,Forest,0.27,0.36,0.13,6,USGS, July 2008
+SH4,Major,Forest,0.37,0.42,0.32,6,USGS, July 2008
+SH5,Major,Marsh,0.16,0.31,0.1,6,USGS, July 2008
+SH5,Secondary,Forest,,,,,USGS, July 2008
+SITE_17,Major,Wet prairie,9.27,9.59,9.09,6,USGS, August 2005
+SITE_17,Secondary,Ridge or sawgrass and emergent marsh,9.66,9.7,9.61,3,USGS, August 2005
+SITE_19,Major,Exotics and cattail,9.68,10.01,9.49,6,USGS, August 2005
+SITE_19,Secondary,Slough or open water,9.16,9.24,9.13,3,USGS, August 2005
+SITE_62,Major,Ridge or sawgrass and emergent marsh,8.39,8.62,8.2,6,USGS, August 2005
+SITE_62,Secondary,Slough or open water,8.32,8.38,8.27,3,USGS, August 2005
+SITE_63,Major,Exotics and cattail,7.51,7.75,7.3,6,USGS, August 2005
+SITE_63,Secondary,Slough or open water,7.33,7.38,7.28,3,USGS, August 2005
+SITE_64,Major,Slough or open water,6.97,7.2,6.73,6,USGS, August 2005
+SITE_64,Secondary,Ridge or sawgrass and emergent marsh,7.61,7.66,7.55,3,USGS, August 2005
+SITE_65,Major,Slough or open water,5.86,6,5.67,6,USGS, August 2005
+SITE_65,Secondary,Ridge or sawgrass and emergent marsh,6.37,6.83,6.09,3,USGS, August 2005
+SITE_69W,Major,Canal,,,,,USGS, July 2007
+SITE_7,Major,Slough or open water,13.55,13.66,13.33,6,USGS, August 2005
+SITE_7,Secondary,Other (mostly wetland shrub and wetland forested),13.28,13.32,13.26,3,USGS, August 2005
+SITE_71,Major,Ridge or sawgrass and emergent marsh,5.06,5.12,4.99,6,USGS, August 2005
+SITE_71,Secondary,Slough or open water,4.43,4.87,3.98,3,USGS, August 2005
+SITE_76,Major,Ridge or sawgrass and emergent marsh,5.32,5.74,5.14,6,USGS, August 2005
+SITE_8C,Major,Canal,,,,,USGS, July 2007
+SITE_8T,Major,Wet prairie,13.52,13.57,13.45,6,USGS, August 2005
+SITE_8T,Secondary,Other (mostly wetland shrub and wetland forested),13.63,13.71,13.53,3,USGS, August 2005
+SITE_9,Major,Slough or open water,13.22,13.81,12.61,6,USGS, August 2005
+SITE_9,Secondary,Other (mostly wetland shrub and wetland forested),14.07,14.17,13.93,3,USGS, August 2005
+SITE_99,Major,Wet prairie,4.84,5.18,4.62,7,USGS, August 07
+SITE_99,Secondary,Slough or open water,4.71,4.79,4.62,3,USGS, August 07
+SOUTH_CA1,Major,Slough or open water,11.05,11.14,10.95,6,USGS, August 2005
+SOUTH_CA1,Secondary,Ridge or sawgrass and emergent marsh,12.12,12.24,12.06,3,USGS, August 2005
+SP,Major,N/A,0.86,,,1,ENP,
+SPARO,Major,N/A,5.49,,,1,USGS,
+SR1,Major,N/A,-0.17,,,1,ENP,
+SRS1,Major,Canal,1.1,1.79,0.51,3,USGS, Sept. 2007
+SRS1,Secondary,Ridge or sawgrass and emergent marsh,5.07,5.23,4.77,3,USGS, Sept. 2007
+Tamiami_Canal_40-Mile_Bend_to_Monroe,Major,Canal,6.12,6.61,5.4,5,USGS, July 2007
+Tamiami_Canal_Monroe_to_Carnestown,Major,Canal,,,,,USGS, July 2007
+Taylor_Slough_wetland_at_E146,Major,N/A,-1.02,,,1,USGS,
+TI-8,Major,Slough or open water,4.16,4.3,4.04,6,USGS, September 2007
+TI-8,Secondary,Ridge or sawgrass and emergent marsh,4.52,4.57,4.47,3,USGS, September 2007
+TI-9,Major,Slough or open water,4.78,5,4.35,5,USGS, Sept. 2007
+TI-9,Secondary,Ridge or sawgrass and emergent marsh,4.75,4.77,4.74,3,USGS, Sept. 2007
+TMC,Major,Ridge or sawgrass and emergent marsh,2.61,2.67,2.52,6,ENP, June 2007
+TSB,Major,Ridge or sawgrass and emergent marsh,1.43,1.61,1.29,6,ENP, June 2007
+TSB,Secondary,Wet prairie,0.92,1.01,0.81,3,ENP, June 2007
+TSH,Major,N/A,-0.15,,,1,ENP,
+W11,Major,Slough or open water,6.92,7.3,6.22,6,USGS, August 2005
+W11,Secondary,Ridge or sawgrass and emergent marsh,7.85,7.9,7.8,3,USGS, August 2005
+W14,Major,Other (mostly wetland shrub and wetland forested),7.24,7.61,7.09,6,USGS, August 2005
+W14,Secondary,Ridge or sawgrass and emergent marsh,7.64,7.89,7.51,3,USGS, August 2005
+W14,Secondary,Slough or open water,6.63,6.72,6.52,3,USGS, August 2005
+W15,Major,Slough or open water,7.74,7.9,7.55,6,USGS, August 2005
+W15,Secondary,Wet prairie,7.02,7.29,6.5,3,USGS, August 2005
+W18,Major,Ridge or sawgrass and emergent marsh,7.7,7.87,7.53,6,USACE, October 2009
+W18,Secondary,Slough or open water,7.55,7.58,7.5,3,USACE, October 2009
+W2,Major,Ridge or sawgrass and emergent marsh,6.54,6.64,6.4,6,USGS, August 2005
+W2,Secondary,Wet prairie,6.11,6.7,5.31,3,USGS, August 2005
+W5,Major,Slough or open water,6.1,6.18,6.03,6,USGS, August 2005
+W5,Secondary,Ridge or sawgrass and emergent marsh,6.48,6.82,6.28,3,USGS, August 2005
+WC2AN1,Major,Ridge or sawgrass and emergent marsh,10.9,11.1,10.8,6,SFWMD, September 2010
+WC2AS1,Major,Ridge or sawgrass and emergent marsh,11.1,11.2,11,6,SFWMD, September 2010
+WCA1ME,Major,Slough or open water,13.7,13.95,13.53,6,USGS, August 2005
+WCA1ME,Secondary,Other (mostly wetland shrub and wetland forested),14.4,14.57,14.27,3,USGS, August 2005
+WCA2E1,Major,Exotics and cattail,10.33,10.39,10.29,6,USGS, Sept. 2007
+WCA2E4,Major,Exotics and cattail,10.35,10.37,10.33,6,USACE, October 2009
+WCA2E4,Secondary,Slough or open water,9.76,9.83,9.64,3,USACE, October 2009
+WCA2F1,Major,Exotics and cattail,10.56,10.74,10.38,6,USGS, Sept. 2007
+WCA2F4,Major,Exotics and cattail,10.38,10.53,10.31,6,USACE, October 2009
+WCA2F4,Secondary,Slough or open water,9.93,10.13,9.79,3,USACE, October 2009
+WCA2RT,Major,Exotics and cattail,7.71,7.77,7.65,6,USACE, October 2009
+WCA2U1,Major,Ridge or sawgrass and emergent marsh,9.5,10.24,9.19,6,USGS, Sept. 2007
+WCA2U1,Secondary,Slough or open water,8.2,8.24,8.04,3,USGS, Sept. 2007
+WCA2U3,Major,Ridge or sawgrass and emergent marsh,9.93,10.04,9.74,6,USGS, Sept. 2007
+WCA2U3,Secondary,Slough or open water,9.38,9.94,8.95,3,USGS, Sept. 2007
