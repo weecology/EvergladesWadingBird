@@ -1,4 +1,4 @@
-group_id,year,colony,colony_old,latitude,longitude,wca,species,count,notes
+group_id,year,colony,colony_old,latitude,longitude,region,species,count,notes
 56,2004,hidden_north,Hidden North,25.776917,-80.842633,3as,anhi,8,
 56,2004,hidden_north,Hidden North,25.776917,-80.842633,3as,bcnh,383,
 56,2004,hidden_north,Hidden North,25.776917,-80.842633,3as,lbhe,4,
