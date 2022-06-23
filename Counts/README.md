@@ -4,13 +4,11 @@ Please see the [methods](../SiteandMethods/methods.md) for details about collect
 
 ### Max Counts
 year
-date
 colony 
-wca
+colony_old
 latitude
 longitude
-type - count type
-behavior - bird behavior
+wca
 species
 count
 notes

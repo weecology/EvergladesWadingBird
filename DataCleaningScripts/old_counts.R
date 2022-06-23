@@ -62,4 +62,4 @@ species <- species %>% dplyr::arrange(species)
 write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", quote = 5:25)
 
 colonies <- colonies %>% dplyr::arrange(colony)
-write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = FALSE)
+write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = 6)
