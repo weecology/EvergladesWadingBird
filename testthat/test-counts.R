@@ -2,14 +2,14 @@ context("checks count data")
 
 colonies <- read.csv("../SiteandMethods/colonies.csv")
 species <- read.csv("../SiteandMethods/species_list.csv") 
-counts <- read.csv("../Counts/maxcounts.csv") %>%
-  dplyr::mutate(date = lubridate::ymd(date))
+counts <- read.csv("../Counts/maxcounts.csv")
 counts_cols <- colnames(counts)
 
 test_that("required column names in counts df", {
   
   expect_identical(counts_cols, 
-                   c("year","colony","nest","species","date","eggs","chicks","stage", "notes"))
+                   c("group_id","year","colony","colony_old","latitude","longitude","wca",      
+                     "species","count","notes"))
 })
 
 test_that("Colony and species valid", {
