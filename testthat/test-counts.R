@@ -28,8 +28,3 @@ test_that("Counts valid", {
   expect_true(all(is.integer(counts$count)))
   
 })
-
-# test_that("no duplicated rows", {
-#   
-#   expect_false(any(duplicated(counts)))
-# })

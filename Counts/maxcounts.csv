@@ -1,4 +1,4 @@
-"group_id","year","colony","colony_old","latitude","longitude","wca","species","count","notes"
+group_id,year,colony,colony_old,latitude,longitude,wca,species,count,notes
 56,2004,hidden_north,Hidden North,25.776917,-80.842633,3as,anhi,8,
 56,2004,hidden_north,Hidden North,25.776917,-80.842633,3as,bcnh,383,
 56,2004,hidden_north,Hidden North,25.776917,-80.842633,3as,lbhe,4,
@@ -55,8 +55,8 @@
 57,2010,hidden,Hidden,25.773533,-80.837217,3as,whib,450,
 57,2012,hidden,Hidden,25.773533,-80.837217,3as,greg,200,
 57,2013,hidden,Hidden,25.773533,-80.837217,3as,greg,65,
-57,2014,hidden,Hidden,25.773533,-80.837217,3as,greg,60,"1s indicate presence"
-57,2014,hidden,Hidden,25.773533,-80.837217,3as,trhe,1,"1s indicate presence"
+57,2014,hidden,Hidden,25.773533,-80.837217,3as,greg,60,1s indicate presence
+57,2014,hidden,Hidden,25.773533,-80.837217,3as,trhe,1,1s indicate presence
 57,2015,hidden,Hidden,25.77353,-80.83722,3as,anhi,100,
 57,2015,hidden,Hidden,25.77353,-80.83722,3as,greg,100,
 57,2016,hidden,Hidden,25.77353,-80.83722,3as,greg,50,
@@ -120,7 +120,7 @@
 174,2007,little_d,Little D,25.7712,-80.693017,3as,greg,24,
 174,2007,little_d,Little D,25.7712,-80.693017,3as,sneg,1,
 174,2009,little_d,Little D,25.7712,-80.69301,3as,greg,25,
-174,2011,little_d,Little D,25.7712,-80.693017,3as,greg,15,"PREVIOUSLY DONE AS 877 (15 BCNH/5 NESTS)"
+174,2011,little_d,Little D,25.7712,-80.693017,3as,greg,15,PREVIOUSLY DONE AS 877 (15 BCNH/5 NESTS)
 174,2012,little_d,Little D,25.7712,-80.693017,3as,greg,40,
 174,2012,little_d,Little D,25.7712,-80.69301,3as,greg,4,
 174,2014,little_d,Little D,25.771454,-80.693491,3as,anhi,7,
@@ -369,8 +369,8 @@
 682,2013,henry,Henry,25.81913,-80.83983,3as,greg,50,
 682,2014,henry,Henry,25.81913,-80.83983,3as,greg,51,
 682,2016,henry,Henry,25.81913,-80.83983,3as,greg,134,
-682,2017,henry,Henry,25.82077,-80.84115,3as,bcnh,1,"1s indicate presence"
-682,2017,henry,Henry,25.82077,-80.84115,3as,greg,94,"1s indicate presence"
+682,2017,henry,Henry,25.82077,-80.84115,3as,bcnh,1,1s indicate presence
+682,2017,henry,Henry,25.82077,-80.84115,3as,greg,94,1s indicate presence
 682,2018,henry,Henry,25.81913,-80.83983,3as,gbhe,4,
 682,2018,henry,Henry,25.81913,-80.83983,3as,greg,317,
 682,2020,henry,Henry,25.81913,-80.83983,3as,greg,40,
@@ -380,8 +380,8 @@
 719,2011,719,New 2 MAR 21,25.82211,-80.68362,3as,greg,75,
 726,1996,yonteau,Yonteau,25.820433,-80.676883,3as,anhi,28,
 726,1996,yonteau,Yonteau,25.820433,-80.676883,3as,gbhe,1,
-726,1997,yonteau,Yonteau,25.820167,-80.677,3as,anhi,5,"1"
-726,1997,yonteau,Yonteau,25.820167,-80.677,3as,gbhe,2,"1"
+726,1997,yonteau,Yonteau,25.820167,-80.677,3as,anhi,5,1
+726,1997,yonteau,Yonteau,25.820167,-80.677,3as,gbhe,2,1
 726,1998,yonteau,Yonteau,25.819,-80.6775,3as,anhi,16,
 726,1998,yonteau,Yonteau,25.819,-80.6775,3as,anhi,16,
 726,1998,yonteau,Yonteau,25.819,-80.6775,3as,bcnh,4,
@@ -437,9 +437,9 @@
 726,2013,yonteau,Yonteau,25.818467,-80.677467,3as,greg,12,
 726,2013,yonteau,Yonteau,25.818467,-80.677467,3as,sneg,5,
 726,2013,yonteau,Yonteau,25.818467,-80.677467,3as,trhe,3,
-726,2014,yonteau,Yonteau,25.820433,-80.676883,3as,greg,40,"1s indicate presence"
-726,2014,yonteau,Yonteau,25.820433,-80.676883,3as,lbhe,1,"1s indicate presence"
-726,2014,yonteau,Yonteau,25.820433,-80.676883,3as,trhe,1,"1s indicate presence"
+726,2014,yonteau,Yonteau,25.820433,-80.676883,3as,greg,40,1s indicate presence
+726,2014,yonteau,Yonteau,25.820433,-80.676883,3as,lbhe,1,1s indicate presence
+726,2014,yonteau,Yonteau,25.820433,-80.676883,3as,trhe,1,1s indicate presence
 726,2020,yonteau,Yonteau,25.82026,-80.67626,3as,greg,39,
 745,2009,chac,CHAC +2,25.82346,-80.64074,3b,gbhe,1,
 745,2009,chac,CHAC +2,25.82346,-80.64074,3b,greg,56,
@@ -533,8 +533,8 @@
 1089,2010,enki,ENKI,25.86842,-80.80663,3as,bcnh,6,
 1089,2010,enki,ENKI,25.86842,-80.80663,3as,lbhe,8,
 1089,2010,enki,ENKI,25.86842,-80.80663,3as,sneg,1,
-1089,2018,enki,Enki,25.86842,-80.80663,3as,lada,49,"1s indicate presence"
-1089,2018,enki,Enki,25.86842,-80.80663,3as,lbhe,1,"1s indicate presence"
+1089,2018,enki,Enki,25.86842,-80.80663,3as,lada,49,1s indicate presence
+1089,2018,enki,Enki,25.86842,-80.80663,3as,lbhe,1,1s indicate presence
 1089,2020,enki,Enki,25.86842,-80.80663,3as,lbhe,60,
 1089,2020,enki,Enki,25.86842,-80.80663,3as,sneg,189,
 1092,2011,1092,Colony 138,25.86737,-80.80476,3as,greg,77,
@@ -583,9 +583,9 @@
 1130,2012,enlil,Enlil,25.874133,-80.65365,3as,greg,50,
 1130,2018,enlil,Enlil,25.87414,-80.65365,3as,gbhe,11,
 1130,2018,enlil,Enlil,25.87414,-80.65365,3as,greg,24,
-1130,2020,enlil,Enlil,25.87414,-80.65365,3as,anhi,1,"1s indicate presence"
-1130,2020,enlil,Enlil,25.87414,-80.65365,3as,gbhe,7,"1s indicate presence"
-1130,2020,enlil,Enlil,25.87414,-80.65365,3as,greg,64,"1s indicate presence"
+1130,2020,enlil,Enlil,25.87414,-80.65365,3as,anhi,1,1s indicate presence
+1130,2020,enlil,Enlil,25.87414,-80.65365,3as,gbhe,7,1s indicate presence
+1130,2020,enlil,Enlil,25.87414,-80.65365,3as,greg,64,1s indicate presence
 1237,2007,forseti,Forseti,25.886533,-80.701683,3as,gbhe,5,
 1237,2007,forseti,Forseti,25.886533,-80.701683,3as,greg,14,
 1237,2009,forseti,Forseti,25.886533,-80.701683,3as,gbhe,7,
@@ -716,7 +716,7 @@
 1634,1995,starter_melaleuca,Starter Melaleuca,25.939183,-80.622133,3as,dcco,3,
 1634,1995,starter_melaleuca,Starter Melaleuca,25.939183,-80.622133,3as,gbhe,2,
 1634,1995,starter_melaleuca,Starter Melaleuca,25.939183,-80.622133,3as,greg,5,
-1634,1997,starter_melaleuca,Starter Melaleuca,25.94035,-80.621517,3as,gbhe,2,"1"
+1634,1997,starter_melaleuca,Starter Melaleuca,25.94035,-80.621517,3as,gbhe,2,1
 1634,1998,starter_melaleuca,Starter Melaleuca,25.94075,-80.6224,3as,anhi,80,
 1634,1998,starter_melaleuca,Starter Melaleuca,25.94075,-80.6224,3as,greg,40,
 1634,1999,starter_melaleuca,Starter Melaleuca,25.940717,-80.624433,3as,anhi,45,
@@ -752,9 +752,9 @@
 1647,2009,start_mel,Starter Mel 2,25.946717,-80.637817,3as,gbhe,3,
 1647,2009,start_mel,Starter Mel 2,25.946717,-80.637817,3as,greg,76,
 1647,2014,start_mel,Start Mel,25.94812,-80.63816,3as,greg,26,
-1647,2020,start_mel,Start Mel,25.94812,80.63816,3as,anhi,1,"1s indicate presence"
-1647,2020,start_mel,Start Mel,25.94812,80.63816,3as,gbhe,2,"1s indicate presence"
-1647,2020,start_mel,Start Mel,25.94812,80.63816,3as,greg,72,"1s indicate presence"
+1647,2020,start_mel,Start Mel,25.94812,80.63816,3as,anhi,1,1s indicate presence
+1647,2020,start_mel,Start Mel,25.94812,80.63816,3as,gbhe,2,1s indicate presence
+1647,2020,start_mel,Start Mel,25.94812,80.63816,3as,greg,72,1s indicate presence
 1647,2021,start_mel,Start Mel,25.94812,-80.63816,3as,gbhe,1,
 1647,2021,start_mel,Start Mel,25.94812,-80.63816,3as,greg,89,
 1652,2001,1652,,25.945,-80.659167,3as,sneg,80,
@@ -764,7 +764,7 @@
 1760,1996,lumpy,Lumpy,25.954,-80.653,3as,greg,51,
 1760,1997,lumpy,Lumpy,25.954,-80.653,3as,gbhe,1,
 1760,1997,lumpy,Lumpy,25.954,-80.653,3as,greg,28,
-1760,1997,lumpy,Lumpy,25.954517,-80.654367,3as,anhi,3,"?"
+1760,1997,lumpy,Lumpy,25.954517,-80.654367,3as,anhi,3,?
 1760,2002,lumpy,Lumpy,25.954083,-80.654233,3as,anhi,1,
 1760,2002,lumpy,Lumpy,25.954083,-80.654233,3as,bcnh,6,
 1760,2003,lumpy,Lumpy,25.9542,-80.65385,3as,anhi,1,
@@ -948,12 +948,12 @@
 2006,2016,jerrod,Jerrod,26.00012,-80.59513,3as,greg,75,
 2006,2018,jerrod,Jerrod,26.00012,-80.59513,3as,gbhe,7,
 2006,2018,jerrod,Jerrod,26.00012,-80.59513,3as,greg,140,
-2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,anhi,1,"1s indicate presence"
-2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,bcnh,1,"1s indicate presence"
-2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,gbhe,24,"1s indicate presence"
-2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,greg,167,"1s indicate presence"
-2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,rosp,1,"1s indicate presence"
-2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,sneg,11,"1s indicate presence"
+2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,anhi,1,1s indicate presence
+2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,bcnh,1,1s indicate presence
+2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,gbhe,24,1s indicate presence
+2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,greg,167,1s indicate presence
+2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,rosp,1,1s indicate presence
+2006,2020,jerrod,Jerrod,26.00012,-80.59513,3as,sneg,11,1s indicate presence
 2006,2021,jerrod,Jerrod,26.00012,-80.59513,3as,gbhe,14,
 2006,2021,jerrod,Jerrod,26.00012,-80.59513,3as,greg,144,
 2011,1993,juno,Mud Canal,26.01,-80.460833,3b,bcnh,50,
@@ -1013,8 +1013,8 @@
 2011,2018,juno,Juno,26.0143,-80.45685,3b,greg,107,
 2011,2021,juno,Juno,26.0136,-80.45632,3b,greg,340,
 2013,2002,2013,54,26.008,-80.539333,3as,greg,100,
-2016,1997,joule,Joule,26.012,-80.63055,3as,anhi,1,"1"
-2016,1997,joule,Joule,26.012,-80.63055,3as,gbhe,3,"1"
+2016,1997,joule,Joule,26.012,-80.63055,3as,anhi,1,1
+2016,1997,joule,Joule,26.012,-80.63055,3as,gbhe,3,1
 2016,1998,joule,Joule,26.014467,-80.63095,3as,anhi,3,
 2016,1998,joule,Joule,26.014467,-80.63095,3as,gbhe,3,
 2016,1998,joule,Joule,26.01475,-80.63125,3as,anhi,4,
@@ -1044,8 +1044,8 @@
 2016,2011,joule,Joule,26.0123,-80.632333,3as,rosp,3,
 2016,2012,joule,Joule,26.0123,-80.632333,3as,greg,223,
 2016,2013,joule,Joule,26.0123,-80.632333,3as,greg,180,
-2016,2014,joule,Joule,26.0123,-80.632333,3as,gbhe,1,"1s indicate presence"
-2016,2014,joule,Joule,26.0123,-80.632333,3as,greg,97,"1s indicate presence"
+2016,2014,joule,Joule,26.0123,-80.632333,3as,gbhe,1,1s indicate presence
+2016,2014,joule,Joule,26.0123,-80.632333,3as,greg,97,1s indicate presence
 2016,2015,joule,Joule,26.0123,-80.63233,3as,anhi,75,
 2016,2015,joule,Joule,26.0123,-80.63233,3as,greg,75,
 2016,2016,joule,Joule,26.0123,-80.63233,3as,greg,102,
@@ -1053,10 +1053,10 @@
 2016,2017,joule,Joule,26.0123,-80.63233,3as,greg,110,
 2016,2018,joule,Joule,26.0123,-80.63233,3as,gbhe,6,
 2016,2018,joule,Joule,26.0123,-80.63233,3as,greg,203,
-2016,2020,joule,Joule,26.0123,-80.63233,3as,anhi,1,"1s indicate presence"
-2016,2020,joule,Joule,26.0123,-80.63233,3as,gbhe,2,"1s indicate presence"
-2016,2020,joule,Joule,26.0123,-80.63233,3as,greg,285,"1s indicate presence"
-2016,2020,joule,Joule,26.0123,-80.63233,3as,wost,14,"1s indicate presence"
+2016,2020,joule,Joule,26.0123,-80.63233,3as,anhi,1,1s indicate presence
+2016,2020,joule,Joule,26.0123,-80.63233,3as,gbhe,2,1s indicate presence
+2016,2020,joule,Joule,26.0123,-80.63233,3as,greg,285,1s indicate presence
+2016,2020,joule,Joule,26.0123,-80.63233,3as,wost,14,1s indicate presence
 2016,2021,joule,Joule,26.0123,-80.63233,3as,gbhe,2,
 2016,2021,joule,Joule,26.0123,-80.63233,3as,greg,114,
 2049,1999,2049,,26.018067,-80.692167,3as,greg,75,
@@ -1115,12 +1115,12 @@
 2061,2017,vulture,Vulture,26.02563,-80.53917,3as,lada,3,
 2061,2018,vulture,Vulture,26.02564,-80.53916,3as,gbhe,33,
 2061,2018,vulture,Vulture,26.02564,-80.53916,3as,greg,200,
-2061,2020,vulture,Vulture,26.02765,-80.54106,3as,anhi,1,"1s indicate presence"
-2061,2020,vulture,Vulture,26.02765,-80.54106,3as,greg,211,"1s indicate presence"
-2061,2020,vulture,Vulture,26.02765,-80.54106,3as,rosp,6,"1s indicate presence"
-2061,2020,vulture,Vulture,26.02765,-80.54106,3as,smwh,10,"1s indicate presence"
-2061,2020,vulture,Vulture,26.02765,-80.54106,3as,sneg,5,"1s indicate presence"
-2061,2020,vulture,Vulture,26.02765,-80.54106,3as,whib,65,"1s indicate presence"
+2061,2020,vulture,Vulture,26.02765,-80.54106,3as,anhi,1,1s indicate presence
+2061,2020,vulture,Vulture,26.02765,-80.54106,3as,greg,211,1s indicate presence
+2061,2020,vulture,Vulture,26.02765,-80.54106,3as,rosp,6,1s indicate presence
+2061,2020,vulture,Vulture,26.02765,-80.54106,3as,smwh,10,1s indicate presence
+2061,2020,vulture,Vulture,26.02765,-80.54106,3as,sneg,5,1s indicate presence
+2061,2020,vulture,Vulture,26.02765,-80.54106,3as,whib,65,1s indicate presence
 2061,2021,vulture,Vulture,26.02765,-80.54106,3as,gbhe,32,
 2061,2021,vulture,Vulture,26.02765,-80.54106,3as,greg,205,
 2085,1999,outside_cypress,outside cypress,26.038533,-80.832867,3as,greg,3,
@@ -1266,17 +1266,17 @@
 2274,2018,nanse,Nanse,26.10715,-80.49802,3ase,gbhe,4,
 2274,2018,nanse,Nanse,26.10715,-80.49802,3ase,greg,244,
 2274,2018,nanse,Nanse,26.10715,-80.49802,3ase,lada,7,
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,anhi,1,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,bcnh,1,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,gbhe,22,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,greg,428,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,lbhe,1,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,rosp,20,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,smhe,20,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,smwh,25,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,sneg,67,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,trhe,1,"1s indicate presence"
-2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,whib,44,"1s indicate presence"
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,anhi,1,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,bcnh,1,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,gbhe,22,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,greg,428,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,lbhe,1,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,rosp,20,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,smhe,20,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,smwh,25,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,sneg,67,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,trhe,1,1s indicate presence
+2274,2020,nanse,Nanse,26.10715,-80.49802,3ase,whib,44,1s indicate presence
 2274,2021,nanse,Nanse,26.10715,-80.49802,3ase,gbhe,20,
 2274,2021,nanse,Nanse,26.10715,-80.49802,3ase,greg,340,
 2274,2021,nanse,Nanse,26.10715,-80.49802,3ase,sneg,29,
@@ -1386,19 +1386,19 @@
 2380,2015,cypress_city,Cypress City,26.12408,-80.50438,3ase,anhi,61,
 2380,2015,cypress_city,Cypress City,26.12408,-80.50438,3ase,greg,61,
 2380,2016,cypress_city,cypress city,26.12408,-80.50438,3ase,greg,120,
-2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,anhi,1,"1s indicate presence"
-2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,greg,138,"1s indicate presence"
-2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,lada,36,"1s indicate presence"
-2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,rosp,18,"1s indicate presence"
-2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,wost,23,"1s indicate presence"
+2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,anhi,1,1s indicate presence
+2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,greg,138,1s indicate presence
+2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,lada,36,1s indicate presence
+2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,rosp,18,1s indicate presence
+2380,2017,cypress_city,Cypress City,26.12428,-80.54148,3ase,wost,23,1s indicate presence
 2380,2018,cypress_city,Cypress City,26.1241,-80.5044,3ase,gbhe,11,
 2380,2018,cypress_city,Cypress City,26.1241,-80.5044,3ase,greg,197,
 2380,2018,cypress_city,Cypress City,26.1241,-80.5044,3ase,rosp,21,
-2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,anhi,1,"1s indicate presence"
-2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,gbhe,23,"1s indicate presence"
-2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,greg,237,"1s indicate presence"
-2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,rosp,72,"1s indicate presence"
-2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,wost,36,"1s indicate presence"
+2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,anhi,1,1s indicate presence
+2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,gbhe,23,1s indicate presence
+2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,greg,237,1s indicate presence
+2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,rosp,72,1s indicate presence
+2380,2020,cypress_city,Cypress City,26.1241,-80.5044,3ase,wost,36,1s indicate presence
 2380,2021,cypress_city,Cypress City,26.1241,-80.5044,3ase,gbhe,24,
 2380,2021,cypress_city,Cypress City,26.1241,-80.5044,3ase,greg,120,
 2380,2021,cypress_city,Cypress City,26.1241,-80.5044,3ase,rosp,19,
@@ -1471,49 +1471,49 @@
 2383,2012,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,whib,296,
 2383,2013,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,greg,500,
 2383,2013,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,rosp,30,
-2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,gbhe,13,"1s indicate presence"
-2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,greg,300,"1s indicate presence"
-2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,lbhe,1,"1s indicate presence"
-2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,rosp,20,"1s indicate presence"
-2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,trhe,1,"1s indicate presence"
-2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,whib,326,"1s indicate presence"
-2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,anhi,1073,"1s indicate presence"
-2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,533,"1s indicate presence"
-2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,60,"1s indicate presence"
-2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,trhe,1,"1s indicate presence"
-2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,480,"1s indicate presence"
-2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,gbhe,1,"1s indicate presence"
-2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,greg,300,"1s indicate presence"
-2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,lbhe,1,"1s indicate presence"
-2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,rosp,20,"1s indicate presence"
-2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,trhe,1,"1s indicate presence"
-2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,whib,468,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,anhi,1,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,bcnh,1,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,glib,1,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,177,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,lada,1105,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,88,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,sneg,1,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,trhe,1,"1s indicate presence"
-2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,9982,"1s indicate presence"
-2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,gbhe,7,"1s indicate presence"
-2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,glib,1,"1s indicate presence"
-2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,780,"1s indicate presence"
-2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,88,"1s indicate presence"
-2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,sneg,1423,"1s indicate presence"
-2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,200,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,anhi,1,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,bcnh,1,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,gbhe,31,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,glib,1,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,728,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,lbhe,1,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,627,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,smwh,1301,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,sneg,201,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,trhe,1,"1s indicate presence"
-2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,9500,"1s indicate presence"
+2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,gbhe,13,1s indicate presence
+2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,greg,300,1s indicate presence
+2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,lbhe,1,1s indicate presence
+2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,rosp,20,1s indicate presence
+2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,trhe,1,1s indicate presence
+2383,2014,6th_bridge,6th Bridge,26.124283,-80.541483,3ase,whib,326,1s indicate presence
+2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,anhi,1073,1s indicate presence
+2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,533,1s indicate presence
+2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,60,1s indicate presence
+2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,trhe,1,1s indicate presence
+2383,2015,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,480,1s indicate presence
+2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,gbhe,1,1s indicate presence
+2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,greg,300,1s indicate presence
+2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,lbhe,1,1s indicate presence
+2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,rosp,20,1s indicate presence
+2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,trhe,1,1s indicate presence
+2383,2016,6th_bridge,6th bridge,26.12428,-80.54148,3ase,whib,468,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,anhi,1,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,bcnh,1,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,glib,1,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,177,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,lada,1105,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,88,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,sneg,1,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,trhe,1,1s indicate presence
+2383,2017,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,9982,1s indicate presence
+2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,gbhe,7,1s indicate presence
+2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,glib,1,1s indicate presence
+2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,780,1s indicate presence
+2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,88,1s indicate presence
+2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,sneg,1423,1s indicate presence
+2383,2018,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,200,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,anhi,1,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,bcnh,1,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,gbhe,31,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,glib,1,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,728,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,lbhe,1,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,627,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,smwh,1301,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,sneg,201,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,trhe,1,1s indicate presence
+2383,2020,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,whib,9500,1s indicate presence
 2383,2021,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,gbhe,20,
 2383,2021,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,greg,870,
 2383,2021,6th_bridge,6th Bridge,26.12428,-80.54148,3ase,rosp,248,
@@ -1790,21 +1790,21 @@
 2453,2013,alley_north,Alley North,26.201317,-80.528733,3an,rosp,20,
 2453,2013,alley_north,Alley North,26.201317,-80.528733,3an,smhe,497,
 2453,2013,alley_north,Alley North,26.201317,-80.528733,3an,whib,8000,
-2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,greg,600,"1s indicate presence"
-2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,rosp,20,"1s indicate presence"
-2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,trhe,1,"1s indicate presence"
-2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,whib,6000,"1s indicate presence"
-2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,anhi,15944,"1s indicate presence"
-2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,greg,450,"1s indicate presence"
-2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,rosp,60,"1s indicate presence"
-2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,trhe,1,"1s indicate presence"
-2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,whib,15434,"1s indicate presence"
-2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,bcnh,1,"1s indicate presence"
-2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,greg,678,"1s indicate presence"
-2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,lbhe,1,"1s indicate presence"
-2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,rosp,41,"1s indicate presence"
-2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,trhe,1,"1s indicate presence"
-2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,whib,300,"1s indicate presence"
+2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,greg,600,1s indicate presence
+2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,rosp,20,1s indicate presence
+2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,trhe,1,1s indicate presence
+2453,2014,alley_north,Alley North,26.201317,-80.528733,3an,whib,6000,1s indicate presence
+2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,anhi,15944,1s indicate presence
+2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,greg,450,1s indicate presence
+2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,rosp,60,1s indicate presence
+2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,trhe,1,1s indicate presence
+2453,2015,alley_north,Alley North,26.20132,-80.52873,3an,whib,15434,1s indicate presence
+2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,bcnh,1,1s indicate presence
+2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,greg,678,1s indicate presence
+2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,lbhe,1,1s indicate presence
+2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,rosp,41,1s indicate presence
+2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,trhe,1,1s indicate presence
+2453,2016,alley_north,Alley North,26.20132,-80.52873,3an,whib,300,1s indicate presence
 2453,2017,alley_north,Alley North,26.20132,-80.52873,3an,greg,652,
 2453,2017,alley_north,Alley North,26.20132,-80.52873,3an,lada,855,
 2453,2017,alley_north,Alley North,26.20132,-80.52873,3an,rosp,40,
@@ -1955,19 +1955,19 @@
 2525,2014,rhea,Rhea,26.23782,-80.3128,2a,greg,124,
 2525,2015,rhea,Rhea,26.23782,-80.3128,2a,anhi,187,
 2525,2015,rhea,Rhea,26.23782,-80.3128,2a,greg,187,
-2525,2016,rhea,Rhea,26.23782,-80.3128,2a,gbhe,5,"1s indicate presence"
-2525,2016,rhea,Rhea,26.23782,-80.3128,2a,greg,130,"1s indicate presence"
-2525,2016,rhea,Rhea,26.23782,-80.3128,2a,lbhe,1,"1s indicate presence"
-2525,2016,rhea,Rhea,26.23782,-80.3128,2a,trhe,1,"1s indicate presence"
-2525,2016,rhea,Rhea,26.23782,-80.3128,2a,whib,300,"1s indicate presence"
+2525,2016,rhea,Rhea,26.23782,-80.3128,2a,gbhe,5,1s indicate presence
+2525,2016,rhea,Rhea,26.23782,-80.3128,2a,greg,130,1s indicate presence
+2525,2016,rhea,Rhea,26.23782,-80.3128,2a,lbhe,1,1s indicate presence
+2525,2016,rhea,Rhea,26.23782,-80.3128,2a,trhe,1,1s indicate presence
+2525,2016,rhea,Rhea,26.23782,-80.3128,2a,whib,300,1s indicate presence
 2525,2017,rhea,Rhea,26.23782,-80.3128,2a,gbhe,1,
 2525,2017,rhea,Rhea,26.23782,-80.3128,2a,greg,316,
 2525,2017,rhea,Rhea,26.23782,-80.3128,2a,lada,122,
 2525,2017,rhea,Rhea,26.23782,-80.3128,2a,whib,63,
-2525,2018,rhea,Rhea,26.23782,-80.3128,2a,gbhe,10,"1s indicate presence"
-2525,2018,rhea,Rhea,26.23782,-80.3128,2a,greg,259,"1s indicate presence"
-2525,2018,rhea,Rhea,26.23782,-80.3128,2a,lbhe,1,"1s indicate presence"
-2525,2018,rhea,Rhea,26.23782,-80.3128,2a,trhe,1,"1s indicate presence"
+2525,2018,rhea,Rhea,26.23782,-80.3128,2a,gbhe,10,1s indicate presence
+2525,2018,rhea,Rhea,26.23782,-80.3128,2a,greg,259,1s indicate presence
+2525,2018,rhea,Rhea,26.23782,-80.3128,2a,lbhe,1,1s indicate presence
+2525,2018,rhea,Rhea,26.23782,-80.3128,2a,trhe,1,1s indicate presence
 2525,2020,rhea,Rhea,26.23782,-80.3128,2a,greg,325,
 2525,2020,rhea,Rhea,26.23782,-80.3128,2a,lbhe,20,
 2525,2020,rhea,Rhea,26.23782,-80.3128,2a,rosp,3,
@@ -2091,12 +2091,12 @@
 2571,2017,lox73,Lox73,26.37433,-80.2585,1,greg,133,
 2571,2017,lox73,Lox73,26.37433,-80.2585,1,lada,49,
 2571,2017,lox73,Lox73,26.37433,-80.2585,1,whib,69,
-2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,gbhe,2,"1s indicate presence"
-2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,greg,249,"1s indicate presence"
-2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,lada,375,"1s indicate presence"
-2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,lbhe,1,"1s indicate presence"
-2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,rosp,1,"1s indicate presence"
-2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,whib,600,"1s indicate presence"
+2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,gbhe,2,1s indicate presence
+2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,greg,249,1s indicate presence
+2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,lada,375,1s indicate presence
+2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,lbhe,1,1s indicate presence
+2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,rosp,1,1s indicate presence
+2571,2018,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,whib,600,1s indicate presence
 2571,2020,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,greg,57,
 2571,2021,lox73,Lox 73 / Tyr,26.37187,-80.26597,1,greg,40,
 2573,2014,tyger_south,TYGER,26.371867,-80.265967,1,greg,217,
@@ -2132,10 +2132,10 @@
 2574,2013,tyger,Tyger,26.371867,-80.265967,1,greg,140,
 2574,2013,tyger,Tyger,26.371867,-80.265967,1,smhe,35,
 2574,2013,tyger,Tyger,26.371867,-80.265967,1,whib,561,
-2574,2016,tyger,Tyger,26.37187,-80.26597,1,bcnh,1,"1s indicate presence"
-2574,2016,tyger,Tyger,26.37187,-80.26597,1,greg,143,"1s indicate presence"
-2574,2016,tyger,Tyger,26.37187,-80.26597,1,lada,250,"1s indicate presence"
-2574,2016,tyger,Tyger,26.37187,-80.26597,1,lbhe,1,"1s indicate presence"
+2574,2016,tyger,Tyger,26.37187,-80.26597,1,bcnh,1,1s indicate presence
+2574,2016,tyger,Tyger,26.37187,-80.26597,1,greg,143,1s indicate presence
+2574,2016,tyger,Tyger,26.37187,-80.26597,1,lada,250,1s indicate presence
+2574,2016,tyger,Tyger,26.37187,-80.26597,1,lbhe,1,1s indicate presence
 2585,2007,2585,,26.372917,-80.291783,1,anhi,1,
 2585,2007,2585,,26.372917,-80.291783,1,greg,45,
 2598,1996,ring,Ring,26.369833,-80.301,1,gbhe,2,
@@ -2298,14 +2298,14 @@
 2691,2003,tamiami_west,Tamiami West,25.755167,-80.531667,enp,trhe,4,
 2691,2003,tamiami_west,Tamiami West,25.755167,-80.531667,enp,whib,150,
 2691,2003,tamiami_west,Tamiami West,25.755167,-80.531667,enp,wost,400,
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,anhi,1,"1s indicate presence"
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,bcnh,1,"1s indicate presence"
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,greg,200,"1s indicate presence"
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,lbhe,1,"1s indicate presence"
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,sneg,300,"1s indicate presence"
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,trhe,1,"1s indicate presence"
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,whib,400,"1s indicate presence"
-2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,wost,300,"1s indicate presence"
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,anhi,1,1s indicate presence
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,bcnh,1,1s indicate presence
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,greg,200,1s indicate presence
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,lbhe,1,1s indicate presence
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,sneg,300,1s indicate presence
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,trhe,1,1s indicate presence
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,whib,400,1s indicate presence
+2691,2014,tamiami_west,Tamiami West,25.7609,-80.54568,enp,wost,300,1s indicate presence
 2691,2021,tamiami_west,Tamiami West,25.757449,-80.545017,enp,greg,60,
 2700,2000,big_cypress,Big Cypr col,25.822833,-80.863167,bigcypress,greg,60,
 2701,1994,rodgers_river_bay,RRbay,25.546667,-81.05,enp,bcnh,100,
@@ -2365,8 +2365,8 @@
 2707,2011,vacation,Vacation,25.91565,-80.630217,3as,greg,250,
 2707,2012,vacation,Vacation,25.91565,-80.630217,3as,greg,206,
 2707,2013,vacation,Vacation,25.91565,-80.630217,3as,greg,255,
-2707,2014,vacation,Vacation,25.91565,-80.630217,3as,anhi,1,"1s indicate presence"
-2707,2014,vacation,Vacation,25.91565,-80.630217,3as,greg,77,"1s indicate presence"
+2707,2014,vacation,Vacation,25.91565,-80.630217,3as,anhi,1,1s indicate presence
+2707,2014,vacation,Vacation,25.91565,-80.630217,3as,greg,77,1s indicate presence
 2707,2015,vacation,Vacation,25.91565,-80.63022,3as,anhi,75,
 2707,2015,vacation,Vacation,25.91565,-80.63022,3as,greg,75,
 2707,2016,vacation,Vacation,25.91565,-80.63022,3as,greg,62,
@@ -2374,9 +2374,9 @@
 2707,2017,vacation,Vacation,25.91565,-80.63022,3as,greg,72,
 2707,2018,vacation,Vacation,25.91565,-80.63022,3as,gbhe,5,
 2707,2018,vacation,Vacation,25.91565,-80.63022,3as,greg,102,
-2707,2020,vacation,Vacation,25.91565,-80.63022,3as,anhi,1,"1s indicate presence"
-2707,2020,vacation,Vacation,25.91565,-80.63022,3as,gbhe,9,"1s indicate presence"
-2707,2020,vacation,Vacation,25.91565,-80.63022,3as,greg,50,"1s indicate presence"
+2707,2020,vacation,Vacation,25.91565,-80.63022,3as,anhi,1,1s indicate presence
+2707,2020,vacation,Vacation,25.91565,-80.63022,3as,gbhe,9,1s indicate presence
+2707,2020,vacation,Vacation,25.91565,-80.63022,3as,greg,50,1s indicate presence
 2707,2021,vacation,Vacation,25.91565,-80.63022,3as,gbhe,7,
 2707,2021,vacation,Vacation,25.91565,-80.63022,3as,greg,37,
 2708,1993,false_l67,False L-67,25.907,-80.606167,3as,greg,50,
@@ -2412,30 +2412,30 @@
 2727,2010,lox_west,Lox West,26.55014,-80.44268,1,whib,693,
 2727,2014,lox_west,LOX West,26.55014,-80.44268,1,greg,330,
 2727,2014,lox_west,LOX West,26.55014,-80.44268,1,whib,1622,
-2727,2015,lox_west,LOX West,26.55014,-80.44268,1,anhi,1054,"1s indicate presence"
-2727,2015,lox_west,LOX West,26.55014,-80.44268,1,greg,60,"1s indicate presence"
-2727,2015,lox_west,LOX West,26.55014,-80.44268,1,rosp,9,"1s indicate presence"
-2727,2015,lox_west,LOX West,26.55014,-80.44268,1,trhe,1,"1s indicate presence"
-2727,2015,lox_west,LOX West,26.55014,-80.44268,1,whib,985,"1s indicate presence"
-2727,2016,lox_west,LOX west,26.55014,-80.44268,1,bcnh,1,"1s indicate presence"
-2727,2016,lox_west,LOX west,26.55014,-80.44268,1,greg,200,"1s indicate presence"
-2727,2016,lox_west,LOX west,26.55014,-80.44268,1,lbhe,1,"1s indicate presence"
-2727,2016,lox_west,LOX west,26.55014,-80.44268,1,rosp,11,"1s indicate presence"
-2727,2016,lox_west,LOX west,26.55014,-80.44268,1,sneg,200,"1s indicate presence"
-2727,2016,lox_west,LOX west,26.55014,-80.44268,1,whib,600,"1s indicate presence"
-2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,greg,322,"1s indicate presence"
-2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,lada,794,"1s indicate presence"
-2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,lbhe,1,"1s indicate presence"
-2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,rosp,15,"1s indicate presence"
-2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,sneg,17,"1s indicate presence"
-2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,whib,195,"1s indicate presence"
-2727,2018,lox_west,Lox West,26.55014,-80.44268,1,gbhe,1,"1s indicate presence"
-2727,2018,lox_west,Lox West,26.55014,-80.44268,1,greg,208,"1s indicate presence"
-2727,2018,lox_west,Lox West,26.55014,-80.44268,1,lada,553,"1s indicate presence"
-2727,2018,lox_west,Lox West,26.55014,-80.44268,1,lbhe,1,"1s indicate presence"
-2727,2018,lox_west,Lox West,26.55014,-80.44268,1,rosp,14,"1s indicate presence"
-2727,2018,lox_west,Lox West,26.55014,-80.44268,1,trhe,1,"1s indicate presence"
-2727,2018,lox_west,Lox West,26.55014,-80.44268,1,whib,200,"1s indicate presence"
+2727,2015,lox_west,LOX West,26.55014,-80.44268,1,anhi,1054,1s indicate presence
+2727,2015,lox_west,LOX West,26.55014,-80.44268,1,greg,60,1s indicate presence
+2727,2015,lox_west,LOX West,26.55014,-80.44268,1,rosp,9,1s indicate presence
+2727,2015,lox_west,LOX West,26.55014,-80.44268,1,trhe,1,1s indicate presence
+2727,2015,lox_west,LOX West,26.55014,-80.44268,1,whib,985,1s indicate presence
+2727,2016,lox_west,LOX west,26.55014,-80.44268,1,bcnh,1,1s indicate presence
+2727,2016,lox_west,LOX west,26.55014,-80.44268,1,greg,200,1s indicate presence
+2727,2016,lox_west,LOX west,26.55014,-80.44268,1,lbhe,1,1s indicate presence
+2727,2016,lox_west,LOX west,26.55014,-80.44268,1,rosp,11,1s indicate presence
+2727,2016,lox_west,LOX west,26.55014,-80.44268,1,sneg,200,1s indicate presence
+2727,2016,lox_west,LOX west,26.55014,-80.44268,1,whib,600,1s indicate presence
+2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,greg,322,1s indicate presence
+2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,lada,794,1s indicate presence
+2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,lbhe,1,1s indicate presence
+2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,rosp,15,1s indicate presence
+2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,sneg,17,1s indicate presence
+2727,2017,lox_west,LoxWest,26.55014,-80.44268,1,whib,195,1s indicate presence
+2727,2018,lox_west,Lox West,26.55014,-80.44268,1,gbhe,1,1s indicate presence
+2727,2018,lox_west,Lox West,26.55014,-80.44268,1,greg,208,1s indicate presence
+2727,2018,lox_west,Lox West,26.55014,-80.44268,1,lada,553,1s indicate presence
+2727,2018,lox_west,Lox West,26.55014,-80.44268,1,lbhe,1,1s indicate presence
+2727,2018,lox_west,Lox West,26.55014,-80.44268,1,rosp,14,1s indicate presence
+2727,2018,lox_west,Lox West,26.55014,-80.44268,1,trhe,1,1s indicate presence
+2727,2018,lox_west,Lox West,26.55014,-80.44268,1,whib,200,1s indicate presence
 2727,2020,lox_west,Lox West,26.55014,-80.44268,1,greg,80,
 2727,2020,lox_west,Lox West,26.55014,-80.44268,1,lbhe,18,
 2727,2020,lox_west,Lox West,26.55014,-80.44268,1,rosp,13,
@@ -2451,12 +2451,12 @@
 2727,2021,lox_west,Lox West,26.55014,-80.44268,1,trhe,20,
 2727,2021,lox_west,Lox West,26.55014,-80.44268,1,whib,74,
 2732,2008,zulu,ZULU,26.5981,-80.285467,1,smhe,23,
-2732,2018,zulu,Zulu,26.5965,80.28623,1,gbhe,3,"1s indicate presence"
-2732,2018,zulu,Zulu,26.5965,80.28623,1,greg,57,"1s indicate presence"
-2732,2018,zulu,Zulu,26.5965,80.28623,1,lada,204,"1s indicate presence"
-2732,2018,zulu,Zulu,26.5965,80.28623,1,lbhe,1,"1s indicate presence"
-2732,2018,zulu,Zulu,26.5965,80.28623,1,sneg,15,"1s indicate presence"
-2732,2018,zulu,Zulu,26.5965,80.28623,1,whib,200,"1s indicate presence"
+2732,2018,zulu,Zulu,26.5965,80.28623,1,gbhe,3,1s indicate presence
+2732,2018,zulu,Zulu,26.5965,80.28623,1,greg,57,1s indicate presence
+2732,2018,zulu,Zulu,26.5965,80.28623,1,lada,204,1s indicate presence
+2732,2018,zulu,Zulu,26.5965,80.28623,1,lbhe,1,1s indicate presence
+2732,2018,zulu,Zulu,26.5965,80.28623,1,sneg,15,1s indicate presence
+2732,2018,zulu,Zulu,26.5965,80.28623,1,whib,200,1s indicate presence
 2732,2021,zulu,Zulu,26.5965,-80.28623,1,gbhe,12,
 2732,2021,zulu,Zulu,26.5965,-80.28623,1,lbhe,80,
 2732,2021,zulu,Zulu,26.5965,-80.28623,1,sneg,240,
@@ -2640,24 +2640,24 @@
 2929,2013,lox_ramp,Lox Ramp,26.49511,-80.22533,1,whib,800,
 2929,2014,lox_ramp,Lox Ramp,26.49511,-80.22533,1,greg,170,
 2929,2014,lox_ramp,Lox Ramp,26.49511,-80.22533,1,whib,254,
-2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,anhi,1778,"1s indicate presence"
-2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,greg,78,"1s indicate presence"
-2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,lbhe,1,"1s indicate presence"
-2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,whib,1700,"1s indicate presence"
+2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,anhi,1778,1s indicate presence
+2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,greg,78,1s indicate presence
+2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,lbhe,1,1s indicate presence
+2929,2015,lox_ramp,Lox Ramp,26.49511,-80.22533,1,whib,1700,1s indicate presence
 2929,2016,lox_ramp,LOX ramp,26.49511,-80.22533,1,greg,100,
 2929,2016,lox_ramp,LOX ramp,26.49511,-80.22533,1,lada,150,
 2929,2016,lox_ramp,LOX ramp,26.49511,-80.22533,1,trhe,20,
 2929,2016,lox_ramp,LOX ramp,26.49511,-80.22533,1,whib,517,
-2929,2017,lox_ramp,LoxRamp,26.49446,-80.22302,1,greg,74,"1s indicate presence"
-2929,2017,lox_ramp,LoxRamp,26.49446,-80.22302,1,lada,80,"1s indicate presence"
-2929,2017,lox_ramp,LoxRamp,26.49446,-80.22302,1,smda,1,"1s indicate presence"
-2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,gbhe,1,"1s indicate presence"
-2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,greg,287,"1s indicate presence"
-2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,lada,586,"1s indicate presence"
-2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,lbhe,1,"1s indicate presence"
-2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,rosp,1,"1s indicate presence"
-2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,sneg,224,"1s indicate presence"
-2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,trhe,1,"1s indicate presence"
+2929,2017,lox_ramp,LoxRamp,26.49446,-80.22302,1,greg,74,1s indicate presence
+2929,2017,lox_ramp,LoxRamp,26.49446,-80.22302,1,lada,80,1s indicate presence
+2929,2017,lox_ramp,LoxRamp,26.49446,-80.22302,1,smda,1,1s indicate presence
+2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,gbhe,1,1s indicate presence
+2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,greg,287,1s indicate presence
+2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,lada,586,1s indicate presence
+2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,lbhe,1,1s indicate presence
+2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,rosp,1,1s indicate presence
+2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,sneg,224,1s indicate presence
+2929,2018,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,trhe,1,1s indicate presence
 2929,2020,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,greg,61,
 2929,2020,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,lbhe,16,
 2929,2020,lox_ramp,Lox Ramp/011,26.49511,-80.22533,1,rosp,4,
@@ -2855,26 +2855,26 @@
 3039,2013,lox99,Lox 99,26.438217,-80.390533,1,whib,4000,
 3039,2014,lox99,LOX 99,26.438217,-80.390533,1,greg,500,
 3039,2014,lox99,LOX 99,26.438217,-80.390533,1,whib,3520,
-3039,2015,lox99,LOX 99,26.43822,-80.39053,1,anhi,3521,"1s indicate presence"
-3039,2015,lox99,LOX 99,26.43822,-80.39053,1,greg,221,"1s indicate presence"
-3039,2015,lox99,LOX 99,26.43822,-80.39053,1,lbhe,1,"1s indicate presence"
-3039,2015,lox99,LOX 99,26.43822,-80.39053,1,sneg,400,"1s indicate presence"
-3039,2015,lox99,LOX 99,26.43822,-80.39053,1,whib,2900,"1s indicate presence"
-3039,2016,lox99,LOX 99,26.43822,-80.39053,1,greg,500,"1s indicate presence"
-3039,2016,lox99,LOX 99,26.43822,-80.39053,1,trhe,1,"1s indicate presence"
-3039,2016,lox99,LOX 99,26.43822,-80.39053,1,whib,6800,"1s indicate presence"
+3039,2015,lox99,LOX 99,26.43822,-80.39053,1,anhi,3521,1s indicate presence
+3039,2015,lox99,LOX 99,26.43822,-80.39053,1,greg,221,1s indicate presence
+3039,2015,lox99,LOX 99,26.43822,-80.39053,1,lbhe,1,1s indicate presence
+3039,2015,lox99,LOX 99,26.43822,-80.39053,1,sneg,400,1s indicate presence
+3039,2015,lox99,LOX 99,26.43822,-80.39053,1,whib,2900,1s indicate presence
+3039,2016,lox99,LOX 99,26.43822,-80.39053,1,greg,500,1s indicate presence
+3039,2016,lox99,LOX 99,26.43822,-80.39053,1,trhe,1,1s indicate presence
+3039,2016,lox99,LOX 99,26.43822,-80.39053,1,whib,6800,1s indicate presence
 3039,2017,lox99,Lox99,26.43822,-80.39053,1,greg,539,
 3039,2017,lox99,Lox99,26.43822,-80.39053,1,lada,136,
 3039,2017,lox99,Lox99,26.43822,-80.39053,1,rosp,2,
 3039,2017,lox99,Lox99,26.43822,-80.39053,1,sneg,15,
 3039,2017,lox99,Lox99,26.43822,-80.39053,1,whib,1322,
-3039,2018,lox99,Lox 99,26.43822,-80.39053,1,gbhe,1,"1s indicate presence"
-3039,2018,lox99,Lox 99,26.43822,-80.39053,1,greg,760,"1s indicate presence"
-3039,2018,lox99,Lox 99,26.43822,-80.39053,1,lada,99,"1s indicate presence"
-3039,2018,lox99,Lox 99,26.43822,-80.39053,1,lbhe,1,"1s indicate presence"
-3039,2018,lox99,Lox 99,26.43822,-80.39053,1,rosp,2,"1s indicate presence"
-3039,2018,lox99,Lox 99,26.43822,-80.39053,1,sneg,32,"1s indicate presence"
-3039,2018,lox99,Lox 99,26.43822,-80.39053,1,trhe,1,"1s indicate presence"
+3039,2018,lox99,Lox 99,26.43822,-80.39053,1,gbhe,1,1s indicate presence
+3039,2018,lox99,Lox 99,26.43822,-80.39053,1,greg,760,1s indicate presence
+3039,2018,lox99,Lox 99,26.43822,-80.39053,1,lada,99,1s indicate presence
+3039,2018,lox99,Lox 99,26.43822,-80.39053,1,lbhe,1,1s indicate presence
+3039,2018,lox99,Lox 99,26.43822,-80.39053,1,rosp,2,1s indicate presence
+3039,2018,lox99,Lox 99,26.43822,-80.39053,1,sneg,32,1s indicate presence
+3039,2018,lox99,Lox 99,26.43822,-80.39053,1,trhe,1,1s indicate presence
 3039,2020,lox99,Lox 99,26.43822,-80.39053,1,greg,287,
 3039,2020,lox99,Lox 99,26.43822,-80.39053,1,lbhe,80,
 3039,2020,lox99,Lox 99,26.43822,-80.39053,1,smwh,240,
@@ -3273,9 +3273,9 @@
 3373,2013,canal_north,Canal North,26.55993,-80.24871,1,whib,179,
 3373,2014,canal_north,Canal North,26.55993,-80.24871,1,greg,200,
 3373,2014,canal_north,Canal North,26.55993,-80.24871,1,sneg,107,
-3373,2016,canal_north,Canal North,26.55993,-80.24871,1,greg,60,"1s indicate presence"
-3373,2016,canal_north,Canal North,26.55993,-80.24871,1,sneg,120,"1s indicate presence"
-3373,2016,canal_north,Canal North,26.55993,-80.24871,1,trhe,1,"1s indicate presence"
+3373,2016,canal_north,Canal North,26.55993,-80.24871,1,greg,60,1s indicate presence
+3373,2016,canal_north,Canal North,26.55993,-80.24871,1,sneg,120,1s indicate presence
+3373,2016,canal_north,Canal North,26.55993,-80.24871,1,trhe,1,1s indicate presence
 3373,2020,canal_north,Canal N,26.55993,-80.24871,1,lbhe,11,
 3373,2020,canal_north,Canal N,26.55993,-80.24871,1,smhe,18,
 3373,2020,canal_north,Canal N,26.55993,-80.24871,1,smwh,40,
@@ -3305,9 +3305,9 @@
 3664,2014,3664,194,26.55895,-80.28352,1,whib,60,
 3665,2014,3665,188,26.62441,-80.32439,1,greg,60,
 3667,2014,3667,193,26.55607,-80.27551,1,greg,60,
-3668,2016,6,6,26.61526,-80.30763,1,lbhe,1,"1s indicate presence"
-3668,2016,6,6,26.61526,-80.30763,1,sneg,133,"1s indicate presence"
-3668,2016,6,6,26.61526,-80.30763,1,trhe,1,"1s indicate presence"
+3668,2016,6,6,26.61526,-80.30763,1,lbhe,1,1s indicate presence
+3668,2016,6,6,26.61526,-80.30763,1,sneg,133,1s indicate presence
+3668,2016,6,6,26.61526,-80.30763,1,trhe,1,1s indicate presence
 3668,2020,6,6,26.61526,-80.30763,1,lbhe,27,
 3668,2020,6,6,26.61526,-80.30763,1,smwh,130,
 3668,2020,6,6,26.61526,-80.30763,1,trhe,3,
@@ -3329,15 +3329,15 @@
 3674,2017,38,38,26.45047,-80.24233,1,greg,92,
 3674,2017,38,38,26.45047,-80.24233,1,lada,6,
 3675,2018,42,42,26.42186,-80.30663,1,greg,43,
-3686,2015,103,103,26.50638,-80.3309,1,anhi,50,"1s indicate presence"
-3686,2015,103,103,26.50638,-80.3309,1,lbhe,1,"1s indicate presence"
-3686,2015,103,103,26.50638,-80.3309,1,sneg,50,"1s indicate presence"
-3686,2015,103,103,26.50638,-80.3309,1,trhe,1,"1s indicate presence"
-3687,2015,192,192,26.47655,-80.28165,1,anhi,62,"1s indicate presence"
-3687,2015,192,192,26.47655,-80.28165,1,greg,32,"1s indicate presence"
-3687,2015,192,192,26.47655,-80.28165,1,lawh,30,"1s indicate presence"
-3687,2015,192,192,26.47655,-80.28165,1,lbhe,1,"1s indicate presence"
-3687,2015,192,192,26.47655,-80.28165,1,trhe,1,"1s indicate presence"
+3686,2015,103,103,26.50638,-80.3309,1,anhi,50,1s indicate presence
+3686,2015,103,103,26.50638,-80.3309,1,lbhe,1,1s indicate presence
+3686,2015,103,103,26.50638,-80.3309,1,sneg,50,1s indicate presence
+3686,2015,103,103,26.50638,-80.3309,1,trhe,1,1s indicate presence
+3687,2015,192,192,26.47655,-80.28165,1,anhi,62,1s indicate presence
+3687,2015,192,192,26.47655,-80.28165,1,greg,32,1s indicate presence
+3687,2015,192,192,26.47655,-80.28165,1,lawh,30,1s indicate presence
+3687,2015,192,192,26.47655,-80.28165,1,lbhe,1,1s indicate presence
+3687,2015,192,192,26.47655,-80.28165,1,trhe,1,1s indicate presence
 3693,2020,485,485,25.92521,-80.77935,3as,lbhe,45,
 3693,2020,485,485,25.92521,-80.77935,3as,sneg,50,
 3693,2020,485,485,25.92521,-80.77935,3as,trhe,35,
@@ -3360,18 +3360,18 @@
 3706,2021,3706,new,26.19038,-80.39236,2b,smwh,65,
 3707,2021,3707,new,26.2478,-80.436,2a,smhe,100,
 3707,2021,3707,new,26.2478,-80.436,2a,smwh,200,
-3708,2021,3708,New 2021, Shark Valley Tram Road NW,25.720225,-80.768942,enp,bcnh,1,"1s indicate presence"
-3708,2021,3708,New 2021, Shark Valley Tram Road NW,25.720225,-80.768942,enp,greg,112,"1s indicate presence"
-3708,2021,3708,New 2021, Shark Valley Tram Road NW,25.720225,-80.768942,enp,rosp,5,"1s indicate presence"
-3708,2021,3708,New 2021, Shark Valley Tram Road NW,25.720225,-80.768942,enp,sneg,1,"1s indicate presence"
-3708,2021,3708,New 2021, Shark Valley Tram Road NW,25.720225,-80.768942,enp,whib,4200,"1s indicate presence"
-3709,2021,3709,New 2021, SW Shark River Slough,25.3109,-80.859317,enp,greg,86,
-3709,2021,3709,New 2021, SW Shark River Slough,25.3109,-80.859317,enp,rosp,5,
-3710,2021,3710,New 2021, Vulture Roost colony,25.3036,-80.631024,enp,greg,89,
+3708,2021,3708, Shark Valley Tram Road NW,25.720225,-80.768942,enp,bcnh,1,1s indicate presence
+3708,2021,3708, Shark Valley Tram Road NW,25.720225,-80.768942,enp,greg,112,1s indicate presence
+3708,2021,3708, Shark Valley Tram Road NW,25.720225,-80.768942,enp,rosp,5,1s indicate presence
+3708,2021,3708, Shark Valley Tram Road NW,25.720225,-80.768942,enp,sneg,1,1s indicate presence
+3708,2021,3708, Shark Valley Tram Road NW,25.720225,-80.768942,enp,whib,4200,1s indicate presence
+3709,2021,3709, SW Shark River Slough,25.3109,-80.859317,enp,greg,86,
+3709,2021,3709, SW Shark River Slough,25.3109,-80.859317,enp,rosp,5,
+3710,2021,3710, Vulture Roost colony,25.3036,-80.631024,enp,greg,89,
 3712,2021,3712,New colony 2021,25.687637,-80.695277,enp,greg,121,
 3713,2021,3713,New colony 2021,25.51,-80.91,enp,greg,150,
-3714,2021,3714,New colony 2021,25.689184,-80.697903,enp,bcnh,1,"1s indicate presence"
-3714,2021,3714,New colony 2021,25.689184,-80.697903,enp,greg,53,"1s indicate presence"
+3714,2021,3714,New colony 2021,25.689184,-80.697903,enp,bcnh,1,1s indicate presence
+3714,2021,3714,New colony 2021,25.689184,-80.697903,enp,greg,53,1s indicate presence
 3715,2021,3715,New colony 2021,25.604455,-80.547223,enp,caeg,30,
 3715,2021,3715,New colony 2021,25.604455,-80.547223,enp,greg,65,
 3716,2018,jetport_new,64,25.84139,-80.84643,3as,lada,50,
@@ -3380,14 +3380,14 @@
 3716,2018,jetport_new,64,25.84139,-80.84643,3as,trhe,100,
 3716,2021,jetport_new,New Jetport,25.84278,-80.84222,3as,greg,50,
 3716,2021,jetport_new,New Jetport,25.84278,-80.84222,3as,wost,98,
-3717,2018,38_185,38/185,26.44892,-80.24226,1,greg,108,"1s indicate presence"
-3717,2018,38_185,38/185,26.44892,-80.24226,1,lbhe,1,"1s indicate presence"
-3717,2018,38_185,38/185,26.44892,-80.24226,1,sneg,36,"1s indicate presence"
-3717,2018,38_185,38/185,26.44892,-80.24226,1,whib,79,"1s indicate presence"
-3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,greg,225,"1s indicate presence"
-3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,lbhe,1,"1s indicate presence"
-3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,sneg,1,"1s indicate presence"
-3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,trhe,1,"1s indicate presence"
+3717,2018,38_185,38/185,26.44892,-80.24226,1,greg,108,1s indicate presence
+3717,2018,38_185,38/185,26.44892,-80.24226,1,lbhe,1,1s indicate presence
+3717,2018,38_185,38/185,26.44892,-80.24226,1,sneg,36,1s indicate presence
+3717,2018,38_185,38/185,26.44892,-80.24226,1,whib,79,1s indicate presence
+3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,greg,225,1s indicate presence
+3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,lbhe,1,1s indicate presence
+3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,sneg,1,1s indicate presence
+3721,2021,alligator_bay,Alligator Bay,25.670989,-81.147138,enp,trhe,1,1s indicate presence
 3722,2017,big_mel,Big Mel,26.04602,-80.62586,3as,gbhe,1,
 3722,2017,big_mel,Big Mel,26.04602,-80.62586,3as,greg,66,
 3722,2018,big_mel,Big Mel,26.04602,-80.62586,3as,gbhe,3,
@@ -3400,23 +3400,23 @@
 3723,2021,broad_river,Broad River,25.502924,-80.974397,enp,sneg,80,
 3723,2021,broad_river,Broad River,25.502924,-80.974397,enp,trhe,16,
 3723,2021,broad_river,Broad River,25.502924,-80.974397,enp,wost,809,
-3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,greg,715,"1s indicate presence"
-3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,lbhe,21,"1s indicate presence"
-3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,rosp,60,"1s indicate presence"
-3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,sneg,1,"1s indicate presence"
-3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,trhe,42,"1s indicate presence"
-3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,whib,21700,"1s indicate presence"
-3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,wost,742,"1s indicate presence"
+3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,greg,715,1s indicate presence
+3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,lbhe,21,1s indicate presence
+3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,rosp,60,1s indicate presence
+3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,sneg,1,1s indicate presence
+3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,trhe,42,1s indicate presence
+3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,whib,21700,1s indicate presence
+3724,2021,cabbage_bay,Cabbage Bay,25.619995,-81.056117,enp,wost,742,1s indicate presence
 3725,2020,canal_junction,Canal Junction (new),26.54121,-80.23359,1,lbhe,5,
 3725,2020,canal_junction,Canal Junction (new),26.54121,-80.23359,1,sneg,280,
 3725,2020,canal_junction,Canal Junction (new),26.54121,-80.23359,1,trhe,65,
 3726,2021,colony13,Colony 13,25.706599,-80.595042,enp,greg,150,
 3727,2021,colony22,Colony 22,25.775631,-81.186331,enp,greg,58,
-3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,greg,64,"1s indicate presence"
-3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,lada,400,"1s indicate presence"
-3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,lbhe,1,"1s indicate presence"
-3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,sneg,121,"1s indicate presence"
-3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,whib,300,"1s indicate presence"
+3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,greg,64,1s indicate presence
+3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,lada,400,1s indicate presence
+3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,lbhe,1,1s indicate presence
+3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,sneg,121,1s indicate presence
+3728,2018,cook_nc1,Cook NC1,26.5537,-80.2508,1,whib,300,1s indicate presence
 3729,2018,cook_nc4,Cook NC4,26.5328,-80.27617,1,gbhe,1,
 3729,2018,cook_nc4,Cook NC4,26.5328,-80.27617,1,greg,46,
 3729,2018,cook_nc4,Cook NC4,26.5328,-80.27617,1,lada,2,
@@ -3434,23 +3434,23 @@
 3731,2018,diana,Diana,25.84727,-80.52347,3b,lada,1,
 3731,2021,diana,Diana,25.84727,-80.52347,3b,greg,184,
 3732,2021,grossman_ridge_west,Grossman Ridge West,25.636272,-80.652754,enp,greg,40,
-3732,2021,grossman_willowhead,Grossman Willowhead,25.626131,-80.645822,enp,greg,42,"1s indicate presence"
-3732,2021,grossman_willowhead,Grossman Willowhead,25.626131,-80.645822,enp,sneg,1,"1s indicate presence"
+3732,2021,grossman_willowhead,Grossman Willowhead,25.626131,-80.645822,enp,greg,42,1s indicate presence
+3732,2021,grossman_willowhead,Grossman Willowhead,25.626131,-80.645822,enp,sneg,1,1s indicate presence
 3734,2017,lox_nc1,LoxNC1,26.5537,-80.2508,1,greg,44,
 3734,2017,lox_nc1,LoxNC1,26.5537,-80.2508,1,lada,538,
 3735,2017,lox_nc4,LoxNC4,26.5328,-80.2762,1,greg,120,
 3735,2017,lox_nc4,LoxNC4,26.5328,-80.2762,1,whib,2502,
 3736,1993,andytown_willow,Andytown East Willow,26.101,-80.489,3ase,lbhe,15,
 3736,1993,andytown_willow,Andytown East Willow,26.101,-80.489,3ase,sneg,1,
-3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,greg,698,"1s indicate presence"
-3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,lbhe,1,"1s indicate presence"
-3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,rosp,20,"1s indicate presence"
-3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,sneg,1,"1s indicate presence"
-3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,trhe,1,"1s indicate presence"
-3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,whib,2975,"1s indicate presence"
-3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,wost,8,"1s indicate presence"
-3738,2021,rookery_branch,Rookery Branch,25.463561,-80.852558,enp,greg,198,"1s indicate presence"
-3738,2021,rookery_branch,Rookery Branch,25.463561,-80.852558,enp,sneg,1,"1s indicate presence"
+3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,greg,698,1s indicate presence
+3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,lbhe,1,1s indicate presence
+3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,rosp,20,1s indicate presence
+3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,sneg,1,1s indicate presence
+3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,trhe,1,1s indicate presence
+3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,whib,2975,1s indicate presence
+3737,2021,otter_creek,Otter Creek,25.467803,-80.937717,enp,wost,8,1s indicate presence
+3738,2021,rookery_branch,Rookery Branch,25.463561,-80.852558,enp,greg,198,1s indicate presence
+3738,2021,rookery_branch,Rookery Branch,25.463561,-80.852558,enp,sneg,1,1s indicate presence
 3739,2018,shamash,Shamash,26.24412,-80.43317,2a,greg,53,
 3739,2021,shamash,Shamash,26.24412,-80.43317,2a,gbhe,9,
 3739,2021,shamash,Shamash,26.24412,-80.43317,2a,greg,178,
