@@ -22,7 +22,7 @@ all_data <- dplyr::bind_rows(new_data,new_data2,new_data3) %>%
   dplyr::arrange(.data$year, .data$region)
 
 write.csv(all_data, "../Water/eden_covariates.csv", row.names = FALSE, col.names = FALSE,
-          append = TRUE, na="")
+          append = TRUE, na="", quote = FALSE)
 
 }
 
