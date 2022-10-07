@@ -12,6 +12,12 @@ test_that("required column names in counts df", {
                      "species","count","notes"))
 })
 
+test_that("Lat and long valid", {
+  
+  expect_true(all((counts$latitude <= 27 | counts$latitude > 25)))
+  expect_true(all((counts$longitude <= -80 | counts$longitude > -81.3)))
+})
+
 test_that("Colony and species valid", {
   
   expect_true(all(counts$colony %in% colonies$colony))
