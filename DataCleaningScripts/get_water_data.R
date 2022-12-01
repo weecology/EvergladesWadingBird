@@ -6,6 +6,7 @@
 # Downloads new EDEN depth data, calculates covariates, appends to covariate file
 
 append_eden_covariates <- function() {
+
 download_eden_depths()
 
 new_data <- get_eden_covariates()

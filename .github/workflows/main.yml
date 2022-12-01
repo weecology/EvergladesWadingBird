@@ -33,14 +33,14 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
             fetch-depth: 3
             
       - uses: r-lib/actions/setup-r@v2
         
       - name: Cache R packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-${{ hashFiles('.github/depends.Rds') }}
@@ -48,7 +48,7 @@ jobs:
             ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
             
       - name: Install system dependencies
-        run: sudo apt-get install libgit2-dev
+        run: sudo apt-get install libgit2-dev libcurl4-openssl-dev libudunits2-dev libgdal-dev libnetcdf-dev libgeos-dev libproj-dev
           
       - name: Install packages
         run: Rscript install-packages.R        
@@ -64,9 +64,9 @@ jobs:
         run: |
           if [[ -z "$(git status --porcelain)" ]] ; then 
             echo "Git status is empty"
-            echo "::set-output name=diff::FALSE"
+            echo "{diff}={FALSE}" >> $GITHUB_OUTPUT
           else 
-            echo "::set-output name=diff::TRUE"
+            echo "{diff}={TRUE}" >> $GITHUB_OUTPUT
           fi
           
       - name: Bump version
@@ -78,10 +78,10 @@ jobs:
           R -e "source('version_bump.R'); bump_version('${{ env.LOG }}', ${{ env.CRON }}, ${{ steps.check_files.outputs.diff }})"
           if echo "$(git status --porcelain)" | grep -q version.txt ; then 
             echo "Version changed"
-            echo "::set-output name=new_ver::TRUE"
+            echo "{new_ver}={TRUE}" >> $GITHUB_OUTPUT
           else 
             echo "No version bump"
-            echo "::set-output name=new_ver::FALSE"
+            echo "{new_ver}={FALSE}" >> $GITHUB_OUTPUT
           fi
         
       - name: Setup Tag
@@ -89,9 +89,9 @@ jobs:
         id: tagging
         run: |
           value=`cat version.txt`
-          echo "::set-output name=tag::$value"
+          echo "{tag}={$value}" >> $GITHUB_OUTPUT
           value="v${value}"
-          echo "::set-output name=release::$value"
+          echo "{release}={$value}" >> $GITHUB_OUTPUT
       
       - name: Tag new version for release
         if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
