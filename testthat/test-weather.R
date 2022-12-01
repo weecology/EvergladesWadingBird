@@ -26,8 +26,8 @@ test_that("Air Temperature ok", {
   
   expect_true(all(weather$tobs > -20, na.rm=TRUE))
   expect_true(all(weather$tobs <= 45, na.rm=TRUE))
-  expect_true(all(weather$avg > -20, na.rm=TRUE))
-  expect_true(all(weather$avg <= 45, na.rm=TRUE))  
+  expect_true(all(weather$tavg > -20, na.rm=TRUE))
+  expect_true(all(weather$tavg <= 45, na.rm=TRUE))  
   expect_true(all(weather$tmin > -20, na.rm=TRUE))
   expect_true(all(weather$tmin <= 45, na.rm=TRUE))
   expect_true(all(weather$tmax > -20, na.rm=TRUE))
