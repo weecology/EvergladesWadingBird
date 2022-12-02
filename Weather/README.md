@@ -1,32 +1,23 @@
 # Weather Data
 Data are from [NOAA Custom GHCN-Daily](https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ncdc:C00861/html#)
 
-## Stations
-OASIS FLORIDA, FL US (GHCND:USR0000FOAS)
+## [Weather Stations](weather_stations.csv)
 
-TAMIAMI TRAIL 40 MI. BEND, FL US (GHCND:USC00088780)
+station	name
 
-ROYAL PALM RANGER STATION, FL US (GHCND:USC00087760)
+latitude
 
-PINECREST, FL US (GHCND:USC00087115)
+longitude
 
-OASIS RANGER STATION, FL US (GHCND:USC00086406)
+elevation
 
-RACCOON POINT FLORIDA, FL US (GHCND:USR0000FRAC)
+min_date
 
-MONROE, FL US (GHCND:USC00085866)
+max_date
 
-## Values
+## [Weather](weather.csv)
 
 STATION - station ID
-
-NAME - station name
-
-LATITUDE - latitude
-
-LONGITUDE	- longitude
-
-ELEVATION	- meters
 
 DATE - yyyy-mm-dd
 
@@ -215,7 +206,21 @@ z = Uzbekistan update
 	   priority order (from highest to lowest):
 	   Z,R,D,0,6,C,X,W,K,7,F,B,M,m,r,E,z,u,b,s,a,G,Q,I,A,N,T,U,H,S
 
-
 ## Cite as:
 
 Menne, Matthew J., Imke Durre, Bryant Korzeniewski, Shelley McNeal, Kristy Thomas, Xungang Yin, Steven Anthony, Ron Ray, Russell S. Vose, Byron E.Gleason, and Tamara G. Houston (2012): Global Historical Climatology Network - Daily (GHCN-Daily), Version 3. [indicate subset used]. NOAA National Climatic Data Center. doi:10.7289/V5D21VHZ [access date].
+
+## PRISM Normals Data
+We use the PRISM dataset to calculate anomalies at the site (% average precipitation and temperature)
+
+Location: Location:  Lat: 26.0832   Lon: -80.6252   Elev: 2m Spatial resolution: 4km
+
+PRISM day definition: 24 hours ending at 1200 UTC on the day shown
+
+Details: http://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf
+
+#### [Monthly 1991-2020 Normals](prism_normals.csv)
+Dataset: Norm91m
+
+#### [PRISM Time Series Data](prism_data.csv)
+Dataset: AN81m
