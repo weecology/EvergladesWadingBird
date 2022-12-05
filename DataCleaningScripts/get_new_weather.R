@@ -11,9 +11,11 @@
 #'
 #'
 #'
-# This function checks for new data at the datalogger-hosted website
+# This function checks for new data at all NOAA stations
 
 new_met_data <- function() {
+  
+  options(dplyr.summarise.inform = FALSE)  
   
   # Load existing data for comparison
   weather <- read.csv("Weather/weather.csv") %>%
@@ -47,7 +49,8 @@ new_met_data <- function() {
                   tmax = tmax/10,
                   tmin = tmin/10, 
                   tavg = tavg/10, 
-                  tobs = tobs/10)
+                  tobs = tobs/10, 
+                  prcp = prcp/10)
   
   all[,setdiff(weather_cols, names(all))] <- NA
     
