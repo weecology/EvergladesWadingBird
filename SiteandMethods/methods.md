@@ -51,3 +51,10 @@ Field collection methods are described in [Feather_Mercury_Collection](../Sitean
 #### Hg Analyzer Methods
 
 A quick guide to protocol is listed in [DMA_Protocol](../SiteandMethods/DMA_Protocol.md).
+
+### Image processing
+
+#### Orthomosaics
+
+Orthomosaics created from the raw UAS imagery are stored as GeoTIFF's with LZW compression.
+BigTIFF format is used since most orthomosaics are greater than the 4GB file size limit for normal TIFFs.
