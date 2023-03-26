@@ -2,6 +2,9 @@
 <!-- badges: start -->
 [![Build Status](https://github.com/weecology/EvergladesWadingBird/workflows/CI/badge.svg)](https://github.com/weecology/EvergladesWadingBird/actions)
 [![License](http://i.creativecommons.org/p/zero/1.0/88x31.png)](https://raw.githubusercontent.com/weecology/PortalData/main/LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7734553.svg)](https://doi.org/10.5281/zenodo.7734553)
+
+
 <!-- badges: end -->
 
 Data from the Everglades breeding bird monitoring project
