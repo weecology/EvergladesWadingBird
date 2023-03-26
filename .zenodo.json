@@ -1,0 +1,35 @@
+{
+    "creators": [
+      {
+        "affiliation": "University of Florida",
+        "name": "Peter Frederick"
+      },
+      {
+        "affiliation": "University of Florida",
+        "name": "Lindsey Garner"
+        },
+      {
+        "affiliation": "University of Florida",
+        "name": "Glenda M. Yenni",
+        "orcid": "0000-0001-6969-1848"
+        },
+      {
+        "affiliation": "University of Florida",
+        "name": "Ethan P. White",
+        "orcid": "0000-0001-6728-7745"
+      },
+      {
+        "affiliation": "University of Florida",
+        "name": "S. K. Morgan Ernest",
+        "orcid": "0000-0002-6026-8530"
+      }
+    ],
+    "keywords": [
+      "ecology",
+      "time-series",
+      "long-term",
+      "continuous analysis"
+    ],
+    "license": "cc-zero",
+    "upload_type": "dataset"
+  }
