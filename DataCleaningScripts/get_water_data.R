@@ -7,13 +7,13 @@
 
 append_eden_covariates <- function() {
 
-download_eden_depths()
+wader::download_eden_depths()
 
-new_data <- get_eden_covariates()
+new_data <- wader::get_eden_covariates()
 
-new_data2=get_eden_covariates(level="all")
+new_data2 <- wader::get_eden_covariates(level="all")
 
-new_data3=get_eden_covariates(level="wcas")
+new_data3 <- wader::get_eden_covariates(level="wcas")
 
 all_data <- dplyr::bind_rows(new_data,new_data2,new_data3) %>%
   dplyr::select(.data$year, region=.data$Name, .data$variable, .data$value) %>%
