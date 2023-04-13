@@ -8,7 +8,7 @@ counts_cols <- colnames(counts)
 test_that("required column names in counts df", {
   
   expect_identical(counts_cols, 
-                   c("group_id","year","colony","colony_old","latitude","longitude","region",      
+                   c("group_id","year","colony","colony_old","latitude","longitude",      
                      "species","count","notes"))
 })
 
