@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/weecology/EvergladesWadingBird/workflows/CI/badge.svg)](https://github.com/weecology/EvergladesWadingBird/actions)
 [![License](http://i.creativecommons.org/p/zero/1.0/88x31.png)](https://raw.githubusercontent.com/weecology/PortalData/main/LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7734553.svg)](https://doi.org/10.5281/zenodo.7734553)
-
+[![USACE-W912HZ-20-2-0022/3](https://img.shields.io/badge/USACE-W912HZ--20--2--0022%2F3-blue)](https://www.saj.usace.army.mil/Missions/Environmental/Ecosystem-Restoration/)
 
 <!-- badges: end -->
 
