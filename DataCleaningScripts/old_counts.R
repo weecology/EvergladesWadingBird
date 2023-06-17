@@ -56,10 +56,10 @@ dat21 <- clean_count_data(files[33], 2021)
 
 
 counts <- counts %>% dplyr::arrange(counts)
-write.csv(counts, "Counts/maxcounts.csv", row.names = FALSE, na = "", quote = 11)
+write.csv(counts, "Counts/maxcounts.csv", row.names = FALSE, na = "", quote = 9)
 
 species <- species %>% dplyr::arrange(species)
 write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", quote = 5:25)
 
 colonies <- colonies %>% dplyr::arrange(colony)
-write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = 6)
+write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = c(7,8))
