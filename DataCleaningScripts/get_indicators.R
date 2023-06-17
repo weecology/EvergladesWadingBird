@@ -29,6 +29,20 @@ counts <- colony_counts$new_data %>% dplyr::arrange()
 write.table(counts, "Counts/maxcounts.csv", row.names = FALSE, col.names = FALSE, 
                                           na = "", sep = ",", append=TRUE, quote = 9)
 
+enp <- readxl::read_excel(path = data_path, sheet = "enp", 
+                          col_names = TRUE, col_types = "text") %>%
+  dplyr::left_join(colonies[,1:2], by = dplyr::join_by(colony)) %>%
+  
+  dplyr::mutate(year = as.numeric(year),
+                latitude = as.numeric(latitude),
+                longitude = as.numeric(longitude),
+                count = as.numeric(count)) %>%
+       dplyr::select("group_id","year","colony","colony_old","latitude","longitude","species","count","notes")
+print(unique(enp$colony[which(!(enp$colony %in% colonies$colony))]))
+print(unique(enp$species[which(!(enp$species %in% species$species))]))
+write.table(enp, "Counts/maxcounts.csv", row.names = FALSE, col.names = FALSE, 
+            na = "", sep = ",", append=TRUE, quote = 9)
+
 under_40 <- colony_counts$under_40 %>% dplyr::arrange()
 write.table(under_40, "Counts/maxcounts_under40.csv", row.names = FALSE, col.names = FALSE, 
             na = "", sep = ",", append=TRUE, quote = 28)
@@ -36,3 +50,4 @@ write.table(under_40, "Counts/maxcounts_under40.csv", row.names = FALSE, col.nam
 colonies <- colony_counts$new_colonies %>% dplyr::arrange(colony)
 write.table(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, col.names = FALSE, 
             na = "", sep = ",", append=TRUE, quote = c(7,8))
+
