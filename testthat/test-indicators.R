@@ -13,9 +13,9 @@ test_that("required column names in max counts df", {
 
 test_that("Year valid", {
 
-  expect_false(any(is.na(max_count$year)))
-  expect_false(any(is.na(initiation$year)))
-  expect_false(any(is.na(foraging$year)))
+  expect_true(all(is.integer(max_count$year)))
+  expect_true(all(is.integer(initiation$year)))
+  expect_true(all(is.integer(foraging$year)))
 })
 
 test_that("Counts valid", {
