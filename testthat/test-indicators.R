@@ -3,7 +3,7 @@ context("checks indicator data")
 max_count <- read.csv("../Indicators/max_count_all.csv")
 initiation <- read.csv("../Indicators/stork_initiation.csv") 
 foraging <- read.csv("../Indicators/coastal_nesting.csv")
-max_count_cols <- colnames(counts)
+max_count_cols <- colnames(max_count)
 
 test_that("required column names in max counts df", {
   
