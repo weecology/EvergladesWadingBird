@@ -23,4 +23,3 @@ test_that("Counts valid", {
   expect_true(all(is.integer(max_count$count)))
   
 })
-
