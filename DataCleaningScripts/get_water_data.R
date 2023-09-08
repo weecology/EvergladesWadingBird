@@ -1,30 +1,47 @@
-#' Functions used to retrieve and process water gage data
+#' Functions used to retrieve and process water gauge data
 #'
 
 `%>%` <- magrittr::`%>%`
 
 # Downloads new EDEN depth data, calculates covariates, appends to covariate file
 
-append_eden_covariates <- function() {
+get_eden_data <- function() {
 
 wader::download_eden_depths()
 
 new_data <- wader::get_eden_covariates()
-
 new_data2 <- wader::get_eden_covariates(level="all")
-
 new_data3 <- wader::get_eden_covariates(level="wcas")
-
 all_data <- dplyr::bind_rows(new_data,new_data2,new_data3) %>%
   dplyr::select(.data$year, region=.data$Name, .data$variable, .data$value) %>%
   as.data.frame() %>%
   dplyr::select(-geometry) %>%
-  tidyr::pivot_wider(names_from=.data$variable, values_from=.data$value) %>%
-  dplyr::arrange(.data$year, .data$region)
+  tidyr::pivot_wider(names_from="variable", values_from="value") %>%
+  dplyr::arrange("year", "region")
 
-write.csv(all_data, "../Water/eden_covariates.csv", row.names = FALSE, col.names = FALSE,
-          append = TRUE, na="", quote = FALSE)
+levels <- c("subregions", "all", "wcas")
+new_depths <- sapply(levels, wader::get_eden_depths)
+new_depths <- dplyr::bind_cols(date=new_depths[[2]], region=new_depths[[1]], depth=new_depths[[3]]) %>%
+  dplyr::bind_rows(dplyr::bind_cols(date=new_depths[[5]], region=new_depths[[4]], depth=new_depths[[6]])) %>%
+  dplyr::bind_rows(dplyr::bind_cols(date=new_depths[[8]], region=new_depths[[7]], depth=new_depths[[9]])) %>%
+  dplyr::mutate(date=as.Date(date))
 
+return(list(new_covariates=new_covariates, new_depths=new_depths))
+}
+
+#' Appends new water data
+#'
+#'
+
+update_water <- function() {
+
+  data <- get_eden_data()
+
+  write.table(data$new_covariates, "../Water/eden_covariates.csv", row.names = FALSE, col.names = TRUE,
+            na="", sep = ",", quote = FALSE)
+
+  write.table(data$new_depths, file = "../Water/eden_depth.csv",
+              row.names = FALSE, col.names = TRUE, na = "", sep = ",", quote = FALSE)
 }
 
 #' Reads downloaded sophia.usgs gauge files
@@ -49,22 +66,4 @@ water_level <- water_level1 %>%
   tidyr::pivot_wider(names_from = column, values_from = value) %>%
   filter(!is.na(level))
 
-}
-
-#' Appends new water data
-#'
-#'
-
-append_water <- function() {
-
-  new_data_files <- list.files("~/Downloads/eve_data", full.names = TRUE)
-
-  data <- new_data_files %>%
-          lapply(get_water_data) %>%
-          bind_rows %>%
-          dplyr::arrange(date,station)
-
-  # append new data
-  write.table(data, file = "Water/level.csv",
-              row.names = FALSE, col.names = FALSE, na = "", append = TRUE, sep = ",")
 }
