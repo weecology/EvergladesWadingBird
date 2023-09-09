@@ -9,7 +9,7 @@ covariates_names <- colnames(covariates)
 test_that("required column names in new water df", {
 
   expect_identical(depth_names,
-                   c("date","region","depth"))
+                   c("date","region","depth_mean", "depth_sd", "depth_max", "depth_min" ))
   expect_identical(covariates_names,
                    c("year","region","init_depth","breed_season_depth", "recession",
                      "pre_recession","post_recession","dry_days","reversals"))
