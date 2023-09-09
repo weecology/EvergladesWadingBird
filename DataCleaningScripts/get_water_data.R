@@ -19,12 +19,12 @@ all_data <- dplyr::bind_rows(new_data,new_data2,new_data3) %>%
   tidyr::pivot_wider(names_from="variable", values_from="value") %>%
   dplyr::arrange("year", "region")
 
-levels <- c("subregions", "all", "wcas")
-new_depths <- sapply(levels, wader::get_eden_depths)
-new_depths <- dplyr::bind_cols(date=new_depths[[2]], region=new_depths[[1]], depth=new_depths[[3]]) %>%
-  dplyr::bind_rows(dplyr::bind_cols(date=new_depths[[5]], region=new_depths[[4]], depth=new_depths[[6]])) %>%
-  dplyr::bind_rows(dplyr::bind_cols(date=new_depths[[8]], region=new_depths[[7]], depth=new_depths[[9]])) %>%
-  dplyr::mutate(date=as.Date(date))
+depth_data <- wader::get_eden_depths() %>%
+              dplyr::bind_rows(wader::get_eden_depths(level="all")) %>%
+              dplyr::bind_rows(wader::get_eden_depths(level="wcas")) %>%
+              dplyr::mutate(date=as.Date(date))
+
+file.remove(dir(path=file.path(get_default_data_path(), 'EvergladesWadingBird/Water'),  pattern="_.*_depth.nc"))
 
 return(list(new_covariates=new_covariates, new_depths=new_depths))
 }
