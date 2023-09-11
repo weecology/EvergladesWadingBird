@@ -3,7 +3,7 @@ if ("pacman" %in% rownames(installed.packages()) == FALSE) install.packages("pac
 
 # Install packages required for analysis
 
-pacman::p_load(git2r, httr, semver, testthat, yaml, 
+pacman::p_load(git2r, httr, semver, sf, testthat, yaml,
                dplyr, lubridate, remotes)
 
 remotes::install_github("weecology/wader")

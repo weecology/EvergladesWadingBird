@@ -9,6 +9,7 @@ get_eden_data <- function() {
 
 wader::download_eden_depths()
 
+covariate_data <- read.table("../Water/eden_covariates.csv", header = TRUE, sep = ",")
 new_data <- wader::get_eden_covariates()
 new_data2 <- wader::get_eden_covariates(level="all")
 new_data3 <- wader::get_eden_covariates(level="wcas")
@@ -18,18 +19,26 @@ all_data <- dplyr::bind_rows(new_data,new_data2,new_data3) %>%
   dplyr::select(-geometry) %>%
   tidyr::pivot_wider(names_from="variable", values_from="value") %>%
   dplyr::arrange("year", "region")
+new_covariates <- all_data %>%
+  merge(dplyr::filter(covariate_data, !date %in% all_data$year)) %>%
+  dplyr::arrange("year", "region")
 
-depth_data <- wader::get_eden_depths() %>%
+depth_data <- read.table("../Water/eden_depth.csv", header = TRUE, sep = ",") %>%
+              dplyr::mutate(date=as.Date(date))
+new_depths <- wader::get_eden_depths() %>%
               dplyr::bind_rows(wader::get_eden_depths(level="all")) %>%
               dplyr::bind_rows(wader::get_eden_depths(level="wcas")) %>%
               dplyr::mutate(date=as.Date(date))
+new_depths <- new_depths %>%
+              merge(dplyr::filter(depth_data, !date %in% new_depths$date)) %>%
+              dplyr::arrange("date", "region")
 
 file.remove(dir(path=file.path(get_default_data_path(), 'EvergladesWadingBird/Water'),  pattern="_.*_depth.nc"))
 
 return(list(new_covariates=new_covariates, new_depths=new_depths))
 }
 
-#' Appends new water data
+#' Writes new water data
 #'
 #'
 
