@@ -13,7 +13,7 @@ new_data <- wader::get_eden_covariates()
 new_data2 <- wader::get_eden_covariates(level="all")
 new_data3 <- wader::get_eden_covariates(level="wcas")
 all_data <- dplyr::bind_rows(new_data,new_data2,new_data3) %>%
-  dplyr::select(.data$year, region=.data$Name, .data$variable, .data$value) %>%
+  dplyr::select(year, region=Name, variable, value) %>%
   as.data.frame() %>%
   dplyr::select(-geometry) %>%
   tidyr::pivot_wider(names_from="variable", values_from="value") %>%
