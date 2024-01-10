@@ -9,6 +9,8 @@
 #'
 #' Reads count data from original excel files, reshapes from wide (dates as cols) to long format,
 #' corrects data format errors, appends to long timeseries file
+#' 
+#' data_path <- "../Dropbox (UFL)/Everglades/2023 Data/2023 Final Report Work/2023 ENP Survey data.xlsx"
 clean_count_data <- function(data_path, year) {
   
   colonies <- read.csv("SiteandMethods/colonies.csv")
