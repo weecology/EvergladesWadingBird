@@ -1,292 +1,303 @@
-"group_id","colony","region","subregion","latitude","longitude","aka","display_name"
-3670,10,1,1,26.47544,-80.28161,"10","10"
-3753,102,2,,26.2830658,-80.4565018,"","102"
-3686,103,1,1,26.50638,-80.3309,"103","103"
-3756,104_56,1,,26.5571383,-80.2766835,"","104_56"
-3754,105,1,,26.5595003,-80.2840501,"","105"
-1083,1083,3,3as,25.861183,-80.837233,"","1083"
-1088,1088,3,3as,25.870333,-80.8065,"","1088"
-1092,1092,3,3as,25.86737,-80.80476,"Colony 138","1092"
-1093,1093,3,3as,25.866667,-80.8,"","1093"
-1096,1096,3,3as,25.871,-80.802,"","1096"
-3671,10_2,1,1,26.47807,-80.28207,"10","10"
-3758,1106,3,,25.97012803,-80.71734399,"","1106"
-3759,1181,3,,25.970175,-80.774804,"","1181"
-1258,1258,3,3b,25.891167,-80.5025,"206","1258"
-1380,1380,3,3as,25.906,-80.609,"new","1380"
-1474,1474,3,3as,25.9225,-80.83,"unknown","1474"
-1482,1482,3,3as,25.91823,-80.77337,"839","1482"
-1632,1632,3,3as,25.935,-80.625,"","1632"
-1652,1652,3,3as,25.945,-80.659167,"","1652"
-3751,18,3,,25.770234,-80.724434,"","18"
-1844,1844,3,3as,25.97065268,-80.70106731,"90,NA","1844"
-1882,1882,3,3as,25.97833,-80.73566,"","1882"
-3687,192,1,1,26.47655,-80.28165,"192","192"
-1932,1932,3,3as,25.986817,-80.6953,"","1932"
-1980,1980,3,3as,26.0045,-80.81985,"","1980"
-2013,2013,3,3as,26.008,-80.539333,"54","2013"
-2049,2049,3,3as,26.018067,-80.692167,"","2049"
-2092,2092,3,3as,26.037717,-80.761917,"","2092"
-2147,2147,3,3as,26.04075,-80.813167,"","2147"
-2169,2169,3,3as,26.050333,-80.67,"37","2169"
-2172,2172,3,3as,26.049,-80.616667,"Unknown","2172"
-218,218,3,3b,25.780833,-80.6545,"362","218"
-2191,2191,3,3as,26.07105,-80.807467,"1999","2191"
-2282,2282,3,3as,26.11158296,-80.66166347,"","2282"
-2289,2289,3,3as,26.11035,-80.723883,"","2289"
-2307,2307,3,3as,26.11552362,-80.65942169,"NA,9","2307"
-2309,2309,3,3as,26.123167,-80.654833,"","2309"
-2389,2389,3,3as,26.127817,-80.7244,"","2389"
-2397,2397,3,3as,26.136667,-80.83,"","2397"
-2418,2418,3,3ase,26.14,-80.596667,"new","2418"
-2419,2419,3,3ase,26.141667,-80.62,"new","2419"
-2428,2428,3,3an,26.2275,-80.803,"western 3aN","2428"
-2477,2477,2,2b,26.182167,-80.3295,"","2477"
-2482,2482,2,2b,26.1789,-80.32265,"2B","2482"
-2485,2485,2,2b,26.191667,-80.308333,"2B corner","2485"
-2487,2487,2,2b,26.1885,-80.307167,"2B corner","2487"
-2495,2495,2,2a,26.33,-80.501167,"Unknown","2495"
-2532,2532,2,2a,26.246767,-80.327767,"","2532"
-2549,2549,2,2a,26.342,-80.439333,"new","2549"
-2552,2552,2,2a,26.35,-80.400333,"1","2552"
-2554,2554,2,2a,26.356,-80.395,"3","2554"
-2567,2567,1,1,26.367933,-80.258017,"","2567"
-2568,2568,1,1,26.369683,-80.257917,"","2568"
-2585,2585,1,1,26.372917,-80.291783,"","2585"
-2617,2617,1,1,26.375,-80.313333,"10","2617"
-2629,2629,1,1,26.378667,-80.275833,"94086","2629"
-2635,2635,1,1,26.379833,-80.260167,"","2635"
-2647,2647,1,1,26.38025494,-80.25062412,"12,NA","2647"
-2662,2662,other,urban,25.830667,-80.352333,"","2662"
-2722,2722,1,1,26.635833,-80.410833,"","2722"
-2753,2753,1,1,26.491333,-80.44,"","2753"
-2756,2756,1,1,26.527333,-80.438667,"","2756"
-2759,2759,1,1,26.525367,-80.43525,"","2759"
-2804,2804,1,1,26.5546,-80.265067,"","2804"
-2812,2812,1,1,26.550333,-80.2508335,"","2812"
-2838,2838,1,1,26.5245,-80.352667,"","2838"
-2850,2850,1,1,26.530567,-80.266283,"Lox 111","2850"
-2851,2851,1,1,26.523017,-80.266383,"","2851"
-2853,2853,1,1,26.522778,-80.253056,"94061","2853"
-2932,2932,1,1,26.5005,-80.263,"LOX 111","2932"
-2968,2968,1,1,26.39503613,-80.24735063,"Venus","2968"
-2719,2b_mel,2,2b,26.129667,-80.345667,"2B Mel","2b Mel"
-2489,2b_south_end,2,2b,26.14559499,-80.38101257,"2b south end","2b South End"
-3006,3006,1,1,26.412889,-80.26,"94083","3006"
-3012,3012,1,1,26.417,-80.2415,"95012","3012"
-3106,3106,1,1,26.448889,-80.394167,"94038","3106"
-3125,3125,1,1,26.44641,-80.33779,"New 3 FEB 21","3125"
-3134,3134,1,1,26.450556,-80.276944,"94009","3134"
-3142,3142,1,1,26.445167,-80.258833,"95010","3142"
-3145,3145,1,1,26.4445,-80.255,"36","3145"
-3178,3178,1,1,26.453833,-80.262833,"","3178"
-3196,3196,1,1,26.458667,-80.373833,"","3196"
-3673,32,3,3an,26.22918,-80.80352,"3","32"
-3235,3235,1,1,26.46665,-80.252183,"66","3235"
-3240,3240,1,1,26.467778,-80.244444,"94077","3240"
-3310,3310,1,1,26.481,-80.246167,"96075","3310"
-3311,3311,1,1,26.480556,-80.247222,"94002","3311"
-3369,3369,1,1,26.4795,-80.371667,"","3369"
-3400,3400,other,urban,26.3755,-80.2255,"","3400"
-3417,3417,3,3as,25.974833,-80.696833,"","3417"
-3430,3430,3,3as,25.828333,-80.6772,"","3430"
-3455,3455,1,1,26.515,-80.2625,"","3455"
-3456,3456,1,1,26.486833,-80.222333,"","3456"
-3628,3628,3,3as,25.874726,-80.823856,"75","3628"
-3664,3664,1,1,26.55895,-80.28352,"194","3664"
-3665,3665,1,1,26.62441,-80.32439,"188","3665"
-3667,3667,1,1,26.55607,-80.27551,"193","3667"
-3698,3698,1,1,26.61839,-80.30578,"NO  NAME (S OF sta-1E)","3698"
-3700,3700,1,1,26.61059,-80.29449,"NO NAME","3700"
-3702,3702,1,1,26.46806,-80.27889,"new","3702"
-3705,3705,1,1,26.423,-80.31,"new","3705"
-3706,3706,2,2b,26.19038,-80.39236,"new","3706"
-3707,3707,2,2a,26.2478,-80.436,"new","3707"
-3708,3708,enp,sawgrassenp,25.720225,-80.768942,"New 2021, Shark Valley Tram Road NW","3708"
-3710,3710,enp,sawgrassenp,25.3036,-80.631024,"New 2021, Vulture Roost colony","3710"
-3712,3712,enp,sawgrassenp,25.687637,-80.695277,"New colony 2021","3712"
-3713,3713,enp,coastal,25.51,-80.91,"New colony 2021","3713"
-3714,3714,enp,sawgrassenp,25.689184,-80.697903,"New colony 2021","3714"
-3715,3715,enp,sawgrassenp,25.604455,-80.547223,"New colony 2021","3715"
-3717,38_185,1,1,26.44892,-80.24226,"38/185, 38, 185","38 185"
-3746,3b_boat_ramp,3,3b,25.77920649,-80.50961613,"","3b Boat Ramp"
-3675,42,1,1,26.42186,-80.30663,"42","42"
-3749,43,1,,26.51123,-80.43767,"","43"
-3748,47,3,,26.012208,-80.608635,"","47"
-483,483,3,3as,25.798333,-80.762667,"Unknown","483"
-3693,485,3,3as,25.92521,-80.77935,"485","485"
-3694,487,3,3as,25.93637897,-80.78195798,"487","487"
-58,58,3,3as,25.77328,-80.833385,"163","58"
-3668,63,1,1,26.61685605,-80.30663269,"","63"
-2383,6th_bridge,3,3ase,26.12376586,-80.54149724,"6th Bridge,6th bridge","6th Bridge"
-2279,6th_bridge_south,3,3ase,26.108333,-80.541667,"6th Bridge south","6th Bridge South"
-719,719,3,3as,25.82211,-80.68362,"New 2 MAR 21","719"
-3750,72,3,,25.8819533,-80.5975774,"","72"
-3669,8,2,2b,26.13853,-80.36901,"8","8"
-899,899,3,3b,25.838333,-80.5255,"Unknown","899"
-3757,962,3,,25.96063997,-80.75135498,"","962"
-968,968,3,3as,25.853233,-80.838717,"","968"
-3755,98,3,,25.9800583,-80.7566797,"","98"
-3752,99,3,,25.9753243,-80.6257803,"","99"
-162,aerie,3,3as,25.77156696,-80.70872846,"Aerie","Aerie"
-2453,alley_north,3,3an,26.20129687,-80.52873259,"Alley North","Alley North"
-3721,alligator_bay,enp,coastal,25.670989,-81.147138,"Alligator Bay","Alligator Bay"
-2426,andrews,3,3an,26.239667,-80.761167,"Andrew's","Andrews"
-2315,andytown_north,3,3ase,26.11446883,-80.49135483,"Andytown","Andytown North"
-3736,andytown_willow,3,3ase,26.101,-80.489,"Andytown East Willow","Andytown Willow"
-217,auster,3,3b,25.77976922,-80.61312139,"AUSTER,Austere","Auster"
-2700,big_cypress,other,bigcypress,25.822833,-80.863167,"Big Cypr col","Big Cypress"
-3722,big_mel,3,3as,26.04582189,-80.62585685,"Big Mel, Big Melaleuca","Big Mel"
-2717,big_mel_old,3,3as,26.054833,-80.6255,"Big Meleleuca","Big Mel Old"
-1094,big_pond,3,3as,25.865478,-80.803227,"Big Pond","Big Pond"
-221,brahma,3,3as,25.78156672,-80.68860687,"BRAHMA,Brahma","Brahma"
-3723,broad_river,enp,coastal,25.502924,-80.974397,"Broad River","Broad River"
-330,brodin,3,3as,25.78649978,-80.84957801,"Brodin","Brodin"
-332,buddha,3,3as,25.79066706,-80.85389175,"Budda","Buddha"
-3724,cabbage_bay,enp,coastal,25.619995,-81.056117,"Cabbage Bay","Cabbage Bay"
-3725,canal_junction,1,1,26.54121,-80.23359,"Canal Junction (new)","Canal Junction"
-3373,canal_north,1,1,26.56001644,-80.24960572,"Canal North,canal north,Canal N","Canal North"
-745,chac,3,3b,25.82346,-80.64074,"CHAC +2,Chac","Chac"
-3241,col2_north,1,1,26.468175,-80.240238,"col2 north,Col2north","Col2 North"
-3761,colony 14,enp,sawgrassenp,25.534335,-80.615077,"Colony 14","Colony 15"
-3726,colony13,enp,sawgrassenp,25.706599,-80.595042,"Colony 13","Colony13"
-3762,colony21,enp,coastal,25.776627,-81.185586,"Colony 21","Colony 22"
-3727,colony22,other,bigcypress,25.775631,-81.186331,"Colony 22","Colony22"
-3763,colony_uf-4,enp,sawgrassenp,25.68739,-80.695304,"Colony UF-4","Colony UF-4"
-2687,coopertown_south,enp,sawgrassenp,25.680208,-80.57183325,"NESS CE,Coopertown S.,Grossmans Ridge,Coopertown South","Coopertown South"
-1588,crossover,3,3as,25.9252,-80.835,"Crossover,CROSSOVER","Crossover"
-1589,crossover_old,3,3as,25.9398463,-80.83209604,"Crossover,Crossover Colony,crossover","Crossover Old"
-3730,cuthbert_lake,enp,coastal,25.209331,-80.775001,"Cuthbert Lake","Cuthbert Lake"
-2380,cypress_city,3,3ase,26.12392223,-80.50417714,"Cypress City,cypress city","Cypress City"
-2381,cypress_city_north,3,3ase,26.125833,-80.5075,"Cypress City","Cypress City North"
-2313,cypress_city_south,3,3ase,26.12,-80.508333,"Cypress City","Cypress City South"
-2382,cypress_city_west,3,3ase,26.125167,-80.508667,"Cypress City","Cypress City West"
-896,dalvin,3,3b,25.83991957,-80.53095195,"Dalvin","Dalvin"
-2473,davids,2,2b,26.182333,-80.348,"2b Davids","Davids"
-3731,diana,3,3b,25.85011333,-80.52234942,"Diana","Diana"
-2116,donut_east,3,3ase,26.041333,-80.539333,"DONUT","Donut East"
-1774,donuthole,3,3as,25.964667,-80.589733,"Donuthole","Donuthole"
-3238,dot,1,1,26.464444,-80.245278,"dot","Dot"
-932,draco,3,3as,25.85017062,-80.67349807,"DRACO,Draco,NA","Draco"
-2672,east_slough,enp,sawgrassenp,25.605333,-80.837333,"East Slough","East Slough"
-2544,east_square,2,2a,26.31412521,-80.33838195,"east square","East Square"
-1089,enki,3,3as,25.86856,-80.806532,"ENKI,Enki","Enki"
-1130,enlil,3,3as,25.87407201,-80.65364904,"Enlil","Enlil"
-2708,false_l67,3,3as,25.90654801,-80.60589956,"False L-67","False L67"
-1237,forseti,3,3as,25.88650457,-80.70168882,"Forseti,36,Forsetti,800","Forseti"
-2684,frank_key,other,keys,25.108333,-80.91,"Frank Key","Frank Key"
-1250,freya,3,3b,25.889177,-80.56263222,"NA,205,FREYA,Freya","Freya"
-1435,frodo,3,3as,25.9139,-80.734068,"Frodo","Frodo"
-3745,frog_city_north,enp,sawgrassenp,25.741424,-80.599634,"","Frog City North"
-2689,frog_city_south,enp,sawgrassenp,25.721167,-80.598333,"Frog City South","Frog City South"
-3732,grossman_ridge_west,enp,sawgrassenp,25.636272,-80.652754,"Grossman Ridge West","Grossman Ridge West"
-3732,grossman_willowhead,enp,sawgrassenp,25.626131,-80.645822,"Grossman Willowhead","Grossman Willowhead"
-1636,hagrid,3,3as,25.94062792,-80.59332235,"Hagrid","Hagrid"
-682,henry,3,3as,25.81912409,-80.83981923,"Henry **,HENRY,Henry","Henry"
-1634,hera,3,3as,25.93993152,-80.62295623,"Starter Melaleuca,starter_melaleuca","Hera"
-426,heron_alley,3,3b,25.7967808,-80.56185465,"3b mud canal e,3b mud canal w,Heron alley,3B SH mud canal,Heron Alley,3B mud canal east,Heron alley3,East Central Ag canal,N-S canal 3B,West Cent. Ag,West Ag Canal,HERON ALLEY","Heron Alley"
-1768,hestia,3,3b,25.95900748,-80.47898995,"Hestia","Hestia"
-57,hidden,3,3as,25.77761133,-80.83851862,"Hidden","Hidden"
-56,hidden_north,3,3as,25.775225,-80.839925,"Hidden North","Hidden North"
-2276,holiday_park,3,3ase,26.10033061,-80.45482421,"Holiday Park","Holiday Park"
-1773,horus,3,3as,25.96035998,-80.57207845,"L-67,l67,L67,L-67 (Horus),Horus","Horus"
-2180,house_camp,3,3as,26.0651367,-80.7266819,"house camp","House Camp"
-2006,jerrod,3,3as,26.00003075,-80.59513643,"Jerrod","Jerrod"
-1082,jetport,3,3as,25.86281924,-80.83873237,"Jetport","Jetport"
-3716,jetport_new,3,3as,25.84182004,-80.84296196,"64,New Jetport","Jetport New"
-515,jetport_south,3,3as,25.8051,-80.849,"South Jetport,Jetport South,Cook Stork","Jetport South"
-2016,joule,3,3as,26.01229868,-80.63095974,"Joule","Joule"
-2011,juno,3,3b,26.01347212,-80.45632524,"Mud Canal,Juno","Juno"
-2060,jupiter,3,3as,26.01536816,-80.56273529,"NA,JUPITER,Jupiter","Jupiter"
-2235,jw1,3,3as,26.0845,-80.719167,"JW1,JW2","Jw1"
-2390,jw2,3,3as,26.12247667,-80.7322901,"JW2,new","Jw2"
-2422,jw_north,3,3as,26.1420174,-80.74763206,"new,JW north,2?,Jwnew,Unknown,JW new,NA","Jw North"
-2117,kidlow,3,3as,26.04029845,-80.59991604,"KIDLOW,Kidlow","Kidlow"
-2114,kinich,3,3ase,26.0424178,-80.50309107,"KINICH,Kinich,Enlil","Kinich"
-2677,l31_south,enp,sawgrassenp,25.375,-80.575,"S end of L-31","L31 South"
-514,l_28,3,3as,25.79879183,-80.84299876,"L-28,Hidden,L-28 Hidden","L 28"
-3747,little_a,3,3as,25.77414881,-80.70215184,"","Little A"
-174,little_d,3,3as,25.77116443,-80.69301213,"Little D","Little D"
-3251,lost,1,1,26.4736665,-80.25175,"Lox 93-095,Lost","Lost"
-3760,lostmans_creek,enp,sawgrassenp,25.58723,-80.97204,"Lostmans Creek","Lostmans Creek"
-2829,lox111,1,1,26.53165609,-80.29487418,"LOX 111,LOX111,lox3,New Colony 3,lox3","Lox111"
-2852,lox111_south,1,1,26.5220585,-80.26365,"Lox 111 south","Lox111 South"
-3081,lox70,1,1,26.43630883,-80.2388845,"Lox 70,LOX70","Lox70"
-2571,lox73,1,1,26.3737609,-80.25886536,"LOX 73,lox 73,Lox73,Lox 73 / Tyr","Lox73"
-2650,lox73_north,1,1,26.3828532,-80.25541908,"lox 73 north,lox 73 north 2","Lox73 North"
-2632,lox73_out,1,1,26.3775,-80.261,"LOX 73","Lox73 Out"
-3196,lox93_052,1,1,26.46,-80.373333,"Lox 93-052","Lox93 052"
-3039,lox99,1,1,26.43795536,-80.39053094,"Lox 99,LOX 99,Lox99","Lox99"
-3734,lox_nc1,1,1,26.55308182,-80.25180457,"LoxNC1,yew_south,cook_nc1,YEW south,Cook NC1,yew_south,cook_nc1","Lox Nc1"
-3735,lox_nc4,1,1,26.5328,-80.2762,"LoxNC4,cook_nc4,Cook NC4,cook_nc4","Lox Nc4"
-2720,lox_north_point,1,1,26.678333,-80.372333,"lox north point","Lox North Point"
-2929,lox_ramp,1,1,26.49541725,-80.22458667,"LOXRAMP,Lox Ramp,LOX ramp,LoxRamp,Lox Ramp/011","Lox Ramp"
-2727,lox_west,1,1,26.54991992,-80.44268574,"Lox West,LOX West,LOX west,LoxWest","Lox West"
-3672,lucky13,3,3as,25.89323336,-80.8397393,"13,lucky13","Lucky13"
-1760,lumpy,3,3as,25.95359772,-80.65351653,"Lumpy","Lumpy"
-2414,melaleuca,3,3as,26.129667,-80.679,"2B Melaleuca","Melaleuca"
-2480,melaleuca_2b,2,2b,26.16369183,-80.34672736,"2B Melaleuca","Melaleuca 2b"
-2106,mitten,3,3as,26.03355955,-80.69076312,"mitten","Mitten"
-2168,mitten_north,3,3as,26.05685039,-80.67574656,"mitten north","Mitten North"
-1946,mud_canal_south,3,3b,25.993333,-80.460833,"Mud Canal South,Mud Canal S.","Mud Canal South"
-422,mud_east,3,3b,25.798275,-80.4928,"3B Mud East,3b Mud East","Mud East"
-2274,nanse,3,3ase,26.10469265,-80.49729765,"Andytown,Nanse","Nanse"
-2824,nc4,1,1,26.52869494,-80.26955727,"","Nc4"
-2396,north_3a,3,3as,26.122367,-80.781933,"North 3A","North 3a"
-2427,nw_canal,3,3an,26.19605,-80.824883,"NW Canal","Nw Canal"
-2407,odin,3,3as,26.13113921,-80.70169027,"Odin","Odin"
-2449,oil_can,3,3an,26.15751773,-80.4852551,"Oil Can,3704,new,3704","Oil Can"
-2491,opus,2,2b,26.14479398,-80.39009059,"Opus","Opus"
-3737,otter_creek,enp,coastal,25.467803,-80.937717,"Otter Creek","Otter Creek"
-2859,outer_lox111_south,1,1,26.51725,-80.26375,"Lox 111 ?","Outer Lox111 South"
-2085,outside_cypress,3,3as,26.03997468,-80.82900501,"outside cypress","Outside Cypress"
-2681,paurotis_pond,enp,sawgrassenp,25.262722,-80.81211033,"Paurotis Pond","Paurotis Pond"
-1523,pocket,3,3b,25.92341386,-80.51857941,"pocket,NA,Pocket","Pocket"
-1867,pocket_willow,3,3b,25.97521772,-80.52689009,"Pocket willow,Pocket Willow","Pocket Willow"
-2664,preserve_pond_apple,other,bigcypress,25.675167,-80.931167,"Preserve pond apple","Preserve Pond Apple"
-3020,race_track,1,1,26.42405974,-80.24313102,"race track","Race Track"
-2430,restin,3,3an,26.21368783,-80.81460723,"ROTOR,Restin (WP 131)","Restin"
-2525,rhea,2,2a,26.23779014,-80.31280335,"2A SE mel west,2a SE Mel,RHEA,Rhea,new_may,2a SE,New 1 May 18,New 1 18 may,New 1 18 May,new_may","Rhea"
-2598,ring,1,1,26.3695915,-80.30057075,"Ring","Ring"
-3312,river,1,1,26.4811684,-80.2415417,"river","River"
-3245,river_south,1,1,26.47502767,-80.2462225,"River south,River South","River South"
-2701,rodgers_river_bay,enp,coastal,25.55000067,-81.056612,"RRbay,Rodgers River Bay,Rodgers River Bay Large Island","Rodgers River Bay"
-3738,rookery_branch,enp,coastal,25.463561,-80.852558,"Rookery Branch","Rookery Branch"
-2528,seti,2,2a,26.24784794,-80.32407881,"Seti","Seti"
-3739,shamash,2,2a,26.24561676,-80.43234,"Shamash","Shamash"
-3709,shark_river_slough,enp,coastal,25.3109,-80.859317,"New 2021, SW Shark River Slough, 3709","3709"
-3740,shark_valley,enp,sawgrassenp,25.655808,-80.766403,"Shark Valley Observation Tower","Shark Valley"
-2524,shiva,2,2a,26.24332077,-80.35071835,"Shiva","Shiva"
-2441,spoonie,3,3an,26.24576235,-80.49299742,"SPOONIE","Spoonie"
-1647,start_mel,3,3as,25.94806102,-80.63816162,"Starter Mel 2,Start Mel,3936,Mel,3696","Start Mel"
-2690,tamiami_east,enp,sawgrassenp,25.758028,-80.508506,"Tamiami East,TTE","Tamiami East"
-2691,tamiami_west,enp,sawgrassenp,25.756883,-80.544996,"Tamiami West,TTW","Tamiami West"
-1513,tiny,3,3as,25.917833,-80.6655,"tiny","Tiny"
-2566,tyche,1,1,26.36837411,-80.25431913,"TYCHE,Tyche","Tyche"
-2574,tyger,1,1,26.37284175,-80.26622854,"Tyger","Tyger"
-2651,tyger_north,1,1,26.38392872,-80.2661184,"Tyger North","Tyger North"
-2573,tyger_south,1,1,26.371867,-80.265967,"TYGER","Tyger South"
-2649,untew,1,1,26.38683328,-80.23964464,"UNTEW","Untew"
-2609,utu,1,1,26.37186937,-80.31037834,"Utu,UTU","Utu"
-3741,uweta,1,1,26.3,-80.3122,"Uweta","Uweta"
-2961,uzed,1,1,26.39212147,-80.31227316,"UZED","Uzed"
-2953,uzume,1,1,26.39385314,-80.33869007,"Uzume","Uzume"
-2707,vacation,3,3as,25.9154794,-80.63022321,"Vacation","Vacation"
-2965,venus,1,1,26.3988056,-80.24991284,"Venus","Venus"
-3168,vesta,1,1,26.4585959,-80.24010618,"NEWCOL2,NEW COL2,Newcol 2,New Colony 2,newcol2","Vesta"
-3225,vishnu,1,1,26.45935465,-80.35453696,"VISHNU","Vishnu"
-3136,volta,1,1,26.450103,-80.26303091,"Volta","Volta"
-3205,vulcan,1,1,26.45952552,-80.42312934,"NA,VULCAN","Vulcan"
-2061,vulture,3,3as,26.02544389,-80.53904168,"Holiday Trail So.,NA,Donut,Vulture","Vulture"
-2943,weldon,1,1,26.49119714,-80.26720671,"Weldon","Weldon"
-2921,weldon_north,1,1,26.50929175,-80.25925,"Weldon North","Weldon North"
-3255,weldon_south,1,1,26.4731665,-80.26725,"Weldon South","Weldon South"
-3221,welt,1,1,26.46826801,-80.37231375,"Welt","Welt"
-2546,west_square,2,2a,26.31400444,-80.34156856,"west square","West Square"
-2474,willow_mel,2,2b,26.17542039,-80.334794,"2b melaleuca,2b willow/mel, 2b willow/melaleuca","Willow Mel"
-3742,wp437,other,bigcypress,25.67417,-80.91361,"WP 437","Wp437"
-3743,wp440,other,bigcypress,25.631338,-80.988318,"WP 440","Wp440"
-3744,yamir,1,1,26.57228,-80.2722,"Yamir,2772,3699","Yamir"
-2806,yew,1,1,26.55730144,-80.25869503,"YEW,Yew","Yew"
-726,yonteau,3,3as,25.82028001,-80.67691241,"Yonteau,295,299,301","Yonteau"
-2732,zulu,1,1,26.5969,-80.2862,"ZULU,Zulu","Zulu"
+group_id,colony,region,subregion,latitude,longitude,aka,display_name
+3670,10,1,1,26.47544,-80.28161,10,10
+3753,102,2,,26.2830658,-80.4565018,,102
+3686,103,1,1,26.50638,-80.3309,103,103
+3756,104_56,1,,26.5571383,-80.2766835,,104_56
+3754,105,1,,26.5595003,-80.2840501,,105
+1083,1083,3,3as,25.861183,-80.837233,,1083
+1088,1088,3,3as,25.870333,-80.8065,,1088
+1092,1092,3,3as,25.86737,-80.80476,Colony 138,1092
+1093,1093,3,3as,25.866667,-80.8,,1093
+1096,1096,3,3as,25.871,-80.802,,1096
+3671,10_2,1,1,26.47807,-80.28207,10,10
+3758,1106,3,,25.97012803,-80.71734399,,1106
+3765,113,1,1,26.579465,-80.263294,,113
+3769,115,1,1,26.591677,-80.274291,,115
+3764,116,1,1,26.621988,-80.315339,,116
+3759,1181,3,,25.970175,-80.774804,,1181
+1258,1258,3,3b,25.891167,-80.5025,206,1258
+1477,1309,3,3as,25.92199101,-80.79357698,,1309
+1351,1351,3,3as,25.90268,-80.73972,14,1351
+1380,1380,3,3as,25.906,-80.609,new,1380
+3767,1461,3,3as,25.968325,-80.761956,,1461
+1474,1474,3,3as,25.9225,-80.83,unknown,1474
+1482,1482,3,3as,25.91823,-80.77337,839,1482
+1886,1573,3,3as,25.978435,-80.74204001,,1573
+1632,1632,3,3as,25.935,-80.625,,1632
+1652,1652,3,3as,25.945,-80.659167,,1652
+3751,18,3,,25.770234,-80.724434,,18
+1824,1824,3,3as,25.97418596,-80.77247998,"3688, 1379",1824
+1844,1844,3,3as,25.97065268,-80.70106731,"90,NA",1844
+1882,1882,3,3as,25.97833,-80.73566,,1882
+1888,1888,3,3as,25.98047398,-80.756621,"3692, 1470",1888
+3687,192,1,1,26.47655,-80.28165,192,192
+1932,1932,3,3as,25.986817,-80.6953,,1932
+1980,1980,3,3as,26.0045,-80.81985,,1980
+2013,2013,3,3as,26.008,-80.539333,54,2013
+2049,2049,3,3as,26.018067,-80.692167,,2049
+2092,2092,3,3as,26.037717,-80.761917,,2092
+2147,2147,3,3as,26.04075,-80.813167,,2147
+2169,2169,3,3as,26.050333,-80.67,37,2169
+2172,2172,3,3as,26.049,-80.616667,Unknown,2172
+218,218,3,3b,25.780833,-80.6545,362,218
+2191,2191,3,3as,26.07105,-80.807467,1999,2191
+2282,2282,3,3as,26.11158296,-80.66166347,,2282
+2289,2289,3,3as,26.11035,-80.723883,,2289
+2307,2307,3,3as,26.11552362,-80.65942169,"NA,9",2307
+2309,2309,3,3as,26.123167,-80.654833,,2309
+2389,2389,3,3as,26.127817,-80.7244,,2389
+2397,2397,3,3as,26.136667,-80.83,,2397
+2418,2418,3,3ase,26.14,-80.596667,new,2418
+2419,2419,3,3ase,26.141667,-80.62,new,2419
+2428,2428,3,3an,26.2275,-80.803,western 3aN,2428
+2477,2477,2,2b,26.182167,-80.3295,,2477
+2482,2482,2,2b,26.1789,-80.32265,2B,2482
+2485,2485,2,2b,26.191667,-80.308333,2B corner,2485
+2487,2487,2,2b,26.1885,-80.307167,2B corner,2487
+2495,2495,2,2a,26.33,-80.501167,Unknown,2495
+2532,2532,2,2a,26.246767,-80.327767,,2532
+2549,2549,2,2a,26.342,-80.439333,new,2549
+2552,2552,2,2a,26.35,-80.400333,1,2552
+2554,2554,2,2a,26.356,-80.395,3,2554
+2567,2567,1,1,26.367933,-80.258017,,2567
+2568,2568,1,1,26.369683,-80.257917,,2568
+2585,2585,1,1,26.372917,-80.291783,,2585
+2617,2617,1,1,26.375,-80.313333,10,2617
+2629,2629,1,1,26.378667,-80.275833,94086,2629
+2635,2635,1,1,26.379833,-80.260167,,2635
+2647,2647,1,1,26.38025494,-80.25062412,"12,NA",2647
+2662,2662,other,urban,25.830667,-80.352333,,2662
+2722,2722,1,1,26.635833,-80.410833,,2722
+2753,2753,1,1,26.491333,-80.44,,2753
+2756,2756,1,1,26.527333,-80.438667,,2756
+2759,2759,1,1,26.525367,-80.43525,,2759
+2804,2804,1,1,26.5546,-80.265067,,2804
+2812,2812,1,1,26.550333,-80.2508335,,2812
+2838,2838,1,1,26.5245,-80.352667,,2838
+2850,2850,1,1,26.530567,-80.266283,Lox 111,2850
+2851,2851,1,1,26.523017,-80.266383,,2851
+2853,2853,1,1,26.522778,-80.253056,94061,2853
+2932,2932,1,1,26.5005,-80.263,LOX 111,2932
+2968,2968,1,1,26.39503613,-80.24735063,Venus,2968
+2719,2b_mel,2,2b,26.129667,-80.345667,2B Mel,2b Mel
+2489,2b_south_end,2,2b,26.14559499,-80.38101257,2b south end,2b South End
+3006,3006,1,1,26.412889,-80.26,94083,3006
+3012,3012,1,1,26.417,-80.2415,95012,3012
+3106,3106,1,1,26.448889,-80.394167,94038,3106
+3125,3125,1,1,26.44641,-80.33779,New 3 FEB 21,3125
+3134,3134,1,1,26.450556,-80.276944,94009,3134
+3142,3142,1,1,26.445167,-80.258833,95010,3142
+3145,3145,1,1,26.4445,-80.255,36,3145
+3178,3178,1,1,26.453833,-80.262833,,3178
+3196,3196,1,1,26.458667,-80.373833,,3196
+3673,32,3,3an,26.22918,-80.80352,3,32
+3235,3235,1,1,26.46665,-80.252183,66,3235
+3240,3240,1,1,26.467778,-80.244444,94077,3240
+3310,3310,1,1,26.481,-80.246167,96075,3310
+3311,3311,1,1,26.480556,-80.247222,94002,3311
+3369,3369,1,1,26.4795,-80.371667,,3369
+3400,3400,other,urban,26.3755,-80.2255,,3400
+3417,3417,3,3as,25.974833,-80.696833,,3417
+3430,3430,3,3as,25.828333,-80.6772,,3430
+3455,3455,1,1,26.515,-80.2625,,3455
+3456,3456,1,1,26.486833,-80.222333,,3456
+3628,3628,3,3as,25.874726,-80.823856,75,3628
+3664,3664,1,1,26.55895,-80.28352,194,3664
+3665,3665,1,1,26.62441,-80.32439,"188, 3665, 112",3665
+3667,3667,1,1,26.55607,-80.27551,193,3667
+3698,3698,1,1,26.61839,-80.30578,NO  NAME (S OF sta-1E),3698
+3700,3700,1,1,26.61059,-80.29449,NO NAME,3700
+3702,3702,1,1,26.46806,-80.27889,new,3702
+3705,3705,1,1,26.423,-80.31,new,3705
+3706,3706,2,2b,26.19038,-80.39236,new,3706
+3707,3707,2,2a,26.2478,-80.436,new,3707
+3710,3710,enp,sawgrassenp,25.3036,-80.631024,"New 2021, Vulture Roost colony",3710
+3712,3712,enp,sawgrassenp,25.687637,-80.695277,New colony 2021,3712
+3713,3713,enp,coastal,25.51,-80.91,New colony 2021,3713
+3714,3714,enp,sawgrassenp,25.689184,-80.697903,New colony 2021,3714
+3715,3715,enp,sawgrassenp,25.604455,-80.547223,New colony 2021,3715
+3717,38_185,1,1,26.44892,-80.24226,"38/185, 38, 185",38 185
+3746,3b_boat_ramp,3,3b,25.77920649,-80.50961613,"3b Boat Ramp, 3b Ramp 80,3b Ramp",3b Boat Ramp
+3675,42,1,1,26.42186,-80.30663,42,42
+3749,43,1,,26.51123,-80.43767,,43
+3748,47,3,,26.012208,-80.608635,,47
+483,483,3,3as,25.798333,-80.762667,Unknown,483
+3693,485,3,3as,25.92521,-80.77935,485,485
+3694,487,3,3as,25.93637897,-80.78195798,"487, 1361",487
+58,58,3,3as,25.77328,-80.833385,163,58
+3766,610,3,3as,25.76339099,-80.81530002,,610
+3668,63,1,1,26.61685605,-80.30663269,,63
+2383,6th_bridge,3,3ase,26.12376586,-80.54149724,"6th Bridge,6th bridge",6th Bridge
+2279,6th_bridge_south,3,3ase,26.108333,-80.541667,6th Bridge south,6th Bridge South
+719,719,3,3as,25.82211,-80.68362,New 2 MAR 21,719
+3750,72,3,,25.8819533,-80.5975774,,72
+3768,77,1,1,26.564815,-80.248118,,77
+3669,8,2,2b,26.13853,-80.36901,8,8
+899,899,3,3b,25.838333,-80.5255,Unknown,899
+3757,962,3,,25.96063997,-80.75135498,,962
+968,968,3,3as,25.853233,-80.838717,,968
+3755,98,3,,25.9800583,-80.7566797,,98
+3752,99,3,,25.9753243,-80.6257803,,99
+162,aerie,3,3as,25.77156696,-80.70872846,Aerie,Aerie
+2453,alley_north,3,3an,26.20129687,-80.52873259,Alley North,Alley North
+3721,alligator_bay,enp,coastal,25.670989,-81.147138,Alligator Bay,Alligator Bay
+2426,andrews,3,3an,26.239667,-80.761167,Andrew's,Andrews
+2315,andytown_north,3,3ase,26.11446883,-80.49135483,Andytown,Andytown North
+3736,andytown_willow,3,3ase,26.101,-80.489,Andytown East Willow,Andytown Willow
+217,auster,3,3b,25.77976922,-80.61312139,"AUSTER,Austere",Auster
+2700,big_cypress,other,bigcypress,25.822833,-80.863167,Big Cypr col,Big Cypress
+3722,big_mel,3,3as,26.04582189,-80.62585685,"Big Mel, Big Melaleuca",Big Mel
+2717,big_mel_old,3,3as,26.054833,-80.6255,Big Meleleuca,Big Mel Old
+1094,big_pond,3,3as,25.865478,-80.803227,Big Pond,Big Pond
+221,brahma,3,3as,25.78156672,-80.68860687,"BRAHMA,Brahma",Brahma
+3723,broad_river,enp,coastal,25.502924,-80.974397,Broad River,Broad River
+330,brodin,3,3as,25.78649978,-80.84957801,Brodin,Brodin
+332,buddha,3,3as,25.79066706,-80.85389175,Budda,Buddha
+3724,cabbage_bay,enp,coastal,25.619995,-81.056117,Cabbage Bay,Cabbage Bay
+3725,canal_junction,1,1,26.54121,-80.23359,Canal Junction (new),Canal Junction
+3373,canal_north,1,1,26.56001644,-80.24960572,"Canal North,canal north,Canal N",Canal North
+745,chac,3,3b,25.82346,-80.64074,"CHAC +2,Chac",Chac
+3241,col2_north,1,1,26.468175,-80.240238,"col2 north,Col2north",Col2 North
+3726,colony13,enp,sawgrassenp,25.706599,-80.595042,Colony 13,Colony13
+3761,colony14,enp,sawgrassenp,25.534335,-80.615077,Colony 14,Colony 15
+3762,colony21,enp,coastal,25.776627,-81.185586,Colony 21,Colony 22
+3727,colony22,other,bigcypress,25.775631,-81.186331,Colony 22,Colony22
+3763,colony_uf-4,enp,sawgrassenp,25.68739,-80.695304,Colony UF-4,Colony UF-4
+2687,coopertown_south,enp,sawgrassenp,25.680208,-80.57183325,"NESS CE,Coopertown S.,Grossmans Ridge,Coopertown South",Coopertown South
+1588,crossover,3,3as,25.9252,-80.835,"Crossover,CROSSOVER",Crossover
+1589,crossover_old,3,3as,25.9398463,-80.83209604,"Crossover,Crossover Colony,crossover",Crossover Old
+3730,cuthbert_lake,enp,coastal,25.209331,-80.775001,Cuthbert Lake,Cuthbert Lake
+2380,cypress_city,3,3ase,26.12392223,-80.50417714,"Cypress City,cypress city",Cypress City
+2381,cypress_city_north,3,3ase,26.125833,-80.5075,Cypress City,Cypress City North
+2313,cypress_city_south,3,3ase,26.12,-80.508333,Cypress City,Cypress City South
+2382,cypress_city_west,3,3ase,26.125167,-80.508667,Cypress City,Cypress City West
+896,dalvin,3,3b,25.83991957,-80.53095195,Dalvin,Dalvin
+2473,davids,2,2b,26.182333,-80.348,2b Davids,Davids
+3731,diana,3,3b,25.85011333,-80.52234942,Diana,Diana
+2116,donut_east,3,3ase,26.041333,-80.539333,DONUT,Donut East
+1774,donuthole,3,3as,25.964667,-80.589733,Donuthole,Donuthole
+3238,dot,1,1,26.464444,-80.245278,dot,Dot
+932,draco,3,3as,25.85017062,-80.67349807,"DRACO,Draco,NA",Draco
+2672,east_slough,enp,sawgrassenp,25.605333,-80.837333,East Slough,East Slough
+2544,east_square,2,2a,26.31412521,-80.33838195,east square,East Square
+1089,enki,3,3as,25.86856,-80.806532,"ENKI,Enki",Enki
+1130,enlil,3,3as,25.87407201,-80.65364904,Enlil,Enlil
+2708,false_l67,3,3as,25.90654801,-80.60589956,False L-67,False L67
+1237,forseti,3,3as,25.88650457,-80.70168882,"Forseti,36,Forsetti,800",Forseti
+2684,frank_key,other,keys,25.108333,-80.91,Frank Key,Frank Key
+1250,freya,3,3b,25.889177,-80.56263222,"NA,205,FREYA,Freya",Freya
+1435,frodo,3,3as,25.9139,-80.734068,Frodo,Frodo
+3745,frog_city_north,enp,sawgrassenp,25.741424,-80.599634,,Frog City North
+2689,frog_city_south,enp,sawgrassenp,25.721167,-80.598333,Frog City South,Frog City South
+3732,grossman_ridge_west,enp,sawgrassenp,25.636272,-80.652754,Grossman Ridge West,Grossman Ridge West
+3732,grossman_willowhead,enp,sawgrassenp,25.626131,-80.645822,Grossman Willowhead,Grossman Willowhead
+1636,hagrid,3,3as,25.94062792,-80.59332235,Hagrid,Hagrid
+682,henry,3,3as,25.81912409,-80.83981923,"Henry **,HENRY,Henry",Henry
+1634,hera,3,3as,25.93993152,-80.62295623,"Starter Melaleuca,starter_melaleuca",Hera
+426,heron_alley,3,3b,25.7967808,-80.56185465,"3b mud canal e,3b mud canal w,Heron alley,3B SH mud canal,Heron Alley,3B mud canal east,Heron alley3,East Central Ag canal,N-S canal 3B,West Cent. Ag,West Ag Canal,HERON ALLEY",Heron Alley
+1768,hestia,3,3b,25.95900748,-80.47898995,Hestia,Hestia
+57,hidden,3,3as,25.77761133,-80.83851862,Hidden,Hidden
+56,hidden_north,3,3as,25.775225,-80.839925,Hidden North,Hidden North
+2276,holiday_park,3,3ase,26.10033061,-80.45482421,Holiday Park,Holiday Park
+1773,horus,3,3as,25.96035998,-80.57207845,"L-67,l67,L67,L-67 (Horus),Horus",Horus
+2180,house_camp,3,3as,26.0651367,-80.7266819,house camp,House Camp
+2006,jerrod,3,3as,26.00003075,-80.59513643,Jerrod,Jerrod
+1082,jetport,3,3as,25.86281924,-80.83873237,Jetport,Jetport
+3716,jetport_new,3,3as,25.84182004,-80.84296196,"64,New Jetport",Jetport New
+515,jetport_south,3,3as,25.8051,-80.849,"South Jetport,Jetport South,Cook Stork",Jetport South
+2016,joule,3,3as,26.01229868,-80.63095974,Joule,Joule
+2011,juno,3,3b,26.01347212,-80.45632524,"Mud Canal,Juno",Juno
+2060,jupiter,3,3as,26.01536816,-80.56273529,"NA,JUPITER,Jupiter",Jupiter
+2235,jw1,3,3as,26.0845,-80.719167,"JW1,JW2",Jw1
+2390,jw2,3,3as,26.12247667,-80.7322901,"JW2,new",Jw2
+2422,jw_north,3,3as,26.1420174,-80.74763206,"new,JW north,2?,Jwnew,Unknown,JW new,NA",Jw North
+2117,kidlow,3,3as,26.04029845,-80.59991604,"KIDLOW,Kidlow",Kidlow
+2114,kinich,3,3ase,26.0424178,-80.50309107,"KINICH,Kinich,Enlil",Kinich
+2677,l31_south,enp,sawgrassenp,25.375,-80.575,S end of L-31,L31 South
+514,l_28,3,3as,25.79879183,-80.84299876,"L-28,Hidden,L-28 Hidden",L 28
+3747,little_a,3,3as,25.77414881,-80.70215184,littlea_littled,Little A
+174,little_d,3,3as,25.77116443,-80.69301213,Little D,Little D
+3251,lost,1,1,26.4736665,-80.25175,"Lox 93-095,Lost",Lost
+3760,lostmans_creek,enp,sawgrassenp,25.58723,-80.97204,Lostmans Creek,Lostmans Creek
+2829,lox111,1,1,26.53165609,-80.29487418,"LOX 111,LOX111,lox3,New Colony 3,lox3",Lox111
+2852,lox111_south,1,1,26.5220585,-80.26365,Lox 111 south,Lox111 South
+3081,lox70,1,1,26.43630883,-80.2388845,"Lox 70,LOX70",Lox70
+2571,lox73,1,1,26.3737609,-80.25886536,"LOX 73,lox 73,Lox73,Lox 73 / Tyr",Lox73
+2650,lox73_north,1,1,26.3828532,-80.25541908,"lox 73 north,lox 73 north 2",Lox73 North
+2632,lox73_out,1,1,26.3775,-80.261,LOX 73,Lox73 Out
+3196,lox93_052,1,1,26.46,-80.373333,Lox 93-052,Lox93 052
+3039,lox99,1,1,26.43795536,-80.39053094,"Lox 99,LOX 99,Lox99",Lox99
+3734,lox_nc1,1,1,26.55308182,-80.25180457,"LoxNC1,yew_south,cook_nc1,YEW south,Cook NC1,yew_south,cook_nc1",Lox Nc1
+3735,lox_nc4,1,1,26.5328,-80.2762,"LoxNC4,cook_nc4,Cook NC4,cook_nc4",Lox Nc4
+2720,lox_north_point,1,1,26.678333,-80.372333,lox north point,Lox North Point
+2929,lox_ramp,1,1,26.49541725,-80.22458667,"LOXRAMP,Lox Ramp,LOX ramp,LoxRamp,Lox Ramp/011",Lox Ramp
+2727,lox_west,1,1,26.54991992,-80.44268574,"Lox West,LOX West,LOX west,LoxWest",Lox West
+3672,lucky13,3,3as,25.89323336,-80.8397393,"13,lucky13",Lucky13
+1760,lumpy,3,3as,25.95359772,-80.65351653,Lumpy,Lumpy
+2414,melaleuca,3,3as,26.129667,-80.679,2B Melaleuca,Melaleuca
+2480,melaleuca_2b,2,2b,26.16369183,-80.34672736,2B Melaleuca,Melaleuca 2b
+2106,mitten,3,3as,26.03355955,-80.69076312,mitten,Mitten
+2168,mitten_north,3,3as,26.05685039,-80.67574656,mitten north,Mitten North
+1946,mud_canal_south,3,3b,25.993333,-80.460833,"Mud Canal South,Mud Canal S.",Mud Canal South
+422,mud_east,3,3b,25.798275,-80.4928,"3B Mud East,3b Mud East",Mud East
+2274,nanse,3,3ase,26.10469265,-80.49729765,"Andytown,Nanse",Nanse
+2824,nc4,1,1,26.52869494,-80.26955727,,Nc4
+2396,north_3a,3,3as,26.122367,-80.781933,North 3A,North 3a
+2427,nw_canal,3,3an,26.19605,-80.824883,NW Canal,Nw Canal
+2407,odin,3,3as,26.13113921,-80.70169027,Odin,Odin
+2449,oil_can,3,3an,26.15751773,-80.4852551,"Oil Can,3704,new,3704",Oil Can
+2491,opus,2,2b,26.14479398,-80.39009059,Opus,Opus
+3737,otter_creek,enp,coastal,25.467803,-80.937717,Otter Creek,Otter Creek
+2859,outer_lox111_south,1,1,26.51725,-80.26375,"Lox 111 ?, Outer Lox111 South, Lox 11",Outer Lox111 South
+2085,outside_cypress,3,3as,26.03997468,-80.82900501,outside cypress,Outside Cypress
+2681,paurotis_pond,enp,sawgrassenp,25.262722,-80.81211033,Paurotis Pond,Paurotis Pond
+1523,pocket,3,3b,25.92341386,-80.51857941,"pocket,NA,Pocket",Pocket
+1867,pocket_willow,3,3b,25.97521772,-80.52689009,"Pocket willow,Pocket Willow",Pocket Willow
+2664,preserve_pond_apple,other,bigcypress,25.675167,-80.931167,Preserve pond apple,Preserve Pond Apple
+3020,race_track,1,1,26.42405974,-80.24313102,race track,Race Track
+2430,restin,3,3an,26.21368783,-80.81460723,"ROTOR,Restin (WP 131)",Restin
+2525,rhea,2,2a,26.23779014,-80.31280335,"2A SE mel west,2a SE Mel,RHEA,Rhea,new_may,2a SE,New 1 May 18,New 1 18 may,New 1 18 May,new_may",Rhea
+2598,ring,1,1,26.3695915,-80.30057075,Ring,Ring
+3312,river,1,1,26.4811684,-80.2415417,river,River
+3245,river_south,1,1,26.47502767,-80.2462225,"River south,River South",River South
+2701,rodgers_river_bay,enp,coastal,25.55000067,-81.056612,"RRbay,Rodgers River Bay,Rodgers River Bay Large Island",Rodgers River Bay
+3738,rookery_branch,enp,coastal,25.463561,-80.852558,Rookery Branch,Rookery Branch
+2528,seti,2,2a,26.24784794,-80.32407881,Seti,Seti
+3739,shamash,2,2a,26.24561676,-80.43234,Shamash,Shamash
+3709,shark_river_slough,enp,coastal,25.3109,-80.859317,"New 2021, SW Shark River Slough, 3709, Shark River Slough SE",Shark River Slough
+3740,shark_valley,enp,sawgrassenp,25.655808,-80.766403,"Shark Valley Observation Tower, 3740",Shark Valley
+3708,shark_valley_tram,enp,sawgrassenp,25.720225,-80.768942,"New 2021, Shark Valley Tram Road NW, 3708",Shark Valley Tram
+2524,shiva,2,2a,26.24332077,-80.35071835,Shiva,Shiva
+2441,spoonie,3,3an,26.24576235,-80.49299742,SPOONIE,Spoonie
+1647,start_mel,3,3as,25.94806102,-80.63816162,"Starter Mel 2,Start Mel,3936,Mel,3696",Start Mel
+2690,tamiami_east,enp,sawgrassenp,25.758028,-80.508506,"Tamiami East,TTE",Tamiami East
+2691,tamiami_west,enp,sawgrassenp,25.756883,-80.544996,"Tamiami West,TTW",Tamiami West
+1513,tiny,3,3as,25.917833,-80.6655,tiny,Tiny
+2566,tyche,1,1,26.36837411,-80.25431913,"TYCHE,Tyche",Tyche
+2574,tyger,1,1,26.37284175,-80.26622854,Tyger,Tyger
+2651,tyger_north,1,1,26.38392872,-80.2661184,Tyger North,Tyger North
+2573,tyger_south,1,1,26.371867,-80.265967,TYGER,Tyger South
+2649,untew,1,1,26.38683328,-80.23964464,UNTEW,Untew
+2609,utu,1,1,26.37186937,-80.31037834,"Utu,UTU",Utu
+3741,uweta,1,1,26.3,-80.3122,Uweta,Uweta
+2961,uzed,1,1,26.39212147,-80.31227316,UZED,Uzed
+2953,uzume,1,1,26.39385314,-80.33869007,Uzume,Uzume
+2707,vacation,3,3as,25.9154794,-80.63022321,Vacation,Vacation
+2965,venus,1,1,26.3988056,-80.24991284,Venus,Venus
+3168,vesta,1,1,26.4585959,-80.24010618,"NEWCOL2,NEW COL2,Newcol 2,New Colony 2,newcol2",Vesta
+3225,vishnu,1,1,26.45935465,-80.35453696,VISHNU,Vishnu
+3136,volta,1,1,26.450103,-80.26303091,Volta,Volta
+3205,vulcan,1,1,26.45952552,-80.42312934,"NA,VULCAN",Vulcan
+2061,vulture,3,3as,26.02544389,-80.53904168,"Holiday Trail So.,NA,Donut,Vulture",Vulture
+2943,weldon,1,1,26.49119714,-80.26720671,Weldon,Weldon
+2921,weldon_north,1,1,26.50929175,-80.25925,Weldon North,Weldon North
+3255,weldon_south,1,1,26.4731665,-80.26725,Weldon South,Weldon South
+3221,welt,1,1,26.46826801,-80.37231375,Welt,Welt
+2546,west_square,2,2a,26.31400444,-80.34156856,west square,West Square
+2474,willow_mel,2,2b,26.17542039,-80.334794,"2b melaleuca,2b willow/mel, 2b willow/melaleuca",Willow Mel
+3742,wp437,other,bigcypress,25.67417,-80.91361,WP 437,Wp437
+3743,wp440,other,bigcypress,25.631338,-80.988318,WP 440,Wp440
+3744,yamir,1,1,26.57228,-80.2722,"Yamir,2772,3699",Yamir
+2806,yew,1,1,26.55730144,-80.25869503,"YEW,Yew",Yew
+726,yonteau,3,3as,25.82028001,-80.67691241,"Yonteau,295,299,301",Yonteau
+2732,zulu,1,1,26.5969,-80.2862,"ZULU,Zulu",Zulu

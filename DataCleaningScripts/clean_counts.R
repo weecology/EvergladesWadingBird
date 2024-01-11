@@ -9,6 +9,9 @@
 #'
 #' Reads count data from original excel files, reshapes from wide (dates as cols) to long format,
 #' corrects data format errors, appends to long timeseries file
+#' 
+#' data_path <- "../Dropbox (UFL)/Everglades/2023 Data/2023 Final Report Work/SFWMD Report_Table_2023.xlsx"
+#' year <- 2023
 clean_count_data <- function(data_path, year) {
   
   colonies <- read.csv("SiteandMethods/colonies.csv")
@@ -16,8 +19,8 @@ clean_count_data <- function(data_path, year) {
   
   tab_names <- readxl::excel_sheets(path = data_path)
   
-  data_raw <- readxl::read_excel(path = data_path, sheet = "counts", 
-                                 col_names = TRUE, col_types = "text") %>%
+  data_raw <- readxl::read_excel(path = data_path, sheet = "Appendix", 
+                                 col_names = TRUE, col_types = "text", skip=1) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::rename(smda="unid. small dark.") %>%
     dplyr::rename(smwh="unid. small white") %>%
@@ -28,7 +31,7 @@ clean_count_data <- function(data_path, year) {
                   colony = replace(colony, colony=="63_no_name", "63"),
                   colony = replace(colony, colony=="71_canal_junction", "canal_junction"),
                   colony = replace(colony, colony=="78_canal_north", "canal_north"),
-                  colony = replace(colony, colony=="3b_ramp_80", "3b_boat_ramp"),
+                  colony = replace(colony, colony %in% c("3b_ramp_80","3b_ramp"), "3b_boat_ramp"),
                   colony = replace(colony, colony=="89_venus", "venus"),
                   colony = replace(colony, colony=="austere", "auster"),
                   colony = replace(colony, colony=="cooklox11", "lox111"),
@@ -37,34 +40,37 @@ clean_count_data <- function(data_path, year) {
                   colony = replace(colony, colony=="jetport_new_64", "jetport_new"),
                   colony = replace(colony, colony=="loxwest", "lox_west"),
                   colony = replace(colony, colony=="loxramp_011", "lox_ramp"),
-                  colony = replace(colony, colony=="tyr_lox73", "lox73"),
+                  colony = replace(colony, colony %in% c("tyr_lox73","tyr"), "lox73"),
                   colony = replace(colony, colony=="vulture_007", "vulture"),
                   colony = replace(colony, colony=="1219_draco", "draco"),
                   colony = replace(colony, colony=="990_frodo", "frodo"),
                   colony = replace(colony, colony=="38", "38_185"),
-                  colony = replace(colony, colony=="51", "juno")) %>%
+                  colony = replace(colony, colony=="51", "juno"),
+                  colony = replace(colony, colony=="lox11", "outer_lox111_south"),
+                  colony = replace(colony, colony=="little_d_little_a", "little_a"),
+                  colony = replace(colony, colony=="112", "3665"),
+                  colony = replace(colony, colony=="1362", "487"),
+                  colony = replace(colony, colony=="1470", "1888"),
+                  colony = replace(colony, colony=="1379", "1824"),
+                  colony = replace(colony, colony=="14", "1351")) %>%
     dplyr::left_join(colonies[,1:2], by = dplyr::join_by(colony))
   
-  new_colonies <- data_raw[-which(data_raw$colony %in% colonies$colony),] %>%
-    dplyr::mutate(group_id = max(colonies$group_id)+1:dplyr::n(),
-                  region = wca,
-                  display_name = colony) %>% 
-    dplyr::select(group_id,colony,region,subregion,latitude,longitude,aka,display_name)
-#  write.table(new_colonies, "SiteandMethods/colonies.csv", 
-#              row.names = FALSE, col.names = FALSE, na = "", sep = ",", quote = c(7,8), append=TRUE)
+  new_colonies <- data_raw[-which(data_raw$colony %in% colonies$colony),]
+  
+# only colonies < 40 should be left in new_colonies
     
   new_data <- data_raw %>%
-    dplyr::select(-c(wca,group_id,total)) %>%
-    tidyr::pivot_longer(cols = !c(colony,colony_old,latitude,longitude), 
+    dplyr::select(-c(wca,total)) %>%
+    dplyr::filter(colony %in% colonies$colony) %>%
+    tidyr::pivot_longer(cols = !c(group_id,colony,colony_old,latitude,longitude), 
                           names_to = "species",
                           values_to = "count") %>%
     dplyr::mutate(year = year,
                     notes = "",
                     notes = replace(notes, count=="***", "presence"),
                     count = replace(count, count=="***", 1)) %>%
-      
     dplyr::filter(!is.na(count)) %>%
-    dplyr::left_join(colonies[,1:2], by = dplyr::join_by(colony)) %>%
+    dplyr::left_join(colonies[,1:2], by = dplyr::join_by(group_id,colony)) %>%
     
     dplyr::mutate(year = as.numeric(year),
                   latitude = as.numeric(latitude),
@@ -78,12 +84,16 @@ clean_count_data <- function(data_path, year) {
     print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
   }
   
-  under_40 <- readxl::read_excel(path = data_path, sheet = "under40", 
-                                               col_names = TRUE, col_types = "text") %>%
-    dplyr::rename_with(tolower) %>%
-    dplyr::rename(smda="unid. small dark.") %>%
-    dplyr::rename(smwh="unid. small white") %>%
-    dplyr::mutate(group_id=NA, year=year, colony_old=colony,dcco=NA,grhe=NA,smhe=NA,lawh=NA,lada=NA) %>%
+  under_40 <- new_colonies %>%
+    dplyr::filter(!is.na(latitude)) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(notes = dplyr::case_when(
+                          any(dplyr::c_across(greg:anhi)=="***", na.rm = T) ~ "1s indicate presence",
+                          TRUE ~ ""))
+  under_40[under_40=="***"] <- "1"
+  under_40 <- under_40 %>%
+    dplyr::mutate_at(3:20,as.numeric) %>%
+    dplyr::mutate(year=as.numeric(year), dcco = NA, grhe=NA, smhe=NA, lawh=NA, lada=NA) %>%
     dplyr::select("group_id","year","colony","colony_old","latitude","longitude","wca","greg","whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib","caeg","dcco","grhe","smhe","lawh","lada","smda","smwh","notes","total")
     
   return(list(new_data=new_data, new_colonies=new_colonies, under_40=under_40))
