@@ -31,13 +31,14 @@ new_depths <- get_eden_depths() %>%
               dplyr::bind_rows(get_eden_depths(level="all")) %>%
               dplyr::bind_rows(get_eden_depths(level="wcas")) %>%
               dplyr::mutate(date=as.Date(date))
-new_depths <- new_depths %>%
-              merge(dplyr::filter(depth_data, !date %in% new_depths$date)) %>%
+
+depth_data <- dplyr::filter(depth_data, !date %in% new_depths$date) %>%
+              rbind(new_depths) %>%
               dplyr::arrange("date", "region")
 
 file.remove(dir(path=file.path('Water'),  pattern="_.*_depth.nc"))
 
-return(list(new_covariates=new_covariates, new_depths=new_depths))
+return(list(new_covariates=new_covariates, depth_data=depth_data))
 }
 
 #' Writes new water data
@@ -51,7 +52,7 @@ update_water <- function() {
   write.table(data$new_covariates, "Water/eden_covariates.csv", row.names = FALSE, col.names = TRUE,
             na="", sep = ",", quote = FALSE)
 
-  write.table(data$new_depths, file = "Water/eden_depth.csv",
+  write.table(data$depth_data, file = "Water/eden_depth.csv",
               row.names = FALSE, col.names = TRUE, na = "", sep = ",", quote = FALSE)
 }
 
