@@ -133,7 +133,8 @@ These projects report collectively on annual wading bird responses in the South 
 We performed two kinds of systematic surveys to document nesting by wading birds, including Wood Storks and Roseate Spoonbills in WCAs 1, 2, and 3: aerial and ground surveys.
 Aerial and ground surveys are complementary, and in the Everglades, neither does a particularly good job of assessing reproductive responses alone (Frederick et al. 1996).
 The primary objective of both kinds of surveys is to systematically encounter and document nesting colonies.
-On or about the 15th of each month between January and June, we performed systematic aerial surveys for colonies, with observers seated on both sides of a Cessna 185, flight altitude at 800 feet AGL, and east-west oriented flight transects spaced 1.6 nautical miles apart.
+
+*Aerial Surveys:* On or about the 15th of each month between January and June, we performed systematic aerial surveys for colonies, with observers seated on both sides of a Cessna 185, flight altitude at 800 feet AGL, and east-west oriented flight transects spaced 1.6 nautical miles apart.
 These conditions result in overlapping coverage on successive transects under a variety of weather and visibility conditions and have been used continuously since 1986, with the exception of 2020-2021 due to the coronavirus pandemic.
 Once colonies were located, we noted positions with a GPS unit with the aircraft positioned approximately vertically over the north end of the colony.
 We estimated numbers of visible nesting birds while circling at a variety of altitudes (500 -- 800 feet AGL).
@@ -145,18 +146,19 @@ For this reason, in this study digital photographs of all active colonies were t
 For many of the larger colonies, we also had access to information collected by helicopter via staff at the South Florida Water Management District, which estimated numbers of wading birds, and took photographs for later counting during the first week of every month, January through June.
 When these SFWMD observations were coupled with ours, we had a record of aerial surveys for large colonies every two weeks.
 This allowed much finer interpretation of nesting phenology and species responses.
-Systematic ground surveys of colonies by airboat were done between early April and mid-May in selected sections of WCA 3 and were designed to locate and document small colonies or those of dark-colored species that are difficult to detect from aerial surveys.
+
+*Ground surveys:* Systematic ground surveys of colonies by airboat were done between early April and mid-May in selected sections of WCA 3.
+These surveys are designed to locate and document small colonies or those of dark-colored species that are difficult to detect from aerial surveys.
 All tree islands were approached closely enough to flush nesting birds, and nests were either counted directly, or estimated from flushed birds.
 In the past, we have performed systematic, 100% coverage ground surveys of colonies by airboat in WCAs 1, 2 and 3 once between late April and early May.
 In 2005, 100% coverage ground surveys throughout the WCAs were discontinued due to a change in MAP guidelines for monitoring (concentrating instead on measuring size and species composition of large colonies of white-colored waders).
 However, since that time we have annually performed systematic ground surveys in WCA 3 that allow for a direct comparison of densities of colonies in certain areas.
 This was designed to give an index of abundance for small colonies and dark-colored species in a fashion that might be sustainable for the current monitoring effort.
-It should be clear that this flushing technique works only for smaller colonies.
-In large colonies many of the birds in the interior would not flush, and these larger colonies can only be counted on the ground by walking through, with high levels of positional inaccuracy and high disturbance to the birds.
 We conducted ground surveys in April `r params$report_year`.
 The ground survey belt transects in WCA 3A extended from Tamiami Trail to I-75 (Alligator Alley).
 East/West boundaries for these north/south oriented belts are found in Table \@ref(tab:transecttable).
-Very large colonies occurring within these belts were generally few in number and were counted by a combination of aerial survey estimation and photo-counts for white-colored species (as above), and walk-through counts.
+It should be clear that this flushing technique works only for smaller colonies because birds in the interior will not flush when approached with an airboat.
+Large colonies occurring within these belts are generally few in number and are counted as part of the aerial surveys but dark herons will be undercounted for those colonies.
 
 ```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs", message=FALSE, warning=FALSE}
 sp <- rgdal::readOGR(file.path(wader::get_default_data_path(),                      "EvergladesWadingBird/SiteandMethods/regions/subregions.shp"))
@@ -192,8 +194,8 @@ tibble::tribble(
   knitr::kable("pipe", align=rep('c', 3), caption = "East/West boundaries for Ground Survey transects for WCA 3A.")
 ```
 
-We monitored nest success (probability of any nest producing one or more young to 14 days, 21 days or 50 days for White Ibis, Great Egrets and Wood Storks, respectively) by checking individually marked nests every 5 -- 7 d during 1993 -- present.
-Colonies monitored in each year were selected based on large size, species composition, and wide geographic representation.
+*Nest success:* Since 1993, we have monitored nest success (probability of any nest producing one or more young) for White Ibis, Great Egrets and Wood Storks, respectively) by checking individually marked nests every 5 -- 7 days during the breeding season.
+Colonies monitored in each year were selected for their large size, species composition, and broad geographic representation.
 Many colonies are occupied by several species, and not all colony locations are active in each year (Frederick and Spalding 1994).
 We marked nests for study within colonies along 4-m wide belt transects oriented from the edge to areas of greatest nest density, marking all nests within the belts with numbered surveyors flagging.
 Colonies were monitored from the time most nests had progressed to incubation until all nests on the transects had either failed or produced young to 14 days of age (White Ibis), 21 days of age (Great Egret) or 50 days (Wood Stork).
