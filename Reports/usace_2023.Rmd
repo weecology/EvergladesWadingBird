@@ -158,16 +158,17 @@ The ground survey belt transects in WCA 3A extended from Tamiami Trail to I-75 (
 East/West boundaries for these north/south oriented belts are found in Table \@ref(tab:transecttable).
 Very large colonies occurring within these belts were generally few in number and were counted by a combination of aerial survey estimation and photo-counts for white-colored species (as above), and walk-through counts.
 
-```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs", message=FALSE, warning=FALSE}
-sp <- rgdal::readOGR(file.path(wader::get_default_data_path(),                      "EvergladesWadingBird/SiteandMethods/regions/subregions.shp"))
-sp <- sp::spTransform(sp, sp::CRS("+proj=longlat +datum=WGS84"))
+```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs and ENP", message=FALSE, warning=FALSE}
+sp <- sf::read_sf(file.path(wader::get_default_data_path(),                      "EvergladesWadingBird/SiteandMethods/regions/subregions.shp"))
+sp <- sf::st_transform(sp, sf::st_crs("+proj=longlat +datum=WGS84"))
 location <- unlist(ggmap::geocode('25.762471, -80.789072', override_limit = TRUE))+c(0,.02)
 ggmap::ggmap(ggmap::get_map(location = location, 
                zoom = 9, maptype = "terrain", source = "google")) +
-  ggplot2::geom_polygon(data = sp, ggplot2::aes(x=long, y=lat), color="red", alpha=0) +
+  ggplot2::geom_sf(data = sp, ggplot2::aes(color=Name), inherit.aes = FALSE, linewidth = 1.1, alpha=0) +
   ggplot2::theme_bw() +
   ggplot2::theme_void()
 ```
+
 
 ```{r transecttable}
 tibble::tribble(
