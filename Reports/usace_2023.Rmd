@@ -214,7 +214,7 @@ Nest success was expressed over all nests of each species from all colonies with
 
 At the start of 2023 water levels in WCA 3 and 2 were relatively average, while LOX and inland ENP had below-average water levels.
 Water levels decreased throughout the system through March and then increased dramatically in early April due to an uncharacteristically large rain event.
-After, water levels resumed a dry down trend, until the onset of the rainy season in early June (Figures \@ref(fig:waterplot3) - \@ref(fig:waterplotcoastal)).
+Water levels resumed a dry down trend after April, until the onset of the rainy season in early June (Figures \@ref(fig:waterplot3) - \@ref(fig:waterplotcoastal)).
 
 ```{r waterplot3, fig.cap = "Mean daily water stage in central WCA 3 (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
 water_report(wca="3ase", minyear=params$report_year-2, maxyear=params$report_year)
@@ -240,7 +240,7 @@ water_report(wca="coastal", minyear=params$report_year-2, maxyear=params$report_
 
 Water level recession rates in winter and spring have been noted as one of the components that can help make prey available to wading birds in the Everglades, and although the power of drying rates for predicting nesting alone is rather weak, several studies suggest that minimum water recession rates of 2 mm/d or greater may be important as a partial threshold for breeding.
 Water recession rates are currently used operationally by the SFWMD to enhance breeding whenever possible.
-In 2023, water recession rates varied across the area and between early and late nesting season.
+In 2023, water recession rates varied across regions and between early and late nesting season.
 LOX and all subregions of WCA 3 had above average early season recession rates, exceeding over 50% of years in each case (Table \@ref(tab:watertable)).
 However, WCA 2 and Everglades National Park were below average.
 The late dry season (January through March) had much higher than normal dry down rates in all regions, exceeding more than 80% of rates in many cases.
