@@ -158,16 +158,20 @@ The ground survey belt transects in WCA 3A extended from Tamiami Trail to I-75 (
 East/West boundaries for these north/south oriented belts are found in Table \@ref(tab:transecttable).
 Very large colonies occurring within these belts were generally few in number and were counted by a combination of aerial survey estimation and photo-counts for white-colored species (as above), and walk-through counts.
 
+\newpage
 ```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs and ENP", message=FALSE, warning=FALSE}
 sp <- sf::read_sf(file.path(wader::get_default_data_path(),                      "EvergladesWadingBird/SiteandMethods/regions/subregions.shp"))
 sp <- sf::st_transform(sp, sf::st_crs("+proj=longlat +datum=WGS84"))
-location <- unlist(ggmap::geocode('25.762471, -80.789072', override_limit = TRUE))+c(0,.02)
+location <- ggmap::geocode(c("25.883878, -80.794257"), override_limit = TRUE) + c(-.1,.35)
 ggmap::ggmap(ggmap::get_map(location = location, 
                zoom = 9, maptype = "terrain", source = "google")) +
   ggplot2::geom_sf(data = sp, ggplot2::aes(color=Name), inherit.aes = FALSE, linewidth = 1.1, alpha=0) +
+  ggplot2::labs(color='Subregion') +
   ggplot2::theme_bw() +
   ggplot2::theme_void()
 ```
+
+\newpage
 
 
 ```{r transecttable}
@@ -224,15 +228,15 @@ water_report(wca="2b", minyear=params$report_year-2, maxyear=params$report_year)
 ```
 
 ```{r waterplot1, fig.cap = "Mean daily water stage in LOX (WCA 1, red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
-water_report(wca="wca1", minyear=params$report_year-2, maxyear=params$report_year)
+water_report(wca="1", minyear=params$report_year-2, maxyear=params$report_year)
 ```
 
-```{r waterplotsawgrassenp, fig.cap = "Mean daily water stage in Inland Everglades National Park (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
-water_report(wca="sawgrassenp", minyear=params$report_year-2, maxyear=params$report_year)
+```{r waterplotinland, fig.cap = "Mean daily water stage in Inland Everglades National Park (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
+water_report(wca="inlandenp", minyear=params$report_year-2, maxyear=params$report_year)
 ```
 
 ```{r waterplotcoastal, fig.cap = "Mean daily water stage in Coastal Everglades National Park (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
-water_report(wca="coastal", minyear=params$report_year-2, maxyear=params$report_year)
+water_report(wca="coastalenp", minyear=params$report_year-2, maxyear=params$report_year)
 ```
 
 #### Water Recession
@@ -247,10 +251,8 @@ Coupled with relatively low initial water levels, conditions became too dry for 
 
 ```{r watertable}
 dry_down() %>%
-    dplyr::filter(region %in%            c("2a","2b","3an","3as","3ase","3b","wca1","coastal","sawgrassenp")) %>%
-  dplyr::mutate(region = stringr::str_replace(region, "wca1", "lox"),
-                region = stringr::str_replace(region, "sawgrassenp", "inlandenp"),
-                region = stringr::str_replace(region, "coastal", "coastalenp")) %>%
+    dplyr::filter(region %in%            c("2a","2b","3an","3as","3ase","3b","1","coastalenp","inlandenp")) %>%
+  dplyr::mutate(region = stringr::str_replace(region, "1", "lox")) %>%
   dplyr::select_all(~gsub("_", " ", .)) %>%
   dplyr::group_by(year) %>%
   dplyr::select_all(snakecase::to_title_case) %>%
@@ -262,7 +264,8 @@ dry_down() %>%
   flextable::set_caption("Water level recession rates (mm/day) in the Everglades.")   %>%
   flextable::add_footer_lines("Negative values indicate rising water, positive values indicate falling water. Exceedance refers to the percentage of years in the record in which the drying rate is less than that of the current year.") %>%
   flextable::hline(i = ~is_last_val_in_group == TRUE, border = fp_border()) %>%
-  flextable::fix_border_issues() 
+  flextable::fix_border_issues() %>%
+  flextable::set_table_properties(layout = "autofit")
 ```
 
 #### Temperature and Rainfall
@@ -319,7 +322,8 @@ max_counts() %>%
 
 ```
 
-```{r map, fig.cap="Locations of nesting wading bird colonies totaling over 40 pairs in WCA's 1, 2, and 3, and Everglades National Park."}
+\newpage
+```{r map, echo=FALSE, fig.cap="Locations of nesting wading bird colonies totaling over 40 pairs", fig.width=6, fig.height=6.5, message=FALSE, warning=FALSE}
 colonies <- load_datafile("Counts/maxcounts.csv", path = get_default_data_path()) %>%
   dplyr::filter(year <= params$report_year) %>%
   dplyr::select(group_id,colony) %>%
@@ -327,16 +331,18 @@ colonies <- load_datafile("Counts/maxcounts.csv", path = get_default_data_path()
   dplyr::left_join(load_datafile("SiteandMethods/colonies.csv", 
                                  path = get_default_data_path()),
                    by = dplyr::join_by(group_id, colony)) %>%
-  dplyr::select(colony,latitude,longitude)
+  dplyr::select(colony,subregion,latitude,longitude)
 ggmap::ggmap(ggmap::get_map(location = location, 
                zoom = 9, maptype = "terrain", source = "google")) +
  ggplot2::geom_point(data = colonies, 
-                     ggplot2::aes(x = longitude, y = latitude),
-            colour = "red", size=.5) +
- ggplot2::geom_text(data = colonies, ggplot2::aes(x = longitude, y = latitude, label =  colony), size=.8, hjust=0, vjust=0) +
+                     ggplot2::aes(x = longitude, y = latitude, colour = subregion), size=.9) +
+ ggplot2::geom_text(data = colonies, ggplot2::aes(x = longitude, y = latitude, label =  colony), size=1.2, hjust=0, vjust=0) +
  ggplot2::theme_bw() +
- ggplot2::theme_void()
+ ggplot2::theme_void() +
+ ggplot2::theme(legend.position="none")
 ```
+
+\newpage
 
 We also continued long-term monitoring of small colonies, primarily small dark herons, in WCA 3.
 Note that because of low detection rates of small dark herons from the air, these species are not systematically counted in aerial surveys, and our total counts in the summary tables are derived from partial coverage obtained from ground survey transects and observations from the air when possible.
@@ -578,7 +584,7 @@ plot_coastal(maxyear = params$report_year)
 plot_foraging(maxyear = params$report_year)
 ```
 
-```{r storkindicator, fig.cap="Wood Stork nest initiation date in the Everglades of Florida.", out.width="900px", out.height="500px"}
+```{r storkindicator, echo=FALSE, fig.cap="Wood Stork nest initiation date in the Everglades of Florida.", fig.height=2.5, fig.width=5, message=FALSE, warning=FALSE}
 plot_initiation(maxyear = params$report_year)
 ```
 
