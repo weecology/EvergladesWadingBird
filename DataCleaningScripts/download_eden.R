@@ -79,15 +79,15 @@ get_files_to_update <- function(eden_path = file.path("Water"),
   # Find files that have been updated since last download
   last_download <- get_last_download(eden_path, metadata, force_update = force_update)
   new <- metadata %>%
-    dplyr::left_join(last_download, by = "dataset", suffix = c(".curr", ".last")) %>%
-    dplyr::filter(last_modified.curr > last_modified.last | size.curr != size.last | is.na(last_modified.last))
+    dplyr::left_join(last_download, by = "dataset", suffix = c("", ".last")) %>%
+    dplyr::filter(last_modified > last_modified.last | size != size.last | is.na(last_modified.last))
   metadata %>%
     dplyr::filter(year %in% c(new$year-2, new$year-1, new$year, new$year+1, new$year+2))
   }
 
 #' @name update_last_download
 #'
-#' @title Write new metata file for files already downloaded
+#' @title Write new metadata file for files already downloaded
 #'
 #' @param eden_path path where the EDEN data should be stored
 #' @param metadata EDEN file metadata
@@ -129,8 +129,6 @@ download_eden_depths <- function(eden_path = file.path("Water"),
   downloaded <- mapply(download.file,
     data_urls$urls,
     file.path(eden_path, data_urls$file_names))
-
-  update_last_download(eden_path, metadata)
 
   return(file.path(eden_path, data_urls$file_names))
 }
