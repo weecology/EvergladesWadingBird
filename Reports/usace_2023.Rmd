@@ -464,11 +464,10 @@ While minimum nesting efforts by most species individually were below the five a
 However, 100% of this nesting effort was in Jetport South and resulted in no successful nests.
 Roseate Spoonbills continued to nest throughout the WCA's and were present in several new colonies.
 The majority of nests occurred in large mixed-species colonies such as 6th Bridge (65 nests), and Alley North (107 nests).
-Nesting effort was 50% the five-year average and 83% the ten-year average.
+Roseate Spoonbill nesting effort was 50% the five-year average and 83% the ten-year average.
 White Ibis nesting effort was 44% of the five-year average, which includes the 2021 large nesting event.
 The ten-year average was a bit higher at 59%.
 Great Egret nesting effort was slightly better with 72% and 86% the five and ten-year averages.
-Nesting effort in 2023 was below average and overall nest success was poor.
 A second consecutive year of relatively dry conditions throughout the WCA's was followed by a large, system-wide water level reversal during peak nesting for most species in early April.
 These conditions were not favorable for wading bird nest success.
 While the dry down resumed after the rain event in April, the onset of the rainy season began in late-May and most likely decreased post-fledgling survival for those that remained.
@@ -480,10 +479,10 @@ While the dry down resumed after the rain event in April, the onset of the rainy
 The sustainability of healthy wading bird populations is a primary goal of CERP and other Everglades restoration programs in south Florida.
 A central prediction of CERP is that a return to natural flows and hydropatterns will result in the recovery of large, sustainable breeding wading bird populations, a return to natural timing of nesting, and restoration of large nesting colonies in the coastal zone (Frederick et al. 2009).
 There are at least two overlapping sets of measures of attaining these conditions, all based on historical conditions and thought to be representative of key ecological features of the bird-prey-hydrology relationship.
-RECOVER established Performance Measures (PM) (<http://www.evergladesplan.org/pm/recover>), that include the 3-year running average of the numbers of nesting pairs of key avian species in the mainland Everglades, the timing of Wood Stork nesting, and the proportion of the population that nests in the coastal ecotone (Ogden et al. 1997).
+RECOVER established Performance Measures (PM) that include the 3-year running average of the numbers of nesting pairs of key avian species in the mainland Everglades, the timing of Wood Stork nesting, and the proportion of the population that nests in the coastal ecotone (Ogden et al. 1997).
 In addition to these three, the annual Stoplight Reports have added two other measures: the ratio of visual to tactile wading bird species breeding in the Everglades, and the frequency of exceptionally large White Ibis breeding events.
 These additional measures were added in an attempt to further capture key ecological relationships found in the historical ecosystem (Frederick et al. 2009).
-In this section, we report on the long-term trends and current status of all of these measures.
+In this section, we report on the long-term trends and current status of these measures.
 When thinking about progress towards these restoration measures, it should be remembered that the hydrological system is not yet restored to provide anything like the ecological functions expected in a completed CERP.
 Based on the recent status of the hydrological system, we would not have predicted restored or even partially restored wading bird population indicators.
 The main indicator species are Great Egret, Snowy Egret, White Ibis, and Wood Stork.
@@ -498,21 +497,21 @@ Here, we summarize data for the three Water Conservation Areas and mainland Ever
 #### Numbers of nesting pairs
 
 The three-year running average for nesting pairs in the mainland Everglades (2021 -- 2023) are 9,221 pairs of Great Egrets 2,648 Snowy Egrets, 37,639 White Ibises, and 1,583 Wood Storks (See Table \@ref(tab:maxcountindicator)).
-Trends for Great Egrets over time for this measure increased markedly from 1988 -- 2004, and have been roughly stable since, with the 3-year running average meeting or exceeding restoration criteria for 24 consecutive sampling periods since 1996.
-Trends for Snowy Egrets decreased markedly 1988 -- 1999, increased dramatically from 2000 -- 2008, then decreased variably through the 2017 nesting seasons.
+Trends for Great Egrets over time for this measure increased markedly from 1988 -- 2004, and have been roughly stable since, with the 3-year running average meeting or exceeding restoration criteria for 28 consecutive sampling periods since 1996.
+Trends for Snowy Egrets decreased markedly 1988 -- 1999, increased dramatically from 2000 -- 2008, then decreased variably through the 2017 nesting season.
 A slow increase has occurred since and generally, big nesting years for flock-foraging species show a big increase in Snowy Egret nesting.
 Nonetheless, three-year running averages of breeding Snowy Egrets have been consistently well below the target restoration goal in the time they have been monitored systematically since 1986.
 The 3-year running average has increased markedly for White Ibises during 1986 -- 2001 (2.7 X), and then remained variable but arguably stable for nearly a decade (2002 -- 2011).
 The final period in this record (2011 -- present) showed substantial fluctuation in ibis nesting, with a 50% reduction in one year and three additional years below the average of the previous decade.
 In the last six years, ibis nesting has doubled from the previous decade.
 The huge nesting effort in the 2018 and 2021 nesting seasons pulled the running average up markedly, and the running average may remain high for the next three years simply because of the contribution of large numbers of fledged chicks from those two banner years.
-White Ibis nesting populations have met or exceeded the breeding population criterion during 23 of the past 23 years.
+White Ibis nesting populations have met or exceeded the breeding population criterion during 24 of the past 24 years.
 Wood Storks showed a marked increase from averages in the 2 -- 300 pair range (1986 -- 1992) to averages above 1,000 in many years after 1999.
 Wood Storks have equaled or exceeded the restoration population criterion during 14 of the last 23 years, including in 2023.
 However, the running average for 2023 was again just above the minimum target of 1,500.
-Together, these statistics illustrate that there has been a very substantial increase in numbers of Great Egrets, Wood Storks and White Ibises since 1986, followed by a period of relative stability during which each of these species has met restoration targets in many or even the majority of years (Figure \@ref(fig:maxcountindicatorplot)).
+Together, these statistics illustrate that there has been a very substantial increase in numbers of Great Egrets, Wood Storks and White Ibises since 1986, followed by a period of relative stability during which each of these species has met restoration targets in the majority of years since 2000 (Figure \@ref(fig:maxcountindicatorplot)).
 While Snowy Egrets appear to be rebounding in the last four years, this species has never met restoration targets.
-In addition, there is evidence from systematic ground surveys in WCA 3 (see earlier in this report) that breeding populations of other small herons in the genus Egretta (Tricolored Herons) have fluctuated in the Everglades.
+In addition, there is evidence from systematic ground surveys in WCA 3 (see earlier in this report) that breeding populations of other small herons in the genus *Egretta* (Tricolored Herons) have fluctuated in the Everglades.
 
 #### Coastal nesting
 
@@ -550,7 +549,6 @@ Episodic, exceptionally large breeding aggregations of ibises were characteristi
 Large breeding aggregations during the recent period are defined as being above 16,977 nests each year, defined as the 70th percentile of the entire period of record of annual nestings.
 The interval between large ibis nestings in the predrainage period was 1.6 years and this serves as the target for restoration.
 This measure has improved very markedly since the 1970s, with the target achieved in 16 of the last 23 years (Figure \@ref(fig:supercolonyindicator)).
-However, the 2023 ibis nesting did not reach the restoration criterion.
 
 ### Restoration Discussion
 
@@ -602,25 +600,6 @@ plot_initiation(maxyear = params$report_year)
 ```{r supercolonyindicator, fig.cap="Three year running average of the interval between ibis supercolony events, by year"}
 plot_supercolony(maxyear = params$report_year)
 ```
-
-## Satellite Imagery
-
-Due to COVID-19 restrictions, we were unable to fly aerial transects in 2020 or 2021 to locate colonies and count nesting effort.
-Because we could not fly, we had an accumulation of funds and in 2022, we requested permission to use some of that accumulation to explore whether satellite imagery could be used in the future to either locate colonies or count colony size.
-Aerial counts of colonies have known issues with reliability and safety and finding qualified pilots has become too difficult over the past few years.
-Thus, assessing the ability of alternative technologies to replace or reduce reliance on manned aircraft has the potential benefit of increasing the reliability of the data collected and the ability of researchers to continue to collect an important data stream if scheduling flights becomes difficult or impossible in the future.
-Before ordering satellite data, we explored publicly available satellite data for a number of different satellites with imagery resolution from 60 cm to 30 cm and found images in the 30 cm resolution imagery where we thought we could see large white birds.
-However, without any other information about those locations it was impossible to assess whether the 30 cm resolution imagery was good enough for us to detect the presence of a colony in the Everglades.
-In Spring of 2022, we purchased a small tile of satellite imagery to conduct a preliminary assessment of the potential of satellite imagery for monitoring colonies.
-The past few years have seen high increases in the ability of satellites to provide high resolution imagery, with some providers also providing the ability to task satellites to aim at specific places during specified time periods.
-We purchased imagery from the Pleiades Neo satellites, which are owned and operated by Airbus and provides 30 cm resolution.
-This represents the current cutting edge of satellite capabilities in the public sphere.
-We ordered a 101 km2 tile, positioned to cover several of our known colonies, specifying its acquisition in late March to coincide with the height of the breeding season.
-In this imagery, we found that known colonies also contained visible white dots in the satellite imagery.
-For example, the colony on Jupiter contained \~90 white dots (Figure 12).
-An aerial flight over the colony within a week of the satellite imagery reported 100 Great Egrets on the tree island.
-Because of the small size of the tile, we still cannot make any statements about the performance or reliability of satellite imagery for monitoring purposes, but we feel like there is promise in the use of satellites, especially as satellite technology continues to improve.
-We are currently exploring other funding options to conduct a more rigorous and expansive assessment satellite imagery, including recently announced funding opportunities through AirBus.
 
 \newpage
 
