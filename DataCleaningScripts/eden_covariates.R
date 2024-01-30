@@ -79,6 +79,7 @@ calc_reversals <- function(depth_data) {
                                               is.na(depth) ~ units::set_units(NA, d)),
                   .keep = "none") %>%
     stars::st_apply(c(1, 2), sum)
+  return(reversals)
 }
 
 
@@ -95,10 +96,18 @@ calc_reversals <- function(depth_data) {
 #'
 extract_region_means <- function(raster, regions) {
   var_name <- names(raster)
-  region_means <- raster::aggregate(raster, regions, mean, na.rm=TRUE) %>%
+  region_means <- terra::aggregate(raster, regions, mean, na.rm=TRUE) %>%
     setNames(., "value")
+  if(all(is.nan(region_means$value))) {
+    region_means_spdf <- regions %>%
+      dplyr::mutate(variable = var_name, value = NA)
+  } else {
   region_means_spdf <- regions %>%
-    dplyr::mutate(variable = var_name, value = region_means$value)
+    dplyr::mutate(variable = var_name, value = as.numeric(region_means$value)) %>%
+    dplyr::mutate_if(is.numeric, list(~dplyr::na_if(., Inf))) %>%
+    dplyr::mutate_if(is.numeric, list(~dplyr::na_if(., -Inf))) %>%
+    dplyr::mutate_if(is.numeric, list(~dplyr::na_if(., NaN))) 
+  }
   return(region_means_spdf)
 }
 
@@ -115,10 +124,18 @@ extract_region_means <- function(raster, regions) {
 
 available_years <- function(eden_path = file.path("Water")) {
   eden_data_files <- list.files(file.path(eden_path), pattern = '_depth.nc')
+
+  # Find which years need to be updated since last download
+  metadata <- get_metadata()
+  last_download <- get_last_download(eden_path, metadata)
+  new <- metadata %>%
+    dplyr::left_join(last_download, by = "dataset", suffix = c("", ".last")) %>%
+    dplyr::filter(last_modified > last_modified.last | size != size.last | is.na(last_modified.last))
   years <- eden_data_files %>%
     stringr::str_split('_', simplify = TRUE) %>%
     .[, 1] %>%
-    unique()
+    unique() %>%
+    .[. %in% c(new$year, new$year+1, new$year+2)]
   return(years)
 }
 
@@ -153,7 +170,11 @@ get_eden_covariates <- function(level = "subregions",
   for (year in years) {
     print(paste("Processing ", year, "...", sep = ""))
     pattern <- file.path(paste(year, "_.*_depth.nc", sep = ''))
-    nc_files <- list.files(eden_path, pattern, full.names = TRUE)
+    pattern2 <- file.path(paste(as.numeric(year)-1, "_.*_depth.nc", sep = ''))
+    pattern3 <- file.path(paste(as.numeric(year)-2, "_.*_depth.nc", sep = ''))
+    nc_files <- c(list.files(eden_path, pattern3, full.names = TRUE),
+                  list.files(eden_path, pattern2, full.names = TRUE),
+                  list.files(eden_path, pattern, full.names = TRUE))
     year_data <- stars::read_stars(nc_files, along = "time") %>%
       setNames(., "depth") %>%
       dplyr::mutate(depth = dplyr::case_when(depth < units::set_units(0, cm) ~ units::set_units(0, cm),
@@ -164,6 +185,11 @@ get_eden_covariates <- function(level = "subregions",
     breed_end <- as.POSIXct(paste0(year, '-06-30'))
     breed_season_data <- year_data %>%
       dplyr::filter(time >= breed_start, time <= breed_end)
+    
+    dry_start <- as.POSIXct(paste0(as.numeric(year)-2, '-03-31'))
+    dry_end <- as.POSIXct(paste0(year, '-06-30'))
+    dry_season_data <- year_data %>%
+      dplyr::filter(time >= dry_start, time <= dry_end)
 
     # Do a pre-breed/post-breed split to allow pre-breeding recession calculations
     # following Peterson 2017. Peterson does this on a per species basis. To start
@@ -189,14 +215,8 @@ get_eden_covariates <- function(level = "subregions",
     post_recession <- calc_recession(post_breed_season_data) %>%
       setNames(., "post_recession")
 
-    # Calculate dryindex from everwader
-    # TODO: USGS code calculates this from t-3 3/31 to t 6/30 and converts
-    # the first value to NA
-    # To replicate we would need to load three years worth of data and be careful with
-    # other applications using min/max or replace this with a different predictor
-    # since it's unclear why the lag would be important here
-    # we could also fit the lag rather than building it into the feature
-    dry_days <- calc_dry_days(breed_season_data) %>%
+    # Calculate dryindex from everwader (USGS code calculates this from t-3 3/31 to t 6/30)
+    dry_days <- calc_dry_days(dry_season_data) %>%
       setNames(., "dry_days")
 
     # Calculate reversals following Peterson 2017
@@ -235,7 +255,7 @@ get_eden_depths <- function(level="subregions",
                             boundaries_path = file.path("SiteandMethods/regions"))
   {
 
-  eden_data_files <- list.files(file.path(eden_path), pattern = '_depth.nc', full.names = TRUE)
+  eden_data_files <- list.files(eden_path, pattern = '_depth.nc', full.names = TRUE)
   boundaries <- load_boundaries(boundaries_path,level)
   examp_eden_file <- stars::read_stars(file.path(eden_data_files[1]))
   boundaries_utm <- sf::st_transform(boundaries, sf::st_crs(examp_eden_file))
@@ -246,15 +266,15 @@ get_eden_depths <- function(level="subregions",
     pattern <- file.path(paste(year, "_.*_depth.nc", sep = ''))
     nc_files <- list.files(eden_path, pattern, full.names = TRUE)
     year_data <- stars::read_stars(nc_files, along = "time") %>%
-      setNames(., "depth") # %>%
-      # dplyr::mutate(depth = dplyr::case_when(depth < units::set_units(0, cm) ~ units::set_units(0, cm),
-      #                                       depth >= units::set_units(0, cm) ~ depth,
-      #                                       is.na(depth) ~ units::set_units(NA, cm)))
+      setNames(., "depth") %>%
+      dplyr::mutate(depth = dplyr::case_when(depth < units::set_units(0, cm) ~ units::set_units(0, cm),
+                                             depth >= units::set_units(0, cm) ~ depth,
+                                             is.na(depth) ~ units::set_units(NA, cm)))
 
-    region_means <- raster::aggregate(year_data, boundaries_utm, mean, na.rm=TRUE)
-    region_sd <- raster::aggregate(year_data, boundaries_utm, sd, na.rm=TRUE)
-    region_max <- raster::aggregate(year_data, boundaries_utm, max, na.rm=TRUE)
-    region_min <- raster::aggregate(year_data, boundaries_utm, min, na.rm=TRUE)
+    region_means <- terra::aggregate(year_data, boundaries_utm, mean, na.rm=TRUE)
+    region_sd <- terra::aggregate(year_data, boundaries_utm, sd, na.rm=TRUE)
+    region_max <- terra::aggregate(year_data, boundaries_utm, max, na.rm=TRUE)
+    region_min <- terra::aggregate(year_data, boundaries_utm, min, na.rm=TRUE)
 
     new_year <- reshape_star(region_means, variable="depth_mean", year=year, boundaries=boundaries_utm) %>%
                 merge(reshape_star(region_sd, variable="depth_sd", year=year, boundaries=boundaries_utm)) %>%
@@ -281,7 +301,7 @@ get_eden_depths <- function(level="subregions",
 #'
 reshape_star <- function(data, variable="depth", year, boundaries) {
 
- region_spdf <- boundaries_utm %>% dplyr::mutate(value = data$depth)
+ region_spdf <- boundaries %>% dplyr::mutate(value = data$depth)
  new_region <- as.data.frame(region_spdf$value) %>%
                               dplyr::mutate_all(as.double)
  colnames(new_region) <- as.character(as.Date(stars::st_get_dimension_values(data, 'time')))
