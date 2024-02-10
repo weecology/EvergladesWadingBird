@@ -1,3 +1,8 @@
+#' Clean nest success data
+#'
+
+`%>%` <- magrittr::`%>%`
+
 colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 
