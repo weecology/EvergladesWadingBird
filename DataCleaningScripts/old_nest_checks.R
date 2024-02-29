@@ -168,10 +168,15 @@ nests <- dplyr::bind_rows(old_data,nests) %>%
   dplyr::filter_at(.vars = dplyr::vars(eggs, chicks, stage, notes), 
                    .vars_predicate = dplyr::any_vars(!is.na(.)))
 
-write.csv(nests, "Nesting/nest_checks.csv", row.names = FALSE, na = "", quote = 9)
+nests <- nests %>%
+         dplyr::mutate(dplyr::across(c(colony,nest,species,stage,notes),as.character),
+                       dplyr::across(c(year,eggs,chicks),as.integer),
+                       date = lubridate::ymd(date))
+write.table(nests, "Nesting/nest_checks.csv", row.names = FALSE, na = "", sep = ",", quote = 9)
 
 species <- species %>% dplyr::arrange(species)
-write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", quote = 5:25)
+write.table(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", sep = ",", quote = 5:25)
 
 colonies <- colonies %>% dplyr::arrange(colony)
-write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = FALSE)
+write.table(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, col.names = TRUE, 
+            na = "", sep = ",", quote = c(7,8))

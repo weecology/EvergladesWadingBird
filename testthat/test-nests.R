@@ -2,8 +2,9 @@ context("checks nest check data")
 
 colonies <- read.csv("../SiteandMethods/colonies.csv")
 species <- read.csv("../SiteandMethods/species_list.csv") 
-nests <- read.csv("../Nesting/nest_checks.csv") %>%
-  dplyr::mutate(date = lubridate::ymd(date))
+nests <- read.csv("../Nesting/nest_checks.csv", stringsAsFactors = FALSE) %>%
+         dplyr::mutate(year = as.integer(year),
+                       date = lubridate::ymd(date))
 nest_cols <- colnames(nests)
 success <- read.csv("../Nesting/nest_success.csv")
 success_cols <- colnames(success)
@@ -22,14 +23,15 @@ test_that("Colony and species valid", {
   
   expect_true(all(nests$colony %in% colonies$colony))
   expect_true(all(nests$species %in% species$species))
-  expect_true(all(success$colony %in% success$colony))
-  expect_true(all(success$species %in% success$species))
+  expect_true(all(success$colony %in% colonies$colony))
+  expect_true(all(success$species %in% species$species))
 })
 
 test_that("Dates valid", {
   
   expect_false(any(is.na(nests$date)))
   expect_false(any(is.na(nests$year)))
+  expect_false(any(is.na(success$year)))
 })
 
 test_that("Egg and chick counts valid", {
