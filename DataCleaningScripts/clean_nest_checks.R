@@ -220,9 +220,16 @@ for(i in 1:length(tab_names)) {
                     "missed pulled","couldn’t check","too high","can't see","miss","n/a",
                     "c(\"n/a\", \"n/a\")","flagging gone","missed, no record","flag not found","missing",
                     "c(na, \"empty\")","couldn't find","flag on ground"), NA)) %>%
-    dplyr::mutate(date = as.Date(date),
-                  eggs = as.character(eggs),
-                  chicks = as.character(chicks)) %>%
+    dplyr::mutate(dplyr::across(everything(),~ purrr:map_chr(.x, ~ gsub("\"", "", .x)))) %>%
+    dplyr::mutate(year = as.integer(year),
+                  colony = as.character(colony),
+                  nest = as.character(nest),
+                  species = as.character(species),
+                  date = lubridate::ymd(date),
+                  eggs = as.integer(eggs),
+                  chicks = as.integer(chicks),
+                  stage = as.character(stage),
+                  notes = as.character(notes)) %>%
     dplyr::select(year, colony, nest, species, date, eggs, chicks, stage, notes)
 
     if(!all(new_data$colony %in% colonies$colony)| 
