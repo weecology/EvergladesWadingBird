@@ -73,6 +73,35 @@ unique(success$species[which(!(success$species %in% species$species))])
 success <- success %>% dplyr::arrange(year,colony,species)
 write.table(success, "Nesting/nest_success.csv", row.names = FALSE, na = "", sep = ",", quote = 18)
 
+
+success_summary <- read.csv("Nesting/nest_success_summary.csv")
+success_summary_new <- read.csv("../Desktop/nest_success_summary.csv") %>%
+  dplyr::rename_with(tolower) %>%
+  dplyr::mutate(metric = tolower(metric),
+                metric = gsub(paste(c("[(]", "[)]"), collapse = "|"), "", metric),
+                metric = gsub("overall", "", metric),
+                metric = gsub("success", "", metric),
+                metric = gsub(" ", "", metric),
+                colony = replace(colony, colony=="cuthbert", "cuthbert_lake"),
+                colony = replace(colony, colony=="paurotis", "paurotis_pond")) %>%
+  tidyr::pivot_longer(cols = !c(year,colony,type,metric), 
+                      names_to = "species",
+                      values_to = "value") %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::mutate(variable = paste(type,metric,sep="_")) %>%
+  tidyr::pivot_wider(id_cols = c(year,colony,species), names_from = variable, values_from = value, 
+                     values_fill = NA) %>%
+  dplyr::mutate(year=as.integer(year)) %>% 
+  dplyr::arrange(year,colony,species)
+
+unique(success_summary_new$colony[which(!(success_summary_new$colony %in% colonies$colony))])
+unique(success_summary_new$species[which(!(success_summary_new$species %in% species$species))])
+
+success_summary <- success_summary %>% 
+                   dplyr::bind_rows(success_summary_new) %>%
+                   dplyr::arrange(year,colony,species)
+write.table(success_summary, "Nesting/nest_success_summary.csv", row.names = FALSE, na = "", sep = ",")
+
 # make metadata
 success_metadata <- data.frame(name = as.vector(colnames(success))) %>%
                     dplyr::mutate(class=sapply(success,class),
