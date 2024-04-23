@@ -59,7 +59,7 @@ counts <- counts %>% dplyr::arrange(counts)
 write.csv(counts, "Counts/maxcounts.csv", row.names = FALSE, na = "", quote = 9)
 
 species <- species %>% dplyr::arrange(species)
-write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", quote = 5:25)
+write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", quote = 7:27)
 
 colonies <- colonies %>% dplyr::arrange(colony)
 write.csv(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = c(7,8))
