@@ -175,7 +175,7 @@ nests <- nests %>%
 write.table(nests, "Nesting/nest_checks.csv", row.names = FALSE, na = "", sep = ",", quote = 9)
 
 species <- species %>% dplyr::arrange(species)
-write.table(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", sep = ",", quote = 5:25)
+write.table(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", sep = ",", quote = 7:27)
 
 colonies <- colonies %>% dplyr::arrange(colony)
 write.table(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, col.names = TRUE, 
