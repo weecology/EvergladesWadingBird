@@ -1,3 +1,25 @@
+# Clean and append new nest check data 
+
+source('DataCleaningScripts/clean_nest_checks.R')
+colonies <- read.csv("SiteandMethods/colonies.csv")
+species <- read.csv("SiteandMethods/species_list.csv")
+nest_checks <- read.csv("Nesting/nest_checks.csv")
+
+filepath <- "~/Dropbox (UFL)/Everglades/2023 Data/nest_check_data_2023.xlsx"
+
+year <- 2023
+
+newdata <- clean_nest_data(filepath, year)
+
+all(lubridate::year(newdata$date)==year)
+print(unique(newdata$colony[which(!(newdata$colony %in% colonies$colony))]))
+print(unique(newdata$species[which(!(newdata$species %in% species$species))]))
+all(colnames(newdata)==colnames(nest_checks))
+
+write.table(newdata, "Nesting/nest_checks.csv", row.names = FALSE, col.names = FALSE,
+            append = TRUE, na = "", sep = ",", quote = 9)
+
+
 ## Used to clean nest check data 1994 - 2020 into standard long format
 ## Done one year at a time chronologically, errors get more complicated over time...
 ## G. Yenni 2020-08

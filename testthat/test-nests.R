@@ -52,6 +52,13 @@ test_that("Egg and chick counts valid", {
   expect_true(all(nests$chicks %in% c(0,1,2,3,4,5,6,7, NA)))
 })
 
+test_that("Nest stage valid", {
+  
+  expect_true(all(nests$stage %in% c("empty", "fledged", "failed", "incubating", "nestling","hatching",   
+                                     "wet_chick", "missed", "pipping", "pre_flagged", "collapsed", "pre_marked",
+                                     "pulled", "branchling", "chick_dry", "unknown", "", NA)))
+})
+
 test_that("no duplicated rows", {
   
   expect_false(any(duplicated(success_summary)))
