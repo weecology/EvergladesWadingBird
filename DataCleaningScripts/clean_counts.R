@@ -2,6 +2,9 @@
 #'
 
 `%>%` <- magrittr::`%>%`
+data_path <- "~/Dropbox (UFL)/Everglades/Reports/2019 Reports/SFWMD report table 2019.xlsx"
+SFWMD_report_table_2019 <- read_excel("~/Dropbox (UFL)/Everglades/Reports/2019 Reports/SFWMD report table 2019.xlsx", 
+                           sheet = "Appendix", skip = 1)
 
 #' Reshapes and cleans max count data (2022->)
 #'
@@ -23,36 +26,43 @@ clean_count_data <- function(data_path, year) {
                                  col_names = TRUE, col_types = "text", skip=1) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::rename(smda="unid. small dark.") %>%
-    dplyr::rename(smwh="unid. small white") %>%
+    dplyr::rename(smwh="unid. small wht.") %>%
+    dplyr::rename(lawh="unid. large wht.") %>%
+    dplyr::rename(total="*colony total") %>%
     dplyr::mutate(colony_old = colony,
                   colony = tolower(colony),
                   colony = gsub(" ", "_", colony),
                   colony = gsub("/", "_", colony),
-                  colony = replace(colony, colony=="63_no_name", "63"),
-                  colony = replace(colony, colony=="71_canal_junction", "canal_junction"),
+                  colony = replace(colony, colony %in% c("63_no_name","63_006"), "63"),
+                  colony = replace(colony, colony %in% c("71_canal_junction","71"), "canal_junction"),
                   colony = replace(colony, colony=="78_canal_north", "canal_north"),
                   colony = replace(colony, colony %in% c("3b_ramp_80","3b_ramp"), "3b_boat_ramp"),
                   colony = replace(colony, colony=="89_venus", "venus"),
                   colony = replace(colony, colony=="austere", "auster"),
-                  colony = replace(colony, colony=="cooklox11", "lox111"),
+                  colony = replace(colony, colony %in% c("cooklox11", "cooknc3"), "lox111"),
                   colony = replace(colony, colony=="cooknc4", "lox_nc4"),
                   colony = replace(colony, colony=="enlil_epona", "enlil"),
                   colony = replace(colony, colony=="jetport_new_64", "jetport_new"),
                   colony = replace(colony, colony=="loxwest", "lox_west"),
+                  colony = replace(colony, colony=="cooknc1(77_78)", "lox_nc1"),
+                  colony = replace(colony, colony=="cooknc2(76)", "vesta"),
                   colony = replace(colony, colony=="loxramp_011", "lox_ramp"),
-                  colony = replace(colony, colony %in% c("tyr_lox73","tyr"), "lox73"),
+                  colony = replace(colony, colony %in% c("tyr_lox73","tyr", "lox73_tyr"), "lox73"),
                   colony = replace(colony, colony=="vulture_007", "vulture"),
                   colony = replace(colony, colony=="1219_draco", "draco"),
                   colony = replace(colony, colony=="990_frodo", "frodo"),
                   colony = replace(colony, colony=="38", "38_185"),
-                  colony = replace(colony, colony=="51", "juno"),
+                  colony = replace(colony, colony %in% c("51", "51_juno"), "juno"),
                   colony = replace(colony, colony=="lox11", "outer_lox111_south"),
                   colony = replace(colony, colony=="little_d_little_a", "little_a"),
                   colony = replace(colony, colony=="112", "3665"),
-                  colony = replace(colony, colony=="1362", "487"),
-                  colony = replace(colony, colony=="1470", "1888"),
-                  colony = replace(colony, colony=="1379", "1824"),
-                  colony = replace(colony, colony=="14", "1351")) %>%
+                  colony = replace(colony, colony %in% c("1362", "739", "487"), "col487"),
+                  colony = replace(colony, colony %in% c("1470","576", "98"), "1888"),
+                  colony = replace(colony, colony %in% c("1379", "766_57_nc_2018"), "1824"),
+                  colony = replace(colony, colony=="14", "1351"),
+                  colony = replace(colony, colony=="75", "3700"),
+                  colony = replace(colony, colony=="610_67_nc_2018", "67"),
+                  colony = replace(colony, colony=="644", "1573")) %>%
     dplyr::left_join(colonies[,1:2], by = dplyr::join_by(colony))
   
   new_colonies <- data_raw[-which(data_raw$colony %in% colonies$colony),]

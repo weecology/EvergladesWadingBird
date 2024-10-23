@@ -7,7 +7,7 @@ colonies$aka[which(colonies$colony=="hidden")] = "Hidden North, L-28, Hidden, L-
 counts$group_id[which(counts$colony=="58")] = 57
 counts$colony[which(counts$colony=="58")] = "hidden"
 
-colonies <- colonies %>% dplyr::arrange(colony)
+colonies <- colonies %>% dplyr::arrange(group_id)
 write.table(colonies, "SiteandMethods/colonies.csv", row.names = FALSE, col.names = TRUE, 
             na = "", sep = ",", quote = c(7,8))
 
