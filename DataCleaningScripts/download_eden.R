@@ -124,7 +124,7 @@ download_eden_depths <- function(eden_path = file.path("Water"),
   to_update <- get_files_to_update(eden_path, metadata,
                                    force_update = force_update)
   data_urls <- get_data_urls(to_update$dataset)
-  options(timeout = 500)
+  options(timeout = 1000)
 
   downloaded <- mapply(download.file,
     data_urls$urls,
