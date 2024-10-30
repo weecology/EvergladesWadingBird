@@ -15,7 +15,7 @@ test_that("required column names in counts df", {
   expect_identical(counts_under40_cols, 
                    c("group_id","year","colony","colony_old", "latitude","longitude","wca","greg",     
                      "whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib",
-                     "caeg","dcco","grhe","smhe","lawh","lada","smwh","notes","total"))
+                     "caeg","dcco","grhe","smhe","lawh","lada","smwh","total","notes"))
 })
 
 test_that("Lat and long valid", {
