@@ -127,11 +127,10 @@ under40 <- read.csv("Counts/maxcounts_under40.csv")
                           TRUE ~ ""))
   under_40_new[under_40_new=="***"] <- "1"
   under_40_new <- under_40_new %>%
-    dplyr::mutate_at(c(1:2,5:22),as.numeric) %>%
     dplyr::mutate(year=as.numeric(year), dcco = NA, smhe=NA, lada=NA) %>%
-    dplyr::select("group_id","year","colony","colony_old","latitude","longitude","wca","greg","whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib","caeg","dcco","grhe","smhe","lawh","lada","smwh","notes","total")
+    dplyr::select("group_id","year","colony","colony_old","latitude","longitude","wca","greg","whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib","caeg","dcco","grhe","smhe","lawh","lada","smwh","total","notes") %>%
+    dplyr::mutate_at(c("group_id","year","latitude","longitude","greg","whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib","caeg","dcco","grhe","smhe","lawh","lada","smwh","total"),as.numeric)
     
-
 ################## Move under 40 data to main table for new colonies ###################################
   new_colony_list <- c()
   
@@ -142,3 +141,4 @@ under40 <- read.csv("Counts/maxcounts_under40.csv")
   under40 <- under40 %>% dplyr::bind_rows(under_40_new) %>% dplyr::arrange(year)
   write.table(under40, "Counts/maxcounts_under40.csv", row.names = FALSE, col.names = TRUE, 
               na = "", sep = ",", quote = 28)  
+  
