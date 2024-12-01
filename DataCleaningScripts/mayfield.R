@@ -5,6 +5,7 @@ species <- read.csv("SiteandMethods/species_list.csv")
 #'
 nests <- read.csv("Nesting/nest_checks.csv", na.strings = "") %>%
          dplyr::filter(year>=2017) %>%
+         dplyr::mutate(species = replace(species, species %in% c("unkn", "anhi", "coga", "rsha", "grhe"), "smhe")) %>%
          plyr::join(species[,c(1,5,6)], by = "species") %>%
          dplyr::mutate(date = lubridate::as_date(date),
                        eggs = as.integer(eggs),
@@ -15,20 +16,20 @@ nests <- read.csv("Nesting/nest_checks.csv", na.strings = "") %>%
                                                 (is.na(stage) & chicks %in% c(1:10)) ~ "nestling",
                                                 (is.na(stage) & !(eggs %in% c(1:10)) & !(chicks %in% c(1:10))) ~ "empty",
                                                              TRUE ~ stage)) %>%
-         dplyr::mutate(start_date = dplyr::case_when(stage == "incubating" ~ date-1,
-                                                     stage == "pipping" ~ date - incubation_j,
-                                                     stage == "hatching" ~ date - incubation_j,
-                                                     stage == "wet_chick" ~ date - incubation_j,
-                                                     stage == "chick_dry" ~ date - incubation_j - 1,
-                                                     stage == "nestling" ~ date - incubation_j - 2,
+         dplyr::mutate(start_date = dplyr::case_when(stage == "incubating" ~ date - eggs - 1,
+                                                     stage == "pipping" ~ date - eggs - incubation_j - 1,
+                                                     stage == "hatching" ~ date - eggs - incubation_j - 1,
+                                                     stage == "wet_chick" ~ date - chicks - incubation_j - 1,
+                                                     stage == "chick_dry" ~ date - chicks - incubation_j - 2,
+                                                     stage == "nestling" ~ date - chicks - incubation_j - 3,
                                                      TRUE ~ NA),
                        incubation_end = dplyr::case_when(stage == "pipping" ~ date,
                                                          stage == "hatching" ~ date,
                                                          stage == "wet_chick" ~ date,
-                                                         stage == "chick_dry" ~ date-1,
-                                                         stage == "nestling" ~ date-2,
-                                                         stage == "fledged" ~ date-nestling_j,
-                                                         stage == "branchling" ~ date-nestling_j-2,
+                                                         stage == "chick_dry" ~ date - 1,
+                                                         stage == "nestling" ~ date - 2,
+                                                         stage == "fledged" ~ date - nestling_j,
+                                                         stage == "branchling" ~ date - nestling_j - 2,
                                                          TRUE ~ NA))
 nest_success <- nests %>%   
                 dplyr::rename(nest_number = nest) %>%
@@ -44,7 +45,7 @@ nest_success <- nests %>%
                                  young_lost = clutch - fledged,
                                  start_date = min(start_date, na.rm=TRUE),
                                  incubation_end = max(incubation_end, na.rm=TRUE),
-                                 end_date = max(date, na.rm=TRUE),
+                                 end_date = dplyr::last(date[!(stage %in% c("empty", "missed", "collapsed",  "pulled", "unknown"))]),
                                  start_date = dplyr::case_when(!is.finite(start_date) ~ NA,
                                                           TRUE ~ start_date),
                                  incubation_end = dplyr::case_when(!is.finite(incubation_end) ~ NA,
@@ -57,7 +58,19 @@ nest_success <- nests %>%
                                                                        fledged %in% c(1:10) ~ 1,
                                                                        TRUE ~ 0),
                                  nestling_success = dplyr::case_when(fledged %in% c(1:10) ~ 1,
-                                                                     TRUE ~ 0))
+                                                                     any(stage %in% c("fledged","branchling")) ~ 1,
+                                                                     TRUE ~ 0)) %>%
+               plyr::join(species[,c(1,5,6)], by = "species") %>%
+               dplyr::mutate(n_days_incubation = dplyr::case_when(is.na(incubation_end) ~ as.numeric(end_date-start_date),
+                                                                  TRUE ~ n_days_incubation),
+                             n_days_nestling = dplyr::case_when(n_days_incubation > incubation_j ~ n_days_nestling + n_days_incubation - incubation_j,
+                                                                n_days_nestling > nestling_j ~ nestling_j,
+                                                                is.na(n_days_nestling) & nestling_success==1 ~ nestling_j,
+                                                                is.na(n_days_nestling) ~ 0,
+                                                                TRUE ~ n_days_nestling),
+                             n_days_incubation = dplyr::case_when(n_days_incubation > incubation_j ~ incubation_j,
+                                                                  is.na(n_days_incubation) ~ 0,
+                                                                  TRUE ~ n_days_incubation))
 
 #' Do summary calculations
 #'
@@ -66,7 +79,7 @@ nest_success_manual <- read.csv("Nesting/nest_success.csv")
 
 success <- nest_success %>%
   dplyr::filter(year>=2017) %>%
-  plyr::join(species[,c(1,5,6)], by = "species") %>%
+
   # make consistent use of success columns
   dplyr::mutate(incubation_success = dplyr::case_when(is.na(incubation_success) & brood %in% c(1:10) ~ 1,
                                                is.na(incubation_success) & fledged %in% c(1:10) ~ 1,
@@ -94,7 +107,9 @@ success <- nest_success %>%
                   nestling_sdpj = sqrt(nestling_varpj),
                   overall_p = (incubation_p^incubation_j)*(nestling_p^nestling_j),
                   overall_varp = ((incubation_pj^2)*nestling_varpj)+((nestling_pj^2)*incubation_varpj)+(incubation_varpj*nestling_varpj),
-                  overall_sd = sqrt(overall_varp))
+                  overall_sd = sqrt(overall_varp)) %>%
+    dplyr::mutate_if(is.double, list(~dplyr::na_if(., Inf))) %>% 
+    dplyr::mutate_if(is.double, list(~dplyr::na_if(., -Inf)))
 
 compare <- dplyr::left_join(success,success_summary, by=dplyr::join_by(year, colony, species)) %>%
            dplyr::filter(species %in% c("bcnh","gbhe","glib","greg","rosp","smhe","sneg","whib","wost"))
@@ -157,7 +172,7 @@ f <- ggplot(compare, aes(x=nestling_e.x, y=nestling_e.y)) +
   theme_minimal()
 
 g <- ggplot(compare, aes(x=incubation_j.x, y=incubation_j.y)) + 
-  geom_jitter(aes(color=species)) +
+  geom_point(aes(color=species)) +
   geom_abline(slope = 1, intercept = 0) +
   annotate(geom="text", x=22, y=28, color="red",
            label=paste("Missing:",sum(is.na(compare$incubation_j.y)))) +
@@ -166,7 +181,7 @@ g <- ggplot(compare, aes(x=incubation_j.x, y=incubation_j.y)) +
   theme_minimal()
 
 h <- ggplot(compare, aes(x=nestling_j.x, y=nestling_j.y)) + 
-  geom_jitter(aes(color=species)) +
+  geom_point(aes(color=species)) +
   geom_abline(slope = 1, intercept = 0) +
   annotate(geom="text", x=20, y=50, color="red",
            label=paste("Missing:",sum(is.na(compare$nestling_j.y)))) +
