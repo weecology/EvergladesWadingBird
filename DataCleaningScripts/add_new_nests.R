@@ -5,9 +5,9 @@ colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 nest_checks <- read.csv("Nesting/nest_checks.csv")
 
-filepath <- "~/Dropbox (UFL)/Everglades/2023 Data/nest_check_data_2023.xlsx"
+filepath <- "~/Desktop/Nest_check_data_2024.xlsx"
 
-year <- 2023
+year <- 2024
 
 newdata <- clean_nest_data(filepath, year)
 
