@@ -1,77 +1,93 @@
-#' Clean nest success data
+#' Use to reshape and clean nest success data from field format
 #'
 
 `%>%` <- magrittr::`%>%`
 
+#' Clean and append new nest success data
+#'
+
 colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
+nest_success <- read.csv("Nesting/nest_success.csv")
+success_summary <- read.csv("Nesting/nest_success_summary.csv")
 
-success <- read.csv("Nesting/nest_success.csv") %>%
-  dplyr::rename_with(tolower) %>%
-  dplyr::mutate(colony = tolower(colony),
-                colony = gsub(" ", "_", colony),
-                colony = gsub("/", "_", colony),
-                colony = gsub("-", "_", colony),
-                colony = gsub("'", "", colony),
-                species = tolower(species),
-                species = gsub(" ", "", species),
-                species = gsub("*", "", species),
-                species = gsub("?", "", species),
-                colony = replace(colony, colony %in% c("mud_canal","mud"), "mud_canal_south"),
-                colony = replace(colony, colony=="l-28", "l_28"),
-                colony = replace(colony, colony %in% c("fcity_north", "frogcity"), "frog_city_north"),
-                colony = replace(colony, colony %in% c("teast_tris","t_east_1.","te_2","te_1"), "tamiami_east"),
-                colony = replace(colony, colony=="hidden_", "hidden"),
-                colony = replace(colony, colony=="frog_c._s." , "frog_city_south"),
-                colony = replace(colony, colony %in% c("alley_n","alleynw","alleyns","alley_n_w_ibis","an_mixed_spp","an_whib"  ), "alley_north"),
-                colony = replace(colony, colony %in% c("l_67east","l_67_new"  ), "horus"),
-                colony = replace(colony, colony=="bigpond", "big_pond"),
-                colony = replace(colony, colony=="3b_mud_east", "mud_east"),
-                colony = replace(colony, colony=="vacation_island", "vacation"),
-                colony = replace(colony, colony=="jarrod", "jerrod"),
-                colony = replace(colony, colony=="false_l_67", "false_l67"),
-                colony = replace(colony, colony %in% c("tamwest","tamwestwhib","tamiami_west_","tamw_ibis","tamw_stork"), "tamiami_west"),
-                colony = replace(colony, colony %in% c("6thbridge","6thbridgewhib"), "6th_bridge"),
-                colony = replace(colony, colony=="rookerybranch", "rookery_branch"),
-                colony = replace(colony, colony=="cuthbert", "cuthbert_lake"),
-                colony = replace(colony, colony=="paurotis", "paurotis_pond"),
-                species = replace(species, species %in% c("ge","greg/smhe?","greg/smhe","greg/smwh"), "greg"),
-                species = replace(species, species %in% c("swh", "smwt", "smwh*","smwh/glibrelay","smwht"), "smwh"),
-                species = replace(species, species %in% c("sh", "sh?","smallheron/cormorant","smhe/bcnh","smallheron","smhe/glib","smhe*","smhe/glibrelay"), "smhe"),
-                species = replace(species, species %in% c("tc", "trhe?","tche"), "trhe"),
-                species = replace(species, species %in% c("se", "sneg?"), "sneg"),
-                species = replace(species, species %in% c("gbhe?"), "gbhe"),
-                species = replace(species, species %in% c("lb"), "lbhe"),
-                species = replace(species, species %in% c("anhi?"), "anhi"),
-                species = replace(species, species %in% c("greenheron"), "grhe"),
-                species = replace(species, species %in% c("unknown", ""), "unkn"),
-                species = replace(species, species %in% c("ce?se?","ce?"), "caeg"),
-                species = replace(species, species %in% c("wi", "whib*","whibthensmhe","whib/glibrelay","whip"), "whib"),
-                species = replace(species, species %in% c("bcnh*/smwhrelay", "bcnh/whibrelay","bcnh/glibrelay","bcnh/smwhrelay","bcnhorsmhe","bcnh/trhe","bcnh?","bc"), "bcnh"),
-                species = replace(species, species %in% c("rosp/glibrelay" , "rosp/smherelay","rosp/greg"), "rosp")) %>%
-  dplyr::mutate(across(where(is.character),~dplyr::na_if(., "na"))) %>%
-  dplyr::mutate(across(where(is.character),~dplyr::na_if(., "NS"))) %>%
-  dplyr::mutate(dplyr::across(c("incubation_success","clutch","brood"), stringr::str_replace, " ", ""),
-                dplyr::across(c("incubation_success","clutch","clutch_size","brood"), stringr::str_replace, "\\+", ""),
-                dplyr::across(c("n_days_incubation","clutch_size"), stringr::str_replace, "\\.", ""),
-                dplyr::across(c("brood","fledged","young_lost"), stringr::str_replace, "\\?", ""),
-                incubation_success = replace(incubation_success, incubation_success=="11", "1"),
-                nestling_success = replace(nestling_success, nestling_success==14, 1),
-                clutch = replace(clutch, clutch=="l","1"),
-                brood = replace(brood, brood=="3or 2", "3"),
-                fledged = replace(fledged, fledged=="2-Mar", "3")) %>%
-  dplyr::mutate_at(c("n_days_incubation","incubation_success","n_days_nestling","nestling_success","clutch",
-                     "brood","fledged","clutch_size","clutch_type","young_lost","real_success","real_failure"), as.numeric) %>%
-  dplyr::mutate(year=as.integer(year),
-                clutch=ifelse(is.na(clutch_size), clutch, clutch_size)) %>% 
-  dplyr::select(-"clutch_size") %>%
-  dplyr::arrange(year,colony,species) 
+filepath <- "~/Desktop/Mayfield Calculations_2024.xlsx"
 
-unique(success$colony[which(!(success$colony %in% colonies$colony))])
-unique(success$species[which(!(success$species %in% species$species))])
+this_year <- 2024
 
-success <- success %>% dplyr::arrange(year,colony,species)
-write.table(success, "Nesting/nest_success.csv", row.names = FALSE, na = "", sep = ",", quote = 18)
+all_data <- setNames(data.frame(matrix(ncol = 26, nrow = 0)), 
+                     c("year","colony","nest_number","species", "n_days_incubation", 
+                       "incubation_success", "n_days_nestling", "nestling_success",
+                       "clutch", "brood", "fledged", "clutch_type", "young_lost", "real_success", 
+                       "real_failure", "start_date", "end_date", "notes"))
+
+tab_names <- readxl::excel_sheets(path = filepath)
+tab_names <- tab_names[tab_names != "Calendar"]
+tab_names <- tab_names[tab_names != "Codes"]
+tab_names <- tab_names[tab_names != "Clutch and Fledged"]
+tab_names <- tab_names[tab_names != "template"]
+tab_names <- tab_names[!startsWith(tab_names ,"Other")]
+tab_names <- tab_names[!startsWith(tab_names ,"Sheet")]
+tab_names <- tab_names[!startsWith(tab_names ,"Overview")]
+tab_names <- tab_names[!startsWith(tab_names ,"Dataset Headers")]
+
+data_raw <- lapply(tab_names, function(x) readxl::read_excel(path = filepath, sheet = x, 
+                                                             col_names = FALSE))
+for(i in 1:length(tab_names)) {
+  colnames <- tolower(as.character(data_raw[[i]][1,]))
+  new_data <- as.data.frame(data_raw[[i]]) %>%
+    setNames(colnames) %>%
+    dplyr::slice(-c(1)) %>%
+    dplyr::rename(year = year,
+                  colony = colony,
+                  nest_number = nest,
+                  species = species,
+                  n_days_incubation = "n(i)",
+                  incubation_success = "s(i)", 
+                  n_days_nestling = "n(n)",
+                  nestling_success = "s(n)",
+                  clutch = clutch,
+                  brood = brood,
+                  fledged = fledged, 
+                  notes = "comments") %>%
+    dplyr::mutate(clutch_type = NA,
+                  young_lost = NA,
+                  real_success = NA, 
+                  real_failure = NA, 
+                  start_date = NA, 
+                  end_date = NA) %>%
+    dplyr::select("year","colony","nest_number","species", "n_days_incubation", 
+                  "incubation_success", "n_days_nestling", "nestling_success",
+                  "clutch", "brood", "fledged", "clutch_type", "young_lost", "real_success", 
+                  "real_failure", "start_date", "end_date", "notes")
+  
+  all_data <- rbind(all_data, new_data) }
+
+  new_success <- all_data %>%
+    dplyr::filter_all(dplyr::any_vars(!is.na(.))) %>%
+    dplyr::mutate(year=as.integer(this_year),
+                  colony = tolower(colony),
+                  colony = gsub(" ", "_", colony),
+                  colony = gsub("/", "_", colony),
+                  colony = gsub("-", "_", colony),
+                  colony = gsub("'", "", colony),
+                  species = tolower(species),
+                  species = gsub(" ", "", species),
+                  species = gsub("*", "", species),
+                  species = gsub("?", "", species),
+                  colony = replace(colony, colony %in% c("mud_canal","mud"), "mud_canal_south"),
+                  species = replace(species, species %in% c("ge","greg/smhe?"), "greg")) %>%
+    dplyr::mutate_at(c("n_days_incubation","incubation_success","n_days_nestling",
+                       "nestling_success","clutch","brood","fledged","clutch_type","young_lost",
+                       "real_success","real_failure"), as.numeric) %>%
+    dplyr::arrange(year,colony,species) 
+
+unique(new_success$colony[which(!(new_success$colony %in% colonies$colony))])
+unique(new_success$species[which(!(new_success$species %in% species$species))])
+all(colnames(new_success)==colnames(nest_success))
+
+write.table(new_success, "Nesting/nest_success.csv", row.names = FALSE, col.names = FALSE,
+            append = TRUE, na = "", sep = ",", quote = 18)
 
 
 success_summary <- read.csv("Nesting/nest_success_summary.csv")
@@ -102,16 +118,3 @@ success_summary <- success_summary %>%
                    dplyr::arrange(year,colony,species)
 write.table(success_summary, "Nesting/nest_success_summary.csv", row.names = FALSE, na = "", sep = ",")
 
-# make metadata
-success_metadata <- data.frame(name = as.vector(colnames(success))) %>%
-                    dplyr::mutate(class=sapply(success,class),
-                                  min=sapply(success,min,na.rm = TRUE),
-                                  max=sapply(success,max,na.rm = TRUE),
-                                  description=c("year","see colonies table","unique nest id","see species list",
-                                                "number of days incubating","was incubation successful (1) or not (0)",
-                                                "number of days chicks in nest","did chicks successfully fledge",
-                                                "number of eggs","number of chicks","number of chicks fledged",
-                                                "clutch type","number of young lost","confirmed successful nest",
-                                                "confirmed failed nest","nest start date",
-                                                "fledge or failure date","observer comments"))
-write.table(success_metadata, "Nesting/nest_success_metadata.csv", row.names = FALSE, na = "", sep = ",", quote = 5)
