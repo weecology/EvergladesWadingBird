@@ -9,7 +9,6 @@
 colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 nest_success <- read.csv("Nesting/nest_success.csv")
-success_summary <- read.csv("Nesting/nest_success_summary.csv")
 
 filepath <- "~/Desktop/Mayfield Calculations_2024.xlsx"
 
@@ -115,6 +114,6 @@ unique(success_summary_new$colony[which(!(success_summary_new$colony %in% coloni
 unique(success_summary_new$species[which(!(success_summary_new$species %in% species$species))])
 all(colnames(success_summary_new)==colnames(success_summary))
 
-write.table(success_summary, "Nesting/nest_success_summary.csv", row.names = FALSE, 
+write.table(success_summary_new, "Nesting/nest_success_summary.csv", row.names = FALSE, 
             col.names = FALSE, append = TRUE, na = "", sep = ",")
 

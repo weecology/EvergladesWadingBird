@@ -1,11 +1,24 @@
 library(dplyr)
 source("DataCleaningScripts/clean_counts.R")
-datayear <- 2022
+datayear <- 2024
 colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 
 data_path <- "~/Dropbox (UFL)/Everglades/Reports/2022 Reports/Final Report Work/Final Report Work_2022/WBPOP_2022_Lindsey takeover.xls"
 tab_names <- readxl::excel_sheets(path = data_path)
+
+# add stork initiation
+stork_initiation <- read.csv("Indicators/stork_initiation.csv") %>% 
+  add_row(year = datayear, initiation = "2024-02-15", date_score = 2.0, days_past_nov_1 = 107)
+write.table(stork_initiation, "Indicators/stork_initiation.csv", row.names = FALSE, 
+            col.names = TRUE, na = "", sep = ",")
+
+# add supercolony interval
+
+
+# add coastal nesting
+
+
 
 max_count_raw <- readxl::read_excel(path = data_path, sheet = "WBPOP", 
                                 col_names = TRUE, col_types = "text", skip=2) %>%
