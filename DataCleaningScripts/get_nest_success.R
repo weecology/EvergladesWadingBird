@@ -89,32 +89,32 @@ all(colnames(new_success)==colnames(nest_success))
 write.table(new_success, "Nesting/nest_success.csv", row.names = FALSE, col.names = FALSE,
             append = TRUE, na = "", sep = ",", quote = 18)
 
-
+#' Clean and append new nest success summary data
+#' Pivots from a report table with species as columns and metrics as rows,
+#' to data with species as rows and metrics as columns
+#'
 success_summary <- read.csv("Nesting/nest_success_summary.csv")
-success_summary_new <- read.csv("../Desktop/nest_success_summary.csv") %>%
+success_summary_new <- readxl::read_excel(path = "~/Desktop/Mayfield Table_2024.xlsx", 
+                                          sheet = 1, col_names = TRUE) %>%
   dplyr::rename_with(tolower) %>%
-  dplyr::mutate(metric = tolower(metric),
-                metric = gsub(paste(c("[(]", "[)]"), collapse = "|"), "", metric),
-                metric = gsub("overall", "", metric),
-                metric = gsub("success", "", metric),
-                metric = gsub(" ", "", metric),
-                colony = replace(colony, colony=="cuthbert", "cuthbert_lake"),
-                colony = replace(colony, colony=="paurotis", "paurotis_pond")) %>%
-  tidyr::pivot_longer(cols = !c(year,colony,type,metric), 
+  tidyr::pivot_longer(cols = !c(year,colony,metric), 
                       names_to = "species",
                       values_to = "value") %>%
-  dplyr::filter(!is.na(value)) %>%
-  dplyr::mutate(variable = paste(type,metric,sep="_")) %>%
-  tidyr::pivot_wider(id_cols = c(year,colony,species), names_from = variable, values_from = value, 
+  tidyr::pivot_wider(id_cols = c(year,colony,species), names_from = metric, values_from = value, 
                      values_fill = NA) %>%
   dplyr::mutate(year=as.integer(year)) %>% 
+  dplyr::mutate_at(c("incubation_k","incubation_sumy","incubation_e","incubation_p","incubation_j",
+                     "incubation_pj","incubation_varp","incubation_varpj","incubation_sdp",
+                     "incubation_sdpj","nestling_k","nestling_sumy","nestling_e","nestling_p",
+                     "nestling_j","nestling_pj","nestling_varp","nestling_varpj","nestling_sdp",
+                     "nestling_sdpj","overall_p","overall_varp","overall_sd"), as.numeric) %>%
+  tidyr::drop_na(incubation_k, incubation_sumy) %>% 
   dplyr::arrange(year,colony,species)
 
 unique(success_summary_new$colony[which(!(success_summary_new$colony %in% colonies$colony))])
 unique(success_summary_new$species[which(!(success_summary_new$species %in% species$species))])
+all(colnames(success_summary_new)==colnames(success_summary))
 
-success_summary <- success_summary %>% 
-                   dplyr::bind_rows(success_summary_new) %>%
-                   dplyr::arrange(year,colony,species)
-write.table(success_summary, "Nesting/nest_success_summary.csv", row.names = FALSE, na = "", sep = ",")
+write.table(success_summary, "Nesting/nest_success_summary.csv", row.names = FALSE, 
+            col.names = FALSE, append = TRUE, na = "", sep = ",")
 
