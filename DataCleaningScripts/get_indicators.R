@@ -1,9 +1,6 @@
 library(dplyr)
-source("DataCleaningScripts/clean_counts.R")
+
 datayear <- 2024
-colonies <- read.csv("SiteandMethods/colonies.csv")
-species <- read.csv("SiteandMethods/species_list.csv")
-counts <- read.csv("Counts/maxcounts.csv")
 
 data_path <- "~/Dropbox (UFL)/Everglades/Reports/2022 Reports/Final Report Work/Final Report Work_2022/WBPOP_2022_Lindsey takeover.xls"
 tab_names <- readxl::excel_sheets(path = data_path)
@@ -43,17 +40,24 @@ groundcounts <- read.csv("Counts/groundcounts.csv") %>%
 write.table(groundcounts, "Counts/groundcounts.csv", row.names = FALSE, 
             col.names = TRUE, na = "", sep = ",")
 
-# add max count summaries
-max_count_raw <- readxl::read_excel(path = data_path, sheet = "WBPOP", 
-                                col_names = TRUE, col_types = "text", skip=2) %>%
-             select(-c(1,16:26),-27,-total) %>%
-             rename(year=1)
-
-max_count_all <- max_count_raw[16:52,] %>% mutate_if(is.character, as.numeric) %>%
-                 filter(year==datayear) %>%
-                 tidyr::gather(key="species",value="count",-year) %>%
-                 mutate(region="all", species=tolower(species)) %>%
-                 mutate(species = replace(species, species=="unident", "unkn")) %>%
+# add max count summary
+counts <- read.csv("Counts/maxcounts.csv") %>%
+          filter(year==datayear) %>%
+          group_by(year,species) %>%
+          summarise(count = sum(count))
+under40 <- read.csv("Counts/maxcounts_under40.csv") %>%
+           filter(year==datayear) %>%
+           select(-c(group_id,colony,colony_old,wca,latitude,longitude,total,notes)) %>%
+           group_by(year) %>%
+           summarise(across(where(is.numeric), \(x) sum(x, na.rm = TRUE))) %>%
+           tidyr::pivot_longer(cols = !year, names_to = "species", values_to = "count")
+max_count_all <- bind_rows(counts,under40) %>%
+                 group_by(year,species) %>%
+                 summarise_all(., sum, na.rm = TRUE)
+total <- sum(max_count_all$count)
+max_count_all <- max_count_all %>% ungroup() %>%
+                 add_row(year=datayear, species = "total", count=total) %>%
+                 mutate(region="all") %>%
                  select(year,region,species,count)
 
 write.table(max_count_all, "Indicators/max_count_all.csv", 
