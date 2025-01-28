@@ -96,7 +96,8 @@ under40 <- read.csv("Counts/maxcounts_under40.csv")
                           TRUE ~ ""))
   under_40_new[under_40_new=="***"] <- "1"
   under_40_new <- under_40_new %>%
-    dplyr::mutate(year=as.numeric(year), dcco = NA, smhe=NA, lada=NA, lawh=NA) %>%
+    dplyr::mutate(year=as.numeric(year), dcco = NA, smhe=NA, lada=NA, lawh=NA,
+                  wca = tolower(wca)) %>%
     dplyr::select("group_id","year","colony","colony_old","latitude","longitude","wca","greg","whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib","caeg","dcco","grhe","smhe","lawh","lada","smwh","total","notes") %>%
     dplyr::mutate_at(c("group_id","year","latitude","longitude","greg","whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib","caeg","dcco","grhe","smhe","lawh","lada","smwh","total"),as.numeric)
     
@@ -110,4 +111,59 @@ under40 <- read.csv("Counts/maxcounts_under40.csv")
   under40 <- under40 %>% dplyr::bind_rows(under_40_new) %>% dplyr::arrange(year)
   write.table(under40, "Counts/maxcounts_under40.csv", row.names = FALSE, col.names = TRUE, 
               na = "", sep = ",", quote = 28)  
+
+############################## Add ENP data ############################################################
+  ############################# Get raw data ####################################################
+  datayear <- 2024
+  data_path <- "~/Desktop/ENP wading bird peak nest numbers_2024.xlsx"
   
+  ############################ Build data tables  #######################################
+  
+  colonies <- read.csv("SiteandMethods/colonies.csv") %>%     
+    dplyr::mutate(group_id = as.numeric(group_id),
+                  latitude = as.numeric(latitude),
+                  longitude = as.numeric(longitude))
+  
+  species <- read.csv("SiteandMethods/species_list.csv")
+  counts <- read.csv("Counts/maxcounts.csv")
+  
+  enp_data <- readxl::read_excel(data_path, sheet = 1, skip = 1, col_types = "text") %>%
+    dplyr::rename_with(tolower) %>%
+    dplyr::select(-total) %>%
+    dplyr::mutate(colony_old = colony,
+                  colony = tolower(colony),
+                  colony = gsub(" ", "_", colony),
+                  colony = gsub("/", "_", colony),
+                  colony = replace(colony, colony=="colony_13", "colony13"),
+                  colony = replace(colony, colony=="colony_14", "colony14"),
+                  colony = replace(colony, colony=="colony_15", "colony15"),
+                  colony = replace(colony, colony=="shark_valley_observation_tower", "shark_valley"),
+                  colony = replace(colony, colony=="shark_valley_tram_road_nw", "shark_valley_tram"),
+                  colony = replace(colony, colony=="shark_river_slough_se", "shark_river_slough"),
+                  colony = replace(colony, colony %in% c("rodgers_river_bay_large_island","rodgers_river_bay_small_island"), "rodgers_river_bay"),
+                  colony = replace(colony, colony=="grossman_ridge_willowhead", "grossman_willowhead")) %>%
+    dplyr::left_join(colonies[,1:2], by = dplyr::join_by(colony)) %>%
+    tidyr::pivot_longer(cols = !c(group_id,colony,colony_old,latitude,longitude), 
+                        names_to = "species",
+                        values_to = "count") %>%
+    dplyr::mutate(year = datayear,
+                  notes = "",
+                  notes = replace(notes, count=="+", "present and nesting but numbers unknown"),
+                  count = replace(count, count=="+", 1)) %>%
+    dplyr::filter(!is.na(count)) %>%
+    dplyr::mutate(year = as.numeric(year),
+                  latitude = as.numeric(latitude),
+                  longitude = as.numeric(longitude),
+                  count = as.numeric(count)) %>%
+    dplyr::select("group_id","year","colony","colony_old","latitude","longitude","species","count","notes")
+  
+  if(!all(enp_data$colony %in% colonies$colony)| 
+     !all(enp_data$species %in% species$species)) {
+    print(unique(enp_data$colony[which(!(enp_data$colony %in% colonies$colony))]))
+    print(unique(enp_data$species[which(!(enp_data$species %in% species$species))]))
+  }
+  
+  ### Write
+  counts <- counts %>% dplyr::bind_rows(enp_data) %>% dplyr::arrange(year,group_id)
+  write.table(counts, "Counts/maxcounts.csv", row.names = FALSE, na = "", sep = ",", quote = 9)  
+   
