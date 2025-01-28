@@ -1,7 +1,8 @@
 # SFWMD Report Table
-report_year <- 2023
+report_year <- 2024
 
 library(wader)
+library(rJava)
 library(xlsx)
 
 wb <- createWorkbook()
@@ -52,21 +53,41 @@ xlsx.addTitle <- function(sheet, rowIndex, title, titleStyle) {
 
 #### Get data ###
 # counts
+# get notes for presence
+main_presence <- load_datafile("Counts/maxcounts.csv", path = get_default_data_path()) %>% 
+  dplyr::filter(year==report_year, notes =="presence") %>%
+  dplyr::select(colony,species,count) %>%
+  dplyr::mutate(count="***")
+
+under40_presence <- load_datafile("Counts/maxcounts_under40.csv", path = get_default_data_path()) %>%
+  dplyr::filter(year==report_year, notes=="1s indicate presence") %>%
+  dplyr::select(-c(year,group_id,wca,colony_old,latitude,longitude,total,notes)) %>% 
+  tidyr::pivot_longer(cols = !colony, names_to = "species", values_to = "count") %>%
+  dplyr::mutate(count=replace(count, count==1, "***")) %>%
+  dplyr::filter(count=="***")
+
+presence <- dplyr::bind_rows(main_presence,under40_presence)
+
 main <- max_counts() %>% 
   dplyr::ungroup() %>% 
   dplyr::filter(year==report_year) %>% 
   dplyr::select(-year) %>% 
+  dplyr::anti_join(main_presence, by = c("colony","species")) %>%
   tidyr::pivot_wider(id_cols = colony, names_from = species, values_from = count) %>% 
   dplyr::mutate(total = rowSums(dplyr::across(where(is.numeric)), na.rm=TRUE)) %>%
   dplyr::full_join(load_datafile("SiteandMethods/colonies.csv", path = get_default_data_path()),by = dplyr::join_by(colony)) %>%
   dplyr::select(-c(group_id,subregion,colony,aka)) %>%
-  dplyr::rename(wca=region, colony=display_name)
+  dplyr::rename(wca=region, colony=display_name) %>%
+  dplyr::filter(!(wca %in% c("enp","other"))) 
 under40 <- load_datafile("Counts/maxcounts_under40.csv", path = get_default_data_path()) %>%
   dplyr::filter(year==report_year) %>%
-  dplyr::select(-c(year,notes,colony_old,group_id))
+  dplyr::select(-c(year,notes,colony_old,group_id)) %>%
+  dplyr::filter(!(wca %in% c("enp","other"))) %>%
+  dplyr::mutate(wca = substr(wca, 1, 1)) %>%
+  dplyr::mutate(anhi = replace(anhi, colony=="123", NA))
 
 # by WCA
-lox <- main %>%
+lox_pre <- main %>%
   dplyr::select(colony,wca,latitude, longitude,everything()) %>%
   dplyr::relocate(total, .after = last_col()) %>%
   dplyr::filter(total >= 40, wca=="1") %>%
@@ -75,32 +96,34 @@ lox <- main %>%
   dplyr::bind_rows(dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total"))
 under40_lox <- under40 %>% 
   dplyr::filter(wca=="1") %>%
-  dplyr::select(colnames(lox),
+  dplyr::select(colnames(lox_pre),
                 -c(colony,latitude,longitude,wca)) %>%
   dplyr::summarise_all(~ sum(., na.rm=TRUE)) %>%
   dplyr::mutate(colony=c("Colonies < 40 nests**"))
-totals_lox <- tail(lox[,-c(2:4)],1) %>%
+totals_lox <- tail(lox_pre[,-c(2:4)],1) %>%
   dplyr::bind_rows(under40_lox) %>%
   dplyr::select(-colony) %>%
   dplyr::summarise_all(~ sum(., na.rm=TRUE)) %>% 
   dplyr::mutate(colony=c("Total nests by species"))
-lox <- lox %>%
+lox <- lox_pre %>%
   dplyr::bind_rows(under40_lox) %>%
   dplyr::bind_rows(totals_lox) %>%
-  dplyr::add_row(colony="Total nests excluding ANHI",total=tail(lox$total,1)-tail(lox$anhi,1)) %>%
+  dplyr::add_row(colony="Total nests excluding ANHI",total=tail(totals_lox$total,1)-tail(totals_lox$anhi,1)) %>%
   dplyr::mutate(colony = replace(colony,colony=="Total","Colonies > 40 nests"),
                 wca = replace(wca,wca=="Total",NA),
                 latitude = replace(latitude,latitude=="Total",NA),
                 longitude = replace(longitude,longitude=="Total",NA),
                 ycnh = NA,
-                smda = NA) %>%
+                caeg = NA,
+                smda = NA,
+                glib = NA) %>%
   dplyr::rename_with(toupper, .cols = -colony) %>%
   dplyr::select(Colony=colony,WCA,Latitude=LATITUDE,Longitude=LONGITUDE,GREG,WHIB,WOST,ROSP,SNEG,GBHE,LBHE,
                 TRHE,GLIB,BCNH,CAEG,YCNH,SMDA,SMWH,ANHI,Total=TOTAL) %>%
   `row.names<-`(., NULL) %>% 
   tibble::column_to_rownames(var = "Colony")
 
-wcas <- main %>%
+wcas_pre <- main %>%
   dplyr::select(colony,wca,latitude, longitude,everything()) %>%
   dplyr::relocate(total, .after = last_col()) %>%
   dplyr::filter(total >= 40, wca %in% c("2","3")) %>%
@@ -109,25 +132,27 @@ wcas <- main %>%
   dplyr::bind_rows(dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total"))
 under40_wcas <- under40 %>% 
   dplyr::filter(wca %in% c("2","3")) %>%
-  dplyr::select(colnames(wcas),
+  dplyr::select(colnames(wcas_pre),
                 -c(colony,latitude,longitude,wca)) %>%
   dplyr::summarise_all(~ sum(., na.rm=TRUE)) %>%
   dplyr::mutate(colony="Colonies < 40 nests**")
-totals_wcas <- tail(wcas[,-c(2:4)],1) %>%
+totals_wcas <- tail(wcas_pre[,-c(2:4)],1) %>%
   dplyr::bind_rows(under40_wcas) %>%
   dplyr::select(-colony) %>%
   dplyr::summarise_all(~ sum(., na.rm=TRUE)) %>% 
   dplyr::mutate(colony=c("Total nests by species"))
-wcas <- wcas %>%
+wcas <- wcas_pre %>%
   dplyr::bind_rows(under40_wcas) %>%
   dplyr::bind_rows(totals_wcas) %>%
-  dplyr::add_row(colony="Total nests excluding ANHI",total=tail(wcas$total,1)-tail(wcas$anhi,1)) %>%
+  dplyr::add_row(colony="Total nests excluding ANHI",total=tail(totals_wcas$total,1)-tail(totals_wcas$anhi,1)) %>%
   dplyr::mutate(colony = replace(colony,colony=="Total","Colonies > 40 nests"),
                 wca = replace(wca,wca=="Total",NA),
                 latitude = replace(latitude,latitude=="Total",NA),
                 longitude = replace(longitude,longitude=="Total",NA),
+                caeg = NA,
                 ycnh = NA,
-                smda = NA) %>%
+                smda = NA,
+                glib = NA) %>%
   dplyr::rename_with(toupper, .cols = -colony) %>%
   dplyr::select(Colony=colony,WCA,Latitude=LATITUDE,Longitude=LONGITUDE,GREG,WHIB,WOST,ROSP,SNEG,GBHE,LBHE,
                 TRHE,GLIB,BCNH,CAEG,YCNH,SMDA,SMWH,ANHI,Total=TOTAL) %>%
@@ -135,7 +160,7 @@ wcas <- wcas %>%
   tibble::column_to_rownames(var = "Colony")
 
 # all wcas
-all <- main %>%
+all_pre <- main %>%
   dplyr::select(colony,wca,latitude, longitude,everything()) %>%
   dplyr::relocate(total, .after = last_col()) %>%
   dplyr::filter(total >= 40) %>%
@@ -143,25 +168,27 @@ all <- main %>%
   dplyr::mutate(latitude = as.character(latitude), longitude = as.character(longitude)) %>%
   dplyr::bind_rows(dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total"))
 under40_all <- under40 %>% 
-  dplyr::select(colnames(all),
+  dplyr::select(colnames(all_pre),
                 -c(colony,latitude,longitude,wca)) %>%
   dplyr::summarise_all(~ sum(., na.rm=TRUE)) %>%
   dplyr::mutate(colony="Colonies < 40 nests**")
-totals_all <- tail(all[,-c(2:4)],1) %>%
+totals_all <- tail(all_pre[,-c(2:4)],1) %>%
   dplyr::bind_rows(under40_all) %>%
   dplyr::select(-colony) %>%
   dplyr::summarise_all(~ sum(., na.rm=TRUE)) %>% 
   dplyr::mutate(colony=c("Total nests by species"))
-all <- all %>%
+all <- all_pre %>%
   dplyr::bind_rows(under40_all) %>%
   dplyr::bind_rows(totals_all) %>%
-  dplyr::add_row(colony="Total nests excluding ANHI",total=tail(all$total,1)-tail(all$anhi,1)) %>%
+  dplyr::add_row(colony="Total nests excluding ANHI",total=tail(totals_all$total,1)-tail(totals_all$anhi,1)) %>%
   dplyr::mutate(colony = replace(colony,colony=="Total","Colonies > 40 nests"),
                 wca = replace(wca,wca=="Total",NA),
                 latitude = replace(latitude,latitude=="Total",NA),
                 longitude = replace(longitude,longitude=="Total",NA),
                 ycnh=NA,
-                smda=NA) %>%
+                caeg = NA,
+                smda=NA,
+                glib = NA) %>%
   dplyr::rename_with(toupper, .cols = -colony) %>%
   dplyr::select(Colony=colony,WCA,Latitude=LATITUDE,Longitude=LONGITUDE,GREG,WHIB,WOST,ROSP,SNEG,GBHE,LBHE,
                 TRHE,GLIB,BCNH,CAEG,YCNH,SMDA,SMWH,ANHI,Total=TOTAL) %>%
@@ -169,7 +196,7 @@ all <- all %>%
   tibble::column_to_rownames(var = "Colony")
 
 # appendix
-append <- merge(main, under40, all = TRUE) %>%
+append_pre <- merge(main, under40, all = TRUE) %>%
   dplyr::select(colony,wca,latitude, longitude,everything()) %>%
   dplyr::relocate(total, .after = last_col()) %>%
   dplyr::filter(total > 0) %>%
@@ -177,8 +204,8 @@ append <- merge(main, under40, all = TRUE) %>%
   dplyr::mutate(latitude = as.character(latitude), longitude = as.character(longitude)) %>%
   dplyr::bind_rows(dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
   dplyr::rename_with(toupper, .cols = -colony)
-append <- append %>%
-  dplyr::add_row(colony="Total nests excluding ANHI",TOTAL=tail(append$TOTAL,1)-tail(append$ANHI,1)) %>%
+append <- append_pre %>%
+  dplyr::add_row(colony="Total nests excluding ANHI",TOTAL=tail(append_pre$TOTAL,1)-tail(append_pre$ANHI,1)) %>%
   dplyr::mutate(colony = replace(colony,colony=="Total","Total nests by species"),
                 WCA = replace(WCA,WCA=="Total",NA),
                 LATITUDE = replace(LATITUDE,LATITUDE=="Total",NA),
@@ -196,24 +223,7 @@ success <- read.csv("Nesting/nest_success_summary.csv") %>%
 colony_number <- length(unique(success$colony))
 species_list <- unique(success$species)
 
-success <- success %>%
-  dplyr::summarise(incubation_N=sum(incubation_k), incubation_sumy=sum(incubation_sumy), 
-                   incubation_e=sum(incubation_e), incubation_j=mean(incubation_j),
-                   nestling_N=sum(nestling_k), nestling_sumy=sum(nestling_sumy), nestling_e=sum(nestling_e), 
-                   nestling_j=mean(nestling_j)) %>%
-  dplyr::mutate(incubation_p = 1-((incubation_N-incubation_sumy)/incubation_e), 
-                incubation_Success = incubation_p^incubation_j, 
-                incubation_varp=(incubation_p*(1-incubation_p))/incubation_e, 
-                incubation_var = incubation_varp*((incubation_j*(incubation_p^(incubation_j-1)))^2),
-                incubation_SD = sqrt(incubation_var),
-                nestling_p = 1-((nestling_N-nestling_sumy)/nestling_e), 
-                nestling_Success = nestling_p^nestling_j, 
-                nestling_varp=(nestling_p*(1-nestling_p))/nestling_e, 
-                nestling_var = nestling_varp*((nestling_j*(nestling_p^(nestling_j-1)))^2),
-                nestling_SD = sqrt(nestling_var),
-                overall_Success = (incubation_p^incubation_j)*(nestling_p^nestling_j),
-                overall_var = ((incubation_Success^2)*nestling_var)+((nestling_Success^2)*incubation_var)+(incubation_var*nestling_var),
-                overall_SD = sqrt(overall_var))
+success <- overall_success(minyear=report_year)
 
   incubation <- success %>%
     dplyr::ungroup() %>%
@@ -384,5 +394,5 @@ setColumnWidth(Nest_Success, 1, 27)
 autoSizeColumn(Nest_Success, 2:9)
 
 #### Write ####
-saveWorkbook(wb, file = 'Reports/sfwmd_report_table_2023.xlsx')
+saveWorkbook(wb, file = 'Reports/sfwmd_report_table_2024.xlsx')
 
