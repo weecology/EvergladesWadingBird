@@ -56,7 +56,7 @@ test_that("Nest stage valid", {
   
   expect_true(all(nests$stage %in% c("empty", "fledged", "failed", "incubating", "nestling","hatching",   
                                      "wet_chick", "missed", "pipping", "pre_flagged", "collapsed", "pre_marked",
-                                     "pulled", "branchling", "chick_dry", "unknown", "", NA)))
+                                     "pulled", "branchling", "chick_dry", "re_lay", "unknown", "", NA)))
 })
 
 test_that("no duplicated rows", {
