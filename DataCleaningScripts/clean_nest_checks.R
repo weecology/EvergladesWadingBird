@@ -27,6 +27,7 @@ tab_names <- tab_names[!startsWith(tab_names ,"Other")]
 tab_names <- tab_names[!startsWith(tab_names ,"Sheet")]
 tab_names <- tab_names[!startsWith(tab_names ,"Overview")]
 tab_names <- tab_names[!startsWith(tab_names ,"Dataset Headers")]
+tab_names <- tab_names[!startsWith(tab_names ,"2024 Season Notes")]
 data_raw <- lapply(tab_names, function(x) readxl::read_excel(path = data_path, sheet = x, 
                                                              col_names = FALSE))
 
