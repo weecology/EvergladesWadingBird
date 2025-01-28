@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="3.34.12-Prizren">
+<qgis version="3.34.14-Prizren">
   <identifier></identifier>
   <parentidentifier></parentidentifier>
   <language></language>
