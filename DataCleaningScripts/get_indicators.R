@@ -34,6 +34,15 @@ coastal_nesting <- read.csv("Indicators/coastal_nesting.csv") %>%
 write.table(coastal_nesting, "Indicators/coastal_nesting.csv", row.names = FALSE, 
             col.names = TRUE, na = "", sep = ",")
 
+# add ground count table
+groundcounts <- read.csv("Counts/groundcounts.csv") %>%
+  add_row(year=datayear, greg= 58, whib = 0, anhi = 275, gbhe = 421, 
+                         trhe = 8, bcnh = 117, sneg = 5, lbhe = 116) %>%
+  arrange(-year)
+
+write.table(groundcounts, "Counts/groundcounts.csv", row.names = FALSE, 
+            col.names = TRUE, na = "", sep = ",")
+
 # add max count summaries
 max_count_raw <- readxl::read_excel(path = data_path, sheet = "WBPOP", 
                                 col_names = TRUE, col_types = "text", skip=2) %>%
