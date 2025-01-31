@@ -130,17 +130,17 @@ The `r params$report_year` season began with relatively normal water levels thro
 
 In `r params$report_year`, a total of `r total_nests` wading bird nests (not including Anhingas) were initiated at colonies within WCA 1, WCA 2, and WCA 3.
 Wood Storks nested in low numbers in WCA 3 and Lox (`r stork_max` nests in `r stork_colony`, `r stork_2` in `r stork_colony2`).
-Roseate Spoonbills continued nesting in many colonies throughout the WCAs, but with fewer nests overall (`r totals$rosp`nests). The largest numbers of nests occured at 6th Bridge (`r rosp_6b`) and Alley North (`r rosp_an`).
+Roseate Spoonbills continued nesting in many colonies throughout the WCAs, but with fewer nests overall (`r totals$rosp` nests). The largest numbers of nests occurred at 6th Bridge (`r rosp_6b`) and Alley North (`r rosp_an`).
 White Ibis total nests (`r totals$whib`) were also well below average.
 Great Egrets continued to nest in large numbers (`r totals$greg` nests).
 Little Blue Heron and Tri-colored Heron colonies were monitored from standardized ground surveys in WCA 3.
 While there has been a recent increasing trend of Tri-colored and Little Blue Herons in small colonies, both heron species followed the overall trend of decreased nesting in `r params$report_year` (`r totals$trhe` and `r totals$lbhe` nesting pairs, respectively).
-Black Crowned Night Herons (`r totals$bcnh` pairs) were also observed in `r params$report_year`, though numbers dramatically decreased, deviating from an overall increasing trend
+Black Crowned Night Herons (`r totals$bcnh` pairs) were also observed in `r params$report_year`, though numbers dramatically decreased, deviating from an overall increasing trend.
 We monitored reproductive success of all species present at `r colony_count` colonies in WCA 3 (`r colony_list`).
 Great Egrets and White Ibis had an exceptionally poor overall nest success rate of `r greg_success`% and `r whib_success`%, respectively.
 While some Wood Storks did initiate nesting, most failed before hatching and no nests successfully fledged chicks.
-Roseate Spoonbill nesting effort was was also poor, with `r rosp_success`% of nests observed fledging at least one chick.
-While overall nest success was exceptionally poor across species in `r params$report_year`, observations of earlier nests and fledged chicks in WCA 1 suggest nest success may have been higher in this area. Increased rainfall in the winter months from a strong El Niño weather pattern influenced less than ideal conditions for wading bird nesting effort. While an exceedingly strong dry-down in April and May encouraged additional nesting, a tropical low in mid-June produced near record rainfall causing dramatic water level reversals across the system likely resulted in additional nest failures and low post fledgling survival. 
+Roseate Spoonbill nesting effort was also poor, with `r rosp_success`% of nests observed fledging at least one chick.
+While overall nest success was exceptionally poor across species in `r params$report_year`, observations of earlier nests and fledged chicks in WCA 1 suggest nest success may have been higher in this area. Increased rainfall in the winter months from a strong El Niño weather pattern influenced less than ideal conditions for wading bird nesting effort. While an exceedingly strong dry-down in April and May encouraged additional nesting, a tropical low in mid-June produced near record rainfall causing dramatic water level reversals across the system. It likely resulted in additional nest failures and low post fledgling survival. 
 
 ## Introduction and Background
 
@@ -162,23 +162,23 @@ Wood Storks have special relevance for the restoration of the south Florida ecos
 Historically, this area was the core reproductive habitat for the species, to the extent that over 75% of the U.S. population was thought to breed in this area (Coulter et al. 1999).
 By the 1990s, the breeding population in the Everglades had declined by over 80% since the 1930s and by at least 50% since the 1960s.
 In addition, storks have shifted the timing of nesting in the Everglades from November/December initiations in the 1960s, to February/March initiations (Ogden 1994).
-This shift in timing has meant that storks currently rear young during the onset of summer rains, when surface water levels rise, prey disperses, and young storks typically starve.
+This shift in timing has meant that storks currently rear young during the onset of summer rains, when surface water levels rise, prey disperse, and young storks typically starve.
 In addition, storks have shown marked shifts in the location of nesting, having moved gradually from almost entirely coastal nesting in the Everglades, to inland nesting, as a result of reduced freshwater flows to the coastal regions of the Everglades (Ogden 1994).
 Storks also began nesting in more northerly locations in north and central Florida, Georgia, and South Carolina during the period 1970 -- 2000.
 These dramatic changes in the characteristics of birds nesting in south Florida have been related to radically altered distribution and timing of surface water in the Everglades (Ogden 1994), as well as an approximately 50% loss of wetlands in Florida since Europeans arrived.
-Thus, the restoration of south Florida wetlands seems to be extremely important to the restoration of breeding Wood Storks to the area and is identified as part of the restoration plan for the species.
+Thus, the restoration of south Florida wetlands seems to be extremely important to for restoring breeding Wood Stork colonies in the area and is identified as part of the restoration plan for the species.
 The restoration of storks may also be a signal of successful restoration of key hydrological and biological functions of the south Florida ecosystem (Ogden 1994).
 By virtue of their unique grope-foraging technique, storks require very dense sources of prey animals in order to be cued to nest, and continued availability of dense prey is critical for successful nesting over the course of the approximately 110-day nesting period.
 Reproduction by storks may thus reflect the healthy dynamics of prey animal populations.
 This is probably not a simple relationship, since dense populations may require one or more kinds of irregular disturbance to achieve pulsed production (Frederick and Ogden 2001, Dorn and Cook 2015).
 Storks also seem to rely throughout their range on some degree of surface water recession in order to concentrate prey animals -- successful foraging therefore relies on the right mix of water depth, and water level recession.
-Thus the regular, successful reproduction of storks is thought to indicate that the combination of several hydrological and biological functions in the Everglades has been correctly restored.
+Thus, the regular, successful reproduction of storks is thought to indicate that the combination of several hydrological and biological functions in the Everglades has been correctly restored.
 Reliance on the storks as an indicator seems wise, since there is a long record of stork nesting (over 80 years), and almost no information on dynamics of aquatic animal populations prior to drainage of the system.
 The Roseate Spoonbill (*Platalea ajaja*) is listed in Florida as a state-designated threatened species.
 It has historically been an important nesting bird in the coastal regions of the Everglades but has also bred in freshwater colonies since at least 1992 (Frederick and Towles 1995) and nearly annually thereafter.
 Thus, this protected species is also of interest because of its potential responses to Everglades restoration activities, particularly the trickle-down effects of freshwater management in coastal estuaries.
 
-Wading bird nesting is therefore a key criterion of restoration, and understanding of their reproductive ecology (energetics, timing, productivity) have the potential for fine-tuning the way that the hydrology of the Everglades is managed, as well as how hydrology can be related to specific nesting responses.
+Wading bird nesting is therefore a key criterion of restoration, and understanding of their reproductive ecology (energetics, timing, productivity) has the potential for fine-tuning the way that the hydrology of the Everglades is managed, as well as how hydrology can be related to specific nesting responses.
 For these reasons, continued monitoring of the Everglades breeding populations is likely to provide crucial information, both for evaluating the progress of restoration, for refining our understanding of the underlying ecological relationships between the aquatic ecology of the ecosystem and the birds, and for developing usable predictive tools for managers dealing with real time choices.
 Although the planning for restoration of the South Florida Ecosystem is well underway, uncertainties remain about the reproductive responses of storks, including how soon storks might respond to a restored ecosystem, where and when they will nest, the relative importance of wetland areas outside the Everglades, and how the population will respond to specific levels of reproductive productivity.
 This project specifically monitors nesting and nesting success by storks in the Everglades with the aim of a) detecting ecological changes consistent with restoration, b) contributing to a much larger southeastern-wide picture of stork population change, and c) contributing fecundity inputs to models of stork demographic change.
@@ -195,13 +195,13 @@ The primary objective of both kinds of surveys is to systematically encounter an
 ### Aerial Surveys
 
 On or about the 15th of each month between January and June, we performed systematic aerial surveys for colonies, with observers seated on both sides of a Cessna 185, flight altitude at 800 feet AGL, and east-west oriented flight transects spaced 1.6 nautical miles apart.
-These conditions result in overlapping coverage on successive transects under a variety of weather and visibility conditions and have been used continuously since 1986, with the exception of 2020-2021 due to the coronavirus pandemic.
+These conditions result in overlapping coverage on successive transects under a variety of weather and visibility conditions and have been used continuously since 1986, except for 2020-2021 due to the coronavirus pandemic.
 Once colonies were located, we noted positions with a GPS unit with the aircraft positioned approximately vertically over the north end of the colony.
 We estimated numbers of visible nesting birds while circling at a variety of altitudes (500 -- 800 feet AGL).
 Actual positions of colonies were later rectified by visually locating the tree islands on GIS imagery.
 At small colony sizes (\<100 nests), the proportional error in estimating numbers is generally small.
 However, as colony size grows beyond that, the bias is generally to underestimate numbers (Erwin 1982, Prater 1979), and controlled experiments with simulated counts have demonstrated both large bias (cf 40%) and large inter-observer differences in bias (Frederick et al. 2003).
-In addition, bias can be greatly reduced (by approximately half) through the use of counts of aerial photographs taken at the time of survey (Williams et al. 2008).
+Bias can be greatly reduced (by approximately half) by counting aerial photographs taken at the time of survey (Williams et al. 2008).
 For this reason, we take digital photographs of all active colonies from multiple angles for later counting.
 For many of the larger colonies, we also had access to information collected by helicopter via staff at the South Florida Water Management District, which estimated numbers of wading birds, and took photographs for later counting during the first week of every month, January through June.
 When these SFWMD observations were coupled with ours, we had a record of aerial surveys for large colonies every two weeks.
@@ -226,7 +226,7 @@ Large colonies occurring within these belts are generally few in number and are 
 
 \newpage
 
-```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs and ENP", message=FALSE, warning=FALSE}
+```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs and ENP. ENP monitoring is conducted by park personnel", message=FALSE, warning=FALSE}
 sp <- sf::read_sf(file.path(wader::get_default_data_path(),                      "EvergladesWadingBird/SiteandMethods/regions/subregions.shp"))
 sp <- sf::st_transform(sp, sf::st_crs("+proj=longlat +datum=WGS84"))
 location <- ggmap::geocode(c("25.883878, -80.794257"), override_limit = TRUE) + c(-.1,.35)
@@ -308,8 +308,7 @@ water_report(wca="coastalenp", minyear=params$report_year-2, maxyear=params$repo
 
 #### Water Recession
 
-Water level recession rates in winter and spring have been noted as one of the components that can help make prey available to wading birds in the Everglades, and although the power of drying rates for predicting nesting alone is rather weak, several studies suggest that minimum water recession rates of 2 mm/d or greater may be important as a partial threshold for breeding.
-Water recession rates are currently used operationally by the SFWMD to enhance breeding whenever possible.
+Water level recession rates in winter and spring have been noted as one of the components that can help make prey available to wading birds in the Everglades, and although the power of drying rates for predicting nesting alone is rather weak, several studies suggest that minimum water recession rates of 2 mm/d or greater may be important as a partial threshold for breeding since lower recession rates tend to be associated with reversals which are detrimental for breeding success for many species.
 
 In `r params$report_year` water recession rates slightly varied across regions and between early and late nesting season. Recession rates were notably low system-wide during the early nesting season, with the exception of 2B and coastal ENP. 5 of the 9 subregions did not reach recession rates of 2mm or higher. Overall late dry recession rates were also well below average with the exception of 2A and 3AN. However, all but two subregions (Coastal and Inland ENP) reached recession rates of 2mm or higher. An abnormal and extremely high exceedance rate occurred from April through May in the WCA’s and is not reflected in the tables below. This most likely increased prey availability dramatically, resulting in a late flurry of nesting (Table \@ref(tab:watertable)).
 
@@ -355,7 +354,7 @@ weather_report("precipitation", plot_year=params$report_year)
 
 We estimated that a minimum of `r total_nests` wading bird nests were initiated at colonies within WCA Lox (1), 2 and 3 (Table \@ref(tab:nesting)), and an additional `r total_enp` nests in ENP (Table \@ref(tab:enpnesting)).
 
-Wood Storks initiated nesting in WCA 3 (`r stork_max` nests) at `r stork_colony` in `r params$report_year`, and small number of Wood Storks (8 nests) also nested in a new location, Lox 11, in north central WCA Lox. Wood Storks also initiated nesting in several colonies in ENP (`r enp_counts$wost` nests).  
+Wood Storks initiated nesting in WCA 3 (`r stork_max` nests) at `r stork_colony` in `r params$report_year`, and a small number of Wood Storks (8 nests) also nested in a new location, Lox 11, in north central WCA Lox. Wood Storks also initiated nesting in several colonies in ENP (`r enp_counts$wost` nests).  
 
 Roseate Spoonbills continued to nest in the WCAs and were present in at least `r rosp_colonies` colonies, with a total of `r totals$rosp` nests.
 
@@ -483,7 +482,7 @@ load_datafile("Counts/groundcounts.csv", path = get_default_data_path()) %>%
 #### Reproductive Success
 
 Nest success was monitored at `r colony_count` colonies in WCA 3: `r colony_list`.
-Individual nests of GREG (n=202 at all five colonies), WHIB (n=21 at 6th Bridge), ROSP (n=8 at Hidden and 6th Bridge), BCNH (n=26 at Hidden, 6th Bridge, and Alley North) and Egretta herons (n=22 at Alley North and 6th Bridge) were monitored during ground-based nest checks every 5 – 7 days throughout the season. The overall sample size of monitored nests was smaller than usual due to the low density of nests, coupled with dry navigational conditions mid-season. Overall Small heron nest success was not determined due to dry conditions as well. Nest success (P; probability of fledging at least one young, Mayfield method) system-wide showed variation by species and across colonies, but overall wading bird nest success was extremely poor. GREG (P=0.30; SD=0.036), BCNH (P=0.13; SD=0.081), WHIB (P=0.04; SD=0.031) and ROSP (P=0.11; SD=0.118). This suggests one third or less of the nests initiated in `r params$report_year` were successful. Nestling success and incubation success varied across species and colonies. Incubation success ranged from 17% – 70% across species while nestling success was similar with a range of 19% - 77%. While Wood Stork nests are usually monitored until nest fate is known, dry hydrological conditions at the time of nesting, coupled with tall nest heights inhibited colony access by the field team. Therefore, overall nest success is not known for Wood Storks in `r params$report_year` but aerial observations strongly suggest all of the 145 initiated nests failed by mid-June and before chicks successfully fledged due to water level reversals in June. Thus, our observations suggest that Wood Stork nest success was effectively 0 this year in the WCAs. This is the third year in a row where all Wood Stork nests failed. Roseate Spoonbill nesting effort continued to begin slightly earlier and more asynchronous than other species. However, nest success was extremely low for all Roseate Spoonbill nest starts. NAs and zeros in the nest success table are used to indicate different levels of uncertainty. NAs indicate a lack of observations from which to make calculations, while zeros (where indicated) denote direct observation of no nests or fledglings, from which a nest success of 0 can be inferred.
+Individual nests of GREG (n=202 at all five colonies), WHIB (n=21 at 6th Bridge), ROSP (n=8 at Hidden and 6th Bridge), BCNH (n=26 at Hidden, 6th Bridge, and Alley North) and Egretta herons (n=22 at Alley North and 6th Bridge) were monitored during ground-based nest checks every 5 – 7 days throughout the season. The overall sample size of monitored nests was smaller than usual due to the low density of nests, coupled with dry navigational conditions mid-season. Dry conditions also prevented calculating overall nest success for small herons because nests could not be followed to completion. Nest success (P; probability of fledging at least one young, Mayfield method) system-wide showed variation by species and across colonies, but overall wading bird nest success was extremely poor. GREG (P=0.30; SD=0.036), BCNH (P=0.13; SD=0.081), WHIB (P=0.04; SD=0.031) and ROSP (P=0.11; SD=0.118). This suggests one third or less of the nests initiated in `r params$report_year` were successful. Incubation success ranged from 17% – 70% across species while nestling success was similar with a range of 19% - 77%. While Wood Stork nests are usually monitored until nest fate is known, dry hydrological conditions at the time of nesting, coupled with tall nest heights inhibited colony access by the field team. Therefore, overall nest success is not known for Wood Storks in `r params$report_year` but aerial observations strongly suggest all of the 145 initiated nests failed by mid-June and before chicks successfully fledged due to water level reversals in June. Thus, our observations suggest that Wood Stork nest success was effectively 0 this year in the WCAs. This is the third year in a row where all Wood Stork nests failed. Roseate Spoonbill nesting effort continued to begin slightly earlier and more asynchronous than other species. However, nest success was extremely low for all Roseate Spoonbill nest starts. NAs and zeros in the nest success table are used to indicate different levels of uncertainty. NAs indicate a lack of observations from which to make calculations, while zeros (where indicated) denote direct observation of no nests or fledglings, from which a nest success of 0 can be inferred.
 
 \newpage
 
@@ -606,11 +605,11 @@ In addition, there is evidence from systematic ground surveys in WCA 3 (see earl
 
 #### Coastal nesting
 
-It is estimated that more than 90% of the nesting of the indicator species occurred in the southern ecotone region during the 1930s and early 1940s, in all likelihood because this was the most productive area.
+It is estimated that more than 90% of the nesting of the indicator species occurred in the southern ecotone region during the 1930s and early 1940s, likely because this was the most productive area.
 A major restoration hypothesis holds that it is the reduction of freshwater flows to this coastal region that has reduced secondary productivity and resulted in the abandonment of the area by nesting wading birds.
 The proportion of the entire mainland Everglades nesting population that nests in the coastal zone is one of the restoration indicators, with at least 50% of nesting as the restoration target (Ogden et al. 1997).
 This measure has shown considerable improvement since the lows of the mid-1990s and early 2000's (2 -- 10%, Figure \@ref(fig:coastalindicator)), and during the last four years has ranged between 25 and 42%.
-In `r params$report_year`, only `r coastal$proportion`% of all nests were in coastal colonies, which is still high when compared with the average since 1986, but represents a considerable reduction from the last ten years.
+In `r params$report_year`, only `r coastal$proportion`% of all nests were in coastal colonies. This is still high when compared with the average since 1986, but represents a considerable reduction from the last ten years.
 This metric is not yet meeting the target of 50%, but the overall trend has been improving markedly in recent years.
 
 #### Ratio of visual to tactile foragers
@@ -648,7 +647,7 @@ There has been real progress in the location of nesting, with dramatic increase 
 Nonetheless, there is much room for improvement, especially in the multi-year mean.
 While the numbers of Snowy Egrets have improved in the last five years, they remain far from restoration targets.
 There is little evidence that the timing of nesting for storks is improving on average, despite the early nesting in 2017 - 2019.
-The ratio of tactile to visual foragers continues to improved since the mid-2000's but remains an order of magnitude below the restoration target.
+The ratio of tactile to visual foragers continues to improve since the mid-2000's but remains an order of magnitude below the restoration target.
 This picture illustrates clearly that the birds probably have responded in the last two decades to a combination of altered water management regimes, favorable rainfall patterns and hydropattern by nesting more consistently in the coastal zone, and by increasing populations of ibises and storks.
 While some of the population increases may be attributable to forces outside the Everglades system, the fact that these species have been attracted to nest in the Everglades in larger numbers, and that nesting has often been successful, remains a solid indicator.
 The lack of movement of the other measures suggests that the current hydrological management regimes are not powerful enough to nudge the timing of nesting, ratio of tactile foragers, or numbers of nesting Snowy Egrets further.
