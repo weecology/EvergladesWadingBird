@@ -20,43 +20,71 @@ editor_options:
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, dpi = 300)
 opts <- options(knitr.kable.NA = "NA")
 flextable::set_flextable_defaults(font.size = 11, na_str = NA, font.family = "Arial", big.mark = "", text.align="center")
+library(tidyr)
+library(dplyr)
 library(officedown)
 library(officer)
 library(wader)
 
 # Get summary numbers for text
+species_list <- c("greg","whib","wost","rosp","sneg","gbhe","lbhe",
+                  "trhe","glib", "bcnh","caeg","ycnh","smwh","anhi")
+missing <- c(greg=NA,whib=NA,wost=NA,rosp=NA,sneg=NA,gbhe=NA,lbhe=NA,trhe=NA,
+             glib=NA,bcnh=NA,caeg=NA,ycnh=NA,smda=NA,smwh=NA,anhi=NA)
 raw_counts <- max_counts() %>% 
-  dplyr::ungroup() %>% 
-  dplyr::filter(year==params$report_year) %>% 
-  dplyr::select(-year) %>% 
-  tidyr::pivot_wider(id_cols = colony, names_from = species, values_from = count) %>% 
-  dplyr::mutate(total = rowSums(dplyr::across(where(is.numeric)), na.rm=TRUE)) %>%
-  dplyr::full_join(load_datafile("SiteandMethods/colonies.csv", path = get_default_data_path()),by = dplyr::join_by(colony)) %>%
-  dplyr::select(-c(group_id,subregion,colony,aka)) %>%
-  dplyr::rename(wca=region, colony=display_name)
-under40 <- load_datafile("Counts/maxcounts_under40.csv", path = get_default_data_path()) %>%
+  dplyr::ungroup() %>%
   dplyr::filter(year==params$report_year) %>%
-  dplyr::select(-c(year,notes,colony_old,group_id))
+  dplyr::select(-year) %>% 
+  tidyr::pivot_wider(id_cols = colony, 
+                     names_from = species, values_from = count) %>% 
+  tibble::add_column(!!!missing[!names(missing) %in% names(.)]) %>%
+  dplyr::select(colony,dplyr::all_of(species_list)) %>%
+  dplyr::mutate_at(dplyr::all_of(species_list),as.numeric) %>%
+  dplyr::mutate(total = rowSums(across(where(is.numeric)), na.rm=TRUE)) %>%
+  dplyr::full_join(load_datafile("SiteandMethods/colonies.csv", 
+               path = get_default_data_path()),by =    dplyr::join_by(colony)) %>%
+  dplyr::select(-c(group_id,subregion,colony,aka)) %>%
+  dplyr::rename(wca=region, colony=display_name)   %>%
+  dplyr::mutate(wca = stringr::str_replace(wca, "1", "lox"))  %>%
+  dplyr::mutate(latitude = as.character(latitude), 
+                longitude = as.character(longitude)) %>%
+  dplyr::filter(total>0) 
+under40 <- load_datafile("Counts/maxcounts_under40.csv", 
+                         path = get_default_data_path()) %>%
+  dplyr::filter(year==params$report_year) %>%
+  tibble::add_column(!!!missing[!names(missing) %in% names(.)]) %>%
+  dplyr::mutate_at(dplyr::all_of(species_list),as.numeric) %>%
+  dplyr::mutate(across(species_list, 
+             ~ dplyr::case_when(. == 1 & notes=="1s indicate presence" ~ NA, 
+                                TRUE ~ .))) %>%
+  dplyr::select(colony,wca,latitude,longitude,all_of(species_list)) %>%
+  dplyr::mutate(total = rowSums(dplyr::across(where(is.numeric)), na.rm=TRUE)) %>%
+  dplyr::filter(total>0) 
 
 total_counts <- merge(raw_counts, under40, all = TRUE) %>%
   dplyr::select(colony,wca,latitude, longitude,everything()) %>%
+  dplyr::mutate(wca = substr(wca, 1, 1))  %>%
   dplyr::mutate(wca = stringr::str_replace(wca, "1", "lox"))  %>%
-  dplyr::select(-c(anhi, total)) %>%
   dplyr::mutate(latitude = as.character(latitude), 
-                longitude =     as.character(longitude)) %>%
+                longitude = as.character(longitude)) %>%
   dplyr::filter(!(wca %in% c("enp","other"))) 
+
+totals <- total_counts %>% 
+  dplyr::select(-c(anhi, total)) %>%
+  dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")
 
 enp_counts <- raw_counts %>%
   dplyr::select(colony,wca,latitude, longitude,everything()) %>%
-  dplyr::select(-c(anhi, total)) %>%
   dplyr::mutate(latitude = as.character(latitude), 
                 longitude = as.character(longitude)) %>%
-  dplyr::filter(wca =="enp") %>% dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")
+  dplyr::filter(wca =="enp") 
 
-totals <- total_counts %>% dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")
+enp_totals <- enp_counts %>% 
+  dplyr::select(-c(anhi, total)) %>%
+  dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")
 
-total_nests <- sum(totals[,-(1:4)])
-total_enp <- sum(enp_counts[,-(1:4)])
+total_nests <- as.integer(sum(totals[,-(1:4)]))
+total_enp <- as.integer(sum(enp_totals[,-(1:4)]))
 stork_max <- max(total_counts$wost, na.rm=TRUE)
 stork_colony <- total_counts$colony[which(total_counts$wost==max(total_counts$wost, na.rm=TRUE))]
 stork_2 <- sort(total_counts$wost,decreasing = T)[2]
@@ -64,6 +92,10 @@ stork_colony2 <- total_counts$colony[which(total_counts$wost==stork_2)]
 rosp_6b <- total_counts$rosp[which(total_counts$colony=="6th Bridge")]
 rosp_an <- total_counts$rosp[which(total_counts$colony=="Alley North")]
 rosp_colonies <- sum(total_counts$rosp>0,na.rm=TRUE)
+
+ground_totals <- load_datafile("Counts/groundcounts.csv", path = 
+                                 get_default_data_path()) %>%
+  dplyr::filter(year == params$report_year)
 
 success_numbers <- load_datafile("Nesting/nest_success_summary.csv") %>%
   dplyr::filter(year==params$report_year) %>%        
@@ -131,11 +163,11 @@ The `r params$report_year` season began with relatively normal water levels thro
 In `r params$report_year`, a total of `r total_nests` wading bird nests (not including Anhingas) were initiated at colonies within WCA 1, WCA 2, and WCA 3.
 Wood Storks nested in low numbers in WCA 3 and Lox (`r stork_max` nests in `r stork_colony`, `r stork_2` in `r stork_colony2`).
 Roseate Spoonbills continued nesting in many colonies throughout the WCAs, but with fewer nests overall (`r totals$rosp` nests). The largest numbers of nests occurred at 6th Bridge (`r rosp_6b`) and Alley North (`r rosp_an`).
-White Ibis total nests (`r totals$whib`) were also well below average.
+White Ibis total nests (`r as.integer(totals$whib)`) were also well below average.
 Great Egrets continued to nest in large numbers (`r totals$greg` nests).
 Little Blue Heron and Tri-colored Heron colonies were monitored from standardized ground surveys in WCA 3.
-While there has been a recent increasing trend of Tri-colored and Little Blue Herons in small colonies, both heron species followed the overall trend of decreased nesting in `r params$report_year` (`r totals$trhe` and `r totals$lbhe` nesting pairs, respectively).
-Black Crowned Night Herons (`r totals$bcnh` pairs) were also observed in `r params$report_year`, though numbers dramatically decreased, deviating from an overall increasing trend.
+While there has been a recent increasing trend of Tri-colored and Little Blue Herons in small colonies, both heron species followed the overall trend of decreased nesting in `r params$report_year` (`r ground_totals$trhe` and `r ground_totals$lbhe` nesting pairs, respectively).
+Black Crowned Night Herons (`r ground_totals$bcnh` pairs) were also observed in `r params$report_year`, though numbers dramatically decreased, deviating from an overall increasing trend.
 We monitored reproductive success of all species present at `r colony_count` colonies in WCA 3 (`r colony_list`).
 Great Egrets and White Ibis had an exceptionally poor overall nest success rate of `r greg_success`% and `r whib_success`%, respectively.
 While some Wood Storks did initiate nesting, most failed before hatching and no nests successfully fledged chicks.
@@ -354,32 +386,18 @@ weather_report("precipitation", plot_year=params$report_year)
 
 We estimated that a minimum of `r total_nests` wading bird nests were initiated at colonies within WCA Lox (1), 2 and 3 (Table \@ref(tab:nesting)), and an additional `r total_enp` nests in ENP (Table \@ref(tab:enpnesting)).
 
-Wood Storks initiated nesting in WCA 3 (`r stork_max` nests) at `r stork_colony` in `r params$report_year`, and a small number of Wood Storks (8 nests) also nested in a new location, Lox 11, in north central WCA Lox. Wood Storks also initiated nesting in several colonies in ENP (`r enp_counts$wost` nests).  
+Wood Storks initiated nesting in WCA 3 (`r stork_max` nests) at `r stork_colony` in `r params$report_year`, and a small number of Wood Storks (8 nests) also nested in a new location, Lox 11, in north central WCA Lox. Wood Storks also initiated nesting in several colonies in ENP (`r enp_totals$wost` nests).  
 
-Roseate Spoonbills continued to nest in the WCAs and were present in at least `r rosp_colonies` colonies, with a total of `r totals$rosp` nests.
-
-Large numbers of nesting Roseate Spoonbills usually occurred in large mixed colonies as were observed in Alley North (`r rosp_an` nests) and 6th Bridge (`r rosp_6b` nests).
+Roseate Spoonbills continued to nest in the WCAs and were present in at least `r rosp_colonies` colonies, with a total of `r totals$rosp` nests. Large numbers of nesting Roseate Spoonbills usually occurred in large mixed colonies as were observed in Alley North (`r rosp_an` nests) and 6th Bridge (`r rosp_6b` nests).
 
 ```{r nesting}
-max_counts() %>% 
-  dplyr::ungroup() %>% 
-  dplyr::filter(year==params$report_year) %>% 
-  dplyr::select(-year) %>% 
-  tidyr::pivot_wider(id_cols = colony, names_from = species, values_from = count) %>%
-  dplyr::mutate(total = rowSums(dplyr::across(where(is.numeric)), na.rm=TRUE)) %>%
-  dplyr::full_join(load_datafile("SiteandMethods/colonies.csv", path = get_default_data_path()),by = dplyr::join_by(colony)) %>%
-  dplyr::select(-c(group_id,subregion,colony,aka,latitude, longitude)) %>%
-  dplyr::mutate(region = stringr::str_replace(region, "1", "lox"))  %>%
-  dplyr::rename(wca=region, colony=display_name) %>%
+raw_counts %>%
   dplyr::filter(!(wca %in% c("enp","other"))) %>%
-  dplyr::select(colony,wca,everything()) %>%
-  dplyr::relocate(total, .after = last_col()) %>%
-  dplyr::filter(total > 0) %>%
+  dplyr::select(colony,wca,all_of(species_list),total) %>%
   dplyr::arrange(wca, total) %>%
   dplyr::bind_rows(dplyr::summarise_all(., 
-                                ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
-  dplyr::select(-anhi) %>%
-  dplyr::rename_with(toupper, .cols = -colony) %>%
+              ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
+ dplyr::rename_with(toupper, .cols = -colony) %>%
   flextable::flextable() %>%
   flextable::fontsize(size = 9) %>%
   flextable::fontsize(size = 11, part = "header") %>%
@@ -391,24 +409,9 @@ max_counts() %>%
 
 \newpage
 ```{r enpnesting}
-max_counts() %>% 
-  dplyr::ungroup() %>% 
-  dplyr::filter(year==params$report_year) %>% 
-  dplyr::select(-year) %>% 
-  tidyr::pivot_wider(id_cols = colony, names_from = species, values_from = count) %>%
-  dplyr::mutate(total = rowSums(dplyr::across(where(is.numeric)), na.rm=TRUE)) %>%
-  dplyr::full_join(load_datafile("SiteandMethods/colonies.csv", path = get_default_data_path()),by = dplyr::join_by(colony)) %>%
-  dplyr::select(-c(group_id,subregion,colony,aka,latitude, longitude)) %>%
-  dplyr::mutate(region = stringr::str_replace(region, "1", "lox"))  %>%
-  dplyr::rename(wca=region, colony=display_name) %>%
-  dplyr::filter(wca == "enp") %>%
-  dplyr::select(colony,wca,everything()) %>%
-  dplyr::relocate(total, .after = last_col()) %>%
-  dplyr::filter(total > 0) %>%
-  dplyr::arrange(wca, total) %>%
+enp_counts %>%
   dplyr::bind_rows(dplyr::summarise_all(., 
-                                ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
-  dplyr::select(-anhi) %>%
+              ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
   dplyr::rename_with(toupper, .cols = -colony) %>%
   flextable::flextable() %>%
   flextable::fontsize(size = 9) %>%
@@ -448,7 +451,7 @@ The small dark heron counts should therefore be treated as bare minimums.
 The only indicator of trends of these species is through comparing the same ground surveys in selected transects over time as an index of abundance (Table \@ref(tab:ground)).
 Based on these surveys, there has been an overall trend towards fewer numbers of Tricolored Heron and Little Blue Heron nests in the study area since 2000.
 This decline has been accompanied by a large increase in numbers of Black-crowned Night Heron presence in the same colonies.
-Despite an overall decrease in Tricolored and Little Blue Heron trends for the period of record, there has been an uptick in Little Blue Heron presence starting in 2015. However, a decrease in both Little Blue and Tricolored Herons occurred in `r params$report_year` (`r totals$lbhe` and `r totals$trhe` nests respectively). This was only 42% of the 5-year average and 61% of the 10-year average for Little Blue Herons. Tricolored Heron nesting effort was only 21% and 33% of the 5- and 10-year averages respectively This follows an overall trend of fewer wading bird nests within the WCA’s in `r params$report_year`.
+Despite an overall decrease in Tricolored and Little Blue Heron trends for the period of record, there has been an uptick in Little Blue Heron presence starting in 2015. However, a decrease in both Little Blue and Tricolored Herons occurred in `r params$report_year` (`r ground_totals$lbhe` and `r ground_totals$trhe` nests respectively). This was only 42% of the 5-year average and 61% of the 10-year average for Little Blue Herons. Tricolored Heron nesting effort was only 21% and 33% of the 5- and 10-year averages respectively This follows an overall trend of fewer wading bird nests within the WCA’s in `r params$report_year`.
 
 These long-term patterns of decline, followed by an apparent rebound could be the result of a general fluctuation in nesting by these species throughout the Everglades, or it could indicate that these species were nesting elsewhere in the system such as in larger colonies or in coastal areas.
 For logistical reasons, *Egretta* herons are difficult to count in large colonies.
@@ -725,28 +728,10 @@ plot_supercolony(maxyear = params$report_year)
 ## Appendix
 
 ```{r alltotals}
-main <- max_counts() %>% 
-  dplyr::ungroup() %>% 
-  dplyr::filter(year==params$report_year) %>% 
-  dplyr::select(-year) %>% 
-  tidyr::pivot_wider(id_cols = colony, names_from = species, values_from = count) %>% 
-  dplyr::mutate(total = rowSums(dplyr::across(where(is.numeric)), na.rm=TRUE)) %>%
-  dplyr::full_join(load_datafile("SiteandMethods/colonies.csv", path = get_default_data_path()),by = dplyr::join_by(colony)) %>%
-  dplyr::select(-c(group_id,subregion,colony,aka)) %>%
-  dplyr::rename(wca=region, colony=display_name)
-under40 <- load_datafile("Counts/maxcounts_under40.csv", path = get_default_data_path()) %>%
-  dplyr::filter(year==params$report_year) %>%
-  dplyr::select(-c(year,notes,colony_old,group_id))
-
-merge(main, under40, all = TRUE) %>%
-  dplyr::select(colony,wca,latitude, longitude,everything()) %>%
-  dplyr::mutate(wca = stringr::str_replace(wca, "1", "lox"))  %>%
-  dplyr::relocate(total, .after = last_col()) %>%
-  dplyr::filter(total > 0) %>%
+merge(raw_counts, under40, all = TRUE) %>%
+  dplyr::select(colony,wca,latitude,longitude,all_of(species_list),total) %>%
   dplyr::arrange(wca, desc(total)) %>%
-  dplyr::mutate(latitude = as.character(latitude), longitude = as.character(longitude)) %>%
   dplyr::bind_rows(dplyr::summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
-  dplyr::select(-c(smhe,lawh,lada)) %>%
   dplyr::rename_with(toupper, .cols = -colony) %>%
   flextable::flextable() %>%
   flextable::fontsize(size = 6) %>%
