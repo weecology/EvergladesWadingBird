@@ -77,18 +77,18 @@ nest_success <- nests %>%
 # Make example and compare to manual 
 #
 nest_success_manual <- read.csv("Nesting/nest_success.csv") %>%
-                       dplyr::filter(year>=min_year)
+                       dplyr::filter(year>=min_year) %>%
+                       dplyr::select(-notes)
 write.table(nest_success_manual, "Nesting/example2024.csv", row.names = FALSE, col.names = TRUE,
-            na = "", sep = ",", quote = 18)
+            na = "", sep = ",")
 
 nest_success <- nest_success %>%
                 dplyr::mutate(clutch_type=NA, 
                               real_success=NA,
-                              real_failure=NA,
-                              notes=NA) %>%
+                              real_failure=NA) %>%
                 dplyr::select(colnames(nest_success_manual))
 write.table(nest_success, "Nesting/example2024.csv", row.names = FALSE, col.names = TRUE,
-            na = "", sep = ",", quote = 18)                
+            na = "", sep = ",")                
 
 
 # Do summary calculations
