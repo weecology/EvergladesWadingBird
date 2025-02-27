@@ -79,13 +79,15 @@ nest_success <- nests %>%
 nest_success_manual <- read.csv("Nesting/nest_success.csv") %>%
                        dplyr::filter(year>=min_year) %>%
                        dplyr::select(-c("real_success","real_failure","start_date",
-                                        "end_date","notes"))
+                                        "end_date","notes")) %>%
+                       dplyr::arrange(year,colony, species, nest_number)
 write.table(nest_success_manual, "Nesting/example2024.csv", row.names = FALSE, col.names = TRUE,
             na = "", sep = ",")
 
 nest_success <- nest_success %>%
                 dplyr::mutate(clutch_type=NA) %>%
-                dplyr::select(colnames(nest_success_manual))
+                dplyr::select(colnames(nest_success_manual)) %>%
+                dplyr::arrange(year,colony, species, nest_number)
 write.table(nest_success, "Nesting/example2024.csv", row.names = FALSE, col.names = TRUE,
             na = "", sep = ",")                
 
