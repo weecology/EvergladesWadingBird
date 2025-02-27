@@ -17,19 +17,11 @@ on:
 jobs:
   build:
     if: contains(toJson(github.event.commits), '[skip ci]') == false
-
-    runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
-    strategy:
-      matrix:
-        config:
-          - {os: ubuntu-latest, r: '4.2.2', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+    
+    runs-on: ubuntu-latest
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
@@ -37,22 +29,9 @@ jobs:
         with:
             fetch-depth: 3
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Setup R (Ubuntu)
+        uses: eddelbuettel/github-actions/r2u-setup@master
 
-      - name: Cache R packages
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get -y update && sudo apt-get install -y \
-            libgit2-dev libicu-dev gdal-bin proj-data proj-bin libv8-dev libprotobuf-dev protobuf-compiler \
-            libudunits2-dev libgdal-dev libgeos-dev libproj-dev libfontconfig1-dev libjq-dev libmysqlclient-dev libpng-dev
-          sudo apt-get update
       - name: Install packages
         run: Rscript install-packages.R
 
@@ -110,10 +89,9 @@ jobs:
       - name: Create Release
         if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
         id: create_release
-        uses: zendesk/action-create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.tagging.outputs.tag }}
-          release_name: ${{ steps.tagging.outputs.tag }}
+          name: ${{ steps.tagging.outputs.tag }}
           body: ${{ steps.tagging.outputs.release }}

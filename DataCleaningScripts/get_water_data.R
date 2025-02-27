@@ -8,13 +8,16 @@ source("DataCleaningScripts/eden_covariates.R")
 # Downloads new EDEN depth data, calculates covariates, appends to covariate file
 
 get_eden_data <- function() {
-
-download_eden_depths()
   
-if(length(list.files("Water", pattern = "*_depth.nc"))==0) {
+metadata <- get_metadata()
+last_download <- get_last_download() %>% dplyr::select(-X)
+
+if(identical(metadata,last_download)) {
   return(NULL)
 } else {
 
+download_eden_depths()
+  
 covariate_data <- read.table("Water/eden_covariates.csv", header = TRUE, sep = ",")
 new_covariates <- get_eden_covariates() %>%
                   dplyr::bind_rows(get_eden_covariates(level="all")) %>%
@@ -40,9 +43,7 @@ depth_data <- dplyr::filter(depth_data, !date %in% new_depths$date) %>%
               rbind(new_depths) %>%
               dplyr::arrange("date", "region")
 
-file.remove(dir(path=file.path('Water'),  pattern="_.*_depth.nc", full.names = TRUE))
-
-update_last_download(metadata = get_metadata())
+update_last_download(metadata = metadata)
 }
 
 return(list(covariate_data=covariate_data, depth_data=depth_data))

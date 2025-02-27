@@ -1,4 +1,4 @@
-year,ibis_interval,stork_interval
+"year","ibis_interval","stork_interval"
 1931,1,1
 1932,1,2
 1933,2,3
@@ -79,5 +79,6 @@ year,ibis_interval,stork_interval
 2019,1,
 2020,1,
 2021,1,
-2022,1,
-2023,2,
+2022,2,
+2023,1,
+2024,2,
