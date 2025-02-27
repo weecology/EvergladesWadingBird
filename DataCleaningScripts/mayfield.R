@@ -1,10 +1,11 @@
 `%>%` <- magrittr::`%>%`
 species <- read.csv("SiteandMethods/species_list.csv")
+min_year <- 2024
 
 #' Get nest metrics
 #'
 nests <- read.csv("Nesting/nest_checks.csv", na.strings = "") %>%
-         dplyr::filter(year>=2017) %>%
+         dplyr::filter(year>=min_year) %>%
          dplyr::mutate(species = replace(species, species %in% c("unkn", "anhi", "coga", "rsha", "grhe"), "smhe")) %>%
          plyr::join(species[,c(1,5,6)], by = "species") %>%
          dplyr::mutate(date = lubridate::as_date(date),
@@ -72,13 +73,30 @@ nest_success <- nests %>%
                                                                   is.na(n_days_incubation) ~ 0,
                                                                   TRUE ~ n_days_incubation))
 
-#' Do summary calculations
-#'
+
+# Make example and compare to manual 
+#
+nest_success_manual <- read.csv("Nesting/nest_success.csv") %>%
+                       dplyr::filter(year>=min_year)
+write.table(nest_success_manual, "Nesting/example2024.csv", row.names = FALSE, col.names = TRUE,
+            na = "", sep = ",", quote = 18)
+
+nest_success <- nest_success %>%
+                dplyr::mutate(clutch_type=NA, 
+                              real_success=NA,
+                              real_failure=NA,
+                              notes=NA) %>%
+                dplyr::select(colnames(nest_success_manual))
+write.table(nest_success, "Nesting/example2024.csv", row.names = FALSE, col.names = TRUE,
+            na = "", sep = ",", quote = 18)                
+
+
+# Do summary calculations
+#
 success_summary <- read.csv("Nesting/nest_success_summary.csv")
-nest_success_manual <- read.csv("Nesting/nest_success.csv") 
 
 success <- nest_success %>%
-  dplyr::filter(year>=2017) %>%
+  dplyr::filter(year>=min_year) %>%
 
   # make consistent use of success columns
   dplyr::mutate(incubation_success = dplyr::case_when(is.na(incubation_success) & brood %in% c(1:10) ~ 1,
