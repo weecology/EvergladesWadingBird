@@ -302,13 +302,13 @@ Colonies monitored each year were selected for their large size, species composi
 Many colonies are occupied by several species, and not all colony locations are active in each year (Frederick and Spalding 1994).
 We marked nests for study within colonies along 4-m wide belt transects oriented from the edge to areas of greatest nest density, marking all nests within the belts with numbered surveyors flagging.
 
-Colonies were monitored from the time most nests had progressed to incubation until all nests on the transects had either failed or produced young to 14 days of age (White Ibis), 21 days of age (Great Egret) or 50 days (Wood Stork).
+Colonies were monitored from the time most nests had progressed to incubation until all nests on the transects had either failed or fledged young at 14 days of age (White Ibis), 21 days of age (Great Egret) or 50 days (Wood Stork).
 On each visit, all nests were checked for contents using a mirror pole.
 Nests were identified to species based on construction materials, size, and egg and chick characteristics (McVaugh 1972).
 Nest start date was taken to be the date of laying of the first egg, determined based on either laying or hatching schedule.
 Nests were assumed to have failed when all eggs or chicks disappeared or were found dead prior to the fledging age (above).
 Barring more detailed evidence at the nest, timing of nest failure was assigned to the midpoint between nest checks.
-Nest success was expressed over all nests of each species from all colonies within any breeding year, as a probability of the nest surviving to produce young of a predetermined age (Mayfield 1961, 1975, Hensler 1985).
+Nest success was calculated using the Mayfield method, which corrects for positive bias by accounting for early yet unobserved nest failures. This method estimates daily mortality probabilities based on the number of days each nest was observed, providing an average daily nest survival rate. Stage-specific survival was calculated separately for incubation and nestling stages to account for differences in failure rates between the two. Nest success was expressed over all nests of each species from all colonies within any breeding year, as a probability of the nest surviving to produce at least one young of the predetermined age of fledging (Mayfield 1961, 1975, Hensler 1985).
 
 ## Results
 
