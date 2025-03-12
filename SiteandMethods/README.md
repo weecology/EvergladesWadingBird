@@ -10,6 +10,8 @@ Project description and sampling design.
 Non-target species are noted but are not systematically counted.
 
 Nest attributes:
+* incubation_j: mean days to hatching
+* nestling_j: mean days from hatching to fledging
 * clutch size (range)
 * egg color
 * nest size
