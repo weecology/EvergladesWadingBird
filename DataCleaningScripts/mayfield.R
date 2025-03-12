@@ -34,17 +34,26 @@
   # fledge_date = incubation_j + nestling_j + 2
   # fail date is halfway between last date with chicks and first empty date
 
+# TO DO:
+## When do nests get excluded from calculations
+  # only chicks no eggs and stage isn't aged_chick
+  # only 1 observation of eggs/chicks total, and it isn't hatching or pipping
+  # do not include in clutch size calculations based on 1 observation
+  
+# TO DO: decide on inc_j for smhe
+# correct old calculations days and j's
+
 `%>%` <- magrittr::`%>%`
 species <- read.csv("SiteandMethods/species_list.csv")
 species_list <- c("whib","wost","greg","rosp","gbhe","glib","bcnh",
                   "trhe","lbhe","sneg","smhe","smwh")
-min_year <- 2024
+get_year <- c(2024)
 
 
 #' Get nest metrics
 #'
 nests <- read.csv("Nesting/nest_checks.csv", na.strings = "") %>%
-         dplyr::filter(year>=min_year,
+         dplyr::filter(year %in% get_year,
                        species %in% species_list) %>%
          dplyr::group_by(year,colony,nest,species) %>%
          dplyr::mutate(date = lubridate::as_date(date),
@@ -63,13 +72,13 @@ nests <- read.csv("Nesting/nest_checks.csv", na.strings = "") %>%
                                                              TRUE ~ stage)) %>%
          dplyr::mutate(lay_date = dplyr::case_when(eggs > last_eggs ~ date - eggs*2 - 2,
                                                    eggs == 1 ~ date,
-                                                     TRUE ~ NA),
+                                                   TRUE ~ NA),
                        hatch_date = dplyr::case_when(stage == "pipping" ~ date + 1,
                                                      stage == "hatching" ~ date,
                                                      stage == "wet_chick" ~ date,
                                                      stage == "chick_dry" ~ date - 1,
                                                      stage == "nestling" & last_visit_stage == "incubating" ~ date - days_since_last_visit/2,
-                                                         TRUE ~ NA),
+                                                     TRUE ~ NA),
                        incubation_end = dplyr::case_when(stage == "pipping" ~ date + 1,
                                                          stage == "hatching" ~ date,
                                                          stage == "wet_chick" ~ date,
@@ -78,16 +87,20 @@ nests <- read.csv("Nesting/nest_checks.csv", na.strings = "") %>%
                                                          stage == "fledged" ~ date - nestling_j,
                                                          stage == "branchling" ~ date - nestling_j - 2,
                                                          TRUE ~ NA),
-                       fail_date = dplyr::case_when(stage == "empty" & last_visit_stage != "empty" ~ date - days_since_last_visit/2,
+                       gone_date = dplyr::case_when(stage == "empty" & last_visit_stage != "empty" ~ date - days_since_last_visit/2,
                                                       TRUE ~ NA),
+                       fail_date = dplyr::case_when(stage == "failed" ~ date - days_since_last_visit/2,
+                                                    TRUE ~ NA),
    # replace cur_data(), 
-                       fledge_date = dplyr::case_when(chicks>0 ~ unique(cur_data()$lay_date) + incubation_j + nestling_j,
-                                                      chicks>0 ~ unique(cur_data()$hatch_date) + nestling_j,
+                       fledge_date = dplyr::case_when(chicks>0 & !is.na(unique(dplyr::cur_data()$lay_date)) ~ unique(dplyr::cur_data()$lay_date) + incubation_j + nestling_j,
+                                                      chicks>0 & !is.na(unique(dplyr::cur_data()$hatch_date)) ~ unique(dplyr::cur_data()$hatch_date) + nestling_j,
                                                       TRUE ~ NA))
 nest_success <- nests %>%   
                 dplyr::rename(nest_number = nest) %>%
                 dplyr::group_by(year,colony,nest_number,species) %>%
-                dplyr::summarise(clutch = max(eggs, na.rm = TRUE),
+                dplyr::summarise(incubation_j = mean(incubation_j, na.rm = TRUE),
+                                 nestling_j = mean(nestling_j, na.rm = TRUE),
+                                 clutch = max(eggs, na.rm = TRUE),
                                  brood = max(chicks, na.rm = TRUE),
                                  brood = dplyr::case_when(!is.finite(brood) ~ NA,
                                                            TRUE ~ brood),
@@ -95,13 +108,29 @@ nest_success <- nests %>%
                                                            clutch<brood ~ brood,
                                                            TRUE ~ clutch),
                                  fledged = dplyr::last(chicks[!is.na(chicks)]),
-                                 young_lost = clutch - fledged,
                                  lay_date = min(lay_date, na.rm=TRUE),
+                                 hatch_date = min(hatch_date, na.rm=TRUE),
                                  start_date = min(date, na.rm=TRUE),
-                                 incubation_end = max(incubation_end, na.rm=TRUE),
-                                 end_date = dplyr::last(date[!(stage %in% c("empty", "missed", "collapsed",  "pulled", "unknown"))]),
+                                 incubation_end = min(incubation_end, na.rm=TRUE),
+                                 incubation_end = dplyr::case_when(is.finite(lay_date) ~ lay_date + incubation_j,
+                                                                   is.finite(hatch_date) ~ hatch_date,
+                                                                   TRUE ~ incubation_end),
+                                 gone_date = min(gone_date, na.rm=TRUE),
+                                 fail_date = max(fail_date, na.rm=TRUE),
+                                 fledge_date = max(fledge_date, na.rm=TRUE),
+                                 fledged = dplyr::case_when(is.finite(fail_date) ~ 0,
+                                                            TRUE ~ fledged),
+                                 young_lost = clutch - fledged,
+                                 end_date = dplyr::case_when(is.finite(fail_date) ~ fail_date,
+                                                             is.finite(gone_date) ~ gone_date,
+                                                             is.finite(fledge_date) ~ fledge_date,
+                                                             TRUE ~ NA),
                                  start_date = dplyr::case_when(!is.finite(start_date) ~ NA,
                                                           TRUE ~ start_date),
+                                 lay_date = dplyr::case_when(!is.finite(lay_date) ~ NA,
+                                                               TRUE ~ lay_date),
+                                 hatch_date = dplyr::case_when(!is.finite(hatch_date) ~ NA,
+                                                               TRUE ~ hatch_date),
                                  incubation_end = dplyr::case_when(!is.finite(incubation_end) ~ NA,
                                                                TRUE ~ incubation_end),
                                  end_date = dplyr::case_when(!is.finite(end_date) ~ NA,
@@ -114,16 +143,17 @@ nest_success <- nests %>%
                                  nestling_success = dplyr::case_when(fledged %in% c(1:10) ~ 1,
                                                                      any(stage %in% c("fledged","branchling")) ~ 1,
                                                                      TRUE ~ 0)) %>%
-               plyr::join(species[,c(1,5,6)], by = "species") %>%
                dplyr::mutate(n_days_incubation = dplyr::case_when(is.na(incubation_end) ~ as.numeric(end_date-start_date),
                                                                   TRUE ~ n_days_incubation),
                              n_days_nestling = dplyr::case_when(n_days_incubation > incubation_j ~ n_days_nestling + n_days_incubation - incubation_j,
                                                                 n_days_nestling > nestling_j ~ nestling_j,
                                                                 is.na(n_days_nestling) & nestling_success==1 ~ nestling_j,
                                                                 is.na(n_days_nestling) ~ 0,
+                                                                n_days_nestling < 0 ~ 0,
                                                                 TRUE ~ n_days_nestling),
                              n_days_incubation = dplyr::case_when(n_days_incubation > incubation_j ~ incubation_j,
                                                                   is.na(n_days_incubation) ~ 0,
+                                                                  n_days_incubation < 0 ~ 0,
                                                                   TRUE ~ n_days_incubation))
 
 
@@ -131,7 +161,7 @@ nest_success <- nests %>%
 #
 
 nest_success_compare <- read.csv("Nesting/nest_success.csv") %>%
-                        dplyr::filter(year>=min_year) %>%
+                        dplyr::filter(year %in% get_year) %>%
                         dplyr::full_join(nest_success, 
                                          by=c("year","colony","species","nest_number")) %>%
                         dplyr::select("year","colony","species","nest_number",
@@ -139,22 +169,27 @@ nest_success_compare <- read.csv("Nesting/nest_success.csv") %>%
                                       -"clutch_type")
 
                
-
-
 # Do summary calculations
 #
-# smhe and smwh are used to combine trhe, lbhe, sneg when they cannot be distinuished
+# smhe and smwh are used to combine trhe, lbhe, sneg when they cannot be distinguished
 # trhe, lbhe, sneg nests are impossible to tell apart
   # combine everything into smhe for incubation calculations
 # do trhe, lbhe, sneg separately if possible for nestling calculations
   # once trhe hatch, they are distinguishable
   # or trhe and smwh separately
   # lbhe, sneg chicks difficult to tell apart
+# lump back into smhe for overall
+
+## trhe implies successful incubation
+# smwh implies successful incubation
+# smhe implies incubation failure
+
+# TO DO: This ^
 
 success_summary <- read.csv("Nesting/nest_success_summary.csv")
 
 success <- nest_success %>%
-  dplyr::filter(year>=min_year) %>%
+  dplyr::filter(year %in% get_year) %>%
 
   # make consistent use of success columns
   dplyr::mutate(incubation_success = dplyr::case_when(is.na(incubation_success) & brood %in% c(1:10) ~ 1,
@@ -189,7 +224,8 @@ success <- nest_success %>%
     dplyr::mutate_if(is.double, list(~dplyr::na_if(., -Inf)))
 
 compare <- dplyr::left_join(success,success_summary, by=dplyr::join_by(year, colony, species)) %>%
-           dplyr::filter(species %in% species_list)
+           dplyr::filter(species %in% species_list) %>%
+           dplyr::select("year","colony","species",order(colnames(.)))
 
 library(ggplot2)
 library(ggpubr)
