@@ -33,6 +33,19 @@ Nest success is calculated from nest counts using the Mayfield Method.
 This determines the probability of at least one chick surviving until fledgling 
 (21 days for GREG and BCNH. 14d for WHIB and SMHE, and 55d for WOST)
 
+### Indicators
+Compiled from many sources, including monitoring efforts conducted by Everglades National Park.
+Data source was P. Frederick's WBPOP excel file which contained historical and recent wading bird data for indicators
+
+#### Wood Stork Nest Initiation Date
+
+This is the earliest nesting initiation date for the everglades region, which includes mainland Everglades National Park and the Water Conservation Areas.
+Historical records (1953-1973) from Kushlan et al 1975. 
+Recent records (1997-2024) from UF or ENP survey efforts and double checked using either field notes or South Florida Wading Bird Report
+Region where earliest nesting occurred was added by M. Ernest in March 2025 using field notes and the South Florida Wading Bird Report
+
+Corrections to 1953-1973 data were made by M. Ernest in March 2025 upon review of Kushlan et al 1975 
+
 ### Feather Mercury
 Mercury is a heavy metal that has no known biological function in any organism.
 It is therefore not a trace element, and a contaminant at any level. Its detrimental
@@ -78,7 +91,10 @@ E.g.,
 * `JetportSouth_04_07_2021_A.tif` and `JetportSouth_04_07_2021_B.tif`
 * `AlleyNorth_03_31_2021_partial.tif`
 * `JetportSouth_04_07_2021_primary.tif` and `JetportSouth_04_07_2021_AfterFieldCrew.tif`
+
 #### Orthomosaics
 
 Orthomosaics created from the raw UAS imagery are stored as GeoTIFF's with LZW compression.
 BigTIFF format is used since most orthomosaics are greater than the 4GB file size limit for normal TIFFs.
+
+
