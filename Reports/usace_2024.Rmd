@@ -554,8 +554,7 @@ A central prediction of CERP is that a return to natural flows and hydropatterns
 There are at least two overlapping sets of measures of attaining these conditions, all based on historical conditions and thought to be representative of key ecological features of the bird-prey-hydrology relationship.
 RECOVER established Performance Measures (PM) that include the 3-year running average of the numbers of nesting pairs of key avian species in the mainland Everglades, the timing of Wood Stork nesting, and the proportion of the population that nests in the coastal ecotone (Ogden et al. 1997).
 In addition to these three, the annual Stoplight Reports have added two other measures: the ratio of visual to tactile wading bird species breeding in the Everglades, and the frequency of exceptionally large White Ibis breeding events.
-These additional measures were added in an attempt to further capture key ecological relationships found in the historical ecosystem (Frederick et al. 2009).
-In this section, we report on the long-term trends and current status of these measures.
+These additional measures were added in an attempt to further capture key ecological relationships found in the historical ecosystem (Frederick et al. 2009). All performance metrics were developed based on historical data and information about pre-drainage wading bird colonies in the Everglades. In this section, we report on the long-term trends and current status of these measures relative to these restoration benchmarks.
 
 When thinking about progress towards these restoration measures, it should be remembered that the hydrological system is not yet restored to provide anything like the ecological functions expected in a completed CERP.
 Based on the recent status of the hydrological system, we would not have predicted restored or even partially restored wading bird population indicators.
@@ -590,9 +589,11 @@ supercolony_mean <- round(supercolony$interval_mean[supercolony$year==params$rep
 ```
 
 #### Numbers of nesting pairs
+Restoration Benchmarks: Four species have target minima for number of nesting pairs. Because the Everglades is a naturally variable ecosystem, these metrics were developed as 3-year averages (i.e. the number of nesting pairs over a three year period). These are:
+GREG: 4000 pairs, SNEG: 10,000 pairs, WHIB: 10,000 pairs, WOST:1500 pairs.
 
 The three-year running average for nesting pairs in the mainland Everglades (`r params$report_year-2` -- `r params$report_year`) are `r greg` pairs of Great Egrets, `r sneg` Snowy Egrets, `r whib` White Ibises, and `r wost` Wood Storks (See Table \@ref(tab:maxcountindicator)).
-Trends for Great Egrets over time for this measure increased markedly from 1988 -- 2004, and have been roughly stable since, with the 3-year running average meeting or exceeding restoration criteria for 28 consecutive sampling periods since 1996.
+Trends for Great Egrets over time for this measure increased markedly from 1988 -- 2004, and have been roughly stable since, with the 3-year running average meeting or exceeding restoration criteria since 1996.
 Trends for Snowy Egrets decreased markedly 1988 -- 1999, increased dramatically from 2000 -- 2008, then decreased variably through the 2017 nesting season.
 A slow increase has occurred since and generally, big nesting years for flock-foraging species show a big increase in Snowy Egret nesting.
 Nonetheless, three-year running averages of breeding Snowy Egrets have been consistently well below the target restoration goal in the time they have been monitored systematically since 1986.
@@ -600,15 +601,16 @@ The 3-year running average has increased markedly for White Ibises during 1986 -
 The final period in this record (2011 -- present) showed substantial fluctuation in ibis nesting, with a 50% reduction in one year and three additional years below the average of the previous decade.
 In the last six years, ibis nesting has doubled from the previous decade.
 The huge nesting effort in the 2018 and 2021 nesting seasons pulled the running average up markedly, and the running average may remain high for the next three years simply because of the contribution of large numbers of fledged chicks from those two banner years.
-White Ibis nesting populations have met or exceeded the breeding population criterion during 24 of the past 24 years.
+White Ibis nesting populations have met or exceeded the breeding population criterion since 2000.
 Wood Storks showed a marked increase from averages in the 2 -- 300 pair range (1986 -- 1992) to averages above 1,000 in many years after 1999.
 Wood Storks have equaled or exceeded the restoration population criterion during 14 of the last 24 years.
 However, the running average for `r params$report_year` was below the minimum target of 1,500.
 Together, these statistics illustrate that there has been a very substantial increase in numbers of Great Egrets, Wood Storks and White Ibises since 1986, followed by a period of relative stability during which each of these species has met restoration targets in the majority of years since 2000 (Figure \@ref(fig:maxcountindicatorplot)).
 While Snowy Egrets appear to be rebounding in the last four years, this species has never met restoration targets.
-In addition, there is evidence from systematic ground surveys in WCA 3 (see earlier in this report) that breeding populations of other small herons in the genus *Egretta* (Tricolored Herons) have fluctuated in the Everglades.
+
 
 #### Coastal nesting
+Restoration Benchmark: 50% of nests in coastal colonies (dashed line in Figure \@ref(fig:coastalindicator)). 
 
 It is estimated that more than 90% of the nesting of the indicator species occurred in the southern ecotone region during the 1930s and early 1940s, likely because this was the most productive area.
 A major restoration hypothesis holds that it is the reduction of freshwater flows to this coastal region that has reduced secondary productivity and resulted in the abandonment of the area by nesting wading birds.
@@ -618,15 +620,17 @@ In `r params$report_year`, only `r coastal$proportion`% of all nests were in coa
 This metric is not yet meeting the target of 50%, but the overall trend has been improving markedly in recent years.
 
 #### Ratio of visual to tactile foragers
+Restoration Benchmark: 32 tactile forager nests: 1 visual forager nest (dashed line in Figure \@ref(fig:ratioindicator)). 
 
 This measure recognizes that the breeding wading bird community has shifted from being numerically dominated by tactile foragers (storks and ibises) during the pre-drainage period to one in which visual foragers such as Great Egrets are numerically dominant.
 This shift is thought to have occurred as a result of impounded, stabilized, or over drained marsh, which leads to the declining availability both of larger forage fishes (Wood Storks) and crayfishes (ibises).
-These conditions also seem to favor species like Great Egrets that are less reliant on the entrapment of prey and can forage both in groups and solitarily under a variety of circumstances.
-Restoration targets are set at 32 breeding tactile foragers to each breeding visual forager, characteristic of the 1930s breeding assemblages.
+These conditions also seem to favor species like Great Egrets that are less reliant on the entrapment of prey and can forage both in groups and alone under a variety of circumstances.
+A ratio of 32 breeding tactile foragers to each breeding visual forager was characteristic of the 1930s breeding assemblages.
 While this measure has shown some improvement since the mid 1990's (movement from 0.66 to 7.9 in 2018), the metric is still generally an order of magnitude less than the restoration target (Figure \@ref(fig:ratioindicator)).
 In `r params$report_year`, the ratio was `r ratio$proportion`, and the 3-year running average was `r ratio$proportion_mean`.
 
 #### Timing of Nesting
+Restoration Benchmark: November-December for date of earliest nest initiation by Wood storks.
 
 This parameter applies only to the initiation of nesting for Wood Storks, which has shifted from November - December (1930s through 1960's) to January - March (1980s -- present).
 Later nesting increases the risk of mortality of nestlings that have not fledged prior to the onset of the wet season and can create the difference between the south Florida stork population acting as a source or sink population.
@@ -638,6 +642,7 @@ The three-year running average for `r params$report_year` was `r round(timing$da
 This metric has seen slight improvement since 2016, though much of the consistency may be traced to the lagged nature of the metric as a running average, as late nesting has occurred over the last 3 years.
 
 #### Exceptionally large ibis aggregations
+Restoration Benchmark: Large ibis nesting events every 1.6 years.(dashed line in Figure \@ref(fig:supercolonyindicator))
 
 Episodic, exceptionally large breeding aggregations of ibises were characteristic of the predrainage system and are thought to be indicators of the ability of the wetland system to produce very large pulses of prey resulting in part from typical cycles of drought and flood.
 Large breeding aggregations during the recent period are defined as being above 16,977 nests each year, defined as the 70th percentile of the entire period of record of annual nestings.
