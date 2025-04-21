@@ -11,8 +11,9 @@ Data from the Everglades breeding bird monitoring project
 
 Detailed descriptions of individual data components are located in README.md files in the individual data folders. Please see the [methods](../SiteandMethods/methods.md) for details about collection and how to use the data.
 
-Additional data to complement the wading bird data can be found at [South Florida Water Management District](https://www.sfwmd.gov/) and [Florida Coastal Everglades LTER](http://fcelter.fiu.edu/).
+Water depth is crucial to wading bird behavior. Water depth data are available from the [Everglades Depth Estimation Network (EDEN)](http://sofia.usgs.gov/eden), via their [EDEN THREDDS server](http://sflthredds.er.usgs.gov/) or the [Explore and View EDEN (EVE) web application](https://sofia.usgs.gov/eden/eve/). We also have created the [edenR package](https://github.com/weecology/edenR) to streamline downloads, data processing, and statistics for forecasting.
 
+Additional data to complement the wading bird data can be found at [South Florida Water Management District](https://www.sfwmd.gov/) and [Florida Coastal Everglades LTER](http://fcelter.fiu.edu/).
 
 ### Data Organization
 ------------
