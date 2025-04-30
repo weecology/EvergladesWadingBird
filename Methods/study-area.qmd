@@ -1,0 +1,10 @@
+---
+title: "Study Area"
+format: html
+---
+
+The Greater Everglades Ecosystem encompasses the entire Everglades watershed and estuary, roughly from Orlando FL to the southern tip of the Florida Peninsula. While avian surveys are done throughout this area we focus on methods used in the central Everglades (Water Conservation Areas 1, 2, and 3 and in many years Everglades National Park, 9597 km2, see Figure 1 for locations). This area is predominantly freshwater marsh, with an extremely low elevation gradient (30 mm/km) and soils that vary from calcareous marl soils to deep peats and surficial limestone.  Vegetation is largely composed of sawgrass marsh with tree islands of slightly higher elevation interspersed throughout. Tree island composition varies from largely temperate trees and shrubs in the north to tropical hardwoods in the south, and near-continuous cypress habitat in the west.
+
+Everglades restoration focuses on Wood Storks (Mycteria americana) , White Ibis (Eudocimus albus), Great Egrets (Ardea alba), and Snowy Egrets (Egetta thula) as monitors for the success of restoration, simply because we only have credible historical quantitative information about breeding responses in the pre drainage periods from a few species. These four species have the best historical record in part because they are white colored and easily identified from the air, but also because several of these were heavily hunted for their valuable plumes during the late 1800s and early 1900s.  These species also represent a good cross section of diets and hunting behaviors, and represent a variety of responses to natural and anthropogenically influenced food dynamism (Gawlik 1990, Frederick et al. 2009).
+
+![Figure 1. Layout of the survey regions in southern Florida. Subregions in magenta are in the Water Conservation regions. Subregions in teal are in the Everglades National Park. ENP subregions are not surveyed by this project, but data are included in this dataset.](images/study-area-map.png)
