@@ -1,0 +1,37 @@
+project:
+  type: website
+
+website:
+  title: "Everglades Wading Bird Project Methods"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+  sidebar:
+    search: true
+    collapse-level: 1
+    contents:
+      - overview.qmd
+      - study-area.qmd
+      - section: "Aerial Surveys"
+        contents:
+          - aerial-surveys/aerial-survey-methods.qmd
+      - section: "Mercury"
+        contents:
+          - text: "Methods"
+            href: mercury/mercury-methods.qmd
+      - section: "Weather"
+        contents:
+          - text: "Methods"
+            href: weather/weather-methods.qmd
+      - section: "Hydrology"
+        contents:
+          - text: "Methods"
+            href: hydrology/hydrology-methods.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

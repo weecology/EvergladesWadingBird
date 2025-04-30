@@ -1,0 +1,13 @@
+---
+title: "Data Overview"
+format: html
+---
+
+Data are maintained in a git repository (https://github.com/weecology/EvergladesWadingBird), and archived on Zenodo (https://zenodo.org/doi/10.5281/zenodo.7734553). The data contain xx tables in 9 directories (Figure XX). Each directory contains a README file describing its tables. Additional directories contain cleaning scripts and tests used in data QA/QC (see data validation section below).
+
+These files provide project-level information about the protocols used for sampling and data management. Species phenology is taken from the literature. Official colony locations are determined by the time series of counts. Any tree island with at least one year over 40 nests is assigned an official colony name. The colony shapefile is determined by the cluster of observed count locations around the tree island. Regions are defined by legal designations (water conservation areas - WCAs, public lands - National/state parks). Subregions are designed to encompass distinct water management areas within a region.
+
+- methods.md: A detailed description of the site and methods, including notes on data issues.
+- species_list.csv: Includes species phenology, foraging behavior and nest attributes. Non-target species are noted but are not systematically counted.
+- colonies.csv: Official names and locations of all colonies that have reported counts and/or nests.
+- Spatial Data: This directory also contains spatial polygons defining the regions, subregions and colonies within the study area. Data are provided as shapefiles, GeoJSON and Geopackage files.
