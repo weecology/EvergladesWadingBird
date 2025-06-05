@@ -30,57 +30,66 @@ species <- read.csv("SiteandMethods/species_list.csv")
 # "Ground_survey_data_2024.xlsx" 
 
 year <- 2024
-data_path <- "~/Desktop/ground/Ground_survey_data_2024.xlsx"
+data_path <- "~/Desktop/ground/Ground_survey_data_2024.xlsx" 
 
-data_raw <- readxl::read_excel("~/Desktop/ground/Ground_survey_data_2024.xlsx", 
-                               col_types = c("date", rep("text", 67)))
-
-new_data <- data_raw %>%
+data_raw <- readxl::read_excel(data_path, 
+                               col_types = c("date", rep("text", 67))) %>%
             rename_with(~ tolower(gsub(" ", "_", .x, fixed = TRUE))) %>%
             rename("date"="date_of_survey",
                    "transect" = "transect_id", 
                    "direction" = "direction_of_travel",
                    "complete" = "complete?",
-                   "field_gps" = "field_gps_#") %>%
+                   "field_gps" = "field_gps_#",
+                   "notes" = "comments") %>%
             mutate(year = year,
                    colony = tolower(gsub(" ","_", colony)),
                    start_time = as.numeric(start_time)*24,
                    end_time = as.numeric(end_time)*24)
 
-
-
-transects <- new_data %>%
-             select("date","transect","direction","start_time",
+transects <- data_raw %>%
+             select("year","date","transect","direction","start_time",
                     "end_time","complete","field_gps","observer_1",
                     "observer_2","start_waypoint","start_latitude","start_longitude",
                     "stop_waypoint","stop_latitude","stop_longitude","colony_waypoint",
-                    "colony","latitude","longitude")
+                    "colony","latitude","longitude","notes") %>%
+             mutate(across(c("year","start_time","end_time","start_latitude","start_longitude",
+                             "stop_latitude","stop_longitude","latitude","longitude"), as.numeric))
 
-%>%
+ground_counts <- data_raw %>%
+            select(-c("direction","start_time",
+                      "end_time","complete","field_gps","observer_1",
+                      "observer_2","start_waypoint","start_latitude","start_longitude",
+                      "stop_waypoint","stop_latitude","stop_longitude")) %>%
             pivot_longer(cols = dplyr::contains(species$species), 
                          names_to = c("species","type"),
                          names_pattern = "(.*)_(.*)",
-                         values_to = "count") 
+                         values_to = "count") %>%
+            mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
+            filter(!is.na(count), count!=0) %>%
+            pivot_wider(names_from = type, values_from = count, values_fill = NA) %>%
+            rename("count"="adult") %>%
+            select("year","date","transect","colony_waypoint","colony","latitude","longitude",
+                   "species","count","nests","chicks","notes") 
+# mutate(colony = replace(colony, colony=="58","1181"))
 
-%>%
-            separate(col = "type", 
-                     sep = "obs", 
-                     into = c("behavior", "obs")) 
 
-%>%
-            mutate(colony = tolower(gsub(" ","_", colony)),
-                   observer = ifelse(obs==1,observer1,observer2),
-                   notes = ifelse(obs==1,commentsobserver1,commentsobserver2),
-                   start_time = as.numeric(starttime),
-                   end_time = as.numeric(endtime)) %>%
-            filter(!is.na(count)) %>%
-            rename(start_transect = starttran,
-                   end_transect = endtran,
-                   photo_sets = surveyphotosets) %>%
-            select("date",	"observer",	"colony",	"start_transect",	"end_transect",	"start_time",
-                   "end_time",	"photo_sets",	"photos",	"species",	"behavior",	"count",	"notes",
-                   "entered",	"proofed")
 
+if(!all(ground_counts$colony %in% colonies$colony)| 
+   !all(ground_counts$species %in% species$species)) {
+  print(unique(ground_counts$colony[which(!(ground_counts$colony %in% colonies$colony))]))
+  print(unique(ground_counts$species[which(!(ground_counts$species %in% species$species))]))
+}
+
+write.table(ground_counts, "Counts/ground_counts.csv", 
+            row.names = FALSE, col.names = FALSE, append=TRUE, na = "", sep = ",", quote = 12)
+write.table(transects, "Counts/ground_transects.csv", 
+            row.names = FALSE, col.names = FALSE, append=TRUE, na = "", sep = ",", quote = 21)
+
+groundcounts_all <- read.csv("Counts/ground_counts.csv")
+
+groundcounts_all <- groundcounts_all %>% arrange(year) 
+write.table(groundcounts_all, "Counts/ground_counts.csv", 
+            row.names = FALSE, na = "", sep = ",", quote = 12)
 
 ##############################
 # Original files: Long format: 
