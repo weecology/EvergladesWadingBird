@@ -83,10 +83,13 @@ counts <- counts %>%
                  colony = replace(colony, colony=="cook_nc1","lox_nc1"),
                  colony = replace(colony, colony=="cook_nc4","lox_nc4"))
 
-counts <- counts %>% dplyr::arrange(counts)
-write.csv(counts, "Counts/maxcounts.csv", row.names = FALSE, na = "", quote = 9)
+counts <- counts %>% dplyr::arrange(year,group_id)
+write.table(counts, "Counts/maxcounts.csv", row.names = FALSE, na = "", sep = ",", quote = 9)  
 
 colonies_update <- colonies_update %>% 
   dplyr::mutate(dplyr::across(c("group_id","latitude","longitude"), as.numeric)) %>%
   dplyr::arrange(group_id)
 write.csv(colonies_update, "SiteandMethods/colonies.csv", row.names = FALSE, na = "", quote = c(7,8))
+
+species <- species %>% dplyr::arrange(species)
+write.csv(species, "SiteandMethods/species_list.csv", row.names = FALSE, na = "", quote = 7:27)
