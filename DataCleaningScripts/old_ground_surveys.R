@@ -24,13 +24,14 @@ species <- read.csv("SiteandMethods/species_list.csv")
 # "ground survey data 2015.xlsx"      
 # "ground survey data 2017.xlsx"       
 # "Ground Survey Data_2019.xlsx"      
-# "ground_surveys_2021.xlsx"           
+# "Ground Survey Data_Analysis_2020.xlsx"
+# "Ground Survey Data_Analysis_2021.xlsx"           
 # "ground_surveys_2022.xlsx" 
 # "Ground_survey_data_2023.xlsx"       
 # "Ground_survey_data_2024.xlsx" 
 
-year <- 2009
-data_path <- "~/Desktop/ground/Ground Surveys 2009.xls" 
+year <- 2021
+data_path <- "~/Desktop/ground/Ground Survey Data_Analysis_2021.xlsx" 
 
 data_raw <- readxl::read_excel(data_path, 
                                col_types = c("date", rep("text", 31))) %>%
