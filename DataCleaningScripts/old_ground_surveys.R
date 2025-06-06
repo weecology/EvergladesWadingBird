@@ -93,16 +93,59 @@ write.table(groundcounts_all, "Counts/ground_counts.csv",
 
 ##############################
 # Original files: Long format: 
-# "Ground Surveys 2005.xls"            
-# "Ground Surveys 2006.xls" 
-# "Ground Survey Data 2007.xls"        
-# "Ground Survey Data 2008.xls"
+# "Ground Surveys 2005.xlsx"            
+# "Ground Surveys 2006.xlsx" 
+# "Ground Survey Data 2007.xlsx"        
+# "Ground Survey Data 2008.xlsx"
 
 ##############################
+year <- 2008
+data_path <- "~/Desktop/ground/Ground Survey Data 2008.xlsx" 
+
+data_raw <- readxl::read_excel(data_path, 
+                               col_types = c("date", rep("text", 23))) %>%
+  rename_with(~ tolower(gsub(" ", "_", .x, fixed = TRUE))) %>%
+  rename("transect" = "transect_id", 
+         "direction" = "direction_of_travel",
+         "field_gps" = "field_gps_#",
+         "notes" = "comments") %>%
+  mutate(year = year,
+         colony = tolower(gsub(" ","_", colony)),
+         start_time = as.numeric(start_time)*24,
+         end_time = as.numeric(end_time)*24)
+
+transects <- data_raw %>%
+  select("year","date","transect","direction","start_time",
+         "end_time","complete","field_gps","observer_1",
+         "observer_2","start_waypoint","start_latitude","start_longitude",
+         "stop_waypoint","stop_latitude","stop_longitude","colony_waypoint",
+         "colony","latitude","longitude","notes") %>%
+  mutate(across(c("year","start_time","end_time","start_latitude","start_longitude",
+                  "stop_latitude","stop_longitude","latitude","longitude"), as.numeric))
+
+ground_counts <- data_raw %>%
+  select(-c("direction","start_time",
+            "end_time","complete","field_gps","observer_1",
+            "observer_2","start_waypoint","start_latitude","start_longitude",
+            "stop_waypoint","stop_latitude","stop_longitude")) %>%
+  mutate(across(c("year","latitude","longitude","count","nests","chicks"), as.numeric)) %>%
+  mutate(species = tolower(species)) %>%
+  mutate(species = replace(species, species=="tche","trhe")) %>%
+  select("year","date","transect","colony_waypoint","colony","latitude","longitude",
+         "species","count","nests","chicks","notes") 
+
 ## Check and write data ##
-if(!all(new_data$colony %in% colonies$colony)| 
-   !all(new_data$species %in% species$species)) {
-  print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
-  print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
-  
-write.table(new_data, "~/Counts/ground_surveys.csv", row.names = FALSE, na = "", sep = ",", quote = 13)   
+if(!all(ground_counts$colony %in% colonies$colony)| 
+   !all(ground_counts$species %in% species$species)) {
+  print(unique(ground_counts$colony[which(!(ground_counts$colony %in% colonies$colony))]))
+  print(unique(ground_counts$species[which(!(ground_counts$species %in% species$species))]))
+}
+
+groundcounts_all <- groundcounts_all %>% rbind(ground_counts)  
+transects_all <- transects_all %>% rbind(transects) 
+groundcounts_all <- groundcounts_all %>% arrange(year) %>% distinct()
+transects_all <- transects_all %>% arrange(year) %>% distinct()
+write.table(groundcounts_all, "Counts/ground_counts.csv", 
+            row.names = FALSE, col.names = FALSE, append=TRUE, na = "", sep = ",", quote = 12)
+write.table(transects_all, "Counts/ground_transects.csv", 
+            row.names = FALSE, col.names = FALSE, append=TRUE, na = "", sep = ",", quote = 21)
