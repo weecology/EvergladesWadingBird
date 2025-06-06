@@ -28,8 +28,32 @@ Other max counts for minor colonies (under 40 nests)
 * count
 * notes
 
-### Max Count 1993
+### Ground Counts
+Raw field counts from ground surveys
+
+Locations are along a transect, not necessarily at a named colony. Colony is only reported 
+when it is overlapped by the transect.
+* year
+* date
+* transect
+* colony_waypoint
+* colony
+* latitude
+* longitude
+* species
+* count
+* nests
+* chicks
+* notes  
+
+### Ground Transects
+Index of transect location data used in ground surveys
+
+#### Ground Counts Table
+Summary table from reports
+
+#### Max Count 1993
 Original version of max count table
 
-### Max Count New
+#### Max Count New
 Alternate format years 2020, 2021
