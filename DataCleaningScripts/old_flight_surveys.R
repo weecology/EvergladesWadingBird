@@ -12,42 +12,39 @@ colonies <- read.csv("SiteandMethods/colonies.csv") %>%
 
 species <- read.csv("SiteandMethods/species_list.csv")
 
-# All original data files containing ground count data were pulled into a separate directory
+# All original data files containing flight survey data were pulled into a separate directory
 ##############################
-# Original files: 2 observers, nesting and roosting:
+# Original files: 2 observers, nesting and roosting, 2 sets of comments:
 
-years <- c(2011,2013,2015,2016,2017,2018,2019,2022,2023,2024)
+years <- c(2017,2018,2019,2020,2022,2023,2024)
 file_names <- c(
-  "Data_Flight_Counts_2011.xls",
-  "Flight survey data_2013.xls",
-  "Flight survey data_2015.xlsx",
-  "Flight survey data_2016.xlsx",
   "Flight survey data_2017.xlsx",
   "Flight Survey Data_2018.xlsx",
   "Flight Survey Data_2019.xlsx",
+  "Flight Survey Data_2020.xlsx",
   "Flight survey data_2022.xlsx",
   "Flight survey data_2023.xlsx",
   "Flight_survey data_2024.xlsx")
 
-
 ############################# Get raw data ####################################################
-year <- 2011
+year <- 2023
 data_path <- paste("~/Desktop/aerial/",file_names[years==year],sep="")
 data_raw <- readxl::read_excel(data_path, 
                                col_names = FALSE,     
-                               col_types = c("date",rep("text",27)))
+                               col_types = c("date",rep("text",41)))
 
 colnames1 <- tolower(as.character(data_raw[1,]))
 colnames2 <- tolower(as.character(data_raw[2,]))
 colnames1 <-  gsub("[[:punct:][:blank:]]+","", colnames1)
 colnames2 <-  gsub("[[:punct:][:blank:]]+","", colnames2)
 colnames2[1] <- "date"
-colnames1[1:9] <- colnames2[1:9]
 colnames1 <- zoo::na.locf(colnames1)
+colnames2 <- zoo::na.locf(colnames2)
+colnames1[colnames1=="na"] <- colnames2[colnames1=="na"]
 
 colnames <- paste(colnames1, colnames2, sep = "_")
-colnames[1:9] <- colnames2[1:9]
-colnames[38:42] <- c("photos","commentsobserver1","commentsobserver2","entered","proofed")
+colnames[colnames1==colnames2] <- colnames2[colnames1==colnames2]
+colnames[(length(colnames)-1):length(colnames)] <- c("commentsobserver1", "commentsobserver2")
 
 new_data <- data_raw %>%
   setNames(colnames) %>%
@@ -56,6 +53,113 @@ new_data <- data_raw %>%
                names_to = c("species","type"),
                names_pattern = "(.*)_(.*)",
                values_to = "count") %>%
+  filter(!is.na(count), count!=0) %>%
+  separate(col = "type", 
+           sep = "obs", 
+           into = c("behavior", "obs")) %>%
+  mutate(year = year,
+         observer = ifelse(obs==1,observer1,observer2),
+         notes = ifelse(obs==1,commentsobserver1,commentsobserver2),
+         colony = tolower(gsub(" ","_", colony)),
+         colony = gsub("[?]", "", colony),
+         count = gsub("[?]", "", count),
+         count = gsub("+", "", count)) %>%
+  rename(start_transect = starttran,
+         end_transect = endtran,
+         start_time = starttime,
+         end_time = endtime,
+         photo_sets = surveyphotosets,
+         latitude = lat,
+         longitude = long) %>%
+  mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
+  mutate(colony = replace(colony, colony == "ganga", "pocket"),
+         colony = replace(colony, colony == "nammu", "holiday_park"),
+         colony = replace(colony, colony == "vtu", "volta"),
+         colony = replace(colony, colony == "potter", "oil_can"),
+         colony = replace(colony, colony == "epona", "enlil"),
+         colony = replace(colony, colony == "madeira", "race_track"),
+         colony = replace(colony, colony == "cuthbert", "cuthbert_lake"),
+         colony = replace(colony, colony %in% c("rodgers_river","roger_river"), "rodgers_river_bay"),
+         colony = replace(colony, colony == "lottaman_creek", "lostmans_creek"),
+         colony = replace(colony, colony == "grossman", "grossman_ridge_west"),
+         colony = replace(colony, colony %in% c("tyr","tyr/lox73","lox_73"), "lox73"),
+         colony = replace(colony, colony == "frigg", "robs"),
+         colony = replace(colony, colony %in% c("andy_town","andytown"), "nanse"),
+         colony = replace(colony, colony == "janus", "jerrod"),
+         colony = replace(colony, colony == "echo", "big_pond"),
+         colony = replace(colony, colony == "hermes", "lumpy"),
+         colony = replace(colony, colony == "forsetti", "forseti"),
+         colony = replace(colony, colony == "welden", "weldon"),
+         colony = replace(colony, colony %in% c("enil","eponia"), "enlil"),
+         colony = replace(colony, colony == "jerod", "jerrod"),
+         colony = replace(colony, colony %in% c("starter_mel","mel"), "start_mel"),
+         colony = replace(colony, colony %in% c("tam_west","tamiami"), "tamiami_west"),
+         colony = replace(colony, colony == "paurotis", "paurotis_pond"),
+         colony = replace(colony, colony == "lox_99", "lox99"),
+         colony = replace(colony, colony %in% c("loxramp","lox_ramp/011","loxramp/011","cook_lox_11","cooklox11","loxramp/11","lox_11"), "lox_ramp"),
+         colony = replace(colony, colony %in% c("cook_nc4","loxnc4","cooknc4"), "lox_nc4"),
+         colony = replace(colony, colony == "loxwest", "lox_west"),
+         colony = replace(colony, colony == "cook_nc3", "lox111"),
+         colony = replace(colony, colony == "cooknc2", "vesta"),
+         colony = replace(colony, colony %in% c("cook_nc1","cooknc1"), "lox_nc1"),
+         colony = replace(colony, colony == "dragon", "dagon"),
+         colony = replace(colony, colony == "austere", "auster"),
+         colony = replace(colony, colony == "charum", "charun"),
+         colony = replace(colony, colony == "yon_teau", "yonteau"),
+         colony = replace(colony, colony == "3b_ramp", "3b_boat_ramp"),
+         colony = replace(colony, colony == "6", "grant"),
+         colony = replace(colony, colony %in% c("bramha","brahmha"), "brahma"),
+         colony = replace(colony, colony == "davlin", "dalvin"))  %>%
+  select("year","date", "colony", "latitude", "longitude", "start_transect", "end_transect",	
+         "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
+         "count", "notes")
+
+print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
+print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
+
+write.table(new_data, "Counts/flight_surveys.csv", 
+            row.names = FALSE, col.names = FALSE, append = TRUE,
+            na = "", sep = ",", quote = c(10,11,12,16))
+
+##############################
+# Original files: 2 observers, nesting and roosting:
+
+years <- c(2011,2013,2015,2016)
+file_names <- c(
+  "Data_Flight_Counts_2011.xls",
+  "Flight survey data_2013.xls",
+  "Flight survey data_2015.xlsx",
+  "Flight survey data_2016.xlsx")
+
+
+############################# Get raw data ####################################################
+year <- 2016
+data_path <- paste("~/Desktop/aerial/",file_names[years==year],sep="")
+data_raw <- readxl::read_excel(data_path, 
+                               col_names = FALSE,     
+                               col_types = c("date",rep("text",26)))
+
+colnames1 <- tolower(as.character(data_raw[1,]))
+colnames2 <- tolower(as.character(data_raw[2,]))
+colnames1 <-  gsub("[[:punct:][:blank:]]+","", colnames1)
+colnames2 <-  gsub("[[:punct:][:blank:]]+","", colnames2)
+colnames2[1] <- "date"
+colnames1 <- zoo::na.locf(colnames1)
+colnames2 <- zoo::na.locf(colnames2)
+colnames1[colnames1=="na"] <- colnames2[colnames1=="na"]
+
+colnames <- paste(colnames1, colnames2, sep = "_")
+colnames[colnames1==colnames2] <- colnames2[colnames1==colnames2]
+colnames[length(colnames)] <- "notes"
+
+new_data <- data_raw %>%
+  setNames(colnames) %>%
+  slice(-c(1:2)) %>%
+  pivot_longer(cols = dplyr::contains("_"), 
+               names_to = c("species","type"),
+               names_pattern = "(.*)_(.*)",
+               values_to = "count") %>%
+  filter(!is.na(count), count!=0) %>%
   separate(col = "type", 
            sep = "obs", 
            into = c("behavior", "obs")) %>%
@@ -63,14 +167,40 @@ new_data <- data_raw %>%
          colony = tolower(gsub(" ","_", colony)),
          colony = gsub("[?]", "", colony),
          observer = ifelse(obs==1,observer1,observer2),
-         notes = ifelse(obs==1,commentsobserver1,commentsobserver2),
+#         notes = ifelse(obs==1,commentsobserver1,commentsobserver2),
          start_time = as.numeric(starttime),
          end_time = as.numeric(endtime)) %>%
-  filter(!is.na(count), count!=0) %>%
   mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
-  rename(start_transect = starttran,
-         end_transect = endtran,
-         photo_sets = surveyphotosets) %>%
+  rename(start_transect = starttransect,
+         end_transect = endtransect,
+         photo_sets = photosets) %>%
+  mutate(colony = replace(colony, colony == "ganga", "pocket"),
+         colony = replace(colony, colony == "nammu", "holiday_park"),
+         colony = replace(colony, colony == "vtu", "volta"),
+         colony = replace(colony, colony == "potter", "oil_can"),
+         colony = replace(colony, colony == "epona", "enlil"),
+         colony = replace(colony, colony == "madeira", "race_track"),
+         colony = replace(colony, colony == "cuthbert", "cuthbert_lake"),
+         colony = replace(colony, colony == "rodgers_river", "rodgers_river_bay"),
+         colony = replace(colony, colony == "lottaman_creek", "lostmans_creek"),
+         colony = replace(colony, colony == "tyr", "lox73"),
+         colony = replace(colony, colony == "frigg", "robs"),
+         colony = replace(colony, colony %in% c("andy_town","andytown"), "nanse"),
+         colony = replace(colony, colony == "janus", "jerrod"),
+         colony = replace(colony, colony == "echo", "big_pond"),
+         colony = replace(colony, colony == "hermes", "lumpy"),
+         colony = replace(colony, colony == "forsetti", "forseti"),
+         colony = replace(colony, colony == "welden", "weldon"),
+         colony = replace(colony, colony == "enil", "enlil"),
+         colony = replace(colony, colony == "jerod", "jerrod"),
+         colony = replace(colony, colony == "starter_mel", "start_mel"),
+         colony = replace(colony, colony == "paurotis", "paurotis_pond"),
+         colony = replace(colony, colony == "lox_99", "lox99"),
+         colony = replace(colony, colony == "loxramp", "lox_ramp"),
+         colony = replace(colony, colony == "dragon", "dagon"),
+         colony = replace(colony, colony == "yon_teau", "yonteau"),
+         colony = replace(colony, colony %in% c("bramha","brahmha"), "brahma"),
+         colony = replace(colony, colony == "davlin", "dalvin"))  %>%
   select("year","date", "colony", "latitude", "longitude", "start_transect", "end_transect",	
          "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
          "count", "notes")
@@ -156,7 +286,9 @@ write.table(new_data, "Counts/flight_surveys.csv",
             na = "", sep = ",", quote = c(10,11,12,16))
 
 flightsurveys_all <- read.csv("Counts/flight_surveys.csv")
-flightsurveys_all <- flightsurveys_all %>% arrange(year) %>% distinct()
+flightsurveys_all <- flightsurveys_all %>% arrange(year) %>% distinct() %>%
+  mutate(across(c("year","latitude","longitude","count"), as.numeric),
+         date = as.Date(date))
 write.table(flightsurveys_all, "Counts/flight_surveys.csv", 
             row.names = FALSE,
             na = "", sep = ",", quote = c(10,11,12,16))
