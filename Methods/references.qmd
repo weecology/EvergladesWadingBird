@@ -1,0 +1,55 @@
+---
+title: "References"
+format: html
+---
+Gaea E. Crozier and Dale E. Gawlik "Wading Bird Nesting Effort as an Index to Wetland Ecosystem Integrity," Waterbirds 26(3), 303-324, (1 September 2003). https://doi.org/10.1675/1524-4695(2003)026[0303:WBNEAA]2.0.CO;2 
+
+Yenni GM, Christensen EM, Bledsoe EK, Supp SR, Diaz RM, White EP, Ernest SKM. (2019) Developing a modern data workflow for regularly updated data. PLoS Biol 17(1): e3000125. https://doi.org/10.1371/journal.pbio.3000125 
+
+Botson BA, Gawlik DE, Trexler JC (2016) Mechanisms That Generate Resource Pulses in a Fluctuating Wetland. PLoS ONE 11(7): e0158864.
+doi:10.1371/journal.pone.0158864
+ 
+Dessu, S.B., R,. M. Price, T. G. Troxler and J.S. Kominoski.  2018.  Effects of sea-level rise an freshwater management on long term water levels and water quality in the Florida coastal Everglades. Journal of Environmental Management 211:164-176.  https://doi.org/10.1016/j.jenvman.2018.01.025
+ 
+Filbee-Dexter K., J. Pittman, H.A. Haig, S. M. Alexander, C. C. Symons, and M.J. Burke. 2017.  Ecological surprise: concept, synthesis and social dimensions.  Ecosphere 8: https://doi.org/10.1002/ecs2.2005
+ 
+Frederick, P.C., D. G. Gawlik, J.C. Ogden, M. Cook and Michael Lusk. 2009.  White Ibis and Wood Storks as indicators for restoration of Everglades ecosystems.  Ecological Indicators 9: S83-S85
+ 
+Frederick, P.C. and M.G. Spalding. 1994.  Factors affecting reproductive success of wading birds (Ciconiiformes) in the Everglades ecosystem. Pgs. 659 - 691 in: Everglades: the ecosystem and its restoration.  S. Davis and J. C. Ogden (eds.)  St. Lucie Press, Delray Beach, Florida.
+ 
+Frederick, P.C. (2000).  Mercury and its effects in the Everglades ecosystem.  Reviews in Toxicology 3:213 – 255. 
+ 
+Frederick, P.C., D. Axelrad, T. Atkeson and C. Pollman.  2005.  Contaminants research and policy: The Everglades mercury story.  National Wetlands Newsletter 27:3 – 6.
+ 
+Frederick, P.C. and J.C. Ogden. 2003. Monitoring wetland ecosystems using avian populations: seventy years of surveys in the Everglades. Pgs.321-350 in: D. Bush and J. Trexler, eds. "Monitoring ecosystems: interdisciplinary approaches for evaluating ecoregional initiatives".  Island Press, Washington, DC.  447 pgs.
+
+Frederick, P.C., D. G. Gawlik, J.C. Ogden, M. Cook and Michael Lusk. 2009.  White Ibis and Wood Storks as indicators for restoration of Everglades ecosystems.  Ecological Indicators 9: S83-S85
+ 
+Fourqurean, J.W. and M. B. Robblee. 1999.  Florida Bay: a history of recent ecological changes.  Esturaries 22:345-357.
+ 
+Dorn, N.J., J.C. Trexler and E.E. Gaiser. 2006.  Exploring the role of large predators in marsh food webs: evidence for a behaviorally mediated trophic cascade.  Hydrobiologia 569:375-386.
+ 
+Gawlik, DE 2002.  The effects of prey availability on the numerical response of wading birds.  Ecological Monographs 73:329 – 346 https://doi.org/10.1890/0012-9615(2002)072[0329:TEOPAO]2.0.CO;2
+ 
+Gilmour, C.C., G.S. Riedel, M.C. Ederington, J.T. Bell, G.A. Gill and M.C. Stordal. 1998. Methylmercury concentrations and production rates across a trophic gradient in the northern Everglades. Biogeochemistry 40:327-345.
+ 
+Lorenz, J.J. 2013.  The relationship between water level, prey availability and reproductive success in Roseate Spoonbills foraging in a seasonally-flooded wetland while nesting in Florida Bay. Hydrologic Restoration 34: 201-211.
+ 
+Mazzotti, F.J., G. R. Best, L. A. Brandt, M.S. Cherkiss, B. M. Jeffery, and K.G. Rice.  Alligators and crocodiles as indicators for restoration of Everglades ecosystems.  Ecological indicators, 9:S137-S149. https://doi.org/10.1016/j.ecolind.2008.06.008
+
+Nungesser, M., C. Saunders, C. Coronado-Molina, J. Obeysekera, J.  Johnson, C. McVoy, and B. Benscoter. 2015. Potential effects of climate change on Florida’s Everglades. Environmental Management, 55: 824-835.
+Obeysekera, J. J. Barnes and M. Nungesser. 2014.  Climate sensitivity runs and regional hydrological modeling for predicting the response of the greater Florida Everglades ecosystem to climate change. Environmental Management 55:749-762. https://doi.org/10.1007/s00267-014-0315-x
+ 
+Orzechowski, S.C.M., C. M. Romagosa and P.C. Frederick. 2019.  Invasive Burmese pythons (Python bivittatus) are novel nest predators in wading bird colonies of the Florida Everglades.   Biological Invasions 21: 2333 – 2344. DOI 10.1007/s10530-019-01979-x
+Petersen, Michelle L.  2017.  Florida Atlantic University ProQuest Dissertations & Theses,  2017. 10610492. Quantifying Wading Bird Resource Selection and Nesting Effort: A Tool for the Restoration of Pulsed Ecosystems.  https://www.proquest.com/openview/2c0a5775cdc01cddf9adbd9b1aefa6ba/1?pq-origsite=gscholar&cbl=18750 
+Pintar, M.R., N.J. Dorn, J. L. Kline, and J.C. Trexler.  2023.  Hydrology-mediated ecological function of a large wetland threatened by an invasive predator.  Science of the total Environment 857. https://doi.org/10.1016/j.scitotenv.2022.159245
+ 
+Sklar, F.H., M.J. Chimney, S. Newman, P. McCormack, D. Gawlik, Shili Miao, C. McVoy, W. Said, J. Newman, C. Coronado, G. Crozier, M. Corvela and K. Rutchey. 2005.The ecological-societal underpinnings of Everglades restoration.   https://doi.org/10.1890/1540-9295(2005)003[0161:TEUOER]2.0.CO;2
+ 
+Trexler, J.C., W.F. Loftus and S. Perry. 2005. Disturbance frequency and community structure in a twenty-five year intervention study.  Oecologia 145: 140–152  DOI 10.1007/s00442-005-0094-4
+ 
+Turner, A.M., J. C. Trexler, C. F. Jordan, S. J. Slack, P. Geddes, J.H. Chick, and W. F. Loftus. 1999. Targeting ecosystem features for conservation.  Standing Crops in the Florida Everglades.  Conservation Biology 13:898-911. http://links.jstor.org/sici?sici=0888-8892%28199908%2913%3A4%3C898%3ATEFFCS%3E2.0.CO%3B2-P
+ 
+Whitney, M.C. and D.A. Cristol. 2018.  Impacts of sublethal mercury exposure on birds: a detailed review.  Reviews of Environmental Contamination and Toxicology 244: 113-163.
+ 
+Zabala, J, J.C. Trexler, N. Jayasena and P.C. Frederick. 2022.  Timing and magnitude of net methylmercury effects on waterbird reproductive output are dependent on food availability.  Science of the Total Environment. Available online at https://authors.elsevier.com/sd/article/S0048-9697(22)06806-1

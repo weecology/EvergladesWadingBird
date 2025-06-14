@@ -1,0 +1,72 @@
+---
+title: "Data Processing"
+format: html
+---
+
+## Mayfield Method
+
+Using the nest check data (see Nest Success Surveys), we calculate nest success for every species (or group, some species’ nests are indistinguishable in the field) at every ground monitored colony using the Mayfield method (Mayfield 1961, 1975, Hensler 1985). The Mayfield method determines the probability of the nest surviving to produce at least one surviving young. The Mayfield method corrects for early or unobservable failures and prorates survival of a nest for the period of observation.
+
+Mayfield is calculated using a two-step process. Daily survival probability is the probability that a nest will survive from one day to the next. It is calculated by determining for each nest the number of days it was active (or the number of ‘exposure days’ to risk) and counting the number of failed nests in your survey.
+
+daily survival probability = (exposure days - # failed nests) / exposure days
+
+Daily survival probability is then used to calculate nest success: 
+
+Nest Success  = Daily survival probability ^ (species nesting length in days)
+
+Assumptions of the Mayfield method include: an assumption of constant mortality for each stage, and probability of failure at any nest is independent of failure at other nests. This means that searches for nests and repeat visits are random with respect to mortality (i.e., visits occur randomly with respect to predation and nesting). Because of this, changing normal visitation schedules in order to get more specific information of timing of events should not occur as this changes probability. Because nest fate needs to be known, we eliminate all nests of unknown fate. This typically occurs when visits to the colony ends before nests are completed (e.g., dry end of season conditions preventing airboat access).
+
+In wading birds, the rate of nest failure varies with the stage of nesting and the Mayfield can be used to calculated stage-specific (egg, nestling, or nesting period) daily survival probabilities and nest success by modifying exposure days to just those when the nest was in the egg incubation or hatchling rearing phase and by using incubation time or hatching to fledging time instead of time from egg lay to fledge, respectively. 
+
+To calculate days of exposure for a nest stage (egg, nestling, or entire nesting period), the initiation date, end dates, and fate (survived or failed) of that stage needs to be determined. To aid with this, we generate a calendar template where each column is a day of the breeding season and each row is a nest. We then enter nest check data into the appropriate date column, resulting in a daily time series for each individual nest.
+
+What species or species groups (if a species group, what does that mean and why?) - what could be in the “small heron” small heron (tri-color, little blue snowies) vs small white (little blues and snowies). All small herons lumped together until they hatch and then separated tri-colors and white herons.
+
+### Determining Days of Exposure
+
+To calculate the probability of survival, the number of exposure days (or survival days, i.e. days a nest was active) for each is tallied for each stage (incubation and nestling). Both surviving and failing nests survive for some period of days and the total number of observed survival days for both are important.  The method is quite sensitive to how surviving nest days are tallied, especially when the number of days is greater than 100, and errors or inconsistencies made in tallying can start to add up. Once the observed surviving days are tallied for both failed and fledged nests, formulas (see Mayfield Method) are used to calculate incubation success, nestling success, and overall nest success for each species. 
+
+Inferring days of exposure from nest observations in the field relies heavily on information about the reproductive biology of wading birds. Since visits occur weekly, precisely catching the first egg lay or hatching is unlikely. We use rules to aid with estimating dates of events so that differences across years reflect the same decision making process.
+
+#### First Egg Lay Date
+
+To estimate the date of first egg lay, we assume that eggs are generally laid every other day and always use the oldest egg or chick when generating our estimates. The following rules are applied to the nest check data to estimate first lay date:
+ If a nest has one egg on the first observation date, we assume the egg was laid that day
+ If a nest has two eggs on its first observation visit and three on the next visit then we assume the 2nd egg was laid on the day of visit and the first egg laid two days prior. 
+If a nest does not increase in the number of eggs after the first observation then laying was already complete when we first observed the nest. In this case we back calculate the first lay date from hatch date.
+If egg laying was complete before first observation and the nest fails before hatching, then we assume we arrived on the day of last egg lay and back calculate using the number of eggs and the every-other-day rule.
+Midpoint between visits is used if not possible to determine dates otherwise.
+
+Most nests aren’t found during egg laying, so the second method to age a nest is by hatch date alone. Incubation of the first egg begins immediately, resulting in asynchronous hatching, and, for our calculations, the incubation period ends when the first egg hatches. A combination of chicks and eggs during a visit is used to determine hatch date, or if all chicks are present, the midway point between visits is chosen (this may include half days for survival tallying). 
+
+For nests that successfully hatch eggs,  we can double check our egg lay date estimate based on the number of days a species incubates their eggs (see End of Incubation for values). If these dates differ, we use the later date as the official egg lay date.
+
+#### First Chick Hatch Date
+
+The process for determining first hatch date is similar to that for determining first egg laying date (see First Lay Date). The hatching of the first chick is rarely observed in the field and must be inferred based on timing and notes. The condition of hatchlings is recorded in the field to help aid with this determination. Additional rules for determining timing of hatching are:
+Like egg laying, egg hatching generally occurs every other day. 
+If a still wet chick is observed in the nest, we assume it was hatched the day observed. 
+If egg pipping is heard, we assume the egg will hatch the following day. 
+Midpoint between visits is used if not possible to determine date otherwise.
+Examples:
+If 1 wet chick is observed on Day X of the breeding season, we assume it hatched that day.
+If we observe 1 dry chick and 1 wet chick on Day X, the 2nd chick hatched on Day X, so first hatched 2 days prior and first hatch date is Day X - 2. 
+If on Day X a nest has three chicks, but had three eggs the prior week, then all chicks hatched between the two visits. Since no chick is wet, we assume the final chick hatched the day before (Day X - 1). We then employ the every other day rule to obtain a first hatch date of Day X - 5 (the 2nd chick hatched Day X- 3, thus the first hatched two days before that.
+If on Day X a nest has 2 chicks, but the previous week had two eggs, first hatch could have occurred early or late in the week, given the every other day rule. We assume hatching occurred mid week unless a chick was wet or egg pipping was heard on the previous visit. 
+
+#### End of Stage
+
+The end date of a stage is determined by the species’ average length for that stage and the date the stage initiated at that nest. This is always determined by the species average and not by nest observations. For example, the end date for incubation is determined by the species’ average incubation period.  This approach (as opposed to using the actual hatch date) is to avoid bias since nests where eggs do not hatch cannot use hatch date to determine the length of the incubation period, creating differences between failed and successful nests in how stages are determined.
+Average incubation by species: 21 days for White Ibis, 22 days for small egretta herons and Roseate Spoonbills, 28 days for Great Egrets, Great Blue Herons, and Wood Storks, and 25 days for Black Crowned Night Herons. 
+Average nestling length by species: 21 days for Great Egrets, Black Crowned Night Herons, and Roseate Spoonbills, 14 days for White Ibis, Glossy Ibis, and Small herons, and 50 days for Wood Storks. 
+Example: 
+If a Great Egret nest hatches 29 days after the first egg lay date, the 28th day is still demarcated as the end of incubation because that is the species’ average.
+
+### Determining Nest Fate 
+
+Nest outcome (failure or success) of every stage (incubation/nestling/nest) for each nest is determined. Nests are assumed to have failed when all eggs or chicks disappeared or were found dead prior to the fledging age. An active nest only requires at least one egg or chick to be classified as surviving. If the nest is partially preyed upon or some young die, it is still surviving according to the method. Barring more detailed evidence at the nest, timing of nest failure is assigned to the midpoint between nest checks. Chicks are considered successfully fledged when they survive past a certain number of days for each species: 21 days for Great Egrets, Black Crowned Night Herons, and Roseate Spoonbills, 14 days for White Ibis, Glossy Ibis, and Small herons, and 50 days for Wood Storks. Nests expected to fledge around the day of the visit are assumed to be successful if the field crew saw chicks in the vicinity of the nest running around in the trees.
+
+## Clutch Size, Hatch Success, Brood Size
+
+From the nest check data, we also calculate additional nesting metrics that are not used in the Mayfield calculations: Clutch size (number of eggs laid), hatch success (how many of those eggs hatched), and brood size (number of young that are alive at the 14-, 21-, or 50-day mark). Clutch size is determined using nests with enough visits to clarify if the clutch is complete, but also hasn’t lost eggs. Brood size only includes nests where the number of chicks present is accurate (i.e. chicks haven’t run out of the nest at the sight of scary field researchers). 

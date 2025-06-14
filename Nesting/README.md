@@ -1,6 +1,6 @@
 # Nesting Data
 
-Please see the [methods](../SiteandMethods/methods.md) for details about collection and how to use the data.
+Please see the [methods](https://everglades-wading-bird-data.netlify.app/) for details about collection and how to use the data.
 
 ### Nest Checks
 
