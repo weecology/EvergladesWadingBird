@@ -9,7 +9,7 @@
 
 Data from the Everglades breeding bird monitoring project
 
-Detailed descriptions of individual data components are located in README.md files in the individual data folders. Please see the [methods](../SiteandMethods/methods.md) for details about collection and how to use the data.
+Detailed descriptions of individual data components are located in README.md files in the individual data folders. Please see the [methods](https://everglades-wading-bird-data.netlify.app/) for details about collection and how to use the data.
 
 Water depth is crucial to wading bird behavior. Water depth data are available from the [Everglades Depth Estimation Network (EDEN)](http://sofia.usgs.gov/eden), via their [EDEN THREDDS server](http://sflthredds.er.usgs.gov/) or the [Explore and View EDEN (EVE) web application](https://sofia.usgs.gov/eden/eve/). We also have created the [edenR package](https://github.com/weecology/edenR) to streamline downloads, data processing, and statistics for forecasting.
 
@@ -22,8 +22,8 @@ Additional data to complement the wading bird data can be found at [South Florid
     |-- Hg                  <- Time series of feather mercury content
     |-- Historic            <- Pre-1986 data, or outside data sources
     |-- Indicators          <- Time series of indicators used in restoration assessment
+    |-- Methods             <- Data paper wiki outlining detailed methods
     |-- Nesting             <- Time series of nest checks and nest success
-    |-- SiteandMethods      <- Site details, project methods, site-level data tables
-    |-- Water               <- Water level data (from EDEN)
+    |-- SiteandMethods      <- Site details, site-level data tables
     |-- Weather             <- Weather station data (from NOAA)
 --------

@@ -1,0 +1,8 @@
+---
+title: "Data Use"
+format: html
+---
+
+All counts should be considered minimum numbers of the number of nests that were present.
+
+The max count has been the primary and only consistent objective of the project. Nonetheless, the methodology used to determine the max count has varied over time. The reported maximum count for each species is determined by a number of factors, including aerial visual estimates, aerial photo counts, ground counts, species phenology, and timing between flights. This thought process has not always been fully documented. Numbers in the max count tables are taken from the officially reported tables. They often do not match up with raw observations of counts reported on a single date, or sum across species or colonies.

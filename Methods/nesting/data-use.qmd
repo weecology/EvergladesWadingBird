@@ -1,0 +1,8 @@
+---
+title: "Data Use"
+format: html
+---
+
+Determining nest success is a science that has changed significantly over the course of the study. It is affected by our ability to detect nests and by observers' personal impressions.
+
+Older nest success numbers are not repeatable using modern calculation methods. Codifying nest success calculations algorithmically is a goal for this project, at which point raw data will be used to standardize calculations. Until then, comparisons of older and newer nest success estimates should be conducted with care.

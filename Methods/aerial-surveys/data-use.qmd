@@ -1,0 +1,8 @@
+---
+title: "Data Use"
+format: html
+---
+
+All counts should be considered minimum numbers of the number of nests that were present.
+
+While transects and aerial protocols have been consistent since the inception of the study, the technology used for counting birds has changed over time. Early years relied on aerial observers, while later years used film and digital cameras to produce images that could be counted at leisure. Improvements in digital camera technology means that as image quality improved, the number of birds that could be detected and identified likely also increased. The impacts of these changes are unknown.

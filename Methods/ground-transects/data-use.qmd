@@ -1,0 +1,10 @@
+---
+title: "Data Use"
+format: html
+---
+
+All counts should be considered minimum numbers of the number of nests that were present.
+
+While Ground Survey transects are a fixed length, it is common that water conditions are too dry for the airboats to travel the entire length of each transect. Start and stop locations are recorded, but the data is not controlled or adjusted for area covered. Therefore, more area is surveyed during wetter years. It has been assumed that nesting birds are few in number or likely to abandon once the water around an island has dried out completely. This is most likely due to the influx of land nest predators such as raccoons and the lack of foraging areas close by. This issue is more complicated than just correcting for distance to determine density because low water levels also mean a decreased likelihood of nesting.
+
+Nest and chick number are reported when observed. But they are not consistently reported and should not be used as independant time series.

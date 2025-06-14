@@ -2,7 +2,7 @@
 
 Measurements for Hg levels in individual feathers. 
 
-Field collection methods are described in [Feather_Mercury_Collection](../SiteandMethods/Feather_Mercury_Collection.md).
+Field collection methods are described in the [methods](https://everglades-wading-bird-data.netlify.app/).
 
 A quick guide to protocol is listed in [DMA_Protocol](../SiteandMethods/DMA_Protocol.md).
 
