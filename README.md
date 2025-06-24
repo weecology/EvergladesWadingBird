@@ -27,3 +27,20 @@ Additional data to complement the wading bird data can be found at [South Florid
     |-- SiteandMethods      <- Site details, site-level data tables
     |-- Weather             <- Weather station data (from NOAA)
 --------
+
+## Developer Setup
+
+**Prerequisites:** Quarto, Git, R (4.0+) and or RStudio
+
+1. Clone and install dependencies:
+   ```bash
+   git clone https://github.com/weecology/EvergladesWadingBird.git
+   cd EvergladesWadingBird
+   R -e "source('install-packages.R')"
+   ```
+
+2. Run the methods website locally:
+   ```bash
+   cd Methods
+   quarto preview
+   ```
