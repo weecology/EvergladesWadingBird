@@ -16,10 +16,9 @@ species <- read.csv("SiteandMethods/species_list.csv")
 ##############################
 # Original files: 2 observers, nesting and roosting, 2 sets of comments:
 
-years <- c(2017,2018,2019,2020,2022,2023,2024)
+years <- c(2017,2019,2020,2022,2023,2024)
 file_names <- c(
   "Flight survey data_2017.xlsx",
-  "Flight Survey Data_2018.xlsx",
   "Flight Survey Data_2019.xlsx",
   "Flight Survey Data_2020.xlsx",
   "Flight survey data_2022.xlsx",
@@ -27,11 +26,11 @@ file_names <- c(
   "Flight_survey data_2024.xlsx")
 
 ############################# Get raw data ####################################################
-year <- 2023
+year <- 2024
 data_path <- paste("~/Desktop/aerial/",file_names[years==year],sep="")
 data_raw <- readxl::read_excel(data_path, 
                                col_names = FALSE,     
-                               col_types = c("date",rep("text",41)))
+                               col_types = c("date",rep("text",42)))
 
 colnames1 <- tolower(as.character(data_raw[1,]))
 colnames2 <- tolower(as.character(data_raw[2,]))
@@ -64,13 +63,16 @@ new_data <- data_raw %>%
          colony = gsub("[?]", "", colony),
          count = gsub("[?]", "", count),
          count = gsub("+", "", count)) %>%
-  rename(start_transect = starttran,
+  rename(colony_old= colonyold,
+         start_transect = starttran,
          end_transect = endtran,
          start_time = starttime,
          end_time = endtime,
          photo_sets = surveyphotosets,
          latitude = lat,
          longitude = long) %>%
+  mutate(across(c("colony_old","photo_sets","photos"), ~gsub(",","",.))) %>%
+  mutate(across(c("colony_old","photo_sets","photos","notes"), ~gsub("\"", "",.))) %>%  
   mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
   mutate(colony = replace(colony, colony == "ganga", "pocket"),
          colony = replace(colony, colony == "nammu", "holiday_park"),
@@ -110,16 +112,17 @@ new_data <- data_raw %>%
          colony = replace(colony, colony == "6", "grant"),
          colony = replace(colony, colony %in% c("bramha","brahmha"), "brahma"),
          colony = replace(colony, colony == "davlin", "dalvin"))  %>%
-  select("year","date", "colony", "latitude", "longitude", "start_transect", "end_transect",	
+  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", "end_transect",	
          "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
          "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
+print(unique(new_data$year[which(!(lubridate::year(new_data$date) == new_data$year))]))
 
 write.table(new_data, "Counts/flight_surveys.csv", 
             row.names = FALSE, col.names = FALSE, append = TRUE,
-            na = "", sep = ",", quote = c(10,11,12,16))
+            na = "", sep = ",", quote = c(11,17))
 
 ##############################
 # Original files: 2 observers, nesting and roosting:
@@ -137,7 +140,7 @@ year <- 2016
 data_path <- paste("~/Desktop/aerial/",file_names[years==year],sep="")
 data_raw <- readxl::read_excel(data_path, 
                                col_names = FALSE,     
-                               col_types = c("date",rep("text",26)))
+                               col_types = c("date",rep("text",27)))
 
 colnames1 <- tolower(as.character(data_raw[1,]))
 colnames2 <- tolower(as.character(data_raw[2,]))
@@ -167,13 +170,15 @@ new_data <- data_raw %>%
          colony = tolower(gsub(" ","_", colony)),
          colony = gsub("[?]", "", colony),
          observer = ifelse(obs==1,observer1,observer2),
-#         notes = ifelse(obs==1,commentsobserver1,commentsobserver2),
          start_time = as.numeric(starttime),
          end_time = as.numeric(endtime)) %>%
-  mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
-  rename(start_transect = starttransect,
+  rename(colony_old= colonyold,
+         start_transect = starttransect,
          end_transect = endtransect,
-         photo_sets = photosets) %>%
+         photo_sets = photosets) %>%  
+  mutate(across(c("colony_old","photo_sets","photos"), ~gsub(",","",.))) %>%
+  mutate(across(c("colony_old","photo_sets","photos"), ~gsub("\"", "",.))) %>%  
+  mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
   mutate(colony = replace(colony, colony == "ganga", "pocket"),
          colony = replace(colony, colony == "nammu", "holiday_park"),
          colony = replace(colony, colony == "vtu", "volta"),
@@ -201,16 +206,17 @@ new_data <- data_raw %>%
          colony = replace(colony, colony == "yon_teau", "yonteau"),
          colony = replace(colony, colony %in% c("bramha","brahmha"), "brahma"),
          colony = replace(colony, colony == "davlin", "dalvin"))  %>%
-  select("year","date", "colony", "latitude", "longitude", "start_transect", "end_transect",	
+  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", "end_transect",	
          "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
          "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
+print(unique(new_data$year[which(!(lubridate::year(new_data$date) == new_data$year))]))
 
 write.table(new_data, "Counts/flight_surveys.csv", 
             row.names = FALSE, col.names = FALSE, append = TRUE,
-            na = "", sep = ",", quote = c(10,11,12,16))
+            na = "", sep = ",", quote = c(11,17))
 
 ##############################
 # Original files: 2 observers:
@@ -228,18 +234,18 @@ year <- 2009
 data_path <- paste("~/Desktop/aerial/",file_names[years==year],sep="")
 data_raw <- readxl::read_excel(data_path, 
                                col_names = FALSE,     
-                               col_types = c("date",rep("text",36)))
+                               col_types = c("date",rep("text",37)))
 
 colnames1 <- tolower(as.character(data_raw[1,]))
 colnames2 <- tolower(as.character(data_raw[2,]))
 colnames1 <-  gsub("[[:punct:][:blank:]]+","", colnames1)
 colnames2 <-  gsub("[[:punct:][:blank:]]+","", colnames2)
 colnames2[1] <- "date"
-colnames1[1:12] <- colnames2[1:12]
+colnames1[1:13] <- colnames2[1:13]
 colnames1 <- zoo::na.locf(colnames1)
 
 colnames <- paste(colnames1, colnames2, sep = "_")
-colnames[1:12] <- colnames2[1:12]
+colnames[1:13] <- colnames2[1:13]
 colnames[length(colnames)] <- "notes"
 
 new_data <- data_raw %>%
@@ -255,13 +261,16 @@ new_data <- data_raw %>%
                    observer = ifelse(obs=="obs1",obs1,obs2),
                    behavior = "nesting") %>%
             filter(!is.na(count), count!=0) %>%
-            mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
-            rename(start_time= starttime,
+            rename(colony_old= colonyold,
+                   start_time= starttime,
                    end_time = endtime,
                    start_transect = starttransect,
                    end_transect = endtransect,
                    photo_sets = photoset,
-                   photos = slides) %>%
+                   photos = slides) %>%  
+            mutate(across(c("colony_old","photo_sets","photos"), ~gsub(",","",.))) %>%
+            mutate(across(c("colony_old","photo_sets","photos"), ~gsub("\"", "",.))) %>%
+            mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
   mutate(colony = replace(colony, colony == "ganga", "pocket"),
          colony = replace(colony, colony == "nammu", "holiday_park"),
          colony = replace(colony, colony == "potter", "oil_can"),
@@ -273,17 +282,17 @@ new_data <- data_raw %>%
          colony = replace(colony, colony == "hermes", "lumpy"),
          colony = replace(colony, colony == "forsetti", "forseti"),
          colony = replace(colony, colony == "davlin", "dalvin"))  %>%
-  select("year","date", "colony", "latitude", "longitude", "start_transect", "end_transect",	
+  select("year","date", "colony","colony_old", "latitude", "longitude", "start_transect", "end_transect",	
          "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
          "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
-
+print(unique(new_data$year[which(!(lubridate::year(new_data$date) == new_data$year))]))
 
 write.table(new_data, "Counts/flight_surveys.csv", 
             row.names = FALSE, col.names = FALSE, append = TRUE,
-            na = "", sep = ",", quote = c(10,11,12,16))
+            na = "", sep = ",", quote = c(11,17))
 
 flightsurveys_all <- read.csv("Counts/flight_surveys.csv")
 flightsurveys_all <- flightsurveys_all %>% arrange(year) %>% distinct() %>%
@@ -291,7 +300,7 @@ flightsurveys_all <- flightsurveys_all %>% arrange(year) %>% distinct() %>%
          date = as.Date(date))
 write.table(flightsurveys_all, "Counts/flight_surveys.csv", 
             row.names = FALSE,
-            na = "", sep = ",", quote = c(10,11,12,16))
+            na = "", sep = ",", quote = c(11,17))
 
 ##############################
 # Original files: 1 observer:
@@ -307,7 +316,7 @@ year <- 2005
 data_path <- paste("~/Desktop/aerial/",file_names[years==year],sep="")
 data_raw <- readxl::read_excel(data_path, 
                                col_names = TRUE,     
-                               col_types = c("date",rep("text",24))) %>%
+                               col_types = c("date",rep("text",25))) %>%
   rename_with(~ tolower(gsub(" ", "_", .x, fixed = TRUE)))
 
 new_data <- data_raw %>%
@@ -325,6 +334,8 @@ new_data <- data_raw %>%
          behavior = "nesting",
          end_transect = NA,
          photo_sets = NA) %>%
+  mutate(across(c("colony_old","photo_sets","photos"), ~gsub(",","",.))) %>%
+  mutate(across(c("colony_old","photo_sets","photos"), ~gsub("\"", "",.))) %>%
   mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
   mutate(colony = replace(colony, colony %in% c("3b_mud_east","3b_mud_e"), "mud_east"),
          colony = replace(colony, colony=="false_l-67", "false_l67"),
@@ -338,13 +349,14 @@ new_data <- data_raw %>%
          colony = replace(colony, colony=="tam_e" , "tamiami_east"),
          colony = replace(colony, colony %in% c("tamiami_w","tam_w","tam_west" ), "tamiami_west"),
          colony = replace(colony, colony=="donut", "vulture")) %>%
-  select("year","date", "colony", "latitude", "longitude", "start_transect", "end_transect",	
+  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", "end_transect",	
          "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
          "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
+print(unique(new_data$year[which(!(lubridate::year(new_data$date) == new_data$year))]))
 
 write.table(new_data, "Counts/flight_surveys.csv", 
             row.names = FALSE, col.names = FALSE, append = TRUE,
-            na = "", sep = ",", quote = c(10,11,12,16))
+            na = "", sep = ",", quote = c(11,17))

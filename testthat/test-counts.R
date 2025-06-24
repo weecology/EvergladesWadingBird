@@ -21,7 +21,7 @@ test_that("required column names in counts df", {
                      "whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib",
                      "caeg","dcco","grhe","smhe","lawh","lada","smwh","total","notes"))
   expect_identical(flight_surveys_cols, 
-                   c("year","date","colony","latitude","longitude","start_transect",
+                   c("year","date","colony","colony_old","latitude","longitude","start_transect",
                      "end_transect","start_time","end_time","observer","photo_sets",
                      "photos","species","behavior","count","notes"))
   expect_identical(ground_counts_cols, 
