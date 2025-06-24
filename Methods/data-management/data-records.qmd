@@ -8,7 +8,7 @@ format: html
 
 ![Figure 3. Overall database schema for the entire database showing how datafiles relate to each other. Listed fields are the keys or unique identifiers for a table. The name of each directory (e.g., COUNTS) is color-coded and located in each dotted outlined box.](../images/EvergladesDatabase-Overview.png)
 
-Data are maintained in a git repository (https://github.com/weecology/EvergladesWadingBird), and archived on Zenodo (https://zenodo.org/doi/10.5281/zenodo.7734553). The data contain 23 tables in 7 directories (Figure 3). Each directory contains a README file describing its tables. Additional directories contain cleaning scripts and tests used in data QA/QC (see data validation section below). 
+Data are maintained in a [git repository](https://github.com/weecology/EvergladesWadingBird), and [archived on Zenodo](https://zenodo.org/doi/10.5281/zenodo.7734553). The data contain 23 tables in 7 directories (Figure 3). Each directory contains a README file describing its tables. Additional directories contain cleaning scripts and tests used in data QA/QC (see data validation section below). 
 
 ## Site and Methods
 
