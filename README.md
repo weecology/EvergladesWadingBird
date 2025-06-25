@@ -30,7 +30,7 @@ Additional data to complement the wading bird data can be found at [South Florid
 
 ## Developer Setup
 
-**Prerequisites:** Quarto, Git, R (4.0+) and or RStudio
+**Prerequisites:** Quarto, Git, R (4.0+) and/or RStudio
 
 1. Clone and install dependencies:
    ```bash
