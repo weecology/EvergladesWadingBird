@@ -2,11 +2,29 @@
 
 Please see the [methods](https://everglades-wading-bird-data.netlify.app/) for details about collection and how to use the data.
 
+### Image Counts
+Counts from photos/slides taken from plane during transect flights.
+* year
+* date
+* colony - official colony name
+* colony_old - name used at time of observation
+* latitude
+* longitude
+* type
+* camera
+* filenames - photos or slides counted, link to photos in flight surveys table
+* counter
+* species
+* behavior - nesting or roosting
+* count
+* notes 
+
 ### Flight Surveys
 Raw counts observed from plane. Typically 2 counters.
 * year
 * date
-* colony
+* colony - official colony name
+* colony_old - name used at time of observation
 * latitude
 * longitude
 * start_transect

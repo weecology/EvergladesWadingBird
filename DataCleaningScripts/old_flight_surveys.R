@@ -81,7 +81,8 @@ new_data <- data_raw %>%
          colony = replace(colony, colony == "epona", "enlil"),
          colony = replace(colony, colony == "madeira", "race_track"),
          colony = replace(colony, colony == "cuthbert", "cuthbert_lake"),
-         colony = replace(colony, colony %in% c("rodgers_river","roger_river"), "rodgers_river_bay"),
+         colony = replace(colony, colony %in% 
+                            c("rodgers_river","roger_river"), "rodgers_river_bay"),
          colony = replace(colony, colony == "lottaman_creek", "lostmans_creek"),
          colony = replace(colony, colony == "grossman", "grossman_ridge_west"),
          colony = replace(colony, colony %in% c("tyr","tyr/lox73","lox_73"), "lox73"),
@@ -98,7 +99,9 @@ new_data <- data_raw %>%
          colony = replace(colony, colony %in% c("tam_west","tamiami"), "tamiami_west"),
          colony = replace(colony, colony == "paurotis", "paurotis_pond"),
          colony = replace(colony, colony == "lox_99", "lox99"),
-         colony = replace(colony, colony %in% c("loxramp","lox_ramp/011","loxramp/011","cook_lox_11","cooklox11","loxramp/11","lox_11"), "lox_ramp"),
+         colony = replace(colony, colony %in% 
+                            c("loxramp","lox_ramp/011","loxramp/011",
+                              "cook_lox_11","cooklox11","loxramp/11","lox_11"), "lox_ramp"),
          colony = replace(colony, colony %in% c("cook_nc4","loxnc4","cooknc4"), "lox_nc4"),
          colony = replace(colony, colony == "loxwest", "lox_west"),
          colony = replace(colony, colony == "cook_nc3", "lox111"),
@@ -112,9 +115,9 @@ new_data <- data_raw %>%
          colony = replace(colony, colony == "6", "grant"),
          colony = replace(colony, colony %in% c("bramha","brahmha"), "brahma"),
          colony = replace(colony, colony == "davlin", "dalvin"))  %>%
-  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", "end_transect",	
-         "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
-         "count", "notes")
+  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", 
+         "end_transect", "start_time", "end_time", "observer", "photo_sets", "photos", "species", 
+         "behavior", "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
@@ -206,9 +209,9 @@ new_data <- data_raw %>%
          colony = replace(colony, colony == "yon_teau", "yonteau"),
          colony = replace(colony, colony %in% c("bramha","brahmha"), "brahma"),
          colony = replace(colony, colony == "davlin", "dalvin"))  %>%
-  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", "end_transect",	
-         "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
-         "count", "notes")
+  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", 
+         "end_transect", "start_time", "end_time", "observer", "photo_sets", "photos", "species", 
+         "behavior", "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
@@ -282,9 +285,9 @@ new_data <- data_raw %>%
          colony = replace(colony, colony == "hermes", "lumpy"),
          colony = replace(colony, colony == "forsetti", "forseti"),
          colony = replace(colony, colony == "davlin", "dalvin"))  %>%
-  select("year","date", "colony","colony_old", "latitude", "longitude", "start_transect", "end_transect",	
-         "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
-         "count", "notes")
+  select("year","date", "colony","colony_old", "latitude", "longitude", "start_transect", 
+         "end_transect", "start_time", "end_time", "observer", "photo_sets", "photos", 
+         "species", "behavior", "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
@@ -294,13 +297,13 @@ write.table(new_data, "Counts/flight_surveys.csv",
             row.names = FALSE, col.names = FALSE, append = TRUE,
             na = "", sep = ",", quote = c(11,17))
 
-flightsurveys_all <- read.csv("Counts/flight_surveys.csv")
-flightsurveys_all <- flightsurveys_all %>% arrange(year) %>% distinct() %>%
-  mutate(across(c("year","latitude","longitude","count"), as.numeric),
-         date = as.Date(date))
+flightsurveys_all <- read.csv("Counts/flight_surveys.csv") %>% 
+                     distinct() %>%
+                     mutate(across(c("year","latitude","longitude","count"), as.numeric),
+                            date = as.Date(date)) %>% 
+                     arrange(year,date,colony,species)
 write.table(flightsurveys_all, "Counts/flight_surveys.csv", 
-            row.names = FALSE,
-            na = "", sep = ",", quote = c(11,17))
+            row.names = FALSE, na = "", sep = ",", quote = c(11,17))
 
 ##############################
 # Original files: 1 observer:
@@ -349,9 +352,9 @@ new_data <- data_raw %>%
          colony = replace(colony, colony=="tam_e" , "tamiami_east"),
          colony = replace(colony, colony %in% c("tamiami_w","tam_w","tam_west" ), "tamiami_west"),
          colony = replace(colony, colony=="donut", "vulture")) %>%
-  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", "end_transect",	
-         "start_time", "end_time", "observer", "photo_sets", "photos", "species", "behavior", 
-         "count", "notes")
+  select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", 
+         "end_transect", "start_time", "end_time", "observer", "photo_sets", "photos", 
+         "species", "behavior", "count", "notes")
 
 print(unique(new_data$colony[which(!(new_data$colony %in% colonies$colony))]))
 print(unique(new_data$species[which(!(new_data$species %in% species$species))]))
