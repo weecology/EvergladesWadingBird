@@ -16,13 +16,18 @@ species <- read.csv("SiteandMethods/species_list.csv")
 
 ##############################
 # Original files: Wide Format:
-       
+ 
+# "Ground survey 2001.xlsx"
+# "Ground survey 2002.xlsx"
+# "Ground survey 2003.xlsx"
 # "2004 raw survey data all colonies_Found20130128 (Autosaved).xls"
 # "Ground Surveys 2009.xls" 
 # "ground survey data 2013.xls"       
 # "ground survey data 2014.xlsx"       
-# "ground survey data 2015.xlsx"      
-# "ground survey data 2017.xlsx"       
+# "ground survey data 2015.xlsx"  
+# "ground survey data 2016.xlsx"
+# "ground survey data 2017.xlsx" 
+# "Ground Survey Data_2018_Analysis.xlsx"
 # "Ground Survey Data_2019.xlsx"      
 # "Ground Survey Data_Analysis_2020.xlsx"
 # "Ground Survey Data_Analysis_2021.xlsx"           
@@ -30,11 +35,11 @@ species <- read.csv("SiteandMethods/species_list.csv")
 # "Ground_survey_data_2023.xlsx"       
 # "Ground_survey_data_2024.xlsx" 
 
-year <- 2021
-data_path <- "~/Desktop/ground/Ground Survey Data_Analysis_2021.xlsx" 
+year <- 2018
+data_path <- "~/Desktop/ground/Ground Survey Data_2018_Analysis.xlsx" 
 
 data_raw <- readxl::read_excel(data_path, 
-                               col_types = c("date", rep("text", 31))) %>%
+                               col_types = c("date", rep("text", 46))) %>%
             rename_with(~ tolower(gsub(" ", "_", .x, fixed = TRUE))) %>%
             rename("date"="date_of_survey",
                    "transect" = "transect_id", 
@@ -65,19 +70,22 @@ ground_counts <- data_raw %>%
                          names_to = c("species","type"),
                          names_pattern = "(.*)_(.*)",
                          values_to = "count") %>%
+            mutate(count = gsub("[?]", "", count)) %>%
             mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
             filter(!is.na(count), count!=0) %>%
             pivot_wider(names_from = type, values_from = count, values_fill = NA) %>%
             rename("count"="adult") %>%
+#            mutate(nests = ifelse("nests" %in% names(.), nests, NA),
+#                   chicks = ifelse("chicks" %in% names(.), chicks, NA)) %>%
             select("year","date","transect","colony_waypoint","colony","latitude","longitude",
                    "species","count","nests","chicks","notes") 
-# mutate(colony = replace(colony, colony=="58","1181"))
-
 
 if(!all(ground_counts$colony %in% colonies$colony)| 
-   !all(ground_counts$species %in% species$species)) {
+   !all(ground_counts$species %in% species$species)|
+   !all(lubridate::year(ground_counts$date)==ground_counts$year)) {
   print(unique(ground_counts$colony[which(!(ground_counts$colony %in% colonies$colony))]))
   print(unique(ground_counts$species[which(!(ground_counts$species %in% species$species))]))
+  print(unique(ground_counts$year[which(!(lubridate::year(ground_counts$date) == ground_counts$year))]))
 }
 
 write.table(ground_counts, "Counts/ground_counts.csv", 
@@ -101,11 +109,13 @@ write.table(transects_all, "Counts/ground_transects.csv",
 # "Ground Surveys 2006.xlsx" 
 # "Ground Survey Data 2007.xlsx"        
 # "Ground Survey Data 2008.xlsx"
+# "Ground survey 2010.xlsx"
 # "Ground Survey Data 2011.xlsx"
+# "Ground survey 2012 working.xlsx"
 
 ##############################
-year <- 2011
-data_path <- "~/Desktop/ground/Ground Survey Data 2011.xlsx" 
+year <- 2012
+data_path <- "~/Desktop/ground/Ground survey 2012 working.xlsx" 
 
 data_raw <- readxl::read_excel(data_path, 
                                col_types = c("date", rep("text", 23))) %>%
@@ -141,9 +151,11 @@ ground_counts <- data_raw %>%
 
 ## Check and write data ##
 if(!all(ground_counts$colony %in% colonies$colony)| 
-   !all(ground_counts$species %in% species$species)) {
+   !all(ground_counts$species %in% species$species)|
+   !all(lubridate::year(ground_counts$date)==ground_counts$year)) {
   print(unique(ground_counts$colony[which(!(ground_counts$colony %in% colonies$colony))]))
   print(unique(ground_counts$species[which(!(ground_counts$species %in% species$species))]))
+  print(unique(ground_counts$year[which(!(lubridate::year(ground_counts$date) == ground_counts$year))]))
 }
 
 groundcounts_all <- groundcounts_all %>% rbind(ground_counts)  
