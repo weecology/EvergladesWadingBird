@@ -52,6 +52,7 @@ test_that("Lat and long valid", {
 test_that("Colony and species valid", {
   
   expect_true(all(counts$colony %in% colonies$colony))
+  expect_true(all(counts$group_id %in% colonies$group_id))
   expect_true(all(counts$species %in% species$species))
   expect_true(all(counts_under40$wca %in% c(colonies$region,colonies$subregion,"3a","")))
   expect_true(all(na.omit(flight_surveys$colony) %in% c(colonies$colony,"")))
