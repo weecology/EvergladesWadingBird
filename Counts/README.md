@@ -65,7 +65,8 @@ Other max counts for minor colonies (under 40 nests)
 * notes
 
 ### Ground Counts
-Raw field counts from ground surveys
+Raw field counts from ground surveys. These have been quality controlled in recent years, but
+data from before 2007 are suspect and should be used with caution.
 
 Locations are along a transect, not necessarily at a named colony. Colony is only reported 
 when it is overlapped by the transect.

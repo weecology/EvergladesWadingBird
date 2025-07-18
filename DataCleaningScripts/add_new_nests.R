@@ -5,11 +5,12 @@ colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 nest_checks <- read.csv("Nesting/nest_checks.csv")
 
-filepath <- "~/Desktop/Nest_check_data_2024.xlsx"
+filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
+filename <- "FINAL_nest_checks_2025.xlsx"
 
-year <- 2024
+year <- 2025
 
-newdata <- clean_nest_data(filepath, year)
+newdata <- clean_nest_data(paste(filepath,filename,sep=""), year)
 
 all(lubridate::year(newdata$date)==year)
 print(unique(newdata$colony[which(!(newdata$colony %in% colonies$colony))]))
