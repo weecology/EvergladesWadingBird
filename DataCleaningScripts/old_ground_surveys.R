@@ -1,4 +1,4 @@
-## Used to clean ground count data 1994 - 2024 into standard long format
+## Used to clean ground count data 1994 - 2025 into standard long format
 ## Done one year at a time, format is different every year
 ## G. Yenni
 
@@ -34,12 +34,13 @@ species <- read.csv("SiteandMethods/species_list.csv")
 # "ground_surveys_2022.xlsx" 
 # "Ground_survey_data_2023.xlsx"       
 # "Ground_survey_data_2024.xlsx" 
+# "FINAL_Ground_survey_data_2025.xlsx"
 
-year <- 2018
-data_path <- "~/Desktop/ground/Ground Survey Data_2018_Analysis.xlsx" 
+year <- 2025
+data_path <- "~/Desktop/ground/FINAL_Ground_survey_data_2025.xlsx" 
 
 data_raw <- readxl::read_excel(data_path, 
-                               col_types = c("date", rep("text", 46))) %>%
+                               col_types = c("date", rep("text", 68))) %>%
             rename_with(~ tolower(gsub(" ", "_", .x, fixed = TRUE))) %>%
             rename("date"="date_of_survey",
                    "transect" = "transect_id", 
