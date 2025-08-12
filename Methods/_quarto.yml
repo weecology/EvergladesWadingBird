@@ -22,17 +22,16 @@ website:
       - section: "Ground Transects"
         contents:
           - ground-transects/ground-transect-methods.qmd
-          - ground-transects/data-processing.qmd 
+          - ground-transects/data-processing.qmd
           - ground-transects/data-use.qmd
       - section: "Max Counts"
         contents:
           - max-counts/data-processing.qmd
-          - max-counts/ground-transect-methods.qmd
           - max-counts/data-use.qmd
       - section: "Nest Success Surveys"
         contents:
           - nesting/nesting-methods.qmd
-          - nesting/data-processing.qmd  
+          - nesting/data-processing.qmd
           - nesting/data-use.qmd
       - section: "Mercury"
         contents:
@@ -43,7 +42,7 @@ website:
       - section: "Data Management"
         contents:
           - data-management/data-records.qmd
-          - data-management/data-validation.qmd  
+          - data-management/data-validation.qmd
       - references.qmd
 
 format:
