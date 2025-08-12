@@ -1,0 +1,14 @@
+---
+title: "Everglades Wading Bird Project Methods"
+---
+
+The official methods for the Everglades Wading Bird Project, which include detailed monitoring data for the 3 Water Conservation Areas (WCAs) in the Everglades, and additional monitoring data from across the entire Greater Everglades Ecosystem.
+
+All data are available in near real-time in the [Everglades Wading Bird Project GitHub Repository](github.com/weecology/EvergladesWadingBird) and [actively archived to Zenodo)(https://doi.org/10.5281/zenodo.7734553).
+
+## R Package
+An R package is provided to aid in use of the database. The wader package can be installed via remotes::install_github("weecology/wader"). Documentation can be found in the GitHub repo (https://github.com/weecology/wader).
+
+## Data versions 
+Data versioning follows semantic versioning. Every time data are appended to a dataset, a new minor version is released and archived on Zenodo. A major version is released when the structure of a table changes, old data are significantly revised, or another change is made that could affect backward compatibility.
+

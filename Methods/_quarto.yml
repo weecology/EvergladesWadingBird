@@ -1,0 +1,55 @@
+project:
+  type: website
+
+website:
+  title: "Everglades Wading Bird Project Methods"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+  sidebar:
+    search: true
+    collapse-level: 1
+    contents:
+      - overview.qmd
+      - study-area.qmd
+      - section: "Aerial Surveys"
+        contents:
+          - aerial-surveys/aerial-survey-methods.qmd
+          - aerial-surveys/data-processing.qmd
+          - aerial-surveys/data-use.qmd
+      - section: "Ground Transects"
+        contents:
+          - ground-transects/ground-transect-methods.qmd
+          - ground-transects/data-processing.qmd
+          - ground-transects/data-use.qmd
+      - section: "Max Counts"
+        contents:
+          - max-counts/data-processing.qmd
+          - max-counts/data-use.qmd
+      - section: "Nest Success Surveys"
+        contents:
+          - nesting/nesting-methods.qmd
+          - nesting/data-processing.qmd
+          - nesting/data-use.qmd
+      - section: "Mercury"
+        contents:
+          - text: "Methods"
+            href: mercury/mercury-methods.qmd
+      - weather/weather-monitoring.qmd
+      - hydrology/hydrology.qmd
+      - section: "Data Management"
+        contents:
+          - data-management/data-records.qmd
+          - data-management/data-validation.qmd
+      - references.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+execute:
+  freeze: auto

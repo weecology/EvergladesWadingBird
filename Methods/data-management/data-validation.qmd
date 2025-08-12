@@ -1,0 +1,29 @@
+---
+title: "Data Validation"
+format: html
+---
+
+## Overview
+
+ We follow the data management procedures outlined in Yenni et al. (2018). In general, data QA/QC (quality assurance/quality control) has three stages: manual data entry and cleaning, automated data QA/QC, and automated updating of supplementary data tables.
+Data collected in the field are first double-entered in an Excel spreadsheet with restricted fields to prevent typos. The field manager proofreads all entered data and makes final decisions on max counts and nest fates before they continue the QA/QC process.
+The data are appended to the database via an R script that cleans and reshapes from the field version to the database version. Automated tests run to ensure that all records are consistent with realistic values. Once tests have passed and the data are appended, automated scripts update the supplementary data tables as necessary. Below, we explain the specifics of these tables for each data type. 
+
+## Counts
+
+Data fields are checked for the correct class. The species field is cross checked with the species list, and the colony field is cross checked with the colony list. New colonies are given an official name and location and added to the colony list.
+
+## Nesting
+
+Nest check data are confirmed to include only valid nest status and reasonable egg and chick numbers, in addition to checking for valid species and colony. Nest success calculations are restricted to valid data ranges (eg [0,1] for proportions). 
+## Indicators
+
+New indicator values are confirmed to be within valid ranges for the calculation.
+
+## Historic
+
+Because the historic data are static, QA/QC happened once. Data were checked to match the standards of the corresponding modern data.
+
+## Weather
+
+Weather data collection is entirely automated. Automated tests run to verify that downloading and appending hasn’t corrupted the data.

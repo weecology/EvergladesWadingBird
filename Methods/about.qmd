@@ -1,0 +1,9 @@
+---
+title: "About"
+---
+
+## Acknowledgements
+Data collection has been supported under series of contracts with the US Army Corps of Engineers, most recently W912HZ20SOI0001 (to Morgan Ernest).
+
+The authors acknowledge the Everglades Depth Estimation Network (EDEN) project and the US Geological Survey for providing the gauge data for the purpose of this research.
+

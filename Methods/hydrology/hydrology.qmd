@@ -1,0 +1,10 @@
+---
+title: "Hydrology"
+format: html
+---
+
+Hydrological monitoring is conducted by the South Florida Water Management District (SFWMD) and the U.S. Geological Survey (USGS).
+The SFWMD's hydrological monitoring program includes the collection of water level, stage, and discharge data from various locations throughout the Everglades.
+Data provided here has been downloaded from the Everglades Depth Estimation Network (EDEN, http://sofia.usgs.gov/eden) database.
+
+Water depth data are available from the [Everglades Depth Estimation Network (EDEN)](http://sofia.usgs.gov/eden), via their [EDEN THREDDS server](http://sflthredds.er.usgs.gov/) or the [Explore and View EDEN (EVE) web application](https://sofia.usgs.gov/eden/eve/). We also have created the [edenR package](https://github.com/weecology/edenR) to streamline downloads, data processing, and statistics for forecasting.

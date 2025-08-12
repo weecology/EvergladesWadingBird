@@ -1,0 +1,13 @@
+---
+title: "Weather Monitoring"
+format: html
+---
+
+We use weather data from [NOAA Custom GHCN-Daily](https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ncdc:C00861/html#).
+Raw data are automatically collected into a table from all active stations in the study region.
+
+We use the PRISM dataset (http://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf) to calculate anomalies at the site (% average precipitation and temperature).
+
+- Location: Lat: 26.0832 Lon: -80.6252 Elev: 2m
+- Spatial resolution: 4km
+- PRISM day definition: 24 hours ending at 1200 UTC on the day shown
