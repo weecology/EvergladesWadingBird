@@ -20,20 +20,18 @@ all_data <- setNames(data.frame(matrix(ncol = 9, nrow = 0)), c("year", "colony",
 
 tab_names <- readxl::excel_sheets(path = data_path)
 tab_names <- tab_names[tab_names != "key"]
-tab_names <- tab_names[tab_names != "Proofing"]
-tab_names <- tab_names[tab_names != "Template"]
-tab_names <- tab_names[tab_names != "template"]
+tab_names <- tab_names[!(tab_names %in% 
+              c("Proofing","Template","template","TO BE RESOLVED","Decisions on changes"))]
 tab_names <- tab_names[!startsWith(tab_names ,"Other")]
 tab_names <- tab_names[!startsWith(tab_names ,"Sheet")]
-tab_names <- tab_names[!startsWith(tab_names ,"Overview")]
+tab_names <- tab_names[!startsWith(tab_names ,"Transect")]
 tab_names <- tab_names[!startsWith(tab_names ,"Dataset Headers")]
-tab_names <- tab_names[!startsWith(tab_names ,"2024 Season Notes")]
 data_raw <- lapply(tab_names, function(x) readxl::read_excel(path = data_path, sheet = x, 
                                                              col_names = FALSE))
 
 for(i in 1:length(tab_names)) {
   colnames1 <- as.numeric(data_raw[[i]][1,])
-  colnames1[1:3] <- c("colony", "nest", "species")
+  colnames1[1:4] <- c("year","colony", "nest", "species")
   colnames1 <- zoo::na.locf(colnames1)
   colnames2 <- as.character(data_raw[[i]][2,])
   colnames2 <- colnames2[!is.na(colnames2)]
@@ -43,7 +41,7 @@ for(i in 1:length(tab_names)) {
   if(any(startsWith(colnames2,"comment"))) {colnames2 <- colnames2[1:which(startsWith(colnames2,"comment"))]}
   colnames1 <- tolower(colnames1[1:length(colnames2)])
   colnames <- paste(colnames1, colnames2, sep = "_")
-  colnames[1:3] <- c("colony", "nest", "species")
+  colnames[1:4] <- c("year","colony", "nest", "species")
   colnames[length(colnames)] <- "notes"
 
   new_data <- as.data.frame(data_raw[[i]][,1:length(colnames)]) %>%
@@ -77,6 +75,7 @@ for(i in 1:length(tab_names)) {
     dplyr::mutate(eggs = tolower(eggs),
                   chicks = tolower(chicks)) %>%
     dplyr::mutate(dplyr::across(everything(),~ purrr::map_chr(.x, ~ gsub("\"", "", .x)))) %>%
+    dplyr::filter(!dplyr::if_all(c(eggs, chicks,stage), is.na)) %>%
     dplyr::mutate(year = as.integer(year),
                   colony = as.character(colony),
                   nest = as.character(nest),
