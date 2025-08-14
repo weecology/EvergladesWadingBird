@@ -10,9 +10,9 @@ colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 nest_success <- read.csv("Nesting/nest_success.csv")
 
-filepath <- "~/Desktop/Mayfield Calculations_2024.xlsx"
+filepath <- "~/Desktop/Mayfield_Calender_2025.xlsx"
 
-this_year <- 2024
+this_year <- 2025
 
 all_data <- setNames(data.frame(matrix(ncol = 26, nrow = 0)), 
                      c("year","colony","nest_number","species", "n_days_incubation", 
