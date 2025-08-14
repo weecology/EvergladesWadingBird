@@ -41,6 +41,10 @@
   # only chicks no eggs and stage isn't aged_chick
   # only 1 observation of eggs/chicks total, and it isn't hatching or pipping
   # do not include in clutch size calculations based on 1 observation
+  # exclude from incubation calculations if observation period is <<21 days,
+      # and status is never hatching or pipping
+  # exclude from nestling calculations if there is only one nestling observation and it's 
+      # close to hatch date
 
 library(plyr)
 library(dplyr)
@@ -182,74 +186,101 @@ nest_success <- nests %>%
                                                                   n_days_incubation < 0 ~ 0,
                                                                   TRUE ~ n_days_incubation))
 
-
-# Compare example 
-#
-
-nest_success_compare <- read.csv("Nesting/nest_success.csv") %>%
-                        filter(year %in% get_year) %>%
-                        full_join(nest_success, 
-                                         by=c("year","colony","species","nest_number")) %>%
-                        select("year","colony","species","nest_number",
-                                      order(colnames(.)),
-                                      -"clutch_type")
-
                
+# Compare to handmade calculations
+
+filepath <- "~/Desktop/Mayfield_Calender_2025.xlsx"
+new_data <- readxl::read_excel(path = filepath) %>%
+     dplyr::rename_with(tolower) %>%
+     dplyr::rename(nest_number = nest,
+                  species = species,
+                   n_days_incubation = "n(i)",
+                   incubation_success = "s(i)", 
+                   n_days_nestling = "n(n)",
+                   nestling_success = "s(n)",
+                   clutch = clutch,
+                   brood = brood,
+                   fledged = fledged, 
+                   notes = "comments") %>%
+     dplyr::mutate(nest_number = as.character(nest_number),
+                   clutch_type = NA,
+                   young_lost = NA,
+                   real_success = NA, 
+                   real_failure = NA, 
+                   start_date = NA, 
+                   end_date = NA) %>%
+     dplyr::select("year","colony","nest_number","species", "n_days_incubation", 
+                   "incubation_success", "n_days_nestling", "nestling_success",
+                   "clutch", "brood", "fledged", "clutch_type", "young_lost", "real_success", 
+                   "real_failure", "start_date", "end_date", "notes")
+
+nest_success_compare <- new_data %>%
+  full_join(nest_success, 
+            by=c("year","colony","species","nest_number")) %>%
+  select("year","colony","species","nest_number",
+         order(colnames(.)),
+         -"clutch_type")
+
+
+
 # Do summary calculations
 #
 # smhe and smwh are used to combine trhe, lbhe, sneg when they cannot be distinguished
 # trhe, lbhe, sneg nests are impossible to tell apart
-  # combine everything into smhe for incubation calculations
+# combine everything into smhe for incubation calculations
 # do trhe, lbhe, sneg separately if possible for nestling calculations
-  # once trhe hatch, they are distinguishable
-  # or trhe and smwh separately
-  # lbhe, sneg chicks difficult to tell apart
+# once trhe hatch, they are distinguishable
+# or trhe and smwh separately
+# lbhe, sneg chicks difficult to tell apart
 # lump back into smhe for overall
 
 # trhe implies successful incubation
 # smwh implies successful incubation
 # smhe implies incubation failure
 
-success_summary <- read.csv("Nesting/nest_success_summary.csv")
-
 success <- nest_success %>%
   filter(year %in% get_year) %>%
-
+  
   # make consistent use of success columns
   mutate(incubation_success = case_when(is.na(incubation_success) & brood %in% c(1:10) ~ 1,
-                                               is.na(incubation_success) & fledged %in% c(1:10) ~ 1,
-                                               TRUE ~ incubation_success),
-                nestling_success = case_when(is.na(nestling_success) & fledged %in% c(1:10) ~ 1,
-                                                      TRUE ~ nestling_success)) %>%
+                                        is.na(incubation_success) & fledged %in% c(1:10) ~ 1,
+                                        TRUE ~ incubation_success),
+         nestling_success = case_when(is.na(nestling_success) & fledged %in% c(1:10) ~ 1,
+                                      TRUE ~ nestling_success)) %>%
   group_by(year,colony,species) %>%
   mutate(species = replace(species, species %in% c("trhe", "lbhe", "sneg"), "smhe")) %>%
-    summarise(incubation_k=sum(!is.na(nest_number)), 
-                     incubation_sumy=sum(incubation_success==1, na.rm=TRUE), 
-                     incubation_e=sum(n_days_incubation, na.rm = TRUE), 
-                     incubation_j=mean(incubation_j, na.rm = TRUE),
-                     nestling_k=sum(incubation_success==1, na.rm=TRUE), 
-                     nestling_sumy=sum(nestling_success==1, na.rm=TRUE), 
-                     nestling_e=sum(n_days_nestling, na.rm = TRUE), 
-                     nestling_j=mean(nestling_j, na.rm = TRUE)) %>%
-    mutate(incubation_p = 1-((incubation_k-incubation_sumy)/incubation_e), 
-                  incubation_pj = incubation_p^incubation_j, 
-                  incubation_varp=(incubation_p*(1-incubation_p))/incubation_e, 
-                  incubation_varpj = incubation_varp*((incubation_j*(incubation_p^(incubation_j-1)))^2),
-                  incubation_sdpj = sqrt(incubation_varpj),
-                  nestling_p = 1-((nestling_k-nestling_sumy)/nestling_e), 
-                  nestling_pj = nestling_p^nestling_j, 
-                  nestling_varp=(nestling_p*(1-nestling_p))/nestling_e, 
-                  nestling_varpj = nestling_varp*((nestling_j*(nestling_p^(nestling_j-1)))^2),
-                  nestling_sdpj = sqrt(nestling_varpj),
-                  overall_p = (incubation_p^incubation_j)*(nestling_p^nestling_j),
-                  overall_varp = ((incubation_pj^2)*nestling_varpj)+((nestling_pj^2)*incubation_varpj)+(incubation_varpj*nestling_varpj),
-                  overall_sd = sqrt(overall_varp)) %>%
-    mutate_if(is.double, list(~na_if(., Inf))) %>% 
-    mutate_if(is.double, list(~na_if(., -Inf)))
+  summarise(incubation_k=sum(!is.na(nest_number)), 
+            incubation_sumy=sum(incubation_success==1, na.rm=TRUE), 
+            incubation_e=sum(n_days_incubation, na.rm = TRUE), 
+            incubation_j=mean(incubation_j, na.rm = TRUE),
+            nestling_k=sum(incubation_success==1, na.rm=TRUE), 
+            nestling_sumy=sum(nestling_success==1, na.rm=TRUE), 
+            nestling_e=sum(n_days_nestling, na.rm = TRUE), 
+            nestling_j=mean(nestling_j, na.rm = TRUE)) %>%
+  mutate(incubation_p = 1-((incubation_k-incubation_sumy)/incubation_e), 
+         incubation_pj = incubation_p^incubation_j, 
+         incubation_varp=(incubation_p*(1-incubation_p))/incubation_e, 
+         incubation_varpj = incubation_varp*((incubation_j*(incubation_p^(incubation_j-1)))^2),
+         incubation_sdpj = sqrt(incubation_varpj),
+         nestling_p = 1-((nestling_k-nestling_sumy)/nestling_e), 
+         nestling_pj = nestling_p^nestling_j, 
+         nestling_varp=(nestling_p*(1-nestling_p))/nestling_e, 
+         nestling_varpj = nestling_varp*((nestling_j*(nestling_p^(nestling_j-1)))^2),
+         nestling_sdpj = sqrt(nestling_varpj),
+         overall_p = (incubation_p^incubation_j)*(nestling_p^nestling_j),
+         overall_varp = ((incubation_pj^2)*nestling_varpj)+((nestling_pj^2)*incubation_varpj)+(incubation_varpj*nestling_varpj),
+         overall_sd = sqrt(overall_varp)) %>%
+  mutate_if(is.double, list(~na_if(., Inf))) %>% 
+  mutate_if(is.double, list(~na_if(., -Inf)))
 
+
+######################################################################################
+
+# Make plot comparisons of all data
+success_summary <- read.csv("Nesting/nest_success_summary.csv")
 compare <- left_join(success,success_summary, by=join_by(year, colony, species)) %>%
-           filter(species %in% species_list) %>%
-           select("year","colony","species",order(colnames(.)))
+  filter(species %in% species_list) %>%
+  select("year","colony","species",order(colnames(.)))
 
 library(ggplot2)
 library(ggpubr)
