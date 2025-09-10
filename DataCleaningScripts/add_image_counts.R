@@ -12,19 +12,24 @@ colonies <- read.csv("SiteandMethods/colonies.csv") %>%
 species <- read.csv("SiteandMethods/species_list.csv")
 
 ############################# Get raw data #########################################
-year <- 2025
+new_year <- 2025
 
-filepath <- "~/Desktop/photos/"
+filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
 filename <- "Image_count_2025.xlsx"
 
 data_path <- paste(filepath,filename,sep="")
 
 new_data <- readxl::read_excel(data_path, 
                                col_names = TRUE,     
-                               col_types = c(rep("text",2),"date",rep("text",7))) %>%
+                               col_types = c(rep("text",2),"date",rep("text",9)))
+
+new_data <- new_data[,1:10]
+colnames(new_data)[10] <- "notes"
+
+new_data <- new_data %>%
   clean_names() %>%
   filter(!is.na(count), count!=0) %>%
-  mutate(year = year,
+  mutate(year = new_year,
          colony_old = colony,
          latitude = NA,
          longitude = NA) %>%
@@ -49,3 +54,10 @@ print(unique(new_data$year[which(!(lubridate::year(new_data$date) == new_data$ye
 write.table(new_data, "Counts/image_counts.csv", 
             row.names = FALSE, col.names = FALSE, 
             append = TRUE, na = "", sep = ",", quote = c(9,14))
+
+## Remove year to rewrite
+images <- read.csv("Counts/image_counts.csv") %>%
+  filter(year<new_year)
+write.table(images, "Counts/image_counts.csv", 
+            row.names = FALSE, col.names = TRUE, 
+            na = "", sep = ",", quote = c(9,14))
