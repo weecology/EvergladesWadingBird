@@ -7220,7 +7220,7 @@
 2025,2025-03-18,113,113,,,fixed-wing,nikon_d850,"DSC_8591,8581,8564",SNL,greg,nesting,7,
 2025,2025-03-18,116,116,,,fixed-wing,nikon_d850,"DSC_8654,8650",TRF,gbhe,nesting,2,
 2025,2025-03-18,116,116,,,fixed-wing,nikon_d850,"DSC_8654,8650",TRF,greg,roosting,1,
-2025,2025-03-11,1181,1181,,,fixed-wing,nikon_d850,"DSC_7558,7568",MJR,smwh,nesting,7,
+2025,2025-03-11,1181,1181,,,fixed-wing,nikon_d850,"DSC_7558,7568",mjr,smwh,nesting,7,
 2025,2025-03-11,1181,1181,,,fixed-wing,nikon_d850,"DSC_7558,7568",TRF,sneg,nesting,42,"(58)"
 2025,2025-03-11,1181,1181,,,fixed-wing,nikon_d850,"DSC_7558,7568",TRF,sneg,roosting,5,"(58)"
 2025,2025-03-11,1181,1181,,,fixed-wing,nikon_d850,"DSC_7558,7568",TRF,lbhe,nesting,86,"(58)"
@@ -7430,9 +7430,9 @@
 2025,2025-03-18,lox73,tyr,,,fixed-wing,nikon_d850,"DSC_8108,8112",SNL,greg,nesting,13,
 2025,2025-03-18,utu,Utu,,,fixed-wing,nikon_d850,"DSC_8138",MRB,greg,roosting,25,
 2025,2025-03-18,utu,Utu,,,fixed-wing,nikon_d850,"DSC_8138",MRB,greg,nesting,108,
-2025,2025-03-13,vacation,vacation,,,fixed-wing,nikon_d850,"DSC_7500,7503",TRF,greg,nesting,105,
-2025,2025-03-13,vacation,vacation,,,fixed-wing,nikon_d850,"DSC_7500,7503",TRF,gbhe,roosting,1,
-2025,2025-03-13,vacation,vacation,,,fixed-wing,nikon_d850,"DSC_7500,7503",TRF,gbhe,nesting,1,
+2025,2025-03-11,vacation,vacation,,,fixed-wing,nikon_d850,"DSC_7500,7503",TRF,greg,nesting,105,"**Updated date from March 13 to correct March 11"
+2025,2025-03-11,vacation,vacation,,,fixed-wing,nikon_d850,"DSC_7500,7503",TRF,gbhe,roosting,1,"**Updated date from March 13 to correct March 11"
+2025,2025-03-11,vacation,vacation,,,fixed-wing,nikon_d850,"DSC_7500,7503",TRF,gbhe,nesting,1,"**Updated date from March 13 to correct March 11"
 2025,2025-03-18,vaquita,vaquita,,,fixed-wing,nikon_d850,"DSC_8149,8153",MRB,greg,roosting,3,"(100)"
 2025,2025-03-18,vaquita,vaquita,,,fixed-wing,nikon_d850,"DSC_8149,8153",MRB,greg,nesting,12,"(100)"
 2025,2025-03-11,vimba,vimba,,,fixed-wing,nikon_d850,"DSC_7463",TRF,greg,nesting,12,"(96)"
@@ -7567,7 +7567,7 @@
 2025,2025-04-14,auster,Auster,,,fixed-wing,nikon_d850,"DSC_8812,8817",GLA,greg,nesting,35,
 2025,2025-04-14,auster,Auster,,,fixed-wing,nikon_d850,"DSC_8812,8817",GLA,gbhe,nesting,1,
 2025,2025-04-14,auster,Auster,,,fixed-wing,nikon_d850,"DSC_8812,8817",GLA,greg,roosting,3,
-2025,2025-04-16,big_mel,big_mel,,,fixed-wing,nikon_d850,"9350,9355,9356",GLA,greg,nesting,17,
+2025,2025-04-15,big_mel,big_mel,,,fixed-wing,nikon_d850,"9350,9355,9356",GLA,greg,nesting,17,"**Updated date from April 16 to correct April 15"
 2025,2025-04-14,carp,carp,,,fixed-wing,nikon_d850,"DSC_8884",MRB,greg,roosting,2,"(92)"
 2025,2025-04-14,carp,carp,,,fixed-wing,nikon_d850,"DSC_8884",MRB,greg,nesting,27,"(92)"
 2025,2025-04-14,clovis,clovis,,,fixed-wing,nikon_d850,"DSC_8905",MJR,greg,nesting,21,"(134)"

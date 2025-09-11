@@ -12,7 +12,7 @@ colonies <- read.csv("SiteandMethods/colonies.csv") %>%
 species <- read.csv("SiteandMethods/species_list.csv")
 
 ############################# Get raw data #########################################
-year <- 2025
+new_year <- 2025
 
 filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
 filename <- "FINAL_flight_survey_data_2025.xlsx"
@@ -24,7 +24,7 @@ new_data <- readxl::read_excel(data_path,
                                col_types = c(rep("text",5),"date",rep("text",9))) %>%
             clean_names() %>%
             filter(!is.na(count), count!=0) %>%
-  mutate(year = year,
+  mutate(year = new_year,
          colony_old = colony,
          latitude = NA,
          longitude = NA) %>%
@@ -44,4 +44,11 @@ print(unique(new_data$year[which(!(lubridate::year(new_data$date) == new_data$ye
 
 write.table(new_data, "Counts/flight_surveys.csv", 
             row.names = FALSE, col.names = FALSE, append = TRUE,
+            na = "", sep = ",", quote = c(11,17))
+
+## Remove year to rewrite
+flights <- read.csv("Counts/flight_surveys.csv") %>%
+           filter(year<new_year)
+write.table(flights, "Counts/flight_surveys.csv", 
+            row.names = FALSE, col.names = TRUE,
             na = "", sep = ",", quote = c(11,17))
