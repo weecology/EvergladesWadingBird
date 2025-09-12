@@ -2,7 +2,12 @@
 
 library(dplyr)
 
-experts <- c("LG","MJR","LG MJR","L. Garner","M. Rickershauser") 
+colonies <- read.csv("SiteandMethods/colonies.csv") %>%     
+  dplyr::mutate(group_id = as.numeric(group_id),
+                latitude = as.numeric(latitude),
+                longitude = as.numeric(longitude))
+
+experts <- c("MJR","mjr","LG","LG MJR","L. Garner","M. Rickershauser") 
 
 count_year <- 2025
 
@@ -39,16 +44,33 @@ counts <- full_join(imagecounts,flightsurveys,by = c("date","colony","species"))
          count_type = "image",
          count_type = ifelse(is.na(image_count),"flight","image"),
          count = ifelse(is.na(image_count),flight_count,image_count)) 
-  
+
+## Tables for review  
 max_counts <- counts %>%
   slice_max(count, n = 1, by = c(colony,species)) %>%
   select(colony, species, count, date, count_type, image_count, flight_count) %>%
   arrange(colony,species)
+## %>% pivot_wider(names_from = species, values_from = max_count)
 
+# write.table(max_counts, "~/Desktop/max_counts_2025.csv", 
+#             row.names = FALSE, col.names = TRUE, 
+#             na = "", sep = ",")
 
-%>%
-  pivot_wider(names_from = species, values_from = max_count)
+# Write final table
+max_counts_final <- max_counts %>% 
+                left_join(colonies, by="colony") %>%
+                mutate(year = count_year,
+                       colony_old = colony,
+                       notes = NA) %>%
+                select(group_id,year,colony,colony_old,latitude,longitude,species,count,notes) %>%
+                arrange(year,group_id) %>% distinct()
+write.table(max_counts_final, "Counts/maxcounts.csv", row.names = FALSE, col.names = FALSE,
+            append = TRUE, na = "", sep = ",", quote = 9) 
 
-write.table(max_counts, "~/Desktop/max_counts_2025.csv", 
-            row.names = FALSE, col.names = TRUE, 
-            na = "", sep = ",")
+## Under 40 max counts
+groundcounts <- read.csv("Counts/ground_counts.csv") %>% 
+                mutate(across(c("year","count"), as.numeric),
+                       date = as.Date(date)) %>%
+                filter(year==count_year,
+                       !(colony %in% max_counts_final$colony)) %>%
+                slice_max(count, n = 1, by = c(transect,colony_waypoint,species))
