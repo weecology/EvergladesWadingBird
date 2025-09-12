@@ -64,13 +64,21 @@ max_counts_final <- max_counts %>%
                        notes = NA) %>%
                 select(group_id,year,colony,colony_old,latitude,longitude,species,count,notes) %>%
                 arrange(year,group_id) %>% distinct()
+
 write.table(max_counts_final, "Counts/maxcounts.csv", row.names = FALSE, col.names = FALSE,
             append = TRUE, na = "", sep = ",", quote = 9) 
 
 ## Under 40 max counts
 groundcounts <- read.csv("Counts/ground_counts.csv") %>% 
-                mutate(across(c("year","count"), as.numeric),
+                mutate(across(c("year","latitude","longitude","count"), as.numeric),
                        date = as.Date(date)) %>%
                 filter(year==count_year,
                        !(colony %in% max_counts_final$colony)) %>%
-                slice_max(count, n = 1, by = c(transect,colony_waypoint,species))
+                slice_max(count, n = 1, by = c(transect,colony_waypoint,species)) %>%
+                left_join(colonies[,-c(5:6)], by="colony") %>%              
+                mutate(wca="3", colony_old=colony_waypoint) %>%
+                select("year","wca","group_id","colony","colony_old","latitude",
+                       "longitude","species","count","notes") 
+
+write.table(groundcounts, "Counts/maxcounts_under40.csv", row.names = FALSE, col.names = FALSE,
+            append = TRUE, na = "", sep = ",", quote = 10) 
