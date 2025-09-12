@@ -19,9 +19,8 @@ test_that("required column names in counts df", {
                    c("group_id","year","colony","colony_old","latitude","longitude",      
                      "species","count","notes"))
   expect_identical(counts_under40_cols, 
-                   c("group_id","year","colony","colony_old", "latitude","longitude","wca","greg",     
-                     "whib","wost","gbhe","rosp","sneg","anhi","trhe","bcnh","lbhe","ycnh","glib",
-                     "caeg","dcco","grhe","smhe","lawh","lada","smwh","total","notes"))
+                   c("year","wca","group_id","colony","colony_old","latitude","longitude",
+                     "species","count","notes" ))
   expect_identical(flight_surveys_cols, 
                    c("year","date","colony","colony_old","latitude","longitude","start_transect",
                      "end_transect","start_time","end_time","observer","photo_sets",
@@ -55,6 +54,7 @@ test_that("Colony and species valid", {
   expect_true(all(counts$group_id %in% colonies$group_id))
   expect_true(all(counts$species %in% species$species))
   expect_true(all(counts_under40$wca %in% c(colonies$region,colonies$subregion,"3a","")))
+  expect_true(all(counts_under40$species %in% species$species))
   expect_true(all(na.omit(flight_surveys$colony) %in% c(colonies$colony,"")))
   expect_true(all(flight_surveys$species %in% species$species))
   expect_true(all(na.omit(image_counts$colony) %in% c(colonies$colony,"")))
@@ -75,6 +75,7 @@ test_that("Year valid", {
 test_that("Counts valid", {
   
   expect_true(all(is.integer(counts$count)))
+  expect_true(all(is.integer(counts_under40$count)))
   expect_true(all(is.integer(flight_surveys$count)))
   expect_true(all(is.integer(image_counts$count)))
   expect_true(all(is.integer(na.omit(ground_counts$count))))
