@@ -1,4 +1,4 @@
-# Reshapes and cleans max count data (2022->)
+# Reshapes and cleans max count data (2022->2024)
 # Reads count data from original excel files, reshapes from wide (dates as cols) to long format,
 # corrects data format errors, appends to long timeseries file
 
