@@ -1,11 +1,12 @@
 # get max counts
 
 library(dplyr)
+library(tidyr)
 
 colonies <- read.csv("SiteandMethods/colonies.csv") %>%     
-  dplyr::mutate(group_id = as.numeric(group_id),
-                latitude = as.numeric(latitude),
-                longitude = as.numeric(longitude))
+            mutate(group_id = as.numeric(group_id),
+                   latitude = as.numeric(latitude),
+                   longitude = as.numeric(longitude))
 
 experts <- c("MJR","mjr","LG","LG MJR","L. Garner","M. Rickershauser") 
 
@@ -82,3 +83,55 @@ groundcounts <- read.csv("Counts/ground_counts.csv") %>%
 
 write.table(groundcounts, "Counts/maxcounts_under40.csv", row.names = FALSE, col.names = FALSE,
             append = TRUE, na = "", sep = ",", quote = 10) 
+
+############################## Add ENP data ###################################################
+filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
+enp_filename <- "ENP_max_count_2025.xlsx"
+
+species <- read.csv("SiteandMethods/species_list.csv")
+
+enp_data <- readxl::read_excel(paste(filepath,enp_filename,sep=""), 
+                               sheet = 1, col_types = "text") %>%
+  rename_with(tolower) %>%
+  mutate(colony_old = colony,
+          colony = tolower(colony),
+          colony = gsub(" ", "_", colony),
+          colony = gsub("/", "_", colony),
+          colony = replace(colony, colony=="colony_13", "colony13"),
+          colony = replace(colony, colony=="cuthbert", "cuthbert_lake"),
+          colony = replace(colony, colony=="paurotis", "paurotis_pond"),
+          colony = replace(colony, colony=="colony_14", "colony14"),
+          colony = replace(colony, colony=="colony_15", "colony15"),
+          colony = replace(colony, colony %in% 
+                                        c("shark_valley_observation_tower",
+                                          "shark_valley_tower"), "shark_valley"),
+          colony = replace(colony, colony=="shark_valley_tram_road_nw", "shark_valley_tram"),
+          colony = replace(colony, colony=="shark_river_slough_se", "shark_river_slough"),
+          colony = replace(colony, colony %in% 
+                                        c("rodgers_river_bay_large_island",
+                                          "rodgers_river_bay_small_island",
+                                          "rodgers_river"), "rodgers_river_bay"),
+          colony = replace(colony, colony=="grossman_ridge_willowhead", 
+                                                  "grossman_willowhead")) %>%
+  left_join(colonies, by = join_by(colony)) %>%
+  pivot_longer(cols = any_of(species$species), 
+                      names_to = "species",
+                      values_to = "count") %>%
+  mutate(year = count_year) %>%
+  filter(!is.na(count),count!=0) %>%
+  mutate(year = as.numeric(year),
+         latitude = as.numeric(latitude),
+         longitude = as.numeric(longitude),
+         count = as.numeric(count)) %>%
+  select("group_id","year","colony","colony_old","latitude","longitude",
+                "species","count","notes")
+
+if(!all(enp_data$colony %in% colonies$colony)| 
+   !all(enp_data$species %in% species$species)) {
+  print(unique(enp_data$colony[which(!(enp_data$colony %in% colonies$colony))]))
+  print(unique(enp_data$species[which(!(enp_data$species %in% species$species))]))
+}
+
+# Write
+write.table(enp_data, "Counts/maxcounts.csv", row.names = FALSE, col.names = FALSE,
+            append = TRUE, na = "", sep = ",", quote = 9) 
