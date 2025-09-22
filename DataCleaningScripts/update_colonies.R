@@ -51,6 +51,11 @@ colonies_update$colony[colonies_update$group_id==3310] = "velvetfish"
 colonies_update$aka[colonies_update$group_id==3310] = "3310,3311,96075,94002"
 colonies_update$display_name[colonies_update$group_id==3310] = "Velvetfish"
 
+# New ENP colonies
+colonies_update[374,] <- c(3855, "butcher", "other", "bigcypress", 25.85744, -81.01954, "", "Butcher Gallery")
+colonies_update$aka[colonies_update$group_id==3777] = "Colony 2022"
+colonies_update$aka[colonies_update$group_id==3708] = "New 2021, Shark Valley Tram Road NW, 3708, West of Tram Rd"
+
 ## Write new table
 colonies_update <- colonies_update %>% 
   dplyr::mutate(dplyr::across(c("group_id","latitude","longitude"), as.numeric)) %>%
