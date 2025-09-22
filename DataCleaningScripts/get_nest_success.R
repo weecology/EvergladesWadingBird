@@ -10,9 +10,9 @@ colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 nest_success <- read.csv("Nesting/nest_success.csv")
 
-filepath <- "~/Desktop/Mayfield Calculations_2024.xlsx"
+filepath <- "~/Desktop/Mayfield_Calender_2025.xlsx"
 
-this_year <- 2024
+this_year <- 2025
 
 all_data <- setNames(data.frame(matrix(ncol = 26, nrow = 0)), 
                      c("year","colony","nest_number","species", "n_days_incubation", 
@@ -93,12 +93,17 @@ write.table(new_success, "Nesting/nest_success.csv", row.names = FALSE, col.name
 #' to data with species as rows and metrics as columns
 #'
 success_summary <- read.csv("Nesting/nest_success_summary.csv")
-success_summary_new <- readxl::read_excel(path = "~/Desktop/Mayfield Table_2024.xlsx", 
+success_summary_new <- readxl::read_excel(path = "~/Desktop/Mayfield_Calculations_2025.xlsx", 
                                           sheet = 1, col_names = TRUE) %>%
   dplyr::rename_with(tolower) %>%
-  tidyr::pivot_longer(cols = !c(year,colony,metric), 
+  dplyr::mutate(colony = tolower(colony), 
+                metric = tolower(metric)) %>%
+  dplyr::mutate(dplyr::across(.cols = c(metric),
+           .fns = ~ stringr::str_replace_all(., pattern = "[\\(\\)\\s]+", replacement = ""))) %>%
+  tidyr::pivot_longer(cols = !c(year,colony,stage,metric), 
                       names_to = "species",
                       values_to = "value") %>%
+  dplyr::mutate(metric = paste(stage,"_",metric,sep="")) %>%
   tidyr::pivot_wider(id_cols = c(year,colony,species), names_from = metric, values_from = value, 
                      values_fill = NA) %>%
   dplyr::mutate(year=as.integer(year)) %>% 

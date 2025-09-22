@@ -5,7 +5,7 @@ format: html
 
 ## Mayfield Method
 
-Using the nest check data (see Nest Success Surveys), we calculate nest success for every species (or group, some species’ nests are indistinguishable in the field) at every ground monitored colony using the Mayfield method (Mayfield 1961, 1975, Hensler 1985). The Mayfield method determines the probability of the nest surviving to produce at least one surviving young. The Mayfield method corrects for early or unobservable failures and prorates survival of a nest for the period of observation.
+Using the nest check data (see Nest Surveys), we calculate nest success for every species (or group, some species’ nests are indistinguishable in the field) at every ground monitored colony using the Mayfield method (Mayfield 1961, 1975, Hensler 1985). The Mayfield method determines the probability of the nest surviving to produce at least one surviving young. The Mayfield method corrects for early or unobservable failures and prorates survival of a nest for the period of observation.
 
 Mayfield is calculated using a two-step process. Daily survival probability is the probability that a nest will survive from one day to the next. It is calculated by determining for each nest the number of days it was active (or the number of ‘exposure days’ to risk) and counting the number of failed nests in your survey.
 

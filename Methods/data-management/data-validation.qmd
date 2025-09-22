@@ -16,6 +16,7 @@ Data fields are checked for the correct class. The species field is cross checke
 ## Nesting
 
 Nest check data are confirmed to include only valid nest status and reasonable egg and chick numbers, in addition to checking for valid species and colony. Nest success calculations are restricted to valid data ranges (eg [0,1] for proportions). 
+
 ## Indicators
 
 New indicator values are confirmed to be within valid ranges for the calculation.
