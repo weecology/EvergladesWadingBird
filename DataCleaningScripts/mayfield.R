@@ -193,19 +193,19 @@ filepath <- "~/Desktop/Mayfield_Calender_2025.xlsx"
 new_data <- readxl::read_excel(path = filepath) %>%
      dplyr::rename_with(tolower) %>%
      dplyr::rename(nest_number = nest,
-                  species = species,
+                   species = species,
                    n_days_incubation = "n(i)",
                    incubation_success = "s(i)", 
                    n_days_nestling = "n(n)",
                    nestling_success = "s(n)",
                    clutch = clutch,
                    brood = brood,
-                   fledged = fledged, 
+                   fledged = fledged,
+                   real_success = "reliable(1yes/0no)",
                    notes = "comments") %>%
      dplyr::mutate(nest_number = as.character(nest_number),
                    clutch_type = NA,
                    young_lost = NA,
-                   real_success = NA, 
                    real_failure = NA, 
                    start_date = NA, 
                    end_date = NA) %>%
