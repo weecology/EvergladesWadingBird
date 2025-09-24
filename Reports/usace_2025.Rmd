@@ -27,6 +27,7 @@ library(officedown)
 library(officer)
 library(wader)
 library(ggplot2)
+library(scales)
 
 # download_observations()
 # Get summary numbers for text
@@ -34,8 +35,11 @@ species_list <- c("greg","whib","wost","rosp","sneg","gbhe","lbhe",
                   "trhe","glib", "bcnh","caeg","ycnh","smwh","anhi")
 missing <- c(greg=NA,whib=NA,wost=NA,rosp=NA,sneg=NA,gbhe=NA,lbhe=NA,trhe=NA,
              glib=NA,bcnh=NA,caeg=NA,ycnh=NA,smda=NA,smwh=NA,anhi=NA)
-raw_counts <- max_counts() %>% 
+
+all_counts <- max_counts() %>% 
   ungroup() %>%
+  filter(year %in% (params$report_year-9):params$report_year)
+raw_counts <- all_counts %>%
   filter(year==params$report_year) %>%
   distinct() %>%
   select(-year) %>% 
@@ -513,8 +517,8 @@ Individual nests of GREG (n=202 at all five colonies), WHIB (n=21 at 6th Bridge)
 ```{r nestsuccesstable}
 
 success_table <- overall_success(minyear=params$report_year-4) %>% 
-  filter(species %in% c("GREG", "WHIB","WOST")) %>% 
   ungroup() %>%
+  filter(species %in% c("GREG", "WHIB","WOST")) %>% 
   mutate(species = replace(species, species == "GREG", "Great Egret"),
          species = replace(species, species == "WHIB", "White Ibis"),
          species = replace(species, species == "WOST", "Wood Stork")) %>%
@@ -524,7 +528,7 @@ success_table <- overall_success(minyear=params$report_year-4) %>%
 
 clutch_fledged <- load_datafile("Nesting/nest_success.csv") %>%
                   filter(species %in% c("greg", "whib","wost"),
-                         year %in% (params$report_year-4):params$report_year) %>%
+                         year %in% (params$report_year-9):params$report_year) %>%
                   group_by(year,species) %>%
                   summarise(clutch_size = mean(clutch,na.rm=TRUE),
                             clutch_sd = sd(clutch,na.rm=TRUE),
@@ -536,13 +540,13 @@ clutch_fledged <- load_datafile("Nesting/nest_success.csv") %>%
     mutate(species = replace(species, species == "greg", "Great Egret"),
          species = replace(species, species == "whib", "White Ibis"),
          species = replace(species, species == "wost", "Wood Stork")) %>%
-    arrange(species,-year) 
+    arrange(species,-year)  %>%
+                  filter(year %in% (params$report_year-4):params$report_year)
 
 success_table <- success_table %>% full_join(clutch_fledged, by = join_by(species, year))
 colnames(success_table) <- c("Species", "Year", "Estimate", "SD", "N", "Estimate ",                              "SD ", "N ", "Estimate  ", "SD  ", "N  ")
 
 success_table %>%
-  
   flextable::flextable() %>%
   flextable::bold(i = ~ Year == params$report_year) %>%
   flextable::surround(i = ~ Year == params$report_year, border.bottom = fp_border(), border.top = fp_border()) %>%
@@ -571,6 +575,82 @@ success_table %>%
 The `r params$report_year` nesting effort (`r total_nests` nest starts) was 
 
 [summarise year]
+
+(Table \@ref(tab:effortsummarytable))
+
+(Table \@ref(tab:successsummarytable))
+
+```{r effortsummarytable}
+
+summary_totals <- all_counts %>% 
+  filter(species %in% c("greg","sneg","whib","wost","rosp")) %>% 
+  group_by(species,year) %>%
+  summarise(count = sum(count, na.rm=TRUE))
+
+count_means <- summary_totals %>% 
+  group_by(species) %>%
+  summarise(count = mean(count, na.rm=TRUE))
+
+count_percentages <- summary_totals %>%
+                     filter(year >= params$report_year-4) %>%
+                     left_join(count_means, by = join_by(species)) %>%
+                     mutate(percent_of_mean = 100*(count.x/count.y)) %>%
+  select(species,year,percent_of_mean) %>%
+  pivot_wider(id_cols = year, names_from = species, values_from = percent_of_mean) %>%
+mutate(across(2:6, \(x) round(x, 2))) %>% 
+rename_with(toupper, .cols = -year) 
+
+colourer <- col_numeric(
+  palette = c("red", "green"),
+  domain = c(0, 300))
+
+count_percentages %>%
+  flextable::flextable() %>% 
+  flextable::bg(
+    bg = colourer,
+    j = ~ . -year,
+    part = "body") %>%
+  flextable::set_caption("Yearly percentages of nesting pairs of Great Egrets, Roseate Spoonbills, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
+
+```
+
+```{r successsummarytable}
+
+success_table_averages <- overall_success(minyear=params$report_year-9) %>% 
+  ungroup() %>%
+  filter(species %in% c("GREG","SNEG","WHIB","WOST","ROSP")) %>% 
+  select(species,year,overall_Success) %>%
+  replace(is.na(.), 0) %>%
+  group_by(species) %>%
+  summarise(mean_success = mean(overall_Success))
+
+success_table_percentages <- overall_success(minyear=params$report_year-4) %>% 
+  ungroup() %>%
+  filter(species %in% c("GREG","SNEG","WHIB","WOST","ROSP")) %>% 
+  select(species,year,overall_Success) %>%
+  left_join(success_table_averages, by = join_by(species)) %>%
+  mutate(percent_of_mean = 100*(overall_Success/mean_success)) %>%
+  select(species,year,percent_of_mean) %>%
+  pivot_wider(id_cols = year, names_from = species, values_from = percent_of_mean) %>%
+  replace(is.na(.), 0) %>%
+  mutate(across(2:5, \(x) round(x, 2))) %>% 
+  rename_with(toupper, .cols = -year) 
+
+colourer <- col_numeric(
+  palette = c("red", "green"),
+  domain = c(0, 300))
+
+success_table_percentages %>%
+  flextable::flextable() %>% 
+  flextable::bg(
+    bg = colourer,
+    j = ~ . -year,
+    part = "body") %>%
+  flextable::set_caption("Yearly percentages of nest success for Great Egrets, Roseate Spoonbills, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
+
+```
 
 ## Progress towards Restoration
 
