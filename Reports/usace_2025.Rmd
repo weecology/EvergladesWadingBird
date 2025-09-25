@@ -27,15 +27,18 @@ library(officedown)
 library(officer)
 library(wader)
 library(ggplot2)
+library(scales)
 
-# download_observations()
+#download_observations()
 # Get summary numbers for text
 species_list <- c("greg","whib","wost","rosp","sneg","gbhe","lbhe",
                   "trhe","glib", "bcnh","caeg","ycnh","smwh","anhi")
 missing <- c(greg=NA,whib=NA,wost=NA,rosp=NA,sneg=NA,gbhe=NA,lbhe=NA,trhe=NA,
              glib=NA,bcnh=NA,caeg=NA,ycnh=NA,smda=NA,smwh=NA,anhi=NA)
-raw_counts <- max_counts() %>% 
+all_counts <- max_counts() %>% 
   ungroup() %>%
+  filter(year %in% (params$report_year-9):params$report_year)
+raw_counts <- all_counts %>%
   filter(year==params$report_year) %>%
   distinct() %>%
   select(-year) %>% 
@@ -115,7 +118,7 @@ colony_list <- unique(success_numbers$display_name)
 overall_success <- overall_success(minyear=params$report_year)
 
 whib_success <- 
-  round(100*overall_success$overall_Success[overall_success$species=="WHIB"],2)
+  round(100*mean(success_numbers$overall_p[success_numbers$species=="whib"],na.rm=TRUE),2)
 greg_success <- 
   round(100*overall_success$overall_Success[overall_success$species=="GREG"],2)
 rosp_success <- 
@@ -166,7 +169,7 @@ The numbers of breeding pairs of wading birds in the Everglades and their reprod
 These relationships are strong enough that wading birds have been chosen as important indicator species for the progress of Everglades restoration, and explicit predictions about specific species and their reproductive responses have been expressed as a series of trophic hypotheses.
 Here, we report on reproduction by wading birds along with the environmental conditions present during the `r params$report_year` breeding season.
 
-The `r params$report_year` season began with considerably low water levels throughout the system. High water levels at the end of the prior dry season combined with average rainfall in the winter months resulted in what appeared to be another wet breeding season. However, an exceptionally rapid draw down, combined with a lack of reversals, resulted in well below average low water levels by the time nesting began. This slightly delayed nesting for some wading birds and also resulted high abandonment among WOST, but otherwise overall nest success was up across all species. 
+The `r params$report_year` season began with considerably low water levels throughout the system. High water levels at the end of the prior dry season combined with average rainfall in the winter months resulted in what appeared to be another wet breeding season. However, an exceptionally rapid draw down, combined with a lack of reversals, resulted in well below average low water levels by the time nesting began. This slightly delayed nesting for some wading birds and also resulted in high abandonment among WOST, but otherwise overall nest success was up across all species. 
 
 In `r params$report_year`, a total of `r total_nests` wading bird nests (not including Anhingas) were initiated at colonies within WCA 1, WCA 2, and WCA 3.
 Wood Storks nests were slightly below average but a large increase from last year. More than half of were nesting in southwest WCA 3, a notable change from the usual majority nesting in ENP previous years  (`r stork_max` nests in `r stork_colony`, `r stork_2` in `r stork_colony2`).
@@ -510,8 +513,8 @@ NAs and zeros in the nest success table (Table \@ref(tab:nestsuccesstable)) are 
 ```{r nestsuccesstable}
 
 success_table <- overall_success(minyear=params$report_year-4) %>% 
-  filter(species %in% c("GREG", "WHIB","WOST")) %>% 
   ungroup() %>%
+  filter(species %in% c("GREG", "WHIB","WOST")) %>% 
   mutate(species = replace(species, species == "GREG", "Great Egret"),
          species = replace(species, species == "WHIB", "White Ibis"),
          species = replace(species, species == "WOST", "Wood Stork")) %>%
@@ -521,7 +524,7 @@ success_table <- overall_success(minyear=params$report_year-4) %>%
 
 clutch_fledged <- load_datafile("Nesting/nest_success.csv") %>%
                   filter(species %in% c("greg", "whib","wost"),
-                         year %in% (params$report_year-4):params$report_year) %>%
+                         year %in% (params$report_year-9):params$report_year) %>%
                   group_by(year,species) %>%
                   summarise(clutch_size = mean(clutch,na.rm=TRUE),
                             clutch_sd = sd(clutch,na.rm=TRUE),
@@ -533,13 +536,13 @@ clutch_fledged <- load_datafile("Nesting/nest_success.csv") %>%
     mutate(species = replace(species, species == "greg", "Great Egret"),
          species = replace(species, species == "whib", "White Ibis"),
          species = replace(species, species == "wost", "Wood Stork")) %>%
-    arrange(species,-year) 
+    arrange(species,-year)  %>%
+    filter(year %in% (params$report_year-4):params$report_year)
 
 success_table <- success_table %>% full_join(clutch_fledged, by = join_by(species, year))
 colnames(success_table) <- c("Species", "Year", "Estimate", "SD", "N", "Estimate ",                              "SD ", "N ", "Estimate  ", "SD  ", "N  ")
 
 success_table %>%
-  
   flextable::flextable() %>%
   flextable::bold(i = ~ Year == params$report_year) %>%
   flextable::surround(i = ~ Year == params$report_year, border.bottom = fp_border(), border.top = fp_border()) %>%
@@ -565,12 +568,72 @@ success_table %>%
 
 ## Discussion
 
-The `r params$report_year` nesting effort (`r total_nests` nest starts) was a varied but likely overall average year. Total nest starts are up from the prior two years but nesting effort varied greatly by species. GREG and WOST nested in relatively high numbers (143% and 136% respectively), whereas other target species continue to be well below their long-term averages. While nesting effort for ROSP in the WCAs has followed an increasing trend over the last two decades, nesting effort continues to decline for the third year with only 68% of the 10-year average (Table 7). In contrast, ROSP nest success far exceeded that of previous years (112%). SNEG, while undoubtedly down this year, should also be viewed in context of the SMWH category. It is known that SNEG nests are the most challenging to identify in aerial imagery, largely due to their size and the inability to confidently determine the species of small heron chicks. In 2025, far more nests were identified as SMWH than in previous years. When viewed as a whole, small herons were at 81% of their 3-year average in 2025.
+The `r params$report_year` nesting effort (`r total_nests` nest starts) was a varied but likely overall average year. Total nest starts are up from the prior two years but nesting effort varied greatly by species. GREG and WOST nested in relatively high numbers (143% and 136% respectively), whereas other target species continue to be well below their long-term averages. While nesting effort for ROSP in the WCAs has followed an increasing trend over the last two decades, nesting effort continues to decline for the third year with only 68% of the 10-year average (Table \@ref(tab:effortsummarytable)). In contrast, ROSP nest success far exceeded that of previous years (112%). SNEG, while undoubtedly down this year, should also be viewed in context of the SMWH category. It is known that SNEG nests are the most challenging to identify in aerial imagery, largely due to their size and the inability to confidently determine the species of small heron chicks. In 2025, far more nests were identified as SMWH than in previous years. When viewed as a whole, small herons were at 81% of their 3-year average in 2025 (Table \@ref(tab:successsummarytable)).
 [ADD SOMETHING ABOUT WHIB HERE WHEN DATA CORRECTED]
 WOST effort increased this year (136%) compared to the 10-year average, up from last year's low of only 32%. A novel method of assessing WOST nest success via UAV imagery was used this year, due to the limitations of ground-based nest checks. However, due to equipment issues, consistent monitoring was not begun until late March. High levels of WOST nest abandonment occurred mid-season, upwards of 50%, as observed in the disparity between March and April's aerial observations. As a result, WOST reproductive success is only representative of nests still present post-abandonment and not the 2025 breeding season as a whole. While nest success remains below average, this is the first time in 4 years any WOST nests were successful in the WCA's. WOST continue to nest at the Jetport and Jetport New colonies. WOST were also found nesting at Hidden for the first time, in what was the largest single colony in 2025. However, WOST did not nest at Jetport South this year. This also marks the 5th year in a row that WOST have failed to nest in what was once a long-term colony, Tamiami West, located just south of WCA 3. 
 An intense draw down, beginning in November 2024, and lack of any rain events resulted in water levels to be far below normal at the start of the season and continued to drop until May. However, previous water levels were at a 4-year high due to an abnormally wet dry season the prior year combined with several major rain events. This likely buffered prey availability, contributing to what was a more productive season than was initially anticipated. Low water levels and dry navigational conditions caused the field team to lose access to several colonies mid-season. This only significantly impacted determining nest success at 6th Bridge for some species, but also leaves post-fledgling fate difficult to gauge.
 
-[summarise year]
+
+```{r effortsummarytable}
+summary_totals <- all_counts %>% 
+  filter(species %in% c("greg","sneg","whib","wost","rosp")) %>% 
+  group_by(species,year) %>%
+  summarise(count = sum(count, na.rm=TRUE))
+count_means <- summary_totals %>% 
+  group_by(species) %>%
+  summarise(count = mean(count, na.rm=TRUE))
+count_percentages <- summary_totals %>%
+                     filter(year >= params$report_year-4) %>%
+                     left_join(count_means, by = join_by(species)) %>%
+                     mutate(percent_of_mean = 100*(count.x/count.y)) %>%
+  select(species,year,percent_of_mean) %>%
+  pivot_wider(id_cols = year, names_from = species, values_from = percent_of_mean) %>%
+mutate(across(2:6, \(x) round(x, 2))) %>% 
+rename_with(toupper, .cols = -year) 
+colourer <- col_numeric(
+  palette = c("red", "green"),
+  domain = c(0, 300))
+count_percentages %>%
+  flextable::flextable() %>% 
+  flextable::bg(
+    bg = colourer,
+    j = ~ . -year,
+    part = "body") %>%
+  flextable::set_caption("Yearly percentages of nesting pairs of Great Egrets, Roseate Spoonbills, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
+```
+
+```{r successsummarytable}
+success_table_averages <- overall_success(minyear=params$report_year-9) %>% 
+  ungroup() %>%
+  filter(species %in% c("GREG","SNEG","WHIB","WOST","ROSP")) %>% 
+  select(species,year,overall_Success) %>%
+  replace(is.na(.), 0) %>%
+  group_by(species) %>%
+  summarise(mean_success = mean(overall_Success))
+success_table_percentages <- overall_success(minyear=params$report_year-4) %>% 
+  ungroup() %>%
+  filter(species %in% c("GREG","SNEG","WHIB","WOST","ROSP")) %>% 
+  select(species,year,overall_Success) %>%
+  left_join(success_table_averages, by = join_by(species)) %>%
+  mutate(percent_of_mean = 100*(overall_Success/mean_success)) %>%
+  select(species,year,percent_of_mean) %>%
+  pivot_wider(id_cols = year, names_from = species, values_from = percent_of_mean) %>%
+  replace(is.na(.), 0) %>%
+  mutate(across(2:5, \(x) round(x, 2))) %>% 
+  rename_with(toupper, .cols = -year) 
+colourer <- col_numeric(
+  palette = c("red", "green"),
+  domain = c(0, 300))
+success_table_percentages %>%
+  flextable::flextable() %>% 
+  flextable::bg(
+    bg = colourer,
+    j = ~ . -year,
+    part = "body") %>%
+  flextable::set_caption("Yearly percentages of nest success for Great Egrets, Roseate Spoonbills, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
+```
 
 ## Progress towards Restoration
 
