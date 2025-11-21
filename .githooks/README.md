@@ -14,7 +14,7 @@ If your commit does not have versioning instructions, you will get an error and 
 `"Aborting commit. Your commit message is missing versioning instructions. 
 Please add [no version bump], [patch], [minor], or [major] to your commit message"`
 
-### Guide to using the version tags:  
+### Guide to using the version tags:   
 `[no version bump]` - Code changes that are not accompanied by data or file structure changes  
 `[patch]` - Minor data corrections, or more significant code changes  
 `[minor]` - Data additions or changes (the most commonly used tag)  
