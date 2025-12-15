@@ -5,7 +5,7 @@ library('survival')
 library("survminer")
 
 
-
+#script that cleans WoodStork_dates.csv created by Morgan Ernest from wading bird reports
 
 
 
