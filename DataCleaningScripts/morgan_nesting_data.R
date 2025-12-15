@@ -5,7 +5,6 @@ library('survival')
 library("survminer")
 
 
-#script that cleans WoodStork_dates.csv created by Morgan Ernest from wading bird reports
 
 
 
@@ -34,7 +33,7 @@ library("survminer")
 
 
 
-wost_initiate_df <- read.csv('Nesting/WoodStork_dates.csv')%>% 
+wost_initiate_df <- read.csv('Nesting/WoodStork_dates_morgan_data.csv')%>% 
   as_tibble() 
 # check with glenda about the colony names 
 
@@ -76,6 +75,13 @@ wost_initiate_df <-  wost_initiate_df |>
   ) |> 
    mutate(part_of_project = if_else(colony == 'corkscrew' | colony == 'clyde_butcher', 
                                     'n', 'y')) 
+
+
+
+
+# notes from Michael regarding colony names -------------------------------
+
+
 # Michael:    
 # 2b stork -> melaleuca_2b
 # 2004 new colony8 -> otter creek
@@ -89,9 +95,7 @@ wost_initiate_df <-  wost_initiate_df |>
 
 
 
-
-
-# notes from Morgan regarding WoodStork_dates.csv -------------------------
+# notes from Morgan regarding data ----------------------------------------
 
 
 # Ok, here's my wood stork initiation date work! It's notready for the repo quite yet. Colony 
@@ -117,6 +121,10 @@ wost_initiate_df <-  wost_initiate_df |>
 # pushed back some deadlines to finish this up! We can chat in Everglades about this if 
 # people have questions (not this monday because there's a faculty meeting). Oh, and feel 
 # free to change file names. I'm not wedded to these.
+
+
+
+
 
 
 
