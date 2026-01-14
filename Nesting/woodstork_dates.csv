@@ -1,0 +1,116 @@
+"year","flight_first_nest_obs","previous_flight","date_score","colony","colony_old","stage","source","notes"
+1997,1997-02-28,1997-02-05,2,tamiami_west,Tamiami West,nests,sfwbr,"began nesting by late February. Both UF and ENP monitored this colony. ENP flew it 'early Feb' and reported nothing"
+1997,1997-03-24,1997-02-05,2,paurotis_pond,Paurotis Pond,unknown,sfwbr,"ENP reported flight data in Feb as \"early Feb\". No flights between early feb and late march. With little extra information, used indicator value since usually nesting in south earlier than tamiamia/WCA3"
+1997,1997-03-24,1997-02-05,2,rodgers_river_bay,Rogers River Bay,unknown,sfwbr,"ENP reported flight data in Feb as \"early Feb\". No flights between early feb and late march. With little extra information, used indicator value since usually nesting in south earlier than tamiamia/WCA3"
+1998,1998-04-21,1998-02-16,0,paurotis_pond,Paurotis Pond,nests,sfwbr,"no flights were conducted between Feb and April because of a late start to nesting. Without further information, used indicator date"
+1999,1999-03-05,,1.5,paurotis_pond,Paurotis Pond,initiating,sfwbr,"first flight was 3/5. 2000 report says nesting initiated in  late Feb/early march"
+1999,1999-03-05,,1.5,rodgers_river_bay,Rogers River Bay,initiating,sfwbr,"first flight was 3/5."
+1999,1999-02-15,,2,tamiami_west,Tamiami West,unknown,sfwbr,"started in Feb' so I assigned mid Feb. UF colony."
+1999,1999-02-15,,2,crossover,Crossover,unknown,sfwbr,"started in Feb' so I assigned mid Feb. UF colony."
+1999,1999-02-15,,2,melaleuca_2b,2B stork,unknown,sfwbr,"started in Feb' so I assigned mid Feb. UF colony."
+2000,2000-02-15,,2,tamiami_west,Tamiami West,unknown,sfwbr,"\"Wood storks nested early (February)\" I chose mid-Feb"
+2000,2000-02-15,,2,crossover,Crossover,unknown,sfwbr,"\"Wood storks nested early (February)\" I chose mid-Feb"
+2000,2000-02-15,,2,jetport_new,Jetport new,unknown,sfwbr,"\"Wood storks nested early (February)\" I chose mid-Feb"
+2001,2001-04-04,,0.5,1083,1083,unknown,sfwbr,"2 weeks from fledging on June 7th. Only second time in LOX history. Date estimated by Lindsey from description"
+2002,2001-12-12,,4,corkscrew,Corkscrew Swamp,,sfwbr,"BCNP"
+2004,2004-04-21,2004-03-12,0.5,lox111,2004 new colony3,unknown,sfwbr,"nests seen in April 21 flight, but not March 12"
+2004,2004-04-21,2004-03-12,0.5,otter_creek,2004 new colony8,unknown,sfwbr,"nests seen in April 21 flight, but not March 12"
+2004,2004-03-15,2004-02-15,1.5,tamiami_west,Tamiami West,unknown,sfwbr,"\"nesting in late Feb\" Flights took place ~15th of every month. I chose mid point"
+2004,2004-03-15,2004-02-15,1.5,crossover,Crossover,unknown,sfwbr,"\"nesting in late Feb\" Flights took place ~15th of every month"
+2005,2005-04-08,2005-03-30,0.5,rodgers_river_bay,Rogers River Bay,unknown,sfwbr,"8 nests initiated by April 8th"
+2005,2005-03-30,2005-02-15,1.5,cuthbert_lake,Cuthbert,unknown,sfwbr,"nest initiated by march 30th. Young storks on and off nests early June (Jun3rd?). Balck calculating gets us closer to early march"
+2005,2005-02-16,,2,tamiami_west,Tamiami West,unknown,obs_aerial,"10% nesting. SFWBR says no evidence nesting started before Feb in any colony"
+2005,2005-02-16,,2,mud_east,3B Mud East,unknown,obs_aerial,"25/30 or 30/50 nesting;  SFWBR says no evidence nesting started before Feb in any colony"
+2005,2005-02-15,2005-01-24,2.5,paurotis_pond,Paurotis Pond,unknown,sfwbr,"\"earliest start of the ENP colonies\". 8 nests observed feb 15. Midpoint between flights is 2/4 or early feb"
+2006,2006-04-17,2006-03-14,0.5,crossover,Crossover,unknown,UF_flight_sheets,"id'd as crossover in the notes in march. SFWBR says initiated in Feb. went with late feb"
+2006,2006-02-15,,2,tamiami_west,Tamiami West,unknown,UF_flight_sheets,"30 nests, \"initiated in feb\""
+2006,2006-02-15,,2,mud_east,3B Mud East,unknown,UF_flight_sheets,"12 nests, \"intitiated in Feb\""
+2008,2008-03-17,,0.5,cuthbert_lake,Cuthbert,nest starts,sfwbr,"notes says nest starts visible on the date they visited. Impression that these were the leading individuals at those colonies"
+2008,2008-02-20,,1.5,paurotis_pond,Paurotis Pond,nest starts,sfwbr,"notes says nest starts visible on the date they visited. Impression that these were the leading individuals at those colonies. 70 nests by march 3"
+2009,2009-03-16,2009-02-16,1.5,jetport,Jetport,unknown,UF_digital_image_and_obs_counts,"chose midpoint"
+2009,2009-03-21,2009-02-20,1.5,lox_nc4,Lox New Colony 4,unknown,UF_digital_image_and_obs_counts,"chose midpoint"
+2009,2009-02-16,,2,tamiami_east,Tamiami East 2,unknown,UF_digital_image_and_obs_counts,
+2009,2009-02-16,,2,crossover,Crossover,unknown,UF_digital_image_and_obs_counts,
+2009,2009-01-26,,2.5,tamiami_west,Tamiami West,nest starts,sfwbr,"standing on nest starts"
+2009,2009-01-26,,2.5,cuthbert_lake,Cuthbert,nest starts,sfwbr,"standing on nest starts"
+2009,2009-01-26,,2.5,paurotis_pond,Paurotis Pond,nest starts,sfwbr,"standing on nest starts"
+2009,2009-01-26,,2.5,rodgers_river_bay,Rogers River Bay,nest starts,sfwbr,"standing on nest starts"
+2010,2010-02-18,,2,tamiami_west,Tamiami West,nest starts,UF_flight_sheets,
+2010,2010-01-28,,2,cuthbert_lake,Cuthbert,nest starts,,
+2010,2010-01-28,,2,grossman_ridge_west,Grossman Ridge West,nest starts,,
+2010,2010-01-28,,2.5,paurotis_pond,Paurotis Pond,incubating,sfwbr,
+2010,2010-01-28,,2.5,rodgers_river_bay,Rogers River Bay,incubating,sfwbr,
+2011,2011-04-18,2011-03-21,0.5,jetport_south,Jetport South,unknown,UF_flight_sheets,"not mentioned in march flight"
+2011,2011-04-19,2011-03-22,0.5,kinich,Kinich,unknown,UF_flight_sheets,"conflict between observors but the 0 count was uncertain and thought might be nests."
+2011,2011-02-19,,2,tamiami_west,Tamiami West,unknown,UF_flight_sheets,"initiated nests in February"
+2012,2012-03-14,2012-02-17,0.5,tamiami_west,Tamiami West,unknown,UF_flight_sheets,"separate nesting and roosting not given in 2012; sfwbr said \"late March\""
+2012,2012-03-27,2012-02-29,1,paurotis_pond,Paurotis Pond,unknown,sfwbr,"\"mid-March\""
+2012,2012-03-27,2012-02-29,1,cuthbert_lake,Cuthbert,unknown,sfwbr,"majority of stork colonies no incubation or building until March 27"
+2012,2012-02-29,,1.5,rodgers_river_bay,Rogers River Bay,nest starts,sfwbr,
+2013,2013-03-25,2013-02-19,1.5,jetport_south,Jetport South,unknown,UF_flight_sheets,"midpoint between flights chosen"
+2013,2013-03-25,2013-02-19,1.5,jetport,Jetport,unknown,UF_flight_sheets,"chose midpoint"
+2013,2013-01-30,2013-01-18,2.5,paurotis_pond,Paurotis Pond,unknown,sfwbr,"active nests when checked on Jan 29 & 31"
+2013,2013-01-30,2013-01-18,2.5,cuthbert_lake,Cuthbert,unknown,sfwbr,"active nests when checked on Jan 29 & 31"
+2013,2013-02-19,,2,tamiami_west,Tamiami West,unknown,UF_flight_sheets,"chose midpoint"
+2013,2013-01-18,,3.5,rodgers_river_bay,Rogers River Bay,incubating,sfwbr,"ENP saw 100 nests, incbating and eggs, assume start happened earlier given activity level reported"
+2014,2014-03-20,2014-03-03,0.5,cuthbert_lake,Cuthbert,paired,  nest starts,sfwbr,
+2014,2014-03-20,2014-03-03,1,cabbage_bay,Cabbage Bay,incubating,sfwbr,
+2014,2014-02-11,,1.5,jetport_south,Jetport South,unknown,sfwbr,"first wave of egg laying started in late February; flight date from UF aerial sheets"
+2014,2014-02-11,,2,jetport,Jetport,unknown,UF_flight_sheets,
+2014,2014-01-30,,2.5,grossman_ridge_west,Grossman Ridge West,paired, nest starts,sfwbr,
+2014,2014-01-30,,2.5,lostmans_creek,Lostmans Creek,paired,  nest starts,sfwbr,
+2014,2014-01-30,,2.5,tamiami_west,Tamiami West,nest starts,sfwbr,
+2014,2014-01-30,,3,paurotis_pond,Paurotis Pond,incubating,sfwbr,
+2014,2014-01-30,,3,broad_river,Broad River,incubating,sfwbr,
+2014,2014-01-30,,3,rodgers_river_bay,Rogers River Bay,incubating,sfwbr,
+2015,2015-03-23,,0.5,cuthbert_lake,Cuthbert,initiating,sfwbr,
+2015,2015-03-23,,0.5,paurotis_pond,Paurotis Pond,incubating,sfwbr,
+2015,2015-02-27,,1.5,broad_river,Broad River,incubating,sfwbr,
+2015,2015-02-27,,1.5,cabbage_bay,Cabbage Bay,incubating,sfwbr,
+2015,2015-02-27,2015-01-28,2.5,tamiami_west,Tamiami West,small young,sfwbr,"ENP saw small young in nests. Incubating is about 1 month, so assume late January, early feb egg lay"
+2016,2016-03-22,,0.5,broad_river,Broad River,incubating,sfwbr,"only a few seen incubating, so probably date close to initiation"
+2016,2016-03-22,,0.5,cabbage_bay,Cabbage Bay,incubating,sfwbr,"only a few seen incubating, so probably date close to initiation"
+2016,2016-03-22,,0.5,paurotis_pond,Paurotis Pond,incubating,sfwbr,"only a few seen incubating, so probably date close to initiation"
+2017,2017-04-19,2017-03-14,0.5,cypress_city,Cypress City,unknown,UF_flight_sheets,"chose midpoint"
+2017,2017-02-22,,2.5,cabbage_bay,Cabbage Bay,small young,,
+2017,2017-02-22,,2.5,grossman_ridge_west,Grossman Ridge West,small young,,
+2017,2017-02-22,,2.5,paurotis_pond,Paurotis Pond,small young,,
+2017,2017-02-22,,2.5,rodgers_river_bay,Rogers River Bay,small young,,
+2017,2017-02-21,2017-01-18,2.5,tamiami_west,Tamiami West,unknown,UF_flight_sheets,"chose midpoint"
+2017,2017-02-21,2017-01-18,2.5,jetport,Jetport,unknown,UF_flight_sheets,"chose midpoint"
+2017,2017-02-21,2017-01-18,2.5,jetport_south,Jetport South,unknown,UF_flight_sheets,"chose midpoint"
+2017,2017-01-18,,3,cuthbert_lake,Cuthbert,unknown,UF_flight_sheets,
+2017,2017-01-03,,3.5,broad_river,Broad River,paired, nest starts,sfwbr,"assuming first nests shortly thereafter"
+2018,2018-03-13,2018-02-13,1.5,colony13,Colony 013,unknown,UF_flight_sheets,"chose midpoint"
+2018,2018-03-02,2018-01-13,1.5,grossman_ridge_west,Grossman Ridge West,incubating,sfwbr,"paired at nests or incubating"
+2018,2018-01-22,,2.5,jetport_south,Jetport South,unknown,UF_flight_sheets,"without info on stage, chose mid month (1 week before flight)"
+2018,2018-01-22,,2.5,jetport,Jetport,unknown,UF_flight_sheets,"without info on stage, chose flight date"
+2018,2018-01-12,,3,broad_river,Broad River,incubating,sfwbr,"standing on completed nests or incubating"
+2018,2018-01-12,,3,paurotis_pond,Paurotis Pond,incubating,sfwbr,"standing on completed nests or incubating"
+2018,2018-01-12,,3,rodgers_river_bay,Rogers River Bay,incubating,sfwbr,"standing on completed nests or incubating"
+2018,2018-01-12,,3,cabbage_bay,Cabbage Bay,paired,  nest starts,sfwbr,"standing on new nests"
+2019,2019-01-18,,3.5,cabbage_bay,Cabbage Bay,incubating,UF_flight_sheets,"most of the larger colony sites were active with GREG and WOST nests, feels like season underway for a while. Index was 3.5 so kept for ENP colonies"
+2019,2019-01-18,,3.5,broad_river,Broad River,eggs,UF_flight_sheets,"a few WOST nests at the Broad River colony contained one egg  Index was 3.5 so kept for ENP colonies"
+2019,2019-01-18,,3.5,tamiami_west,Tamiami West,incubating,UF_flight_sheets,"most of the larger colony sites were active with GREG and WOST nests,  Index was 3.5 so kept for ENP colonies"
+2020,2020-03-14,2020-02-16,1,jetport_south,Jetport South,unknown,UF_flight_sheets,"SFWBR says initiated mid march"
+2021,2021-03-18,2021-03-03,1,paurotis_pond,Paurotis Pond,incubating,sfwbr,"a few incubating, most on new nests"
+2021,2021-02-23,2021-02-03,2,cuthbert_lake,Cuthbert,incubating,sfwbr,"chose midpoint"
+2021,2021-01-29,2021-01-07,3,broad_river,Broad River,incubating,sfwbr,"chose midpoint"
+2021,2021-01-29,2021-01-07,3,cabbage_bay,Cabbage Bay,incubating,sfwbr,"chose midpoint"
+2022,2022-03-22,2022-03-11,1,cuthbert_lake,Cuthbert,incubating,sfwbr,
+2022,2022-03-11,2022-03-04,1.5,broad_river,Broad River,incubating,sfwbr,
+2022,2022-02-24,,1.5,cabbage_bay,Cabbage Bay,paired,sfwbr,"no nests yet but M cook saw nests 3/11"
+2022,2022-02-11,,2,jetport_new,Jetport New,unknown,Mark Cook,"Mark Cook determined this was the first laying colony"
+2023,2023-03-13,2023-02-13,1.5,jetport_south,Jetport South,unknown,UF_digital_image_and_obs_counts,"midpoint chosen"
+2023,2023-01-20,2023-01-07,2.5,cabbage_bay,Cabbage Bay,paired, nests starts,sfwbr,"not yet incubating, M. Cook saw incubating in a coastal colony 1/20. No idea which one."
+2023,2023-01-20,2023-01-07,2.5,broad_river,Broad River,paired, nest starts,sfwbr,"not yet incubating. M. Cook saw incubating in a coastal colony 1/20. No idea which one."
+2023,2023-02-03,2023-01-20,2.5,cuthbert_lake,Cuthbert,unknown,sfwbr,
+2024,2024-05-16,2024-04-18,0,lox11,Lox11,unknown,UF_digital_image_and_obs_counts,"0 is the lowest"
+2024,2024-04-16,2024-03-12,0.5,jetport_south,Jetport South,unknown,UF_digital_image_and_obs_counts,"M cook: late march"
+2024,2024-03-04,2024-02-08,2,cuthbert_lake,Cuthbert,incubating,ENP perscom,
+2024,2024-03-04,2024-02-08,2,broad_river,Broad River,incubating,ENP perscom,
+2024,2024-02-08,,2.5,cabbage_bay,Cabbage Bay,incubating,ENP perscom,"ENP: a couple incubating feb 8th, feb5th lay date at latest"
+2025,2025-02-10,,2.5,hidden,Hidden,< 10 nests with eggs,Mark Cook,
+2025,2025-02-10,,2.5,jetport,Jetport,<10 nests with eggs,Mark Cook,
+2025,2025-02-03,2025-01-27,2.5,cabbage_bay,Cabbage Bay,incubating,ENP perscom,"handful incubating, most paired"
+2025,2025-01-24,,3.5,butcher,Clyde Butcher,incubating,Mark Cook,"eggs seens; BCNP. Feb3rd small downy chicks seen by M. cook"
