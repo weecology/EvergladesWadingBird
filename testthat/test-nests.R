@@ -55,6 +55,7 @@ test_that("Dates valid", {
   expect_false(any(is.na(success$year)))
   expect_false(any(is.na(success_summary$year)))
   expect_false(any(is.na(stork_dates$year)))
+  expect_type(stork_dates$year,"integer")
   expect_false(any(is.na(stork_dates$flight_first_nest_obs)))
 })
 

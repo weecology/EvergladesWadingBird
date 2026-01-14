@@ -57,8 +57,10 @@ wost_initiate_df <-  readxl::read_excel('Nesting/WoodStork_dates.xlsx') |>
          colony = str_replace_all(colony, "lox_new_colony_4",'lox_nc4'),
          colony = str_replace_all(colony, "tamiami_east_2",'tamiami_east'),
          colony = str_replace_all(colony, "clyde_butcher",'butcher'),
-         colony = str_replace_all(colony, "2b_stork",'melaleuca_2b') #Michael
-         ) |>
+         colony = str_replace_all(colony, "2b_stork",'melaleuca_2b')) |> #Michael
+  mutate(notes = str_remove_all(notes, '["\']')) |>
+  mutate(source = str_replace_all(source, ",", ";"),
+         stage = str_replace_all(stage, ",", ";")) |>
   rename(colony_old=colony_sheet) |>
   select("year","flight_first_nest_obs","previous_flight","date_score","colony",
          "colony_old","stage","source","notes")
