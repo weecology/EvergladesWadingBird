@@ -5,6 +5,7 @@ library('tidyverse')
 library('survival')
 library("survminer")
 
+
 # Colony-level data gleaned from SFWB reports and data sheets. It includes flight date of 
 # the observation, previous flight (when presumably no storks were nesting), the colony name, 
 # the source of the info, the observation made (incubating, nest starts, paired) and any other 
@@ -37,7 +38,6 @@ library("survminer")
 # If the person who saw the nest disagrees with the assessment, then we can change time period. 
 # We just need to document in notes why they thought it was mid/early/late instead of what our 
 # rule set would suggest.
-
 
 colonies <- read.csv('SiteandMethods/colonies.csv')
 
