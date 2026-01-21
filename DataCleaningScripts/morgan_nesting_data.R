@@ -41,15 +41,15 @@ library("survminer")
 
 colonies <- read.csv('SiteandMethods/colonies.csv')
 
-wost_initiate_df <-  readxl::read_excel('Nesting/WoodStork_dates.xlsx') |>
+WoodStork_dates <- readxl::read_excel("~/Downloads/WoodStork_dates.xlsx")
+wost_initiate_df <- WoodStork_dates |>
   rename_with(tolower) |>
   mutate(colony = colony_sheet, 
          colony = tolower(colony),
          colony = gsub(" ", "_", colony),
          colony = str_replace_all(colony, "rogers_river_bay",'rodgers_river_bay'),
-         colony = str_replace_all(colony, "1083",'1083'), 
+         colony = str_replace_all(colony, "1083",'weldon_north'),            #Morgan
          colony = str_replace_all(colony, "colony_013",'colony13'),   
-         colony = str_replace_all(colony, "corkscrew_swamp",'corkscrew'), 
          colony = str_replace_all(colony, "2004_new_colony3",'lox111'), 
          colony = str_replace_all(colony, "2004_new_colony8",'otter_creek'), #Michael
          colony = str_replace_all(colony, "cuthbert",'cuthbert_lake'), 
@@ -57,9 +57,9 @@ wost_initiate_df <-  readxl::read_excel('Nesting/WoodStork_dates.xlsx') |>
          colony = str_replace_all(colony, "lox_new_colony_4",'lox_nc4'),
          colony = str_replace_all(colony, "tamiami_east_2",'tamiami_east'),
          colony = str_replace_all(colony, "clyde_butcher",'butcher'),
-         colony = str_replace_all(colony, "2b_stork",'melaleuca_2b')) |> #Michael
-  mutate(notes = str_remove_all(notes, '["\']')) |>
-  mutate(source = str_replace_all(source, ",", ";"),
+         colony = str_replace_all(colony, "2b_stork",'melaleuca_2b')) |>     #Michael
+  mutate(notes = str_remove_all(notes, '["\']'),
+         source = str_replace_all(source, ",", ";"),
          stage = str_replace_all(stage, ",", ";")) |>
   rename(colony_old=colony_sheet) |>
   select("year","flight_first_nest_obs","previous_flight","date_score","colony",
