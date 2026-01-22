@@ -10,8 +10,10 @@ success <- read.csv("../Nesting/nest_success.csv")
 success_cols <- colnames(success)
 success_summary <- read.csv("../Nesting/nest_success_summary.csv")
 success_summary_cols <- colnames(success_summary)
+stork_dates <- read.csv("../Nesting/woodstork_dates.csv")
+stork_dates_cols <- colnames(stork_dates)
 
-test_that("required column names in nests df", {
+test_that("required column names in nests dfs", {
   
   expect_identical(nest_cols, 
                    c("year","colony","nest","species","date","eggs","chicks","stage", "notes"))
@@ -25,13 +27,22 @@ test_that("required column names in nests df", {
                      "incubation_sdpj","nestling_k","nestling_sumy","nestling_e","nestling_p","nestling_j",
                      "nestling_pj","nestling_varp","nestling_varpj","nestling_sdp","nestling_sdpj","overall_p",
                      "overall_varp","overall_sd"))
+  expect_identical(stork_dates_cols,
+                   c("year","flight_first_nest_obs","previous_flight","date_score",
+                     "colony","colony_old","stage","source","notes"))
 })
 
-test_that("Colony and species valid", {
+test_that("Colony valid", {
   
   expect_true(all(nests$colony %in% colonies$colony))
   expect_true(all(nests$species %in% species$species))
   expect_true(all(success$colony %in% colonies$colony))
+  expect_false(any(is.na(success_summary$colony)))
+  expect_true(all(stork_dates$colony %in% colonies$colony))
+})
+
+test_that("Species valid", {
+
   expect_true(all(success$species %in% species$species))
   expect_true(all(success_summary$colony %in% colonies$colony))
   expect_true(all(success_summary$species %in% species$species))
@@ -43,7 +54,9 @@ test_that("Dates valid", {
   expect_false(any(is.na(nests$year)))
   expect_false(any(is.na(success$year)))
   expect_false(any(is.na(success_summary$year)))
-  expect_false(any(is.na(success_summary$colony)))
+  expect_false(any(is.na(stork_dates$year)))
+  expect_type(stork_dates$year,"integer")
+  expect_false(any(is.na(stork_dates$flight_first_nest_obs)))
 })
 
 test_that("Egg and chick counts valid", {
