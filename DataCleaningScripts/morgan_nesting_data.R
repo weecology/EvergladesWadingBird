@@ -4,8 +4,9 @@
 library('tidyverse')
 library('survival')
 library("survminer")
+library(lubridate)
 
-
+################# Nesting/woodstork_dates.csv ########################################################
 # Colony-level data gleaned from SFWB reports and data sheets. It includes flight date of 
 # the observation, previous flight (when presumably no storks were nesting), the colony name, 
 # the source of the info, the observation made (incubating, nest starts, paired) and any other 
@@ -72,3 +73,47 @@ print(unique(wost_initiate_df$year[which(!(lubridate::year(wost_initiate_df$prev
 write.table(wost_initiate_df, 'Nesting/woodstork_dates.csv', 
             row.names = FALSE, col.names = TRUE, 
             na = "", sep = ",", quote = c(9))
+
+################# Indicators/stork_initiation.csv ########################################################
+# From stork_initiation_revised:
+# I changed the date column to the date of observation (which is not the same as date of first lay). 
+# When possible, I id'd to colony, but if a year had little information then I went with the 
+# existing date score and just left source blank. Sometimes sources will say region, but not colony 
+# and sometimes it's possible to rule out regions (no storks) to infer region. 
+# I stuck other similar-timed colonies in a separate column. 
+# My choice when there were several is arbitrary.
+
+# stork_initiation <- read_csv("Indicators/stork_initiation.csv")
+stork_initiation_revised <- read_csv("~/Downloads/stork_initiation_revised.csv")
+stork_initiation_revised <- stork_initiation_revised |>
+  rename_with(tolower) |>
+  rename_with(~ gsub(" ", "_", .x)) |>
+  mutate(date_observed = mdy(date_observed)) |>
+  mutate(colony = tolower(colony),
+         colony = gsub(" ", "_", colony),
+         colony = str_replace_all(colony, "rogers_river_bay",'rodgers_river_bay'),
+         colony = str_replace_all(colony, "1083",'weldon_north'),            #Morgan
+         colony = str_replace_all(colony, "colony_013",'colony13'),   
+         colony = str_replace_all(colony, "2004_new_colony3",'lox111'), 
+         colony = str_replace_all(colony, "2004_new_colony8",'otter_creek'), #Michael
+         colony = str_replace_all(colony, "cuthbert",'cuthbert_lake'), 
+         colony = str_replace_all(colony, "3b_mud_east",'mud_east'), 
+         colony = str_replace_all(colony, "lox_new_colony_4",'lox_nc4'),
+         colony = str_replace_all(colony, "tamiami_east_2",'tamiami_east'),
+         colony = str_replace_all(colony, "clyde_butcher",'butcher'),
+         colony = str_replace_all(colony, "2b_stork",'melaleuca_2b'),         #Michael
+         colony = na_if(colony, "unknown")) |>
+  mutate(correction_comment = str_remove_all(correction_comment, '["\']'),
+         correction_comment = str_replace_all(correction_comment, "/", "-"),
+         correction_comment = str_replace_all(correction_comment, ",", ";"),
+         other_colonies = str_replace_all(other_colonies, ",", ";")) |>
+  select("year","date_observed","intitiation_month","date_score",
+         "region","colony","recorded_date","nest_observation",
+         "source","corrected","other_colonies","correction_comment")
+
+print(unique(stork_initiation_revised$colony[which(!(stork_initiation_revised$colony %in% colonies$colony))]))
+print(unique(stork_initiation_revised$year[which(!(year(stork_initiation_revised$date_observed) == stork_initiation_revised$year))]))
+
+write.table(stork_initiation_revised, 'Indicators/stork_initiation.csv', 
+            row.names = FALSE, col.names = TRUE, 
+            na = "", sep = ",", quote = 12)
