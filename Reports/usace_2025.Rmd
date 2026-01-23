@@ -1,0 +1,946 @@
+---
+title: "Wading bird colony location, size, timing and Wood Stork and Roseate Spoonbill reproductive success"
+subtitle: "`r params$report_year` Annual Report to the U.S. Army Corps of Engineers Jacksonville, Florida W912HZ-15-2-0017"
+author: "Dr. Morgan Ernest and Michael Rickershauser"
+date: "Dept. Wildlife Ecology and Conservation, University of Florida, Gainesville"
+params:
+  report_year: 2025
+output:
+  bookdown::word_document2:
+    toc: true
+    fig_caption: yes
+    number_sections: no
+    reference_docx: word-styles-reference.docx
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, dpi = 300)
+opts <- options(knitr.kable.NA = "NA")
+flextable::set_flextable_defaults(font.size = 11, na_str = NA, font.family = "Arial", big.mark = "", text.align="center")
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(officedown)
+library(officer)
+library(wader)
+library(ggplot2)
+library(scales)
+
+#download_observations()
+# Get summary numbers for text
+species_list <- c("greg","whib","wost","rosp","sneg","gbhe","lbhe",
+                  "trhe","glib", "bcnh","caeg","ycnh","smwh","anhi")
+missing <- c(greg=NA,whib=NA,wost=NA,rosp=NA,sneg=NA,gbhe=NA,lbhe=NA,trhe=NA,
+             glib=NA,bcnh=NA,caeg=NA,ycnh=NA,smda=NA,smwh=NA,anhi=NA)
+all_counts <- max_counts() %>% 
+  ungroup() %>%
+  filter(year %in% (params$report_year-9):params$report_year)
+raw_counts <- all_counts %>%
+  filter(year==params$report_year) %>%
+  distinct() %>%
+  select(-year) %>% 
+  pivot_wider(id_cols = colony, 
+                     names_from = species, values_from = count) %>% 
+  add_column(!!!missing[!names(missing) %in% names(.)]) %>%
+  select(colony,all_of(species_list)) %>%
+  mutate_at(all_of(species_list),as.numeric) %>%
+  mutate(total = rowSums(across(where(is.numeric)), na.rm=TRUE)) %>%
+  full_join(load_datafile("SiteandMethods/colonies.csv", 
+               path = get_default_data_path()),by =    join_by(colony)) %>%
+  select(-c(group_id,subregion,colony,aka)) %>%
+  rename(wca=region, colony=display_name)   %>%
+  mutate(wca = stringr::str_replace(wca, "1", "lox"))  %>%
+  mutate(latitude = as.character(latitude), 
+                longitude = as.character(longitude)) %>%
+  filter(total>0) 
+under40 <- load_datafile("Counts/maxcounts_under40.csv", 
+                         path = get_default_data_path()) %>%
+  filter(year==params$report_year) %>%
+  distinct() %>%
+  select(-year) %>% 
+  pivot_wider(id_cols = c(wca,colony_old,latitude,longitude), 
+                     names_from = species, values_from = count) %>%
+  add_column(!!!missing[!names(missing) %in% names(.)]) %>%
+  mutate_at(all_of(species_list),as.numeric) %>%
+  mutate(latitude = as.character(latitude), 
+                longitude = as.character(longitude)) %>%  
+  select(colony=colony_old,wca,latitude,longitude,all_of(species_list)) %>%
+  mutate(total = rowSums(across(where(is.numeric)), na.rm=TRUE)) %>%
+  filter(total>0) 
+
+total_counts <- merge(raw_counts, under40, all = TRUE) %>%
+  select(colony,wca,latitude, longitude,everything()) %>%
+  filter(!(wca %in% c("enp","other")))  %>%
+  mutate(wca = stringr::str_replace(wca, "lox", "1"))  %>%
+  mutate(wca = substr(wca, 1, 1))  %>%
+  mutate(wca = stringr::str_replace(wca, "1", "lox"))  %>%
+  mutate(latitude = as.character(latitude), 
+                longitude = as.character(longitude)) 
+
+totals <- total_counts %>% 
+  select(-c(anhi, total)) %>%
+  summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")
+
+enp_counts <- raw_counts %>%
+  select(colony,wca,latitude, longitude,everything()) %>%
+  mutate(latitude = as.character(latitude), 
+                longitude = as.character(longitude)) %>%
+  filter(wca =="enp") 
+
+enp_totals <- enp_counts %>% 
+  select(-c(anhi, total)) %>%
+  summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")
+
+total_nests <- as.integer(sum(totals[,-(1:4)]))
+total_enp <- as.integer(sum(enp_totals[,-(1:4)]))
+stork_max <- max(total_counts$wost, na.rm=TRUE)
+stork_colony <- total_counts$colony[which(total_counts$wost==max(total_counts$wost, na.rm=TRUE))]
+stork_2 <- sort(total_counts$wost,decreasing = T)[2]
+stork_colony2 <- total_counts$colony[which(total_counts$wost==stork_2)]
+rosp_6b <- total_counts$rosp[which(total_counts$colony=="6th Bridge")]
+rosp_an <- total_counts$rosp[which(total_counts$colony=="Alley North")]
+rosp_colonies <- sum(total_counts$rosp>0,na.rm=TRUE)
+
+ground_totals <- load_datafile("Counts/groundcounts_table.csv", path = 
+                                 get_default_data_path()) %>%
+  filter(year == params$report_year)
+
+success_numbers <- load_datafile("Nesting/nest_success_summary.csv") %>%
+  filter(year==params$report_year) %>%        
+  left_join(load_datafile("SiteandMethods/colonies.csv"))
+
+colony_count <- length(unique(success_numbers$colony))
+colony_list <- unique(success_numbers$display_name)
+
+overall_success <- overall_success(minyear=params$report_year)
+
+whib_success <- 
+  round(100*overall_success$overall_Success[overall_success$species=="WHIB"],2)
+greg_success <- 
+  round(100*overall_success$overall_Success[overall_success$species=="GREG"],2)
+rosp_success <- 
+  round(100*overall_success$overall_Success[overall_success$species=="ROSP"],2)
+
+```
+
+Dr. Morgan Ernest [skmorgane\@ufl.edu](mailto:skmorgane@ufl.edu){.email}
+
+Michael Rickershauser [m.rickershauser\@ufl.edu](mailto:m.rickershauser@ufl.edu){.email}
+
+Dept.
+Wildlife Ecology and Conservation P.O. Box 110430, University of Florida, Gainesville, FL, 32611
+
+\newpage
+
+## Abbreviations
+
+CERP- Comprehensive Everglades Restoration Plan
+
+ENP-Everglades National Park
+
+WCA-Water Conservation Area
+
+LOX-Loxahatchee National Wildlife Refuge
+
+UAV-Unmanned Aerial Vehicle
+
+GREG-Great Egret
+
+WOST-Wood Stork
+
+TRHE-Tricolored Heron
+
+LBHE-Little Blue Heron
+
+ROSP-Roseate Spoonbill
+
+WHIB-White Ibis
+
+BCNH-Black Crowned Night Heron
+
+\newpage
+
+## Executive Summary
+
+The numbers of breeding pairs of wading birds in the Everglades and their reproductive success measures reflect hydrological and biotic conditions in the Everglades.
+These relationships are strong enough that wading birds have been chosen as important indicator species for the progress of Everglades restoration, and explicit predictions about specific species and their reproductive responses have been expressed as a series of trophic hypotheses.
+Here, we report on reproduction by wading birds along with the environmental conditions present during the `r params$report_year` breeding season.
+The `r params$report_year` season began with considerably low water levels throughout the system.
+High water levels at the end of the prior dry season combined with average rainfall in the winter months resulted in what appeared to be another wet breeding season.
+However, an exceptionally rapid draw down, combined with a lack of reversals, resulted in well below average water levels by the time nesting began.
+This slightly delayed nesting for some wading birds and resulted in high abandonment among WOST, but otherwise overall nest success was up across all species.
+In `r params$report_year`, a total of `r total_nests` wading bird nests (not including Anhingas) were initiated at colonies within WCA 1, WCA 2, and WCA 3.
+Wood Stork nests were slightly below average but experienced a large increase from last year (`r stork_max` nests in `r stork_colony`, `r stork_2` in `r stork_colony2`, 158 in Jetport).
+More than half of Wood Storks nested in southwest WCA 3.
+This was a notable change from previous years, with the majority WOST typically nesting further south in ENP.
+Although Wood Storks did initiate nesting, there was upwards of 50% nest abandonment in late March/early April, most likely due to very low water levels.
+Because Wood Storks only nested in tall trees this year, ground-based nest monitoring was not feasible.
+Using weekly drone surveys (funded by a different project) to monitor Wood Stork nests, we estimated that 33% of the nests remaining after the large abandonment event fledged at least one chick.
+Roseate Spoonbills continued nesting in many colonies throughout the WCAs, but with fewer nests overall (`r totals$rosp` nests).
+The largest number of nests occurred at 6th Bridge (`r rosp_6b`) and Alley North (`r rosp_an`).
+Roseate Spoonbill nest success was above average, with 64.92% of nests observed fledging at least one chick.
+While White Ibis nesting effort (`r as.integer(totals$whib)` nests) and overall success (`r whib_success`%) continue to be below the 10-year average, they are up in relation to recent years.
+Great Egret nesting effort (`r totals$greg` nests) and overall success (`r greg_success`%) increased greatly in comparison to both the long-term averages and more recent years.
+Little Blue Heron and Tri-colored Heron colonies were monitored from standardized ground surveys in WCA 3.
+While there has been a recent increasing trend of Tri-colored and Little Blue Herons in small colonies, both heron species followed the overall trend of decreased nesting in `r params$report_year` (`r ground_totals$trhe` and `r ground_totals$lbhe` nesting pairs, respectively).
+Black Crowned Night Herons (`r ground_totals$bcnh` pairs) were also observed in 2025, a tremendous increase from last year and continues a recent cyclical trend of high and low years.
+We monitored reproductive success of all species present at `r colony_count` colonies in WCA 3 (`r colony_list`) and for Wood Storks (using drone flights) at Jetport and Jetport New.
+While both nest numbers and overall success varied across most species in `r params$report_year`, it is well above what was anticipated given early-season conditions.
+Additionally, access to some colonies was lost since navigation became prohibitively challenging as water levels continued to drop.
+As a result, overall nest success for some species was indeterminable at 6th Bridge, with post-fledgling fate uncertain at others.
+Nesting activity continued however, as observed via aerial surveys, and so it is believed nest success was roughly equal to that observed at other colonies.
+
+## Introduction and Background
+
+The Water Resources Development Acts (WRDA) of 2000, 2007 and 2014 authorized the Comprehensive Everglades Restoration Plan as a framework for modifications and operational changes to the Central and Southern Florida Project needed to restore the south Florida ecosystem.
+Monitoring impacts and evaluating the success of these efforts are a key requirement of this effort.
+There is compelling evidence that various aspects of wading bird reproduction and foraging ecology can be mechanistically linked with particular attributes of the ecology of wetlands, at a variety of scales (Frederick and Ogden 2003, Frederick 2002, Frederick et al. 2009).
+While some of these linkages are simple enough to be revealed by short-term studies, a full understanding of the interplay of many variables (e.g. hydrology, weather, prey, vegetation, and fire cycles) is only possible using long-term records.
+For example, an 80-year record of nesting and hydrology was required to discover that exceptionally large and significant breeding events were almost always preceded by infrequent, severe droughts (Frederick and Ogden 2001), and a combination of modeling and validation is now exploring the tradeoffs between managing for high prey levels through long hydroperiods and making prey available through drying patterns.
+Thus, the monitoring of wading birds has been a powerful tool in unraveling the ecology of the birds and the ecosystem, and ongoing monitoring is likely to pay off in further understanding and management applications (Frederick and Ogden 2003).
+First, the long-term nature of the existing nesting record is a powerful context for comparison and interpretation of any future years.
+Second, the long-term record becomes more powerful with each passing year, particularly for the analysis of the importance of rare combinations of events.
+Third, a key prediction of the restoration program is that hydrological restoration will result in increased populations of wading birds, earlier nesting for some species, and increased nesting success for some species.
+While this is a reasonable set of predictions given our understanding of these relationships, there is still a lot of uncertainty in the accuracy (in both space and time) of the prediction.
+This is because wading bird nesting numbers are probably influenced by alternative nesting opportunities outside the Everglades, and because the influence of contaminants may confound the predicted relationship between hydro pattern and nesting.
+In addition to monitoring overall Everglades restoration efforts, the USACE as a lead agency in the CERP process has an interest in ensuring that responses of threatened and endangered species to CERP are monitored in order to comply with the Endangered Species Act.
+The Wood Stork (*Mycteria americana*) is the only stork breeding in the United States and is a federally threatened species.
+Wood Storks have special relevance for the restoration of the south Florida ecosystem (encompassing the Kissimmee basin, Lake Okeechobee, the Everglades, Big Cypress, wetlands of southwest Florida, and Florida Bay).
+Historically, this area was the core reproductive habitat for the species, to the extent that over 75% of the U.S. population was thought to breed in this area (Coulter et al. 1999).
+By the 1990s, the breeding population in the Everglades had declined by over 80% since the 1930s and by at least 50% since the 1960s.
+In addition, storks have shifted the timing of nesting in the Everglades from November/December initiations in the 1960s, to February/March initiations (Ogden 1994).
+This shift in timing has meant that storks currently rear young during the onset of summer rains, when surface water levels rise, prey disperse, and young storks typically starve.
+In addition, storks have shown marked shifts in the location of nesting, having moved gradually from almost entirely coastal nesting in the Everglades, to inland nesting, as a result of reduced freshwater flows to the coastal regions of the Everglades (Ogden 1994).
+Storks also began nesting in more northerly locations in north and central Florida, Georgia, and South Carolina during the period 1970 – 2000.
+These dramatic changes in the characteristics of birds nesting in south Florida have been related to radically altered distribution and timing of surface water in the Everglades (Ogden 1994), as well as an approximately 50% loss of wetlands in Florida since Europeans arrived.
+Thus, the restoration of south Florida wetlands seems to be extremely important to for restoring breeding Wood Stork colonies in the area and is identified as part of the restoration plan for the species.
+The restoration of storks may also be a signal of successful restoration of key hydrological and biological functions of the south Florida ecosystem (Ogden 1994).
+By virtue of their unique grope-foraging technique, storks require very dense sources of prey animals in order to be cued to nest, and continued availability of dense prey is critical for successful nesting over the course of the approximately 110-day nesting period.
+Reproduction by storks may thus reflect the healthy dynamics of prey animal populations.
+This is probably not a simple relationship, since dense populations may require one or more kinds of irregular disturbance to achieve pulsed production (Frederick and Ogden 2001, Dorn and Cook 2015).
+Storks also seem to rely throughout their range on some degree of surface water recession in order to concentrate prey animals – successful foraging therefore relies on the right mix of water depth, and water level recession.
+Thus, the regular, successful reproduction of storks is thought to indicate that the combination of several hydrological and biological functions in the Everglades has been correctly restored.
+Reliance on the storks as an indicator seems wise, since there is a long record of stork nesting (over 80 years), and almost no information on dynamics of aquatic animal populations prior to drainage of the system.
+The Roseate Spoonbill (*Platalea ajaja*) is listed in Florida as a state-designated threatened species.
+It has historically been an important nesting bird in the coastal regions of the Everglades but has also bred in freshwater colonies since at least 1992 (Frederick and Towles 1995) and nearly annually thereafter.
+Thus, this protected species is also of interest because of its potential responses to Everglades restoration activities, particularly the trickle-down effects of freshwater management in coastal estuaries.
+Wading bird nesting is therefore a key criterion of restoration, and understanding of their reproductive ecology (energetics, timing, productivity) has the potential for fine-tuning the way that the hydrology of the Everglades is managed, as well as how hydrology can be related to specific nesting responses.
+For these reasons, continued monitoring of the Everglades breeding populations is likely to provide crucial information, both for evaluating the progress of restoration, for refining our understanding of the underlying ecological relationships between the aquatic ecology of the ecosystem and the birds, and for developing usable predictive tools for managers dealing with real time choices.
+Although the planning for restoration of the South Florida Ecosystem is well underway, uncertainties remain about the reproductive responses of storks, including how soon storks might respond to a restored ecosystem, where and when they will nest, the relative importance of wetland areas outside the Everglades, and how the population will respond to specific levels of reproductive productivity.
+This project specifically monitors nesting and nesting success by storks in the Everglades with the aim of a) detecting ecological changes consistent with restoration, b) contributing to a much larger southeastern-wide picture of stork population change, and c) contributing fecundity inputs to models of stork demographic change.
+This monitoring project is part of a larger program designed to detect demographic responses throughout the south Florida ecosystem.
+This project monitors wading bird responses in Water Conservation Areas 1, 2, and 3, but is integrated with similar efforts in Lake Okeechobee, Everglades National Park, Big Cypress National Preserve, and Florida Bay (see Figure \@ref(fig:regions)).
+These projects report collectively on annual wading bird responses in the South Florida Wading Bird Nesting Report, published annually by the South Florida Water Management District.
+
+## Methods
+
+We collected data on both nesting effort and nesting success.
+We performed two kinds of systematic surveys to document nesting effort by wading birds, including Wood Storks and Roseate Spoonbills in WCAs 1, 2, and 3: aerial and ground surveys.
+Aerial and ground surveys are complementary, and in the Everglades, neither does a particularly good job of assessing reproductive responses alone (Frederick et al. 1996).
+The primary objective of both kinds of surveys is to systematically encounter and document nesting colonies.
+Ground-based monitoring of individuals marked nests at several colonies was conducted to document the success of nests initiated during the breeding season.
+
+### Aerial Surveys
+
+On or about the 15th of each month between January and June, we performed systematic aerial surveys for colonies, with observers seated on both sides of a Cessna 185, flight altitude at 800 feet AGL, and east-west oriented flight transects spaced 1.6 nautical miles apart.
+These conditions result in overlapping coverage on successive transects under a variety of weather and visibility conditions and have been used continuously since 1986, except for 2020-2021 due to the coronavirus pandemic.
+Once colonies were located, we noted positions with a GPS unit with the aircraft positioned approximately vertically over the north end of the colony.
+We estimated numbers of visible nesting birds while circling at a variety of altitudes (500 – 800 feet AGL).
+Actual positions of colonies were later rectified by visually locating the tree islands on GIS imagery.
+At small colony sizes (\<100 nests), the proportional error in estimating numbers is generally small.
+However, as colony size grows beyond that, the bias is generally to underestimate numbers (Erwin 1982, Prater 1979), and controlled experiments with simulated counts have demonstrated both large bias (cf 40%) and large inter-observer differences in bias (Frederick et al. 2003).
+Bias can be greatly reduced (by approximately half) by counting aerial photographs taken at the time of survey (Williams et al. 2008).
+For this reason, we take digital photographs of all active colonies from multiple angles for later counting.
+For many of the larger colonies, we also compare to information collected by helicopter via staff at the South Florida Water Management District, which estimated numbers of wading birds, and took photographs for later counting.
+Normally, SFWMD flights occur during the first week of every month, January through Jun, though helicopter issues restricted SFWMD flights this year.
+
+### Ground surveys
+
+Systematic ground surveys of colonies by airboat were done between early April and mid-May in selected sections of WCA 3.
+These surveys are designed to locate and document small colonies or those of dark-colored species that are difficult to detect from aerial surveys.
+All tree islands were approached closely enough to flush nesting birds, and nests were either counted directly, or estimated from flushed birds.
+
+In the past, we have performed systematic, 100% coverage ground surveys of colonies by airboat in WCAs 1, 2 and 3 once between late April and early May.
+In 2005, 100% coverage ground surveys throughout the WCAs were discontinued due to a change in MAP guidelines for monitoring (concentrating instead on measuring size and species composition of large colonies of white-colored waders).
+However, since that time we have annually performed systematic ground surveys in WCA 3 that allow for a direct comparison of densities of colonies in certain areas.
+This was designed to give an index of abundance for small colonies and dark-colored species in a fashion that might be sustainable for the current monitoring effort.
+
+We conducted ground surveys in April `r params$report_year`.
+The ground survey belt transects in WCA 3A extended from Tamiami Trail to I-75 (Alligator Alley).
+East/West boundaries for these north/south oriented belts are found in Table \@ref(tab:transecttable).
+It should be clear that this flushing technique works only for smaller colonies because birds in the interior will not flush when approached with an airboat.
+Large colonies occurring within these belts are generally few in number and are counted as part of the aerial surveys, but dark herons will be undercounted for those colonies.
+
+\newpage
+
+```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs and ENP. ENP monitoring is conducted by park personnel", message=FALSE, warning=FALSE}
+sp <- sf::read_sf(file.path(get_default_data_path(),                      "EvergladesWadingBird/SiteandMethods/regions/subregions.shp"))
+sp <- sf::st_transform(sp, sf::st_crs("+proj=longlat +datum=WGS84"))
+location <- ggmap::geocode(c("25.883878, -80.794257"), override_limit = TRUE) + c(-.1,.35)
+ggmap::ggmap(ggmap::get_map(location = location, 
+               zoom = 9, maptype = "terrain", source = "google")) +
+  geom_sf(data = sp, aes(color=Name), inherit.aes = FALSE, linewidth = 1.1, alpha=0) +
+  labs(color='Subregion') +
+  theme_bw() +
+  theme_void()
+```
+
+\newpage
+
+```{r transecttable}
+tribble(
+~Transect_ID, ~East_Boundary, ~West_Boundary,
+#|:---------|--------------:|---------------:|
+1,           "80° 40.300",     "80° 40.600",
+2,           "80° 40.900",     "80° 41.200",
+3,           "80° 41.500",     "80° 41.800",
+4,           "80° 42.100",     "80° 42.400",
+5,           "80° 42.700",     "80° 43.000",
+6,           "80° 43.300",     "80° 43.600",
+7,           "80° 43.900",     "80° 44.200",
+8,           "80° 44.500",     "80° 44.800",
+9,           "80° 45.100",     "80° 45.400",
+10,          "80° 45.700",     "80° 46.000",
+11,          "80° 46.300",     "80° 46.600",
+12,          "80° 46.900",     "80° 47.200",
+13,          "80° 47.500",     "80° 47.800",
+14,          "80° 48.100",     "80° 48.400",
+15,          "80° 48.700",     "80° 49.000",
+16,          "80° 49.300",     "80° 49.600") %>%
+  knitr::kable("pipe", align=rep('c', 3), caption = "East/West boundaries for Ground Survey transects for WCA 3A.")
+```
+
+### Nest success
+
+Since 1993, we have monitored nest success (probability of any nest producing one or more young) for White Ibis, Great Egrets and Wood Storks, respectively) by checking individually marked nests every 5 -- 7 days during the breeding season.
+Colonies monitored each year were selected for their large size, species composition, and broad geographic representation.
+Many colonies are occupied by several species, and not all colony locations are active in each year (Frederick and Spalding 1994).
+We marked nests for study within colonies along 4-m wide belt transects oriented from the edge to areas of greatest nest density, marking all nests within the belts with numbered surveyors flagging.
+
+Colonies were monitored from the time most nests had progressed to incubation until all nests on the transects had either failed or fledged young at 14 days of age (White Ibis), 21 days of age (Great Egret) or 50 days (Wood Stork).
+On each visit, all nests were checked for contents using a mirror pole.
+Nests were identified to species based on construction materials, size, and egg and chick characteristics (McVaugh 1972).
+Nest start date was taken to be the date of laying of the first egg, determined based on either laying or hatching schedule.
+Nests were assumed to have failed when all eggs or chicks disappeared or were found dead prior to the fledging age (above).
+Barring more detailed evidence at the nest, timing of nest failure was assigned to the midpoint between nest checks.
+Nest success was calculated using the Mayfield method, which corrects for positive bias by accounting for early yet unobserved nest failures.
+Mayfield is calculated using a two-step process.
+The first step is to calculate the daily survival probability across all monitored nests in the colony.
+
+$$
+\ Pr(Survival_{daily}) = (Exposure days – number failed nests)/Exposure days 
+$$
+
+where exposure days is the sum across nests of the number of days each nest was active.
+This method estimates daily mortality probabilities based on the number of days each nest was observed, providing an average daily nest survival rate.
+Daily survival probability is then used to calculate nest success (the probability a nest will survive to produce at least one offspring):
+
+$$
+\ Nest Success = Pr(Survival_{daily})^{Nesting Length}
+$$
+
+Stage-specific survival was calculated separately for incubation and nestling stages to account for differences in failure rates between the two.
+Nest success was expressed over all nests of each species from all colonies within any breeding year, as a probability of the nest surviving to produce at least one young of the predetermined age of fledging (Mayfield 1961, 1975, Hensler 1985).
+
+In 2025, we attempted a novel approach to conducting Wood Stork nest checks.
+Nesting habits of Wood Storks in Cypress and other taller vegetation in WCA 3 make ground-based nest checks infeasible.
+Instead, nests were checked by analyzing UAV imagery.
+UAV flights (funded by a separate agency) were conducted over each colony every 5 - 7 days at a height of 250 ft Areas of each colony were then selected for analysis based on general WOST nest density.
+Frames from each of the weekly flights that covered the selected areas were assessed to determine nest contents, attempting to be as comparable to ground-based methods as possible.
+While this method has provided a viable alternative to ground-based nest checks, there are some limitations.
+It is not possible to determine clutch size, as adults remain incubating during UAV flights a vast majority of the time.
+There is also more uncertainty in determining accurate hatch dates as it is difficult to discern early brooding from incubation when the chicks are still very small.
+Nest success methods, like the Mayfield Method, can be very sensitive to small differences in timing estimates (i.e. exposure days).
+Current estimates based on drone surveys should be treated carefully until additional work can be conducted to compare drone-based and ground-based estimates of nest success.
+
+## Results
+
+### Weather and Water Conditions
+
+#### Hydrology
+
+At the start of `r params$report_year`, water level in WCA 3 was average but rapidly dropping.
+Initial water levels had reached a 4-year high by the end of the preceding rainy season.
+This was the result of numerous reversals during the prior year’s breeding season that left water levels at a 7-year high, along with several major rain events from June through mid-July.
+This was followed by an intense draw down beginning in November and continuing through April, with one minor reversal March 30th.
+Three minor rain events throughout May and a fourth on June 02 brought water levels back to what they were at the start of April, but overall levels remained at or below mean monthly minimums.
+In contrast, WCA 1 maintained a slow and gradual draw down throughout the season (Figures \@ref(fig:waterplot3) - \@ref(fig:waterplotcoastal)).
+
+```{r waterplot3, echo=FALSE, fig.cap="Mean daily water stage in central WCA 3 (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
+depths <- read.csv("../../water/eden_depth.csv")
+water_report(depths = depths, wca="3ase", minyear=params$report_year-2, maxyear=params$report_year)
+```
+
+```{r waterplot2, fig.cap = "Mean daily water stage in central WCA 2 (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
+water_report(depths = depths, wca="2b", minyear=params$report_year-2, maxyear=params$report_year)
+```
+
+```{r waterplot1, echo=FALSE, fig.cap="Mean daily water stage in LOX (WCA 1, red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
+water_report(depths = depths, wca="1", minyear=params$report_year-2, maxyear=params$report_year)
+```
+
+```{r waterplotinland, fig.cap = "Mean daily water stage in Inland Everglades National Park (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
+water_report(depths = depths, wca="inlandenp", minyear=params$report_year-2, maxyear=params$report_year)
+```
+
+```{r waterplotcoastal, fig.cap = "Mean daily water stage in Coastal Everglades National Park (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
+water_report(depths = depths, wca="coastalenp", minyear=params$report_year-2, maxyear=params$report_year)
+```
+
+#### Water Recession
+
+Water level recession rates in winter and spring have been noted as one of the components that can help make prey available to wading birds in the Everglades, and although the power of drying rates for predicting nesting alone is rather weak, several studies suggest that minimum water recession rates of 2 mm/d or greater may be important as a partial threshold for breeding since lower recession rates tend to be associated with reversals which are detrimental for breeding success for many species.
+
+In `r params$report_year` water recession rates varied across regions but for the most part were far above normal and remained consistent through early and late nesting season.
+Both Lox and 2b began with low recession rates, especially in comparison to the majority of subregions.
+Both followed their usual trend of increasing recession as the season progressed, although Lox experienced a more gradual draw down than usual.
+2A and coastal ENP maintained consistent recession rates at or slightly above the minimum of 2mm throughout the season.
+However, rates in WCA 3 were extremely high.
+3 of the 4 subrregions began with rates in excess of 7mm, with all of WCA 3 maintaining a recession rate above 5mm and exceedances of 82 or higher throughout the season.
+As a whole, the effects of these high recession rates where likely buffered by the high water levels at the offset of the season, thus creating adequate prey availability and resulted in a more productive breeding season than initially anticipated.
+(Table \@ref(tab:watertable)).
+
+```{r watertable}
+dry_down(depths) %>%
+    filter(region %in%            c("2a","2b","3an","3as","3ase","3b","1","coastalenp","inlandenp")) %>%
+  mutate(region = stringr::str_replace(region, "1", "lox")) %>%
+  select_all(~gsub("_", " ", .)) %>%
+  group_by(year) %>%
+  select_all(snakecase::to_title_case) %>%
+  mutate(is_last_val_in_group = row_number() == max(row_number())) %>%
+  flextable::flextable(col_keys = 
+    c('Year', 'Region', 'Early Dry', 'Late Dry','Exceedance Early', 'Exceedance Late')) %>%
+  flextable::colformat_double(digits = 2) %>%
+  flextable::colformat_double(j = "Year", digits = 0) %>%
+  flextable::set_caption("Water level recession rates (mm/day) in the Everglades.")   %>%
+  flextable::add_footer_lines("Negative values indicate rising water, positive values indicate falling water. Exceedance refers to the percentage of years in the record in which the drying rate is less than that of the current year.") %>%
+  flextable::hline(i = ~is_last_val_in_group == TRUE, border = fp_border()) %>%
+  flextable::fix_border_issues() %>%
+  flextable::set_table_properties(layout = "autofit")
+```
+
+#### Temperature and Rainfall
+
+Low temperatures during the winter months can significantly affect the availability of prey, since small fishes and crustaceans may burrow during cooler weather (Frederick and Loftus 1993).
+
+`r params$report_year` maintained low temperatures throughout most of the season, with the one exception of an abnormally warm February.
+While overall cooler temperatures may have negatively affected prey availability, high recession rates and the resulting prey concentration likely offset this effect (Figure \@ref(fig:temperature)).
+Overall rainfall was below average across all months, further supporting this season’s high recession rates.
+High levels of precipitation often result in reversals that are detrimental to nesting success.
+However, given the extremely low water levels and high recession rate, a slightly elevated amount of rainfall may have been beneficial by maintaining some water on the landscape, particularly WCA 3.
+June experienced extremely low rainfall, during what is typically the second month of the rainy season.
+Combined with already low water levels, there may be negative impacts on prey availability for next year’s breeding season (Figure \@ref(fig:precipitation)).
+
+```{r temperature, fig.cap="Monthly temperature deviations averaged across all regional NOAA weather stations. Zero represents average long-term monthly deviation from normal temperature. Red bars display monthly deviations from long-term mean monthly temperatures. Dashed lines indicate average standard deviation above and below the mean monthly deviation."}
+weather_report("temperature", plot_year=params$report_year)
+```
+
+```{r precipitation, fig.cap="Monthly precipitation deviations averaged across all regional NOAA weather stations. Zero represents average long-term monthly deviation from normal precipitation. Red bars display monthly deviations from long-term mean monthly precipitation levels. Dashed lines indicate average standard deviation above and below the mean monthly deviation."}
+weather_report("precipitation", plot_year=params$report_year)
+```
+
+### Nesting Effort and Success
+
+#### Nesting effort
+
+We estimated that a minimum of `r total_nests` wading bird nests were initiated at colonies within WCA Lox (1), 2 and 3 (Table \@ref(tab:nesting)), and an additional `r total_enp` nests in ENP (Table \@ref(tab:enpnesting), see Figure \@ref(fig:map) for colony locations).
+
+Wood Storks initiated nesting in WCA 3 (`r stork_max` nests) at `r stork_colony`, `r stork_colony2`, and Jetport in `r params$report_year`.
+This is the first year Wood Storks have been observed nesting at Hidden, and was the largest single colony this season.
+On the other hand, Jetport South, usually one of the larger WOST colonies, experienced no nesting activity.
+Wood Storks also initiated nesting in several colonies in ENP (`r enp_totals$wost` nests).
+Roseate Spoonbills continued to nest in the WCAs and were present in at least `r rosp_colonies` colonies, with a total of `r totals$rosp` nests.
+Larger numbers of nesting Roseate Spoonbills usually occurred in large mixed colonies as were observed in Alley North (`r rosp_an` nests) and 6th Bridge (`r rosp_6b` nests).
+Actual nest numbers are likely higher, as Roseate Spoonbills have been difficult to identify at some locations.
+For example, 11 active nests were found while performing ground-based nest checks at Hidden, but only 2 nests were observed in the imagery utilized for colony-wide counts.
+
+\newpage
+
+```{r nesting}
+raw_counts %>%
+  filter(!(wca %in% c("enp","other")), total>=40) %>%
+  select(colony,wca,all_of(species_list),total) %>%
+  arrange(wca, total) %>%
+  bind_rows(summarise_all(., 
+              ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
+ rename_with(toupper, .cols = -colony) %>%
+  flextable::flextable() %>%
+  flextable::fontsize(size = 9) %>%
+  flextable::fontsize(size = 11, part = "header") %>%
+  flextable::set_caption("Numbers of nests of wading birds by species in all WCAs.")   %>%
+  flextable::add_footer_lines("For detailed information on colonies, and for information on colonies of less than 40 pairs, see Appendix 1.") %>%
+  flextable::set_table_properties(layout = "autofit")
+
+```
+
+\newpage
+
+```{r enpnesting}
+enp_counts %>%
+  select(-c("latitude","longitude")) %>%
+  bind_rows(summarise_all(., 
+              ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
+  rename_with(toupper, .cols = -colony) %>%
+  flextable::flextable() %>%
+  flextable::fontsize(size = 9) %>%
+  flextable::fontsize(size = 11, part = "header") %>%
+  flextable::set_caption("Numbers of nests of wading birds by species in Everglades National Park.")   %>%
+  flextable::add_footer_lines("For detailed information on colonies see Appendix 1. Numbers in ENP are courtesy of Everglades National Park staff and SFWMD.") %>%
+  flextable::set_table_properties(layout = "autofit")
+
+```
+
+\newpage
+
+```{r map, echo=FALSE, fig.cap="Locations of nesting wading bird colonies totaling over 40 pairs in the WCAs", fig.width=6, fig.height=6.5, message=FALSE, warning=FALSE}
+colonies <- load_datafile("Counts/maxcounts.csv", path = get_default_data_path()) %>%
+  filter(year == params$report_year) %>%
+  select(group_id,colony) %>%
+  distinct() %>%
+  left_join(load_datafile("SiteandMethods/colonies.csv", 
+                                 path = get_default_data_path()),
+                   by = join_by(group_id, colony)) %>%
+  filter(!(region %in% c("enp","other"))) %>%
+  select(colony,subregion,latitude,longitude)
+ggmap::ggmap(ggmap::get_map(location = location, 
+               zoom = 9, maptype = "terrain", source = "google")) +
+ geom_point(data = colonies, 
+                     aes(x = longitude, y = latitude, colour = subregion), size=.9) +
+ geom_text(data = colonies, aes(x = longitude, y = latitude, label =  colony), size=1.2, hjust=0, vjust=0) +
+ theme_bw() +
+ theme_void() +
+ theme(legend.position="none")
+```
+
+\newpage
+
+We also continued long-term monitoring of small colonies, primarily for small dark herons, in WCA 3.
+Note that because of low detection rates of small dark herons from the air, these species are not systematically counted in aerial surveys, and our total counts in the summary tables are derived from partial coverage obtained from ground survey transects and observations from the air when possible.
+The small dark heron counts should therefore be treated as bare minimums.
+The only indicator of trends of these species is through comparing the same ground surveys in selected transects over time as an index of abundance (Table \@ref(tab:ground)).
+Based on these surveys, there has been an overall trend towards fewer numbers of Tricolored Heron and Little Blue Heron nests in the study area since 2000.
+This decline has been accompanied by a large increase in numbers of Black-crowned Night Heron presence in the same colonies.
+Despite an overall decrease in Tricolored and Little Blue Heron trends for the period of record, there has been an uptick in Little Blue Heron presence starting in 2015.
+Both Little Blue and Tricolored Herons occurred in `r params$report_year` (`r ground_totals$lbhe` and `r ground_totals$trhe` nests respectively).
+
+These long-term patterns of decline, followed by an apparent rebound could be the result of a general fluctuation in nesting by these species throughout the Everglades, or it could indicate that these species were nesting elsewhere in the system such as in larger colonies or in coastal areas.
+For logistical reasons, *Egretta* herons are difficult to count in large colonies.
+However, many nesting Tricolored Heron and Little Blue Heron were observed during aerial surveys in large mixed colonies including Lox Ramp, Lox West, and Alley North, as well as several *Egretta* dominated colonies in northern WCA 1.
+Competing hypotheses about the overall trends include a potential decline or shift in composition of the prey base, initial displacement by Black Crowned Night Herons, or movement to coastal colonies.
+Black-crowned Night Herons are likely to be a predator on nestlings of *Egretta* herons.
+Black-crowned Night Herons have rebounded from last year's low numbers, with `r totals$bcnh` adults counted during ground surveys in `r params$report_year` (Figure \@ref(fig:groundplot)).
+Still, the recent recovery of Tricolored Heron and Little Blue Heron nesting effort could suggest that small herons are adjusting to Black-crowned Night Heron presence in small tree islands.
+
+```{r ground}
+load_datafile("Counts/groundcounts_table.csv", path = get_default_data_path()) %>%
+  filter(year <= params$report_year) %>%
+  rename_with(toupper, .cols = -year) %>%
+  flextable::flextable() %>%
+  flextable::set_caption("Numbers of wading bird nests discovered in systematic ground searches within a constant study area in WCA 3.") %>%
+  flextable::set_table_properties(layout = "autofit")
+
+```
+
+```{r groundplot, fig.cap="Numbers of Tricolored Heron (blue), Little Blue Heron (red) and Black-crowned Night Heron (green) nests in the constant survey area in WCA 3A by year."}
+load_datafile("Counts/groundcounts_table.csv", path = get_default_data_path()) %>%
+  filter(year <= params$report_year) %>%
+  ggplot() +
+  geom_line(aes(x=year, y=trhe), color="steelblue", linewidth=1.05) +
+  geom_line(aes(x=year, y=lbhe), color="red2", linewidth=1.05) +
+  geom_line(aes(x=year, y=bcnh), color="green3", linewidth=1.05) +
+  theme_bw() +
+    theme(legend.position="none") +
+    ylab("Number of nesting pairs")
+```
+
+#### Reproductive Success
+
+Nest success was monitored for all species at `r colony_count` colonies in WCA 3: `r colony_list`.
+Individual nests of GREG (n=250 at all five colonies), WHIB (n=228 at Hidden and 6th Bridge), ROSP (n=28 at Hidden and 6th Bridge), BCNH (n=53 at Hidden and 6th Bridge) and Egretta herons (n=82 at Hidden and 6th Bridge) were monitored during ground-based nest checks every 5 – 7 days throughout the season.
+WOST nests were also monitored via weekly UAV flights (n=174 at Hidden, Jetport, and Jetport South. While ground-based nest checks are preferred, tall nest heights often make this unfeasible. The initial sample size of monitored nests was average for most species in recent years. However, low water levels created excessively dry navigational conditions that prevented access to 6th Bridge mid-season. As a result, all WHIB (81 nests), GLIB (13 nests), and nearly half of the SMHE (16 nests) at 6th Bridge could not be followed to completion and were not utilized in calculating overall nest success.
+Nest success (P; probability of fledging at least one young, Mayfield method) system-wide showed variation both by species and across colonies.
+GREG (P=0.76; SD=0.034), BCNH (P=0.34; SD=0.095), SMHE (P=0.71; SD=0.065), WHIB (P=0.37; SD=0.035) and ROSP (P=0.65; SD=0.152), WOST (P=0.33; SD=0.025).
+This suggests only one third of the BCNH and WHIB nests initiated in `r params$report_year` were successful, whereas approximately three-quarters of GREG, SMHE, and ROSP nests were able to fledge at least one young.
+Calculated nest success for WOST would suggest success rates similar to BCNH and WHIB.
+However, due to equipment issues, consistent monitoring did not begin until late March.
+High levels of WOST nest abandonment occurred mid-season, upwards of 50%, as observed in the disparity between March and April’s aerial observations.
+As a result, WOST reproductive success is only representative of nests present post-abandonment and not the 2025 breeding season as a whole.
+While true overall WOST nest success was even lower than our drone-based numbers suggest, this is the first time in 4 years Wood Storks exhibited any level of nesting success.
+GREG nest success, while the highest overall, exhibited extreme variation between colonies.
+In colonies where only GREG were observed nesting (Cypress City, Vacation, Little A), success rates were very high (P=0.90, P=0.92, and P=0.85 respectively).
+GREG nest success was much lower at Hidden and 6th Bridge, with overall success rates of only P=0.58 and P=0.27 respectively.
+Roseate Spoonbill nesting effort continues to begin earlier and occur more asynchronous than other species, with some nests being fully hatched by the time nest checks where initiated.
+ROSP were far more successful at Hidden, with all nests having fledged at least one young (P=1.00) than at 6th Bridge (P=0.39).
+Due to their early nesting combined with a large gap in nest checks caused by WHIB courtship, only about half of the ROSP nests initially marked at 6th bridge had known fates.
+This likely resulted in a nest sample that was biased towards later nesting pairs, but it is uncertain if that had a significant impact on overall nest success.
+NAs and zeros in the nest success table (Table \@ref(tab:nestsuccesstable)) are used to indicate different levels of uncertainty.
+NAs indicate a lack of observations from which to make calculations, while zeros (where indicated) denote direct observation of no nests or fledglings, from which a nest success of 0 can be inferred.
+
+\newpage
+
+```{r nestsuccesstable}
+
+success_table <- overall_success(minyear=params$report_year-4) %>% 
+  ungroup() %>%
+  filter(species %in% c("GREG", "WHIB","WOST")) %>% 
+  mutate(species = replace(species, species == "GREG", "Great Egret"),
+         species = replace(species, species == "WHIB", "White Ibis"),
+         species = replace(species, species == "WOST", "Wood Stork")) %>%
+  select(species,year,overall_Success,overall_SD,nestling_N) %>%
+  complete(species, year) %>%
+  arrange(species,-year)
+
+clutch_fledged <- load_datafile("Nesting/nest_success.csv") %>%
+                  filter(species %in% c("greg", "whib","wost"),
+                         year %in% (params$report_year-9):params$report_year) %>%
+                  group_by(year,species) %>%
+                  summarise(clutch_size = mean(clutch,na.rm=TRUE),
+                            clutch_sd = sd(clutch,na.rm=TRUE),
+                            clutch_n = sum(!is.na(clutch)),
+                            fledge_size = mean(fledged,na.rm=TRUE),
+                            fledge_sd = sd(fledged,na.rm=TRUE),
+                            fledge_n = sum(!is.na(fledged)),
+                            .groups = "drop") %>%
+    mutate(species = replace(species, species == "greg", "Great Egret"),
+         species = replace(species, species == "whib", "White Ibis"),
+         species = replace(species, species == "wost", "Wood Stork")) %>%
+    arrange(species,-year)  %>%
+    filter(year %in% (params$report_year-4):params$report_year)
+
+success_table <- success_table %>% full_join(clutch_fledged, by = join_by(species, year))
+colnames(success_table) <- c("Species", "Year", "Estimate", "SD", "N", "Estimate ",                              "SD ", "N ", "Estimate  ", "SD  ", "N  ")
+
+success_table %>%
+  flextable::flextable() %>%
+  flextable::bold(i = ~ Year == params$report_year) %>%
+  flextable::surround(i = ~ Year == params$report_year, border.bottom = fp_border(), border.top = fp_border()) %>%
+  flextable::colformat_double(j = c("Estimate", "SD"), digits = 3, na_str = "NA") %>%
+  flextable::colformat_double(j = c("Estimate ", "SD ", "Estimate  ", "SD  "), digits = 2, na_str = "NA") %>%
+  flextable::add_header_row(values = c("", "Nest Success", "Clutch Size", "Successful Fledglings"), colwidths = c(2,3,3,3)) %>%
+  flextable::set_caption("Five-year summary of reproductive statistics for the three major wading bird species in the Water Conservation Areas of the Everglades.")   %>%
+  flextable::footnote(i = c(1), j = c(3), value=flextable::as_paragraph(c("Nest success: Proportion of nest starts predicted to raise at least one young. Survival estimated for entire nesting period via pro-rating using Mayfield methods.")),
+               ref_symbols = c("a"),
+               part = "header", inline = TRUE)  %>%
+  flextable::footnote(i = c(1), j = c(4), value=flextable::as_paragraph(c("Successful Fledglings: Numbers of young raised to 21 days (Great Egrets), 14 days (White Ibises), or 50 days (Wood Storks).")),
+               ref_symbols = c("b"),
+               part = "header", inline = TRUE) %>%
+  flextable::add_footer_lines(value=flextable::as_paragraph(c("Zeros are from observation. NA = unable to calculate nest success due to low numbers or inaccessibility."))) %>%
+  flextable::align(i = 1:2, j = NULL, align = "center", part = "header") %>%
+  flextable::theme_booktabs(bold_header = TRUE) %>%
+  flextable::set_table_properties(layout = "autofit")
+```
+
+\newpage
+
+## Discussion
+
+The `r params$report_year` nesting effort (`r total_nests` nest starts) was a varied but likely overall average year.
+Total nest starts are up from the prior two years, but nesting effort varied greatly by species.
+GREG and WOST nested in relatively high numbers (143% and 136% respectively), whereas other target species continue to be well below their long-term averages.
+While nesting effort for ROSP in the WCAs has followed an increasing trend over the last two decades, nesting effort continues to decline for the third year with only 68% of the 10-year average (Table \@ref(tab:effortsummarytable)).
+In contrast, ROSP nest success far exceeded that of previous years (112%).
+SNEG, while undoubtedly down this year, should also be viewed in context of the SMWH category.
+It is known that SNEG nests are the most challenging to identify in aerial imagery, largely due to their size and the inability to confidently determine the species of small heron chicks.
+In `r params$report_year`, far more nests were identified as SMWH than in previous years.
+When viewed as a whole, small herons were at 81% of their 10-year average in `r params$report_year` (Table \@ref(tab:successsummarytable)).
+Though WHIB nesting effort was below (75%) and overall success was near (112%) their 10-year average, they are up in relation to recent years.
+WOST nesting effort increased dramatically this year compared to the 10-year average (136%), up from last year’s low of only 32%.
+A novel method of assessing WOST nest success via UAV imagery was used this year, due to the limitations of ground-based nest checks.
+However, due to equipment issues, consistent monitoring did not begin until late March.
+High levels of WOST nest abandonment occurred mid-season, upwards of 50%, as observed in the disparity between March and April’s aerial observations.
+As a result, WOST reproductive success is only representative of nests present post-abandonment and not the `r params$report_year` breeding season as a whole.
+While nest success remains below average, this is the first time in 4 years any WOST nests were successful in the WCA’s.
+WOST continued to nest at the Jetport and Jetport New colonies and were also found nesting at Hidden for the first time, in what was the largest single colony in `r params$report_year`.
+However, WOST did not nest at Jetport South this year.
+This also marks the 5th year in a row that WOST have failed to nest in what was once a long-term colony, Tamiami West, located just south of WCA 3.
+An intense draw down, beginning in November 2024 resulted in water levels far below normal at the start of the breeding season and continued to drop until May.
+However, previous water levels were at a 4-year high due to an abnormally wet dry season the prior year combined with several major rain events.
+This likely buffered prey availability, contributing to what was a more productive season than was initially anticipated.
+Low water levels and dry navigational conditions caused the field team to lose access to several colonies mid-season.
+This significantly impacted the number of nests that could be utilized in calculating overall success at 6th Bridge for some species, but also caused post-fledgling fate to be difficult to gauge at others.
+
+\newpage
+
+```{r effortsummarytable}
+summary_totals <- all_counts %>% 
+  filter(species %in% c("greg","sneg","whib","wost","rosp")) %>% 
+  group_by(species,year) %>%
+  summarise(count = sum(count, na.rm=TRUE))
+count_means <- summary_totals %>% 
+  group_by(species) %>%
+  summarise(count = mean(count, na.rm=TRUE))
+count_percentages <- summary_totals %>%
+                     filter(year >= params$report_year-4) %>%
+                     left_join(count_means, by = join_by(species)) %>%
+                     mutate(percent_of_mean = 100*(count.x/count.y)) %>%
+  select(species,year,percent_of_mean) %>%
+  pivot_wider(id_cols = year, names_from = species, values_from = percent_of_mean) %>%
+mutate(across(2:6, \(x) round(x, 2))) %>% 
+rename_with(toupper, .cols = -year) 
+colourer <- col_numeric(
+  palette = c("red", "green"),
+  domain = c(0, 300))
+count_percentages %>%
+  flextable::flextable() %>% 
+  flextable::bg(
+    bg = colourer,
+    j = ~ . -year,
+    part = "body") %>%
+  flextable::set_caption("Yearly percentages of nesting pairs of Great Egrets, Roseate Spoonbills, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
+```
+
+```{r successsummarytable}
+success_table_averages <- overall_success(minyear=params$report_year-9) %>% 
+  ungroup() %>%
+  filter(species %in% c("GREG","SNEG","WHIB","WOST","ROSP")) %>% 
+  select(species,year,overall_Success) %>%
+  replace(is.na(.), 0) %>%
+  group_by(species) %>%
+  summarise(mean_success = mean(overall_Success))
+success_table_percentages <- overall_success(minyear=params$report_year-4) %>% 
+  ungroup() %>%
+  filter(species %in% c("GREG","SNEG","WHIB","WOST","ROSP")) %>% 
+  select(species,year,overall_Success) %>%
+  left_join(success_table_averages, by = join_by(species)) %>%
+  mutate(percent_of_mean = 100*(overall_Success/mean_success)) %>%
+  select(species,year,percent_of_mean) %>%
+  pivot_wider(id_cols = year, names_from = species, values_from = percent_of_mean) %>%
+  replace(is.na(.), 0) %>%
+  mutate(across(2:5, \(x) round(x, 2))) %>% 
+  rename_with(toupper, .cols = -year) 
+colourer <- col_numeric(
+  palette = c("red", "green"),
+  domain = c(0, 300))
+success_table_percentages %>%
+  flextable::flextable() %>% 
+  flextable::bg(
+    bg = colourer,
+    j = ~ . -year,
+    part = "body") %>%
+  flextable::set_caption("Yearly percentages of nest success for Great Egrets, Roseate Spoonbills, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
+```
+
+\newpage
+
+## Progress towards Restoration
+
+### Status of Wading Bird Recovery
+
+The sustainability of healthy wading bird populations is a primary goal of CERP and other Everglades restoration programs in south Florida.
+A central prediction of CERP is that a return to natural flows and hydropatterns will result in the recovery of large, sustainable breeding wading bird populations, a return to natural timing of nesting, and restoration of large nesting colonies in the coastal zone (Frederick et al. 2009).
+There are at least two overlapping sets of measures of attaining these conditions, all based on historical conditions and thought to be representative of key ecological features of the bird-prey-hydrology relationship.
+RECOVER established Performance Measures (PM) that include the 3-year running average of the numbers of nesting pairs of key avian species in the mainland Everglades, the timing of Wood Stork nesting, and the proportion of the population that nests in the coastal ecotone (Ogden et al. 1997).
+In addition to these three, the annual Stoplight Reports have added two other measures: the ratio of visual to tactile wading bird species breeding in the Everglades, and the frequency of exceptionally large White Ibis breeding events.
+These additional measures were added in an attempt to further capture key ecological relationships found in the historical ecosystem (Frederick et al. 2009).
+All performance metrics were developed based on historical data and information about pre-drainage wading bird colonies in the Everglades.
+In this section, we report on the long-term trends and current status of these measures relative to these restoration benchmarks.
+When thinking about progress towards these restoration measures, it should be remembered that the hydrological system is not yet restored to provide anything like the ecological functions expected in a completed CERP.
+Based on the recent status of the hydrological system, we would not have predicted restored or even partially restored wading bird population indicators.
+The main indicator species are Great Egret, Snowy Egret, White Ibis, and Wood Stork.
+Although the Tricolored Heron was originally included in this list (Ogden et al. 1997), this species has proven extremely difficult to consistently monitor due to the inability to see their dark plumage in colonies during aerial surveys.
+Ogden et al. (1997) lumped Tricolored Heron and Snowy Egret population targets (eg 10,000 breeding pairs), and it is difficult to derive an expected number for Snowy Egrets alone (Ogden 1994).
+Based on relative abundances in coastal colonies (Ogden 1994), roughly equal support can be derived for 1:1 ratios as for 2:1 ratios (Snowy:Tricolored).
+In practice, the distinction is unimportant since both species appear to be declining and are nowhere near any of the population restoration targets.
+Here, we summarize data for the three Water Conservation Areas and mainland Everglades National Park.
+
+### Restoration Metrics
+
+```{r indicator setup, include=FALSE}
+# Get summary numbers for text
+indicator_totals <- max_count_indicator(minyear=params$report_year-2, maxyear = params$report_year) %>% filter(year == params$report_year)
+
+greg<-as.integer(indicator_totals$count_mean[indicator_totals$species=='greg'])
+sneg<-as.integer(indicator_totals$count_mean[indicator_totals$species=='sneg'])
+whib<-as.integer(indicator_totals$count_mean[indicator_totals$species=='whib'])
+wost<-as.integer(indicator_totals$count_mean[indicator_totals$species=='wost'])
+
+coastal <- coastal_indicator(maxyear = params$report_year) %>% 
+           filter(year == params$report_year) %>%
+           mutate(proportion=round(100*proportion,2))
+ratio <- foraging_indicator(maxyear = params$report_year) %>% 
+         filter(year == params$report_year) %>%
+           mutate(proportion=round(proportion,2),  
+                         proportion_mean=round(proportion_mean,2))
+timing <- initiation_indicator(maxyear = params$report_year) %>% 
+          filter(year == params$report_year)
+supercolony <- supercolony_indicator(maxyear = params$report_year) %>%        
+               filter(year >params$report_year-23)
+supercolony_count <- sum(supercolony$ibis_interval==1)
+supercolony_mean <- round(supercolony$interval_mean[supercolony$year==params$report_year],2)
+```
+
+#### Numbers of nesting pairs
+
+> **Restoration Benchmarks:** Four species have target minima for number of nesting pairs.
+> Because the Everglades is a naturally variable ecosystem, these metrics were developed as 3-year averages (i.e. the number of nesting pairs over a three year period).
+> These are:
+>
+> ```         
+>    GREG: 4000 pairs
+>    SNEG: 10,000 pairs
+>    WHIB: 10,000 pairs
+>    WOST:1500 pairs
+> ```
+
+The three-year running average for nesting pairs in the mainland Everglades (`r params$report_year-2` -- `r params$report_year`) are `r greg` pairs of Great Egrets, `r sneg` Snowy Egrets, `r whib` White Ibises, and `r wost` Wood Storks (See Table \@ref(tab:maxcountindicator)).
+Trends for Great Egrets over time for this measure increased markedly from 1988 – 2004, and have been roughly stable since, with the 3-year running average meeting or exceeding restoration criteria since 1996.
+Trends for Snowy Egrets decreased markedly 1988 – 1999, increased dramatically from 2000 – 2008, then decreased variably through the 2017 nesting season.
+A slow increase has occurred since and generally, big nesting years for flock-foraging species show a big increase in Snowy Egret nesting.
+Nonetheless, three-year running averages of breeding Snowy Egrets have been consistently well below the target restoration goal in the time they have been monitored systematically since 1986.
+The 3-year running average increased markedly for White Ibises during 1986 – 2001 (2.7 X), and then remained variable but arguably stable for nearly a decade (2002 – 2011).
+The final period in this record (2011 – present) showed substantial fluctuation in ibis nesting, with a 50% reduction in one year and three additional years below the average of the previous decade.
+In the last six years, ibis nesting has doubled from the previous decade.
+The huge nesting effort in the 2018 and 2021 nesting seasons pulled the running average up markedly, and the running average may remain high for the next three years simply because of the contribution of large numbers of fledged chicks from those two banner years.
+White Ibis nesting populations have met or exceeded the breeding population criterion since 2000.
+Wood Storks showed a marked increase from averages in the 2 – 300 pair range (1986 – 1992) to averages above 1,000 in many years after 1999.
+Wood Storks have equaled or exceeded the restoration population criterion during 14 of the last 24 years.
+However, the running average for `r params$report_year` was below the minimum target of 1,500.
+Together, these statistics illustrate that there has been a very substantial increase in numbers of Great Egrets, Wood Storks and White Ibises since 1986, followed by a period of relative stability during which each of these species has met restoration targets in the majority of years since 2000 (Figure \@ref(fig:maxcountindicatorplot)).
+While Snowy Egrets appear to be rebounding in the last four years, this species has never met restoration targets.
+
+#### Coastal nesting
+
+> **Restoration Benchmarks:** 50% of nests in coastal colonies (dashed line in Figure \@ref(fig:coastalindicator)).
+
+It is estimated that more than 90% of the nesting of the indicator species occurred in the southern ecotone region during the 1930s and early 1940s, likely because this was the most productive area.
+A major restoration hypothesis holds that it is the reduction of freshwater flows to this coastal region that has reduced secondary productivity and resulted in the abandonment of the area by nesting wading birds.
+The proportion of the entire mainland Everglades nesting population that nests in the coastal zone is one of the restoration indicators, with at least 50% of nesting as the restoration target (Ogden et al. 1997).
+This measure has shown considerable improvement since the lows of the mid-1990s and early 2000’s (2 – 10%, Figure \@ref(fig:coastalindicator)), and during the last four years has ranged between 25 and 42%.
+In `r params$report_year`, only `r coastal$proportion`% of all nests were in coastal colonies, which represents a considerable reversal in this metric.
+Despite a disappointing level of coastal:inland nesting in `r params$report_year`, the 3-year average (`r params$report_year-2` -- `r params$report_year`) remains higher than \<10% values consistently seen before 2010.
+This metric has never met its target of 50%, and while the overall trend was improving, since 2020 it has exhibited consistent decline in the 3-year averages.
+
+#### Ratio of visual to tactile foragers
+
+> **Restoration Benchmarks:**  32 tactile forager nests: 1 visual forager nest (dashed line in Figure \@ref(fig:ratioindicator)).
+
+This measure recognizes that the breeding wading bird community has shifted from being numerically dominated by tactile foragers (storks and ibises) during the pre-drainage period to one in which visual foragers such as Great Egrets are numerically dominant.
+This shift is thought to have occurred as a result of impounded, stabilized, or over drained marsh, which leads to the declining availability both of larger forage fishes (Wood Storks) and crayfishes (ibises).
+These conditions also seem to favor species like Great Egrets that are less reliant on the entrapment of prey and can forage both in groups and alone under a variety of circumstances.
+A ratio of 32 breeding tactile foragers to each breeding visual forager was characteristic of the 1930s breeding assemblages.
+While this measure has shown some improvement since the mid 1990's (movement from 0.66 to 7.9 in 2018), the metric is still generally an order of magnitude less than the restoration target (Figure \@ref(fig:ratioindicator)).
+In `r params$report_year`, the ratio was `r ratio$proportion`, and the 3-year running average was `r ratio$proportion_mean`.
+
+#### Timing of Nesting
+
+> **Restoration Benchmarks:**  November-December for date of earliest nest initiation by Wood storks.
+
+This parameter applies only to the initiation of nesting for Wood Storks, which has shifted from November - December (1930s through 1960's) to January - March (1980s -- present).
+Later nesting increases the risk of mortality of nestlings that have not fledged prior to the onset of the wet season and can create the difference between the south Florida stork population acting as a source or sink population.
+This measure has shown a consistent trend towards later nesting between the 1930's and the 1980s, with variation around a February mean initiation date since the 1980s (Figure \@ref(fig:storkindicator)).
+Although some years in the mid-2000's stimulated earlier nesting, there has been no lasting improvement.
+The 2018 season start (late December) was quite early by comparison with recent years, and was only one of three years in the last 30 in which storks have initiated nesting by the end of December.
+The `r params$report_year` date was `r timing$initiation`, which was later than last year.
+The three-year running average for `r params$report_year` was `r round(timing$date_score_mean,2)`, which corresponds to an averaged nest initiation date of early February.
+
+#### Exceptionally large ibis aggregations
+
+> **Restoration Benchmarks:** Large ibis nesting events every 1.6 years (dashed line in Figure \@ref(fig:supercolonyindicator)).
+
+Episodic, exceptionally large breeding aggregations of ibises were characteristic of the predrainage system and are thought to be indicators of the ability of the wetland system to produce very large pulses of prey resulting in part from typical cycles of drought and flood.
+Large breeding aggregations during the recent period are defined as being above 16,977 nests each year, defined as the 70th percentile of the entire period of record of annual nestings.
+The interval between large ibis nestings in the predrainage period was 1.6 years and this serves as the target for restoration.
+The 3-year average this year is `r supercolony_mean`.
+This measure has improved very markedly since the 1970s, with the target achieved in `r supercolony_count` of the last 24 years (Figure \@ref(fig:supercolonyindicator)).
+
+### Restoration Discussion
+
+As a whole, these measures of wading bird nesting suggest that while there have been real improvements in several of the measures during the past one or two decades, several key measures are stalled and not showing further improvement.
+Two measures are genuinely hopeful - numbers of nesting pairs of ibises, storks and Great Egrets in the system seem to be regularly achieving the restoration targets, and the interval between exceptional ibis nesting years has consistently met and surpassed the restoration target.
+There has been real progress in the location of nesting, with dramatic increase in 2018, 2019, and 2021 and an apparent positive trend despite this year’s exceptionally low value.
+Nonetheless, there is much room for improvement.
+While the numbers of Snowy Egrets have improved in the last five years, they remain far from restoration targets.
+There is little evidence that the timing of nesting for storks is improving on average, despite the early nesting in 2017 - 2019.
+The ratio of tactile to visual foragers continues to improve since the mid-2000’s but remains an order of magnitude below the restoration target.
+This picture illustrates clearly that the birds probably have responded in the last two decades to a combination of altered water management regimes, favorable rainfall patterns and hydropattern by nesting more consistently in the coastal zone, and by increasing populations of ibises and storks.
+While some of the population increases may be attributable to forces outside the Everglades system, the fact that these species have been attracted to nest in the Everglades in larger numbers, and that nesting has often been successful, remains a solid indicator.
+The lack of movement of the other measures suggests that the current hydrological management regimes are not powerful enough to nudge the timing of nesting, ratio of tactile foragers, or numbers of nesting Snowy Egrets further.
+While this illustrates an apparent stasis, it should be remembered that full restoration of wading bird populations is predicted only as a result of full restoration of key historical hydropatterns, which has not yet occurred.
+
+\newpage
+
+```{r maxcountindicator}
+max_count_indicator(maxyear = params$report_year) %>% filter(species %in% c("greg","sneg","whib","wost")) %>% pivot_wider(id_cols = year, names_from = species, values_from = count_mean) %>%
+mutate(across(2:5, \(x) round(x, 0))) %>% 
+rename_with(toupper, .cols = -year) %>%
+  flextable::flextable() %>% 
+  flextable::bg(j="GREG", i = ~ GREG > 4000, bg = "grey", part = "body") %>%
+  flextable::bg(j="SNEG", i = ~ SNEG > 10000, bg = "grey", part = "body") %>%
+  flextable::bg(j="WHIB", i = ~ WHIB > 10000, bg = "grey", part = "body") %>%
+  flextable::bg(j="WOST", i = ~ WOST > 1500, bg = "grey", part = "body") %>%
+  flextable::set_caption("Three-year running averages of numbers of nesting pairs of Great Egrets, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs + ENP, not including Florida Bay).") %>%
+  flextable::add_footer_lines("Shaded years are those in which the numbers of nesting pairs met the restoration criteria. Target minima: GREG: 4000, SNEG: 10k, WHIB: 10k, WOST:1500")
+```
+
+\newpage
+
+```{r maxcountindicatorplot, fig.cap="Trends in nesting pairs of the four target species since 1986."}
+max_count_plot(maxyear = params$report_year)
+```
+
+```{r coastalindicator, fig.cap="Proportion of all mainland Everglades nests that were located within the coastal estuarine zone, 1986 -- present. Dashed line is the restoration target."}
+plot_coastal(maxyear = params$report_year)
+```
+
+```{r ratioindicator, fig.cap="Ratio of tactile feeding species (ibis +stork) nests to sight foraging (Great Egret) nests in the Everglades, 1986 -- present. Dashed line is the restoration target."}
+plot_foraging(maxyear = params$report_year)
+```
+
+```{r storkindicator, echo=FALSE, fig.cap="Wood Stork nest initiation date in the Everglades of Florida. Dashed line is the restoration target.", fig.height=2.5, fig.width=5, message=FALSE, warning=FALSE}
+plot_initiation(maxyear = params$report_year)
+```
+
+```{r supercolonyindicator, fig.cap="Three year running average of the interval between ibis supercolony events, by year. Dashed line is the restoration target."}
+plot_supercolony(maxyear = params$report_year)
+```
+
+\newpage
+
+## Literature Cited
+
+-   Coulter, M. C., J. A. Rodgers, J. C. Ogden and F. C. Depkin. 2005. Wood Stork. Birds of North America, Eds: A. Poole and F. Gill. No. 409: 1-28. The Birds of North America, Inc. Philadelphia, PA.
+-   Dorn, N.J. and M.I. Cook. 2015. Hydrological disturbance diminishes predator control in wetlands. Ecology, 96(11), 2015, pp. 2984--2993.
+-   Erwin, R. M. 1982. Observer variability in estimating numbers: an experiment. Journal of Field Ornithology 53: 159-67.
+-   Frederick, P. C. 2002. Wading Birds in the Marine Environment. In: Biology of Seabirds. Eds. B. A. and J. Burger Schreiber, 617-55. Boca Raton, Florida: CRC Press.
+-   Frederick, P. C., T. Towles, R. J. Sawicki, and G. T. Bancroft. 1996. Comparison of aerial and ground techniques for discovery and census of wading bird (Ciconiiformes) nesting colonies. Condor 98: 837-40.
+-   Frederick, P.C. and W. F. Loftus. 1993. Responses of marsh fishes and breeding wading birds to low temperatures; a possible behavioral link between predator and prey. Estuaries 16:216-222.
+-   Frederick, P. C. and J. C. Ogden. 2001. Pulsed breeding of long-legged wading birds and the importance of infrequent severe drought conditions in the Florida Everglades. Wetlands 21 (4): 484-491.
+-   Frederick, P. C. and J. C. Ogden. 2003. Monitoring wetland ecosystems using avian populations: Seventy years of surveys in the Everglades. Pgs.321-350 in: D. Bush and J. Trexler, Eds. "Interdisciplinary approaches for evaluating ecoregional initiatives". Island Press, Washington D.C.447 pgs.
+-   Frederick, P. C. B. A. Hylton J. A. Heath and M. Ruane. 2003. Accuracy and variation in estimates of large numbers of birds by individual observers using an aerial survey simulator. Journal of Field Ornithology 74: 281-87.
+-   Frederick, P.C., D. E. Gawlik, J.C. Ogden, M. Cook and M. Lusk. 2009. The White Ibis and Wood Stork as indicators for restoration of the Everglades ecosystem. Ecol. Indicators.
+-   Frederick, P. C. and N. Jayasena. 2010. Altered pairing behaviour and reproductive success in white ibises exposed to environmentally relevant concentrations of methylmercury. Proceedings of the Royal Society B: Biological Sciences, 278(1713), pp.1851-1857.
+-   Frederick, P.C. and W. F. Loftus. 1993. Responses of marsh fishes and breeding wading birds to low temperatures; a possible behavioral link between predator and prey. Estuaries 16:216-222.
+-   Hensler, G. L. 1985. Estimation and comparison of functions of daily nest survival probabilities using the Mayfield method. Statistics in Ornithology. Springer-Verlag, New York.
+-   Mayfield, H. F. 1961. Nesting success calculated from exposure. Wilson Bulletin 73:255-261.
+-   Mayfield, H. F. 1975. Suggestions for calculating nest success. Wilson Bulletin 87:456-466.
+-   McVaugh, W., Jr. 1975. The development of four North American herons. Living Bird Quarterly 14:163-183.
+-   Ogden, J. C. 1994. A comparison of wading bird nesting dynamics, 1931-1946 and 1974-1989 as an indication of changes in ecosystem conditions in the southern Everglades. in: Everglades: the ecosystem and its restoration. Eds. S. and J. C. Ogden Davis, 533-70. 848 pp. Del Ray Beach, Florida: St. Lucie Press.
+-   Ogden, J. C., G. T. Bancroft, and P. C. Frederick. 1997. Ecological success indicators: reestablishment of healthy wading bird populations. In, Ecologic and precursor success criteria for south Florida ecosystem restoration. A Science Subgroup report to the South Florida Ecosystem Restoration Working Group.
+-   Prater, A. J. 1979. Trends in accuracy of counting birds. Bird Study 26: 198-200.
+-   RECOVER. 2006. 2006 System Status Report. U.S. Army Corps of Engineers Jacksonville District, Jacksonville, FL, and South Florida Water Management District, West Palm Beach, FL.
+-   RECOVER. 2007. 2007 System Status Report. U.S. Army Corps of Engineers Jacksonville District, Jacksonville, FL, and South Florida Water Management District, West Palm Beach, FL.
+-   Van der Molen EJ, Blok AA, De Graaf GJ (1982) Winter starvation and mercury intoxication in grey herons (Ardea cinerea) in the Netherlands. Ardea. 70:173-184.
+-   Williams, K.A., P.C. Frederick, P. Kubilis and J. Simon. 2008. Visual bias in aerial estimates of colonially nesting white ibises and great egrets. Journal of Field Ornithology 79:438 - 448.
+
+\newpage
+
+## Appendix
+
+```{r alltotals}
+merge(raw_counts, under40, all = TRUE) %>%
+  select(colony,wca,latitude,longitude,all_of(species_list),total) %>%
+  arrange(wca, desc(total)) %>%
+  bind_rows(summarise_all(., ~if(is.numeric(.)) sum(., na.rm=TRUE) else "Total")) %>%
+  rename_with(toupper, .cols = -colony) %>%
+  flextable::flextable() %>%
+  flextable::fontsize(size = 6) %>%
+  flextable::fontsize(size = 6.5, part = "header") %>%
+  flextable::set_caption("Total nests estimated in all colonies surveyed in ENP and the Water Conservation Areas of the Everglades. Counts are from aerial and ground surveys. Totals include all species recorded (including ANHI, DCCO, and GRHE which are not in totals reported above).") %>%
+  flextable::set_table_properties(layout = "autofit")
+
+```
