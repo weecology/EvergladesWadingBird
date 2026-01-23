@@ -49,3 +49,7 @@ varpj - varp\*((j\*(p\^(j-1)))\^2), variation of pj
 sdp - standard deviation of p
 
 sdpj - standard deviation of pj
+
+### Wood Stork Nesting Initiation Dates
+
+The date on which Wood Storks initiate nesting each year is used as an indicator of ecosystem health in the everglades. The data used to determine that date, along with the region and colony first active each year, are stored in [woodstork_dates.csv](../Nesting/woodstork_dates.csv).
