@@ -31,7 +31,7 @@ test_that("required column names in counts df", {
                      "species","behavior","count","notes"))
   expect_identical(ground_counts_cols, 
                    c("year","date","transect","colony_waypoint","colony", "latitude","longitude",
-                     "species","count","nests","chicks","notes"))
+                     "species","count","nests","chicks","standard_survey","notes"))
 })
 
 test_that("Lat and long valid", {
