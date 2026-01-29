@@ -14,10 +14,10 @@ ground_counts_all <- read.csv("Counts/ground_counts.csv")
 transects_all <- read.csv("Counts/ground_transects.csv")
 
 # Define transect boundaries
-lat_max =  26.165110
-lat_min = 25.749926
-long_max = -80.652562
-long_min = -80.840796
+lat_max = 26.146679
+lat_min = 25.761435
+long_max = -80.670633
+long_min = -80.827668
 
 # Add flag for locations outside transects
 
@@ -73,6 +73,9 @@ ground_counts[3481,"longitude"] = -80.77167
 ground_counts[3481,"standard_survey"] = 1
 transects[2356,"longitude"] = -80.77167
 transects[2356,"standard_survey"] = 1
+
+# I think these high foraging counts were removed
+ground_counts[c(2639,2632),"standard_survey"] = 0
 
 write.table(ground_counts, "Counts/ground_counts.csv", 
             row.names = FALSE, col.names = TRUE, na = "", sep = ",", quote = 13)
