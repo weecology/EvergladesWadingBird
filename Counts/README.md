@@ -65,8 +65,7 @@ Other max counts for minor colonies (under 40 nests)
 * notes
 
 ### Ground Counts
-Raw field counts from ground surveys. These have been quality controlled in recent years, but
-data from before 2007 are suspect and should be used with caution.
+Raw field counts from ground surveys. These have been quality controlled in recent years, but data from before 2007 are suspect and should be used with caution. The `standard_survey` column can be used as a flag. Counts with `standard_survey=1` are within the standardized transects and are used as the official count in that year. Counts with `standard_survey=0` are outside the standardized transects, are repeated counts at a similar location in the same year, or otherwise should not be used to compare counts across years.
 
 Locations are along a transect, not necessarily at a named colony. Colony is only reported 
 when it is overlapped by the transect.
@@ -81,6 +80,7 @@ when it is overlapped by the transect.
 * count
 * nests
 * chicks
+* standard_survey
 * notes  
 
 ### Ground Transects
