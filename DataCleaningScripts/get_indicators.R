@@ -77,10 +77,15 @@ max_count_all <- bind_rows(counts_total,under40) %>%
                  group_by(year,species) %>%
                  summarise_all(., sum, na.rm = TRUE)
 total <- sum(max_count_all$count)
+cerp <- max_count_all %>%
+        filter(species %in% c("greg","sneg","whib","wost")) %>%
+        sum(count)
 max_count_all <- max_count_all %>% ungroup() %>%
                  add_row(year=datayear, species = "total", count=total) %>%
+                 add_row(year=datayear, species = "cerp", count=cerp$count) %>%
                  mutate(region="all") %>%
-                 select(year,region,species,count)
+                 select(year,region,species,count) %>% 
+                 arrange(year,species)
 
 write.table(max_count_all, "Indicators/max_count_all.csv", 
             row.names = FALSE, col.names = FALSE, na = "", sep = ",", append=TRUE, quote = FALSE)
