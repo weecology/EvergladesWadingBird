@@ -47,15 +47,17 @@ Primary max count table, time series of all significant colonies (over 40 in any
 * colony_old - name used at time of observation
 * latitude
 * longitude
-* wca
 * species
 * count
 * notes
 
 ### Max Counts under 40
 Other max counts for minor colonies (under 40 nests)
-* group_id - unique colony id number
 * year 
+* region
+* subregion
+* wca - region described at time of observation
+* group_id - unique location number, no longer assigned to under 40 counts
 * colony - official colony name
 * colony_old - name used at time of observation
 * latitude

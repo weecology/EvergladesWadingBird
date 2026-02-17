@@ -77,12 +77,27 @@ groundcounts <- read.csv("Counts/ground_counts.csv") %>%
                        !(colony %in% max_counts_final$colony)) %>%
                 slice_max(count, n = 1, by = c(transect,colony_waypoint,species)) %>%
                 left_join(colonies[,-c(5:6)], by="colony") %>%              
-                mutate(wca="3", colony_old=colony_waypoint) %>%
-                select("year","wca","group_id","colony","colony_old","latitude",
-                       "longitude","species","count","notes") 
+                mutate(region="3",subregion="3as",wca="3", colony_old=colony_waypoint) %>%
+                select("year","region","subregion","wca","group_id","colony","colony_old",
+                       "latitude","longitude","species","count","notes") 
+
+## Add subregion using polygons
+# library(sf)
+# under40 <- read.csv("Counts/maxcounts_under40.csv") %>% 
+#   filter(count>0) 
+# polygons <- st_read("SiteandMethods/regions/subregions.shp")
+# waypoints_sf <- st_as_sf(under40, 
+#                          coords = c("longitude", "latitude"), 
+#                          crs = 4326) 
+# polygons <- st_transform(polygons, st_crs(waypoints_sf))
+# points_in_poly <- st_join(waypoints_sf, polygons, join = st_intersects)
+# under40_regions <- under40 %>% 
+#   left_join(points_in_poly[,1:10]) %>%
+#   select(-geometry) %>%
+#   rename(subregion=Name)
 
 write.table(groundcounts, "Counts/maxcounts_under40.csv", row.names = FALSE, col.names = FALSE,
-            append = TRUE, na = "", sep = ",", quote = 10) 
+            append = TRUE, na = "", sep = ",", quote = 12) 
 
 ############################## Add ENP data ###################################################
 filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
