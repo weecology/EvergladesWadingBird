@@ -1,6 +1,7 @@
 context("checks indicator data")
 
 colonies <- read.csv("../SiteandMethods/colonies.csv")
+species <- read.csv("../SiteandMethods/species_list.csv")
 max_count <- read.csv("../Indicators/max_count_all.csv")
 initiation <- read.csv("../Indicators/stork_initiation.csv") 
 foraging <- read.csv("../Indicators/coastal_nesting.csv")
@@ -22,6 +23,11 @@ test_that("Year valid", {
 test_that("Colony valid", {
   
   expect_true(all(na.omit(initiation$colony) %in% c(colonies$colony,"")))
+})
+
+test_that("Species valid", {
+  
+  expect_true(all(max_count$species %in% c(species$species,"cerp","total")))
 })
 
 test_that("Counts valid", {
