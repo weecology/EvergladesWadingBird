@@ -1,11 +1,18 @@
 # Site Data
 
-### colonies
-Colony locations
-
-### methods
 Project description, sampling design, and field collection methods can be found in the [methods](https://everglades-wading-bird-data.netlify.app/). 
 Usage notes for individual datasets are also in the respective READMEs.
+
+### colonies
+Official colony names and locations. 
+* group_id - unique ID number
+* colony - official colony name
+* region
+* subregion	
+* latitude	
+* longitude	
+* aka	- other names given to the same location over time
+* display_name - for use in text
 
 ### species_list
 Non-target species are noted but are not systematically counted.
@@ -38,3 +45,6 @@ Foraging attributes:
 * foraging type (high grader or exploiter)
 * niche description
 * typical prey species 
+
+### Spatial Polygons
+Polygons delineating the regions and colony locations are provided in the regions and colonies subdirectories.

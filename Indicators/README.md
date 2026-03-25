@@ -38,8 +38,10 @@ Reported values for 3 indicators are provided here.
 
 ### Coastal Nesting
 Proportion of all species nesting in coastal Everglades National Park colonies, 
-as opposed to the inland Everglades. The data for this calculation only include numbers 
-reported in the South Florida Wading Bird report. Florida Bay is not included.
+as opposed to the inland Everglades. The "coastal" Everglades includes the coastal headwaters and mangroves.
+Colonies defined as coastal or inland are documented in the [colonies](../SiteandMethods/colonies.csv) table. 
+The data for this calculation only include numbers reported in the South Florida Wading Bird report. 
+Florida Bay is not included.
 
 ### Stork Initiation Date
 This is the earliest nesting initiation date for the everglades region, which includes 
