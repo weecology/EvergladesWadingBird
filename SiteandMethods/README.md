@@ -48,3 +48,4 @@ Foraging attributes:
 
 ### Spatial Polygons
 Polygons delineating the regions and colony locations are provided in the regions and colonies subdirectories.
+The transects subdirectory contains the locations of the aerial and ground transects.
