@@ -10,7 +10,7 @@ colonies <- read.csv("SiteandMethods/colonies.csv") %>%
 
 experts <- c("MJR","mjr","LG","LG MJR","L. Garner","M. Rickershauser") 
 
-count_year <- 2025
+count_year <- 2026
 
 imagecounts <- read.csv("Counts/image_counts.csv") %>% 
   mutate(across(c("year","count"), as.numeric),

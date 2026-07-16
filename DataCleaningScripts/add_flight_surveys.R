@@ -12,7 +12,7 @@ colonies <- read.csv("SiteandMethods/colonies.csv") %>%
 species <- read.csv("SiteandMethods/species_list.csv")
 
 ############################# Get raw data #########################################
-new_year <- 2025
+new_year <- 2026
 
 filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
 filename <- "FINAL_flight_survey_data_2025.xlsx"

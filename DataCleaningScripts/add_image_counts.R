@@ -21,10 +21,10 @@ data_path <- paste(filepath,filename,sep="")
 
 new_data <- readxl::read_excel(data_path, 
                                col_names = TRUE,     
-                               col_types = c(rep("text",2),"date",rep("text",9)))
+                               col_types = c(rep("text",2),"date",rep("text",8)))
 
-new_data <- new_data[,1:10]
-colnames(new_data)[10] <- "notes"
+new_data <- new_data[,1:11]
+colnames(new_data)[11] <- "notes"
 
 new_data <- new_data %>%
   clean_names() %>%
@@ -41,6 +41,7 @@ new_data <- new_data %>%
   mutate(colony = replace(colony, colony=="77", "canal_north"),
          colony = replace(colony, colony=="99", "ivy"),
          colony = replace(colony, colony=="tyr", "lox73"),
+         colony = replace(colony, colony=="38", "38_185"),
          colony = replace(colony, colony=="008", "8")) %>%
   select("year", "date", "colony", "colony_old", "latitude", "longitude", "type", "camera", 
          "filenames", "counter", "species", "behavior", "count", "notes")
