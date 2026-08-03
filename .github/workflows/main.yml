@@ -25,7 +25,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
             fetch-depth: 3
 
@@ -79,7 +79,7 @@ jobs:
         if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
         env:
           JOB_TAGS: ${{ github.event_name == 'schedule' && '[skip ci] [cron]' || '[skip ci]' }}
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           author_name: Weecology Deploy Bot
           author_email: weecologydeploy@weecology.org
@@ -89,7 +89,7 @@ jobs:
       - name: Create Release
         if: github.event_name != 'pull_request' && steps.version.outputs.new_ver == 'TRUE'
         id: create_release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.tagging.outputs.tag }}

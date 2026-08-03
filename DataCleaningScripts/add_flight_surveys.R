@@ -14,24 +14,23 @@ species <- read.csv("SiteandMethods/species_list.csv")
 ############################# Get raw data #########################################
 new_year <- 2026
 
-filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
-filename <- "FINAL_flight_survey_data_2025.xlsx"
+filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/WadingBird_Primary Data/Counts/aerial/Clean data/"
+filename <- "Flight_survey data_2026.xlsx"
 
 data_path <- paste(filepath,filename,sep="")
 
 new_data <- readxl::read_excel(data_path, 
                                col_names = TRUE,     
-                               col_types = c(rep("text",5),"date",rep("text",9))) %>%
+                               col_types = c("date",rep("text",14))) %>%
             clean_names() %>%
             filter(!is.na(count), count!=0) %>%
   mutate(year = new_year,
-         colony_old = colony,
-         latitude = NA,
-         longitude = NA) %>%
+         colony_old = colony) %>%
   mutate(colony = tolower(colony)) %>%
   mutate(across(c("photo_sets","photos"), ~gsub(",","",.))) %>%
   mutate(across(c("photo_sets","photos"), ~gsub("\"", "",.))) %>%
-  mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
+  mutate(across(c("year","count"), as.numeric)) %>%
+  left_join(colonies, by = "colony") %>%
   select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", 
          "end_transect", "start_time", "end_time", "observer", "photo_sets", "photos", 
          "species", "behavior", "count", "notes")
