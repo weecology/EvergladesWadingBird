@@ -1,4 +1,4 @@
-group_id,colony,region,subregion,latitude,longitude,aka,display_name 
+"group_id","colony","region","subregion","latitude","longitude","aka","display_name"
 57,hidden,3,3as,25.77761133,-80.83851862,"Hidden North, L-28, Hidden, L-28 Hidden, 58, 163","Hidden"
 162,aerie,3,3as,25.77156696,-80.70872846,"Aerie","Aerie"
 174,little_d,3,3as,25.77116443,-80.69301213,"","Little D"
@@ -525,3 +525,4 @@ group_id,colony,region,subregion,latitude,longitude,aka,display_name
 4005,mandrill,3,3as,26.261856,-80.374889,"146","Mandrill"
 4006,napo_saki,3,3ase,26.082798,-80.537597,"48","Napo Saki"
 4007,tarsier,1,1,26.547925,-80.429626,"106","Tarsier"
+4008,vervet,1,1,26.456897,-80.253913,"147","Vervet"

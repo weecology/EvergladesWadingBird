@@ -10,6 +10,7 @@ colonies_update[523,] <- c(4004, "gibbon", "3", "3as", 25.891929,	-80.668708, "1
 colonies_update[524,] <- c(4005, "mandrill", "3", "3as", 26.261856, -80.374889, "146", "Mandrill")
 colonies_update[525,] <- c(4006, "napo_saki", "3", "3ase", 26.082798,	-80.537597, "48", "Napo Saki")
 colonies_update[526,] <- c(4007, "tarsier", "1", "1", 26.547925,	-80.429626, "106", "Tarsier")
+colonies_update[527,] <- c(4008, "vervet", "1", "1", 26.456897,	-80.253913, "147", "Vervet")
 
 colonies_update$colony[colonies_update$group_id==3700] = "yaku"
 colonies_update$aka[colonies_update$group_id==3700] = c("3700,075,75")
