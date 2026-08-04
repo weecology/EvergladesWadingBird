@@ -14,27 +14,38 @@ species <- read.csv("SiteandMethods/species_list.csv")
 ############################# Get raw data #########################################
 new_year <- 2026
 
-filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
-filename <- "FINAL_flight_survey_data_2025.xlsx"
+filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/WadingBird_Primary Data/Counts/aerial/Clean data/"
+filename <- "Flight_survey data_2026.xlsx"
 
 data_path <- paste(filepath,filename,sep="")
 
 new_data <- readxl::read_excel(data_path, 
                                col_names = TRUE,     
-                               col_types = c(rep("text",5),"date",rep("text",9))) %>%
+                               col_types = c("date",rep("text",14))) %>%
             clean_names() %>%
             filter(!is.na(count), count!=0) %>%
   mutate(year = new_year,
-         colony_old = colony,
-         latitude = NA,
-         longitude = NA) %>%
+         colony_old = colony) %>%
   mutate(colony = tolower(colony)) %>%
+  mutate(colony = replace(colony, colony=="142","indri"),
+         colony = replace(colony, colony=="143","emperor_tamarin"),
+         colony = replace(colony, colony=="145","gibbon"),
+         colony = replace(colony, colony=="146","mandrill"),
+         colony = replace(colony, colony=="147","vervet"),
+         colony = replace(colony, colony=="48","napo_saki"),
+         colony = replace(colony, colony=="106","tarsier"),
+         colony = replace(colony, colony=="75","yaku"),
+         colony = replace(colony, colony=="tyger_west","tyger")) %>%
   mutate(across(c("photo_sets","photos"), ~gsub(",","",.))) %>%
   mutate(across(c("photo_sets","photos"), ~gsub("\"", "",.))) %>%
-  mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
+  left_join(colonies, by = "colony") %>%
   select("year","date", "colony", "colony_old", "latitude", "longitude", "start_transect", 
          "end_transect", "start_time", "end_time", "observer", "photo_sets", "photos", 
-         "species", "behavior", "count", "notes")
+         "species", "behavior", "count", "notes") %>% 
+  distinct() %>%
+  mutate(across(c("year","latitude","longitude","count"), as.numeric),
+         date = as.Date(date)) %>% 
+  arrange(year,date,colony,species)
 
 ######################## Check for errors and write #######################################
 
@@ -46,6 +57,7 @@ write.table(new_data, "Counts/flight_surveys.csv",
             row.names = FALSE, col.names = FALSE, append = TRUE,
             na = "", sep = ",", quote = c(11,17))
 
+#########################
 ## Remove year to rewrite
 flights <- read.csv("Counts/flight_surveys.csv") %>%
            filter(year<new_year)
