@@ -12,10 +12,10 @@ colonies <- read.csv("SiteandMethods/colonies.csv") %>%
 species <- read.csv("SiteandMethods/species_list.csv")
 
 ############################# Get raw data #########################################
-new_year <- 2025
+new_year <- 2026
 
-filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
-filename <- "Image_count_2025.xlsx"
+filepath <- "~/UF Dropbox/Glenda Yenni/Everglades/WadingBird_Primary Data/Counts/photos/Clean Data/"
+filename <- "image_count_data_2026.xlsx"
 
 data_path <- paste(filepath,filename,sep="")
 
@@ -30,21 +30,25 @@ new_data <- new_data %>%
   clean_names() %>%
   filter(!is.na(count), count!=0) %>%
   mutate(year = new_year,
-         colony_old = colony,
-         latitude = NA,
-         longitude = NA) %>%
+         colony_old = colony) %>%
   mutate(colony = tolower(colony)) %>%
+  mutate(colony = replace(colony, colony=="142","indri"),
+         colony = replace(colony, colony=="143","emperor_tamarin"),
+         colony = replace(colony, colony=="145","gibbon"),
+         colony = replace(colony, colony=="146","mandrill"),
+         colony = replace(colony, colony=="147","vervet"),
+         colony = replace(colony, colony=="48","napo_saki"),
+         colony = replace(colony, colony=="106","tarsier"),
+         colony = replace(colony, colony=="75","yaku"),
+         colony = replace(colony, colony=="tyger_west","tyger")) %>%
   mutate(across(c("type","camera","filenames","counter"), ~gsub(" ", "",.))) %>%
   mutate(across(c("type","camera","filenames","counter"), ~gsub("\"", "",.))) %>%
   mutate(across(c("type","camera","counter"), ~gsub(",", "",.))) %>%
+  left_join(colonies, by = "colony") %>%
   mutate(across(c("year","latitude","longitude","count"), as.numeric)) %>%
-  mutate(colony = replace(colony, colony=="77", "canal_north"),
-         colony = replace(colony, colony=="99", "ivy"),
-         colony = replace(colony, colony=="tyr", "lox73"),
-         colony = replace(colony, colony=="38", "38_185"),
-         colony = replace(colony, colony=="008", "8")) %>%
   select("year", "date", "colony", "colony_old", "latitude", "longitude", "type", "camera", 
-         "filenames", "counter", "species", "behavior", "count", "notes")
+         "filenames", "counter", "species", "behavior", "count", "notes") %>% 
+  arrange(year,date,colony,species)
 
 ######################## Check for errors and write #######################################
 
