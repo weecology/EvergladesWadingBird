@@ -20,8 +20,8 @@ imagecounts <- read.csv("Counts/image_counts.csv") %>%
          date = as.Date(date)) %>% 
   filter(year==count_year, behavior=="nesting") %>%
   group_by(date,colony,species) %>%
-  summarise(expert_count = mean(count[counter %in% experts]), 
-            mean_count = mean(count), 
+  summarise(expert_count = ceiling(mean(count[counter %in% experts])), 
+            mean_count = ceiling(mean(count)), 
             image_sd = sd(count),
             .groups = 'drop') %>%
   mutate(image_count = expert_count,
@@ -34,8 +34,8 @@ flightsurveys <- read.csv("Counts/flight_surveys.csv") %>%
          date = as.Date(date)) %>% 
   filter(year==count_year, behavior=="nesting") %>%
   group_by(date,colony,species) %>%
-  summarise(expert_count = mean(count[observer %in% experts]), 
-            mean_count = mean(count), 
+  summarise(expert_count = ceiling(mean(count[observer %in% experts])), 
+            mean_count = ceiling(mean(count)), 
             flight_sd = sd(count),
             .groups = 'drop') %>%
   mutate(flight_count = expert_count,
@@ -54,11 +54,10 @@ max_counts <- counts %>%
   slice_max(count, n = 1, by = c(colony,species)) %>%
   select(colony, species, count, date, count_type, image_count, flight_count) %>%
   arrange(colony,species)
-## %>% pivot_wider(names_from = species, values_from = max_count)
 
-# write.table(max_counts, "~/Desktop/max_counts_2025.csv", 
-#             row.names = FALSE, col.names = TRUE, 
-#             na = "", sep = ",")
+ write.table(max_counts, "~/Desktop/max_counts_2026.csv", 
+             row.names = FALSE, col.names = TRUE, 
+             na = "", sep = ",")
 
 # Write final table
 max_counts_final <- max_counts %>% 
