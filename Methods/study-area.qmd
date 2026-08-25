@@ -26,11 +26,11 @@ Other regions (Big Cypress, Urban, Florida Bay) are included incidentally in the
 
 ## Subregions
 
-Subregions are defined by a combination of water management practices, local ecology and geology. This combination results in 
+Subregions are defined by a combination of water management practices, local ecology and geology.
 
 Boundaries are defined by roads, levees and other water management structures. Shapefiles are provided in the SiteandMethods directory.
 
-- **1**: Enclosed by levees as a shallow water reservoir, this area experiences one consistent management plan and so is not further divided into subregions. The Wildlife Refuge protects the last significant expanse of native softwater Everglades peat-based wetlands.
+- **1**: Enclosed by levees as a shallow water reservoir, this area experiences one consistent management plan and so is not further divided into subregions. The Wildlife Refuge protects the last significant expanse of native Everglades peat-based wetlands.
 
 - **2a**: Most of the area of WCA 2 is in 2A. It acts as the primary throughput for water moving south toward 3A. 2A has historically suffered from high phosphorus loading from agricultural runoff, triggering extensive marsh restoration efforts.
 
