@@ -18,7 +18,18 @@ count_year <- 2026
 imagecounts <- read.csv("Counts/image_counts.csv") %>% 
   mutate(across(c("year","count"), as.numeric),
          date = as.Date(date)) %>% 
-  filter(year==count_year, behavior=="nesting") %>%
+  filter(year==count_year, behavior=="nesting")
+
+# get total small heron numbers to determine maximum nests
+imagecounts_smallheron <- imagecounts  %>%
+  filter(species %in% c("smhe", "smwh", "smda", "trhe", "sneg", "lbhe")) %>% 
+  group_by(date,colony) %>%
+  summarise(
+    count = sum(count),
+    species = "smallheron") %>%
+  ungroup()
+
+imagecounts_maxs <- imagecounts %>% bind_rows(imagecounts_smallheron) %>%  
   group_by(date,colony,species) %>%
   summarise(expert_count = ceiling(mean(count[counter %in% experts])), 
             mean_count = ceiling(mean(count)), 
@@ -32,7 +43,18 @@ imagecounts <- read.csv("Counts/image_counts.csv") %>%
 flightsurveys <- read.csv("Counts/flight_surveys.csv") %>% 
   mutate(across(c("year","count"), as.numeric),
          date = as.Date(date)) %>% 
-  filter(year==count_year, behavior=="nesting") %>%
+  filter(year==count_year, behavior=="nesting") 
+
+# get total small heron numbers to determine maximum nests
+flightsurveys_smallheron <- flightsurveys  %>%
+  filter(species %in% c("smhe", "smwh", "smda", "trhe", "sneg", "lbhe")) %>% 
+  group_by(date,colony) %>%
+  summarise(
+    count = sum(count),
+    species = "smallheron") %>%
+  ungroup()
+
+flightsurveys_maxs <- flightsurveys %>% bind_rows(flightsurveys_smallheron) %>%  
   group_by(date,colony,species) %>%
   summarise(expert_count = ceiling(mean(count[observer %in% experts])), 
             mean_count = ceiling(mean(count)), 
@@ -43,16 +65,28 @@ flightsurveys <- read.csv("Counts/flight_surveys.csv") %>%
          flight_sd = ifelse(is.nan(expert_count),flight_sd,NA)) %>%
   select(date,colony,species,flight_count,flight_sd) 
 
-counts <- full_join(imagecounts,flightsurveys,by = c("date","colony","species")) %>%
+counts <- full_join(imagecounts_maxs,flightsurveys_maxs,by = c("date","colony","species")) %>%
   mutate(count = image_count,
          count_type = "image",
          count_type = ifelse(is.na(image_count),"flight","image"),
          count = ifelse(is.na(image_count),flight_count,image_count)) 
 
 ## Tables for review  
-max_counts <- counts %>%
+max_counts_new <- counts %>%
   slice_max(count, n = 1, by = c(colony,species)) %>%
-  select(colony, species, count, date, count_type, image_count, flight_count) %>%
+  mutate(species = ifelse(species == "smwh", "smwh_orig", species)) %>%
+  select(colony, species, count, date, count_type, image_count, flight_count)
+
+max_counts_smwh <- max_counts_new %>%
+  filter(species %in% c("smallheron", "smhe", "smda", "trhe", "sneg", "lbhe")) %>% 
+  group_by(colony) %>%
+  summarise(
+    count = count[species == "smallheron"] - sum(count[species != "smallheron"]),
+    date = date[species == "smallheron"],
+    species = "smwh") %>%
+  ungroup()
+
+max_counts <- max_counts_new %>% bind_rows(max_counts_smwh) %>%  
   arrange(colony,species)
 
  write.table(max_counts, "~/Desktop/max_counts_2026.csv", 
@@ -61,12 +95,13 @@ max_counts <- counts %>%
 
 # Write final table
 max_counts_final <- max_counts %>% 
-                left_join(colonies, by="colony") %>%
-                mutate(year = count_year,
-                       colony_old = colony,
-                       notes = NA) %>%
-                select(group_id,year,colony,colony_old,latitude,longitude,species,count,notes) %>%
-                arrange(year,group_id) %>% distinct()
+  filter(count>0, !(species %in% c("smallheron","smwh_orig"))) %>%          
+  left_join(colonies, by="colony") %>%
+  mutate(year = count_year,
+    colony_old = colony,
+    notes = NA) %>%
+  select(group_id,year,colony,colony_old,latitude,longitude,species,count,notes) %>%
+  arrange(year,group_id) %>% distinct()
 
 write.table(max_counts_final, "Counts/maxcounts.csv", row.names = FALSE, col.names = FALSE,
             append = TRUE, na = "", sep = ",", quote = 9) 
