@@ -83,7 +83,8 @@ max_counts_smwh <- max_counts_new %>%
   summarise(
     count = count[species == "smallheron"] - sum(count[species != "smallheron"]),
     date = date[species == "smallheron"],
-    species = "smwh") %>%
+    species = "smwh",
+    count_type = "calculated") %>%
   ungroup()
 
 max_counts <- max_counts_new %>% bind_rows(max_counts_smwh) %>%  
