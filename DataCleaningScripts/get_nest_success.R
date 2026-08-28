@@ -1,18 +1,91 @@
-#' Use to reshape and clean nest success data from field format
-#'
-
-`%>%` <- magrittr::`%>%`
-
-#' Clean and append new nest success data
-#'
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(openxlsx)
 
 colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
+this_year <- 2025
+source("DataCleaningScripts/mayfield.R")
+
+# Create nest success data from raw nest check data and format for review
+
+nest_checks <- read.csv("Nesting/nest_checks.csv") %>% filter(year==this_year) %>%
+  group_by(year,colony,nest,species)
+
+mayfield <- mayfield(this_year)
+
+unique_dates <- nest_checks %>% distinct(date) %>% pull(date) %>% sort()
+date_order <- outer(unique_dates, c("eggs", "chicks", "stage"), paste, sep = "_") %>% 
+  t() %>% 
+  as.vector()
+
+nest_table <- nest_checks %>% 
+  pivot_wider( 
+    names_from = date, 
+    values_from = c(eggs, chicks, stage), 
+    names_glue = "{date}_{.value}" ) %>% 
+  full_join(mayfield, by = c("year","colony","nest" = "nest_number", "species")) %>%
+  dplyr::rename(incubation_days = n_days_incubation, nestling_days = n_days_nestling) %>%
+  select(year, colony, nest, species, nobs, clutch, brood, fledged, lay_date, hatch_date,
+         incubation_days, incubation_success, nestling_days, nestling_success, young_lost,
+         all_of(date_order), notes)
+
+success_table <- success(this_year, mayfield)
+
+# Write workbook for review
+split_names <- strsplit(colnames(nest_table), "_")
+dates <- sapply(split_names, `[`, 1)  
+subheaders <- sapply(split_names, `[`, 2) 
+
+wb <- createWorkbook()
+addWorksheet(wb, "Mayfield")
+
+# Define formatting styles
+date_style <- createStyle(
+  halign = "center", valign = "center", 
+  textDecoration = "bold", fgFill = "#DCE6F1", border = "TopBottomLeftRight"
+)
+sub_style <- createStyle(
+  halign = "center", textDecoration = "bold", 
+  border = "bottom", fgFill = "#F2F2F2"
+)
+
+# 5. Dynamically write and merge Date Headers (Row 1)
+# Find unique dates and their structural column spans
+unique_dates <- unique(dates)
+
+for (d in unique_dates) {
+  # Find all column indexes belonging to this specific date
+  col_indices <- which(dates == d)
+  start_col <- min(col_indices)
+  end_col <- max(col_indices)
+  
+  # Write the date to the first cell of the block
+  writeData(wb, "Mayfield", x = d, startCol = start_col, startRow = 1)
+  
+  # Only merge if there are multiple columns for this date
+  if (start_col < end_col) {
+    mergeCells(wb, "Mayfield", cols = start_col:end_col, rows = 1)
+  }
+}
+addStyle(wb, "Mayfield", style = date_style, rows = 1, cols = 1:ncol(nest_table), gridExpand = TRUE)
+subheaders_nest_table <- as.data.frame(t(subheaders))
+writeData(wb, "Mayfield", x = subheaders_nest_table, startCol = 1, startRow = 2, colNames = FALSE)
+addStyle(wb, "Mayfield", style = sub_style, rows = 2, cols = 1:ncol(nest_table), gridExpand = TRUE)
+writeData(wb, "Mayfield", x = nest_table, startCol = 1, startRow = 3, colNames = FALSE)
+
+addWorksheet(wb, "Success")
+writeData(wb, "Success", x = success_table, startCol = 1, startRow = 1, colNames = TRUE)
+
+saveWorkbook(wb, "~/Desktop/mayfield_2025.xlsx", overwrite = TRUE)
+
+###
+# Reshape and clean nest success data from handmade excel files
+# Clean and append new nest success data
 nest_success <- read.csv("Nesting/nest_success.csv")
 
 filepath <- "~/Desktop/Mayfield_Calender_2025.xlsx"
-
-this_year <- 2025
 
 all_data <- setNames(data.frame(matrix(ncol = 26, nrow = 0)), 
                      c("year","colony","nest_number","species", "n_days_incubation", 
