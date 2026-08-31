@@ -102,7 +102,7 @@ max_counts_final <- max_counts %>%
     colony_old = colony,
     notes = NA) %>%
   select(group_id,year,colony,colony_old,latitude,longitude,species,count,notes) %>%
-  arrange(year,group_id) %>% distinct()
+  arrange(year,group_id,species) %>% distinct()
 
 write.table(max_counts_final, "Counts/maxcounts.csv", row.names = FALSE, col.names = FALSE,
             append = TRUE, na = "", sep = ",", quote = 9) 
