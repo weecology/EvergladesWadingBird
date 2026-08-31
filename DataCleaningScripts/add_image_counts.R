@@ -14,7 +14,7 @@ species <- read.csv("SiteandMethods/species_list.csv")
 ############################# Get raw data #########################################
 new_year <- 2026
 
-filepath <- "~/UF Dropbox/Glenda Yenni/Everglades/WadingBird_Primary Data/Counts/photos/Clean Data/"
+filepath <- "~/UF Dropbox/Glenda Yenni/Everglades/WadingBird_Primary Data/Counts/photos/Clean Data/2020-2029/"
 filename <- "image_count_data_2026.xlsx"
 
 data_path <- paste(filepath,filename,sep="")
