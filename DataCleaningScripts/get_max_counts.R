@@ -138,14 +138,20 @@ write.table(groundcounts, "Counts/maxcounts_under40.csv", row.names = FALSE, col
             append = TRUE, na = "", sep = ",", quote = 12) 
 
 ############################## Add ENP data ###################################################
-filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/WadingBird_Primary Data/Counts/maxcounts/Clean data/"
-enp_filename <- "ENP_maxcounts_archived_1997_2023.xlsx"
+filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/WadingBird_Primary Data/Counts/maxcounts/Raw data/2020-2029/"
+enp_filename <- "ENP max counts 2026.xlsx"
 
 enp_data <- readxl::read_excel(paste(filepath,enp_filename,sep=""), 
                                sheet = 1, col_types = "text") %>%
   rename_with(tolower) %>% 
   mutate(across(where(is.character), ~ replace_na(.x, ""))) %>% 
-  mutate(colony_old = colony,
+  pivot_longer(
+    cols = -c(colony,notes), 
+    names_to = "species",
+    values_to = "count"
+  ) %>%
+  mutate(year = count_year,
+    colony_old = colony,
           colony = tolower(colony),
           colony = gsub(" ", "_", colony),
           colony = gsub("/", "_", colony),
@@ -167,15 +173,20 @@ enp_data <- readxl::read_excel(paste(filepath,enp_filename,sep=""),
                                           "rodgers_river"), "rodgers_river_bay"),
           colony = replace(colony, colony=="grossman_ridge_willowhead", 
                                                   "grossman_willowhead"),
+    colony = replace(colony, colony=="joe_bay_diamond_key", 
+                     "diamond_key"),
+    colony = replace(colony, colony=="butcher_colony_(bicy)", 
+                     "butcher"),
           species = replace(species, species=="tche", "trhe")) %>%
-  left_join(colonies[,1:2], by = join_by(colony)) %>%
+  left_join(colonies, by = join_by(colony)) %>%
   mutate(year = as.numeric(year),
          latitude = as.numeric(latitude),
          longitude = as.numeric(longitude),
          count = as.numeric(count)) %>%
-  select("group_id","year","colony","colony_old","latitude","longitude",
-                "species","count","notes")
-
+  filter(count>0) %>%
+  select(group_id,year,colony,colony_old,latitude,longitude,species,count,notes) %>%
+  arrange(year,group_id,species) %>% distinct()
+  
 if(!all(enp_data$colony %in% colonies$colony)| 
    !all(enp_data$species %in% species$species)) {
   print(unique(enp_data$colony[which(!(enp_data$colony %in% colonies$colony))]))
