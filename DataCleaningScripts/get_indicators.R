@@ -1,6 +1,6 @@
 library(dplyr)
 
-datayear <- 2025
+datayear <- 2026
 
 colonies <- read.csv("SiteandMethods/colonies.csv") %>%     
   mutate(group_id = as.numeric(group_id),
@@ -16,23 +16,44 @@ groundcounts <- read.csv("Counts/ground_counts.csv")
 
 # add stork initiation
 stork_initiation <- read.csv("Indicators/stork_initiation.csv") %>% 
-  add_row(year = datayear, initiation = "2025-02-03", 
-          date_score = 2.5, 
-          days_past_nov_1 = 94,
-          region = "inlandenp",
-          colony = "cabbage_bay")
+  add_row(year = datayear, 
+          date_observed = ,
+          initiation_month = ,
+          date_score = ,
+          region = ,
+          colony = ,
+          recorded_date = ,
+          nest_observation = ,
+          source = ,
+          corrected = ,
+          other_colonies = ,
+          correction_comment = )
 write.table(stork_initiation, "Indicators/stork_initiation.csv", row.names = FALSE, 
+            col.names = TRUE, na = "", sep = ",")
+
+# add other wood stork colonies
+stork_dates <- read.csv("Nesting/woodstork_dates.csv") %>% 
+  add_row(year = datayear,
+          flight_first_nest_obs = ,
+          previous_flight = ,
+          date_score = ,
+          colony = ,
+          colony_old = ,
+          stage = ,
+          source = ,
+          notes = )
+write.table(stork_dates, "Nesting/woodstork_dates.csv", row.names = FALSE, 
             col.names = TRUE, na = "", sep = ",")
 
 # add supercolony interval
 ibis_total <- counts %>% filter(year==datayear, species=="whib") %>% summarise(sum(count))
 ibis_total > 16977
 
-stork_total <- counts %>% filter(year==datayear, species=="whib") %>% summarise(sum(count))
+stork_total <- counts %>% filter(year==datayear, species=="wost") %>% summarise(sum(count))
 stork_total > 1458
 
 supercolony_interval <- read.csv("Indicators/supercolony_interval.csv") %>% 
-  add_row(year = datayear, ibis_interval = 1, stork_interval = 1)
+  add_row(year = datayear, ibis_interval = 2, stork_interval = 2)
 write.table(supercolony_interval, "Indicators/supercolony_interval.csv", row.names = FALSE, 
             col.names = TRUE, na = "", sep = ",")
 
@@ -78,8 +99,8 @@ max_count_all <- bind_rows(counts_total,under40) %>%
                  summarise_all(., sum, na.rm = TRUE)
 total <- sum(max_count_all$count)
 cerp <- max_count_all %>%
-        filter(species %in% c("greg","sneg","whib","wost")) %>%
-        sum(count)
+  filter(species %in% c("greg", "sneg", "whib", "wost")) %>%
+  summarize(count = sum(count, na.rm = TRUE))
 max_count_all <- max_count_all %>% ungroup() %>%
                  add_row(year=datayear, species = "total", count=total) %>%
                  add_row(year=datayear, species = "cerp", count=cerp$count) %>%
