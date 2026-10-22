@@ -1,43 +1,43 @@
 "year","date_observed","initiation_month","date_score","region","colony","recorded_date","nest_observation","source","corrected","other_colonies","correction_comment"
-1953,,December,4,enp,,,,kushlan et al 1975,,,
-1954,,December,4,enp,,,,kushlan et al 1975,,,
+1953,,December,4,enp,,,,kushlan et al 1975,,,""
+1954,,December,4,enp,,,,kushlan et al 1975,,,""
 1955,,December,4,enp,,,,kushlan et al 1975,yes,,"corrected to kushlan et al 1975"
 1956,,December,4,enp,,,,kushlan et al 1975,yes,,"corrected to kushlan et al 1975"
-1957,,January,3,enp,,,,kushlan et al 1975,,,
-1958,,December,4,enp,,,,kushlan et al 1975,,,
-1959,,November,5,enp,,,,kushlan et al 1975,,,
-1960,,December,4,enp,,,,kushlan et al 1975,,,
-1961,,November,5,enp,,,,kushlan et al 1975,,,
-1963,,December,4,enp,,,,kushlan et al 1975,,,
+1957,,January,3,enp,,,,kushlan et al 1975,,,""
+1958,,December,4,enp,,,,kushlan et al 1975,,,""
+1959,,November,5,enp,,,,kushlan et al 1975,,,""
+1960,,December,4,enp,,,,kushlan et al 1975,,,""
+1961,,November,5,enp,,,,kushlan et al 1975,,,""
+1963,,December,4,enp,,,,kushlan et al 1975,,,""
 1964,,February,2,enp,,,,kushlan et al 1975,yes,,"corrected to kushlan et al 1975"
 1965,,January,3,enp,,,,kushlan et al 1975,yes,,"corrected to kushlan et al 1975"
 1966,,January,3,enp,,,,kushlan et al 1975,yes,,"corrected to kushlan et al 1975"
-1967,,December,4,enp,,,,kushlan et al 1975,,,
-1968,,December,4,enp,,,,kushlan et al 1975,,,
-1969,,December,4,enp,,,,kushlan et al 1975,,,
-1970,,January,3,enp,,,,kushlan et al 1975,,,
-1971,,January,3,enp,,,,kushlan et al 1975,,,
+1967,,December,4,enp,,,,kushlan et al 1975,,,""
+1968,,December,4,enp,,,,kushlan et al 1975,,,""
+1969,,December,4,enp,,,,kushlan et al 1975,,,""
+1970,,January,3,enp,,,,kushlan et al 1975,,,""
+1971,,January,3,enp,,,,kushlan et al 1975,,,""
 1972,,March,1,enp,,,,kushlan et al 1975,yes,,"corrected to kushlan et al 1975"
 1973,,March,1,enp,,,,kushlan et al 1975,yes,,"corrected to kushlan et al 1975"
-1974,,January,3,,,,,,,,
-1975,,January,3,,,,,,,,
-1976,,December,4,,,,,,,,
-1977,,March,1,,,,,,,,
-1979,,January,3,,,,,,,,
-1980,,March,1,,,,,,,,
-1981,,March,1,,,,,,,,
-1982,,February,2,,,,,,,,
-1983,,December,4,,,,,,,,
-1984,,January,3,,,,,,,,
-1985,,February,2,,,,,,,,
-1986,,February,2,,,,,,,,
-1987,,March,1,,,,,,,,
-1988,,March,1,,,,,,,,
-1989,,February,2,,,,,,,,
-1996,,January,3,,,,,,,,
+1974,,January,3,,,,,,,,""
+1975,,January,3,,,,,,,,""
+1976,,December,4,,,,,,,,""
+1977,,March,1,,,,,,,,""
+1979,,January,3,,,,,,,,""
+1980,,March,1,,,,,,,,""
+1981,,March,1,,,,,,,,""
+1982,,February,2,,,,,,,,""
+1983,,December,4,,,,,,,,""
+1984,,January,3,,,,,,,,""
+1985,,February,2,,,,,,,,""
+1986,,February,2,,,,,,,,""
+1987,,March,1,,,,,,,,""
+1988,,March,1,,,,,,,,""
+1989,,February,2,,,,,,,,""
+1996,,January,3,,,,,,,,""
 1997,,February,2,enp,,,,SFWBR,,,"changed region to enp"
-1998,1998-04-21,April,0,inlandenp,paurotis_pond,,,SFWBR,,,
-1999,1999-02-15,February,2,inlandenp,tamiami_west,,,SFWBR,,crossover; melaleuca_2b,
+1998,1998-04-21,April,0,inlandenp,paurotis_pond,,,SFWBR,,,""
+1999,1999-02-15,February,2,inlandenp,tamiami_west,,,SFWBR,,crossover; melaleuca_2b,""
 2000,2000-02-15,February,2,inlandenp,tamiami_west,,,SFWBR,,crossover; jetport,"assumed tamiami; no data on nesting timing at other ENP colonies."
 2001,,January,3,unknown,,,,,,,"SFWBR held no information on timing except for WCA1"
 2002,,January,3,enp,,,,SFWBR,yes,,"only corkscrew had dec initiation. ENP reports nesting started in January"
@@ -54,12 +54,13 @@
 2014,2014-01-30,January,3,inlandenp,paurotis_pond,,,SFWBR,yes,broad_river; rodgers_river_bay,"changed from 2.8 for consistency"
 2015,2015-02-27,February,2.5,inlandenp,tamiami_west,,,SFWBR,yes,,"ENP reported small young on 2-27 flight. Adjusted score to fit with observation"
 2016,2016-03-22,March,0.5,inlandenp,paurotis_pond,,,SFWBR,,rodgers_river_bay; cabbage_bay,"possibly shoulld be score=1 given already incubating late Mar but original index was .5 so kept;"
-2017,2017-01-03,January,3.5,coastalenp,broad_river,,,SFWBR,,,
+2017,2017-01-03,January,3.5,coastalenp,broad_river,,,SFWBR,,,""
 2018,2017-12-25,December,3.5,coastalenp,broad_river,,,SFWBR,yes,cabbage_bay; tamiami_west,"changed from 3.8 for consistency"
 2019,2019-01-18,January,3,coastalenp,broad_river,,,SFWBR,,tamiami_west; cabbage_bay,"because nest starts seen late January; first egg lay has to be after this date. Adjusted from 3"
 2020,2020-01-17,January,2.5,enp,,,,SFWBR,yes,,"No ENP colony data on timing but report says earliest nests started there in late January-early feb. Score changed from 1.5 to reflect report"
 2021,2021-01-29,January,3,coastalenp,broad_river,,,SFWBR,,cabbage_bay,"adjusted to reflect report observations"
-2022,2022-02-11,February,2,3as,jetport_new,,,email,,,
+2022,2022-02-11,February,2,3as,jetport_new,,,email,,,""
 2023,2023-01-20,January,2.5,coastalenp,cabbage_bay,,,SFWBR,yes,broad_river; cuthbert_lake,"shifted to late January based on nest descriptions from ENP"
 2024,2024-02-08,February,2.5,inlandenp,cabbage_bay,,,email,yes,,"updated to reflect ENP park observations"
-2025,2025-02-03,February,2.5,inlandenp,cabbage_bay,,,email,,jetport; hidden,
+2025,2025-02-03,February,2.5,inlandenp,cabbage_bay,,,email,,jetport; hidden,""
+2026,2026-02-20,February,2,coastalenp,cuthbert_lake,,eggs,email,,,
