@@ -370,25 +370,21 @@ This was followed by an intense draw down beginning in November and continuing t
 Three minor rain events throughout May and a fourth on June 02 brought water levels back to what they were at the start of April, but overall levels remained at or below mean monthly minimums.
 In contrast, WCA 1 maintained a slow and gradual draw down throughout the season (Figures \@ref(fig:waterplot3) - \@ref(fig:waterplotcoastal)).
 
-```{r waterplot, echo=FALSE, fig.cap="Mean daily water stage in each subregion (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums (+) and minimums (x) for the period of record, and one standard deviation in excess of mean monthly maximums (+) and below minimums (x)."}
+```{r waterplot, echo=FALSE, fig.cap="Mean daily water stage in each subregion (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums and minimums for the period of record. Black shaded ribbons are the mean monthly maximums plus one standard deviation, and the mean monthly minimums minus one standard deviation."}
 depths <- read.csv("../../water/eden_depth.csv")
 
 p1<- water_report(depths = depths, wca="1", minyear=params$report_year-2, maxyear=params$report_year)
 
-p2 <- water_report(depths = depths, wca="2b", minyear=params$report_year-2, maxyear=params$report_year)
+p2 <- water_report(depths = depths, wca="2a", minyear=params$report_year-2, maxyear=params$report_year)
 
 p3 <- water_report(depths = depths, wca="3ase", minyear=params$report_year-2, maxyear=params$report_year)
 
-p4 <- water_report(depths = depths, wca="3as", minyear=params$report_year-2, maxyear=params$report_year)
-
-p5 <- water_report(depths = depths, wca="inlandenp", minyear=params$report_year-2, maxyear=params$report_year)
-
-p6 <- water_report(depths = depths, wca="coastalenp", minyear=params$report_year-2, maxyear=params$report_year)
+p4 <- water_report(depths = depths, wca="inlandenp", minyear=params$report_year-2, maxyear=params$report_year)
 
 plot_grid(
-  p1, p2, p3, p4, p5, p6,
-  labels = c("1", "2B", "3ASE", "3AS", "Inland ENP", "Coastal ENP"),
-  ncol = 3,
+  p1, p2, p3, p4,
+  labels = c("1", "2A", "3ASE", "Inland ENP"),
+  ncol = 2,
   align = "h",                  
   axis = "t",                   
   label_y = 1.0,                
@@ -888,23 +884,23 @@ rename_with(toupper, .cols = -year) %>%
 
 \newpage
 
-```{r maxcountindicatorplot, fig.cap="Trends in nesting pairs of the four target species since 1986."}
+```{r maxcountindicatorplot, fig.cap="Trends in nesting pairs of the four target species since 1986. Lines are the 3-year running average and points are the yearly counts."}
 max_count_plot(maxyear = params$report_year)
 ```
 
-```{r coastalindicator, fig.cap="Proportion of all mainland Everglades nests that were located within the coastal estuarine zone, 1986 -- present. Dashed line is the restoration target."}
+```{r coastalindicator, fig.cap="Proportion of all mainland Everglades nests that were located within the coastal estuarine zone, 1986 -- present. Black line is the 3-year running average and blue points are the yearly values. Dashed line is the restoration target."}
 plot_coastal(maxyear = params$report_year)
 ```
 
-```{r ratioindicator, fig.cap="Ratio of tactile feeding species (ibis +stork) nests to sight foraging (Great Egret) nests in the Everglades, 1986 -- present. Dashed line is the restoration target."}
+```{r ratioindicator, fig.cap="Ratio of tactile feeding species (ibis +stork) nests to sight foraging (Great Egret) nests in the Everglades, 1986 -- present. Black line is the 3-year running average and blue points are the yearly values. Dashed line is the restoration target."}
 plot_foraging(maxyear = params$report_year)
 ```
 
-```{r storkindicator, echo=FALSE, fig.cap="Wood Stork nest initiation date in the Everglades of Florida. Dashed line is the restoration target.", fig.height=2.5, fig.width=5, message=FALSE, warning=FALSE}
+```{r storkindicator, echo=FALSE, fig.cap="Wood Stork nest initiation date in the Everglades of Florida. Black line is the 3-year running average and blue points are the yearly values. Dashed line is the restoration target.", fig.height=2.5, fig.width=5, message=FALSE, warning=FALSE}
 plot_initiation(maxyear = params$report_year)
 ```
 
-```{r supercolonyindicator, fig.cap="Three year running average of the interval between ibis supercolony events, by year. Dashed line is the restoration target."}
+```{r supercolonyindicator, fig.cap="Three year running average of the interval between ibis supercolony events, by year. Black line is the 3-year running average and blue points are the yearly values. Dashed line is the restoration target."}
 plot_supercolony(maxyear = params$report_year)
 ```
 
