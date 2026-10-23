@@ -5,7 +5,7 @@ library(openxlsx)
 
 colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
-this_year <- 2025
+this_year <- 2026
 source("DataCleaningScripts/mayfield.R")
 
 # Create nest success data from raw nest check data and format for review
