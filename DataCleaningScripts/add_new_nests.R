@@ -5,10 +5,10 @@ colonies <- read.csv("SiteandMethods/colonies.csv")
 species <- read.csv("SiteandMethods/species_list.csv")
 nest_checks <- read.csv("Nesting/nest_checks.csv")
 
-filepath <- "~/UFL Dropbox/Glenda Yenni/Everglades/2025 Data/Field Data/Clean data/"
-filename <- "FINAL_nest_checks_2025_UPDATED.xlsx"
+filepath <- "~/Downloads/"
+filename <- "nest_check_data_2026.xlsx"
 
-year <- 2025
+year <- 2026
 
 newdata <- clean_nest_data(paste(filepath,filename,sep=""), year)
 
@@ -17,7 +17,7 @@ print(unique(newdata$colony[which(!(newdata$colony %in% colonies$colony))]))
 print(unique(newdata$species[which(!(newdata$species %in% species$species))]))
 all(colnames(newdata)==colnames(nest_checks))
 
-write.table(newdata, "Nesting/nest_checks.csv", row.names = FALSE, col.names = FALSE,
+write.table(newdata, "Nesting/UAV/uav_nest_checks.csv", row.names = FALSE, col.names = FALSE,
             append = TRUE, na = "", sep = ",", quote = 9)
 
 
