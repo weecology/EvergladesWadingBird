@@ -21,7 +21,8 @@ all_data <- setNames(data.frame(matrix(ncol = 9, nrow = 0)), c("year", "colony",
 tab_names <- readxl::excel_sheets(path = data_path)
 tab_names <- tab_names[tab_names != "key"]
 tab_names <- tab_names[!(tab_names %in% 
-              c("Proofing","Template","template","TO BE RESOLVED","Decisions on changes"))]
+              c("Proofing","Template","template","TO BE RESOLVED","Decisions on changes",
+                "README", "Colonies", "Species", "Nest Stages", "Codes & Notes"))]
 tab_names <- tab_names[!startsWith(tab_names ,"Other")]
 tab_names <- tab_names[!startsWith(tab_names ,"Sheet")]
 tab_names <- tab_names[!startsWith(tab_names ,"Transect")]
