@@ -1,15 +1,15 @@
 ---
 title: "Wading bird colony location, size, timing and Wood Stork and Roseate Spoonbill reproductive success"
-subtitle: "`r params$report_year` Annual Report to the U.S. Army Corps of Engineers Jacksonville, Florida W912HZ-15-2-0017"
+subtitle: "`r params$report_year` Annual Report to the U.S. Army Corps of Engineers Jacksonville, Florida W9126G-25-2-0031"
 author: "Dr. Morgan Ernest and Michael Rickershauser"
 date: "Dept. Wildlife Ecology and Conservation, University of Florida, Gainesville"
 params:
   report_year: 2026
 output:
-  bookdown::word_document2:
+  officedown::rdocx_document:
     toc: true
-    fig_caption: yes
-    number_sections: no
+    fig_caption: true
+    number_sections: false
     reference_docx: word-styles-reference.docx
 editor_options: 
   markdown: 
@@ -311,7 +311,17 @@ tribble(
 14,          "80° 48.100",     "80° 48.400",
 15,          "80° 48.700",     "80° 49.000",
 16,          "80° 49.300",     "80° 49.600") %>%
-  knitr::kable("pipe", align=rep('c', 3), caption = "East/West boundaries for Ground Survey transects for WCA 3A.")
+
+flextable::flextable() %>%
+  flextable::align(align = "center", part = "all") %>%
+  flextable::autofit() %>%
+  flextable::set_caption(
+    caption = "East/West boundaries for Ground Survey transects for WCA 3A.",
+    autonum = run_autonum(
+      seq_id = "tab",
+      bkm = "transecttable"
+    )
+  )
 ```
 
 ### Nest success
@@ -368,9 +378,17 @@ Initial water levels had reached a 4-year high by the end of the preceding rainy
 This was the result of numerous reversals during the prior year’s breeding season that left water levels at a 7-year high, along with several major rain events from June through mid-July.
 This was followed by an intense draw down beginning in November and continuing through April, with one minor reversal March 30th.
 Three minor rain events throughout May and a fourth on June 02 brought water levels back to what they were at the start of April, but overall levels remained at or below mean monthly minimums.
-In contrast, WCA 1 maintained a slow and gradual draw down throughout the season (Figures \@ref(fig:waterplot3) - \@ref(fig:waterplotcoastal)).
+In contrast, WCA 1 maintained a slow and gradual draw down throughout the season (Figure \@ref(fig:waterplot)).
 
-```{r waterplot, echo=FALSE, fig.cap="Mean daily water stage in each subregion (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums and minimums for the period of record. Black shaded ribbons are the mean monthly maximums plus one standard deviation, and the mean monthly minimums minus one standard deviation."}
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "portrait")
+  )
+)
+```
+
+```{r waterplot, echo=FALSE, fig.width=9, fig.height=5.5, fig.cap="Mean daily water stage in each subregion (red line), as well as minimum and maximum envelope (red shaded). Stage is shown in relation to mean monthly maximums and minimums for the period of record. Black shaded ribbons are the mean monthly maximums plus one standard deviation, and the mean monthly minimums minus one standard deviation."}
 depths <- read.csv("../../water/eden_depth.csv")
 
 p1<- water_report(depths = depths, wca="1", minyear=params$report_year-2, maxyear=params$report_year)
@@ -394,6 +412,14 @@ plot_grid(
   theme(plot.margin = margin(t = 15, r = 5, b = 5, l = 5)) 
 
 ```
+
+```{r, results='asis', echo=FALSE}
+block_section( 
+ prop_section(
+   page_size = officer::page_size(orient = "landscape")
+ )
+) 
+``` 
 
 #### Water Recession
 
@@ -420,7 +446,11 @@ dry_down(depths) %>%
     c('Year', 'Region', 'Early Dry', 'Late Dry','Exceedance Early', 'Exceedance Late')) %>%
   flextable::colformat_double(digits = 2) %>%
   flextable::colformat_double(j = "Year", digits = 0) %>%
-  flextable::set_caption("Water level recession rates (mm/day) in the Everglades.")   %>%
+  flextable::set_caption("Water level recession rates (mm/day) in the Everglades.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "watertable"
+  ))   %>%
   flextable::add_footer_lines("Negative values indicate rising water, positive values indicate falling water. Exceedance refers to the percentage of years in the record in which the drying rate is less than that of the current year.") %>%
   flextable::hline(i = ~is_last_val_in_group == TRUE, border = fp_border()) %>%
   flextable::fix_border_issues() %>%
@@ -439,11 +469,11 @@ However, given the extremely low water levels and high recession rate, a slightl
 June experienced extremely low rainfall, during what is typically the second month of the rainy season.
 Combined with already low water levels, there may be negative impacts on prey availability for next year’s breeding season (Figure \@ref(fig:precipitation)).
 
-```{r temperature, fig.cap="Monthly temperature deviations averaged across all regional NOAA weather stations. Zero represents average long-term monthly deviation from normal temperature. Red bars display monthly deviations from long-term mean monthly temperatures. Dashed lines indicate average standard deviation above and below the mean monthly deviation."}
+```{r temperature, fig.cap="Monthly temperature deviations averaged across all regional NOAA weather stations. Zero represents average long-term monthly deviation from normal temperature. Red bars display monthly deviations from long-term mean monthly temperatures. Dashed lines indicate average standard deviation above and below the mean monthly deviation.", fig.height=3, fig.width=3}
 weather_report("temperature", plot_year=params$report_year)
 ```
 
-```{r precipitation, fig.cap="Monthly precipitation deviations averaged across all regional NOAA weather stations. Zero represents average long-term monthly deviation from normal precipitation. Red bars display monthly deviations from long-term mean monthly precipitation levels. Dashed lines indicate average standard deviation above and below the mean monthly deviation."}
+```{r precipitation, fig.cap="Monthly precipitation deviations averaged across all regional NOAA weather stations. Zero represents average long-term monthly deviation from normal precipitation. Red bars display monthly deviations from long-term mean monthly precipitation levels. Dashed lines indicate average standard deviation above and below the mean monthly deviation.", fig.height=3, fig.width=3}
 weather_report("precipitation", plot_year=params$report_year)
 ```
 
@@ -453,7 +483,7 @@ weather_report("precipitation", plot_year=params$report_year)
 
 We estimated that a minimum of `r total_nests` wading bird nests were initiated at colonies within WCA Lox (1), 2 and 3 (Table \@ref(tab:nesting)), and an additional `r total_enp` nests in ENP (Table \@ref(tab:enpnesting), see Figure \@ref(fig:map) for colony locations).
 
-Wood Storks initiated nesting in WCA 3 (`r stork_max` nests) at `r stork_colony`, `r stork_colony2`, and Jetport in `r params$report_year`.
+Wood Storks initiated nesting in WCA 3 (`r stork_max` nests) at `r stork_colony`, `r stork_colony2`.
 This is the first year Wood Storks have been observed nesting at Hidden, and was the largest single colony this season.
 On the other hand, Jetport South, usually one of the larger WOST colonies, experienced no nesting activity.
 Wood Storks also initiated nesting in several colonies in ENP (`r enp_totals$wost` nests).
@@ -462,7 +492,13 @@ Larger numbers of nesting Roseate Spoonbills usually occurred in large mixed col
 Actual nest numbers are likely higher, as Roseate Spoonbills have been difficult to identify at some locations.
 For example, 11 active nests were found while performing ground-based nest checks at Hidden, but only 2 nests were observed in the imagery utilized for colony-wide counts.
 
-\newpage
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "portrait")
+  )
+)
+```
 
 ```{r nesting}
 raw_counts %>%
@@ -475,12 +511,15 @@ raw_counts %>%
   flextable::flextable() %>%
   flextable::fontsize(size = 9) %>%
   flextable::fontsize(size = 11, part = "header") %>%
-  flextable::set_caption("Numbers of nests of wading birds by species in all WCAs.")   %>%
+  flextable::set_caption("Numbers of nests of wading birds by species in all WCAs.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "nesting"
+  ))   %>%
   flextable::add_footer_lines("For detailed information on colonies, and for information on colonies of less than 40 pairs, see Appendix 1.") %>%
   flextable::set_table_properties(layout = "autofit")
 
 ```
-
 \newpage
 
 ```{r enpnesting}
@@ -492,13 +531,23 @@ enp_counts %>%
   flextable::flextable() %>%
   flextable::fontsize(size = 9) %>%
   flextable::fontsize(size = 11, part = "header") %>%
-  flextable::set_caption("Numbers of nests of wading birds by species in Everglades National Park.")   %>%
+  flextable::set_caption("Numbers of nests of wading birds by species in Everglades National Park.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "enpnesting"
+  ))   %>%
   flextable::add_footer_lines("For detailed information on colonies see Appendix 1. Numbers in ENP are courtesy of Everglades National Park staff and SFWMD.") %>%
   flextable::set_table_properties(layout = "autofit")
 
 ```
 
-\newpage
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "landscape")
+  )
+)
+```
 
 ```{r map, echo=FALSE, fig.cap="Locations of nesting wading bird colonies totaling over 40 pairs in the WCAs", fig.width=6, fig.height=6.5, message=FALSE, warning=FALSE}
 colonies <- load_datafile("Counts/maxcounts.csv", path = get_default_data_path()) %>%
@@ -544,7 +593,11 @@ load_datafile("Counts/groundcounts_table.csv", path = get_default_data_path()) %
   filter(year <= params$report_year) %>%
   rename_with(toupper, .cols = -year) %>%
   flextable::flextable() %>%
-  flextable::set_caption("Numbers of wading bird nests discovered in systematic ground searches within a constant study area in WCA 3.") %>%
+  flextable::set_caption("Numbers of wading bird nests discovered in systematic ground searches within a constant study area in WCA 3.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "ground"
+  )) %>%
   flextable::set_table_properties(layout = "autofit")
 
 ```
@@ -563,28 +616,19 @@ load_datafile("Counts/groundcounts_table.csv", path = get_default_data_path()) %
 
 #### Reproductive Success
 
-Nest success was monitored for all species at `r colony_count` colonies in WCA 3: `r colony_list`.
-Individual nests of GREG (n=250 at all five colonies), WHIB (n=228 at Hidden and 6th Bridge), ROSP (n=28 at Hidden and 6th Bridge), BCNH (n=53 at Hidden and 6th Bridge) and Egretta herons (n=82 at Hidden and 6th Bridge) were monitored during ground-based nest checks every 5 – 7 days throughout the season.
-WOST nests were also monitored via weekly UAV flights (n=174 at Hidden, Jetport, and Jetport South. While ground-based nest checks are preferred, tall nest heights often make this unfeasible. The initial sample size of monitored nests was average for most species in recent years. However, low water levels created excessively dry navigational conditions that prevented access to 6th Bridge mid-season. As a result, all WHIB (81 nests), GLIB (13 nests), and nearly half of the SMHE (16 nests) at 6th Bridge could not be followed to completion and were not utilized in calculating overall nest success.
-Nest success (P; probability of fledging at least one young, Mayfield method) system-wide showed variation both by species and across colonies.
-GREG (P=0.76; SD=0.034), BCNH (P=0.34; SD=0.095), SMHE (P=0.71; SD=0.065), WHIB (P=0.37; SD=0.035) and ROSP (P=0.65; SD=0.152), WOST (P=0.33; SD=0.025).
-This suggests only one third of the BCNH and WHIB nests initiated in `r params$report_year` were successful, whereas approximately three-quarters of GREG, SMHE, and ROSP nests were able to fledge at least one young.
-Calculated nest success for WOST would suggest success rates similar to BCNH and WHIB.
-However, due to equipment issues, consistent monitoring did not begin until late March.
-High levels of WOST nest abandonment occurred mid-season, upwards of 50%, as observed in the disparity between March and April’s aerial observations.
-As a result, WOST reproductive success is only representative of nests present post-abandonment and not the 2025 breeding season as a whole.
-While true overall WOST nest success was even lower than our drone-based numbers suggest, this is the first time in 4 years Wood Storks exhibited any level of nesting success.
-GREG nest success, while the highest overall, exhibited extreme variation between colonies.
-In colonies where only GREG were observed nesting (Cypress City, Vacation, Little A), success rates were very high (P=0.90, P=0.92, and P=0.85 respectively).
-GREG nest success was much lower at Hidden and 6th Bridge, with overall success rates of only P=0.58 and P=0.27 respectively.
-Roseate Spoonbill nesting effort continues to begin earlier and occur more asynchronous than other species, with some nests being fully hatched by the time nest checks where initiated.
-ROSP were far more successful at Hidden, with all nests having fledged at least one young (P=1.00) than at 6th Bridge (P=0.39).
-Due to their early nesting combined with a large gap in nest checks caused by WHIB courtship, only about half of the ROSP nests initially marked at 6th bridge had known fates.
-This likely resulted in a nest sample that was biased towards later nesting pairs, but it is uncertain if that had a significant impact on overall nest success.
+Ground-based nest monitoring was not possible this year due to extremely early
+dry down rates that left all colonies with active nests in the WCAs inaccessible. 
+Attempts to use the little nest check data we were able to collect before the drydown would result in an extremely biased picture of nest success. Thus, all species recieve an NA for 2026.
 NAs and zeros in the nest success table (Table \@ref(tab:nestsuccesstable)) are used to indicate different levels of uncertainty.
 NAs indicate a lack of observations from which to make calculations, while zeros (where indicated) denote direct observation of no nests or fledglings, from which a nest success of 0 can be inferred.
 
-\newpage
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "portrait")
+  )
+)
+```
 
 ```{r nestsuccesstable}
 
@@ -595,8 +639,9 @@ success_table <- overall_success(minyear=params$report_year-4) %>%
          species = replace(species, species == "WHIB", "White Ibis"),
          species = replace(species, species == "WOST", "Wood Stork")) %>%
   select(species,year,overall_Success,overall_SD,nestling_N) %>%
+  add_row(species = "Great Egret", year = 2026) %>%
   complete(species, year) %>%
-  arrange(species,-year)
+  arrange(species,-year) 
 
 clutch_fledged <- load_datafile("Nesting/nest_success.csv") %>%
                   filter(species %in% c("greg", "whib","wost"),
@@ -625,20 +670,102 @@ success_table %>%
   flextable::colformat_double(j = c("Estimate", "SD"), digits = 3, na_str = "NA") %>%
   flextable::colformat_double(j = c("Estimate ", "SD ", "Estimate  ", "SD  "), digits = 2, na_str = "NA") %>%
   flextable::add_header_row(values = c("", "Nest Success", "Clutch Size", "Successful Fledglings"), colwidths = c(2,3,3,3)) %>%
-  flextable::set_caption("Five-year summary of reproductive statistics for the three major wading bird species in the Water Conservation Areas of the Everglades.")   %>%
-  flextable::footnote(i = c(1), j = c(3), value=flextable::as_paragraph(c("Nest success: Proportion of nest starts predicted to raise at least one young. Survival estimated for entire nesting period via pro-rating using Mayfield methods.")),
-               ref_symbols = c("a"),
-               part = "header", inline = TRUE)  %>%
-  flextable::footnote(i = c(1), j = c(4), value=flextable::as_paragraph(c("Successful Fledglings: Numbers of young raised to 21 days (Great Egrets), 14 days (White Ibises), or 50 days (Wood Storks).")),
-               ref_symbols = c("b"),
-               part = "header", inline = TRUE) %>%
+  flextable::set_caption("Five-year summary of reproductive statistics for the three major wading bird species in the Water Conservation Areas of the Everglades.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "nestsuccesstable"
+  ))   %>%
+  flextable::footnote(
+    i = 1, j = 3, 
+    value = flextable::as_paragraph("Nest success: Proportion of nest starts predicted to raise at least one young. Survival estimated for entire nesting period via pro-rating using Mayfield methods."),
+    ref_symbols = c("a"),
+    part = "header", inline = TRUE
+  )  %>%
+  flextable::footnote(
+    i = 1, j = 9, 
+    value = flextable::as_paragraph("Successful Fledglings: Numbers of young raised to 21 days (Great Egrets), 14 days (White Ibises), or 50 days (Wood Storks)."),
+    ref_symbols = c("b"),
+    part = "header", inline = TRUE
+  ) %>%
   flextable::add_footer_lines(value=flextable::as_paragraph(c("Zeros are from observation. NA = unable to calculate nest success due to low numbers or inaccessibility."))) %>%
   flextable::align(i = 1:2, j = NULL, align = "center", part = "header") %>%
   flextable::theme_booktabs(bold_header = TRUE) %>%
   flextable::set_table_properties(layout = "autofit")
 ```
 
-\newpage
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "landscape")
+  )
+)
+```
+
+##### UAV Nest Success
+
+With drone flights we were able to capture a time series of nest conditions at 5 
+colonies (Lox 99, Lox Ramp, 72, Shamash, and Rhea). There were 3 target species that showed nesting activity across these 5 colonies (GREG, WHIB, ROSP) as well as GBHE 
+and small herons (SMHE, pooled for calulations).
+
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "portrait")
+  )
+)
+```
+
+```{r uavnestsuccess}
+
+uav_success <- load_datafile("Nesting/UAV/uav_nest_success_summary.csv") %>% 
+
+  mutate(species = replace(species, species == "greg", "Great Egret"),
+         species = replace(species, species == "whib", "White Ibis"),
+         species = replace(species, species == "gbhe", "Great Blue Heron"),
+         species = replace(species, species == "rosp", "Roseate Spoonbill"),
+         species = replace(species, species == "smhe", "Small Herons")) %>%
+  select(species,year,incubation_k,incubation_e,incubation_p,
+         nestling_k,nestling_e,nestling_p,overall_p) %>%
+  arrange(species) 
+
+colnames(uav_success) <- c("Species", "Year", "N", "Length", "p", "N ", "Length ",                              "p ", "p  ")
+
+uav_success %>%
+  flextable::flextable() %>%
+  flextable::surround(i = ~ Year == params$report_year, border.bottom = fp_border(), border.top = fp_border()) %>%
+  flextable::colformat_double(j = c("p", "p ", "p  "), digits = 3, na_str = "NA") %>%
+  flextable::add_header_row(values = c("", "Incubation", "Nestling", "Overall"), colwidths = c(2,3,3,1)) %>%
+  flextable::set_caption("Reproductive statistics collected via UAV surveys for wading bird species in the Water Conservation Areas of the Everglades.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "uavnestsuccess"
+  ))   %>%
+  flextable::footnote(
+    i = 1, j = 3, 
+    value = flextable::as_paragraph("Incubation rates: Number of nests tracked, total days of active nests, and proportion of nests with at least 1 hatched egg."),
+    ref_symbols = c("a"),
+    part = "header", inline = TRUE
+  )  %>%
+  flextable::footnote(
+    i = 1, j = 6, 
+    value = flextable::as_paragraph("Nestling rates: Number of nests tracked, total days of active nests, and proportion of nests with at least 1 fledged offspring."),
+    ref_symbols = c("b"),
+    part = "header", inline = TRUE
+  ) %>%
+  flextable::add_footer_lines(value=flextable::as_paragraph(c("Zeros are from observation. NA = unable to calculate nestling activity due to limitations in drone imagery or lack of imagery."))) %>%
+  flextable::align(i = 1:2, j = NULL, align = "center", part = "header") %>%
+  flextable::theme_booktabs(bold_header = TRUE) %>%
+  flextable::set_table_properties(layout = "autofit")
+```
+
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "landscape")
+  )
+)
+```
+
 
 ## Discussion
 
@@ -694,7 +821,11 @@ count_percentages %>%
     bg = colourer,
     j = ~ . -year,
     part = "body") %>%
-  flextable::set_caption("Yearly percentages of nesting pairs of Great Egrets, Roseate Spoonbills, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::set_caption("Yearly percentages of nesting pairs of Great Egrets, Roseate Spoonbills, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "effortsummarytable"
+  )) %>%
   flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
 ```
 
@@ -710,6 +841,7 @@ success_table_percentages <- overall_success(minyear=params$report_year-4) %>%
   ungroup() %>%
   filter(species %in% c("GREG","SNEG","WHIB","WOST","ROSP")) %>% 
   select(species,year,overall_Success) %>%
+  add_row(species = "GREG", year = 2026) %>%
   left_join(success_table_averages, by = join_by(species)) %>%
   mutate(percent_of_mean = 100*(overall_Success/mean_success)) %>%
   select(species,year,percent_of_mean) %>%
@@ -726,7 +858,11 @@ success_table_percentages %>%
     bg = colourer,
     j = ~ . -year,
     part = "body") %>%
-  flextable::set_caption("Yearly percentages of nest success for Great Egrets, Roseate Spoonbills, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.") %>%
+  flextable::set_caption("Yearly percentages of nest success for Great Egrets, Roseate Spoonbills, White Ibises, and Wood Storks in the mainland Everglades (WCAs). Percentages are relative to the species' 10-year mean.",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "successsummarytable"
+  )) %>%
   flextable::add_footer_lines("Greener-shaded years are above-average for the species, redder-shaded values are below average.")
 ```
 
@@ -878,7 +1014,11 @@ rename_with(toupper, .cols = -year) %>%
   flextable::bg(j="SNEG", i = ~ SNEG > 10000, bg = "grey", part = "body") %>%
   flextable::bg(j="WHIB", i = ~ WHIB > 10000, bg = "grey", part = "body") %>%
   flextable::bg(j="WOST", i = ~ WOST > 1500, bg = "grey", part = "body") %>%
-  flextable::set_caption("Three-year running averages of numbers of nesting pairs of Great Egrets, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs + ENP, not including Florida Bay).") %>%
+  flextable::set_caption("Three-year running averages of numbers of nesting pairs of Great Egrets, Snowy Egrets, White Ibises, and Wood Storks in the mainland Everglades (WCAs + ENP, not including Florida Bay).",
+  autonum = officer::run_autonum(
+    seq_id = "tab",
+    bkm = "maxcountindicator"
+  )) %>%
   flextable::add_footer_lines("Shaded years are those in which the numbers of nesting pairs met the restoration criteria. Target minima: GREG: 4000, SNEG: 10k, WHIB: 10k, WOST:1500")
 ```
 
@@ -932,7 +1072,13 @@ plot_supercolony(maxyear = params$report_year)
 -   Van der Molen EJ, Blok AA, De Graaf GJ (1982) Winter starvation and mercury intoxication in grey herons (Ardea cinerea) in the Netherlands. Ardea. 70:173-184.
 -   Williams, K.A., P.C. Frederick, P. Kubilis and J. Simon. 2008. Visual bias in aerial estimates of colonially nesting white ibises and great egrets. Journal of Field Ornithology 79:438 - 448.
 
-\newpage
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "portrait")
+  )
+)
+```
 
 ## Appendix
 
@@ -948,4 +1094,12 @@ merge(raw_counts, under40, all = TRUE) %>%
   flextable::set_caption("Total nests estimated in all colonies surveyed in ENP and the Water Conservation Areas of the Everglades. Counts are from aerial and ground surveys. Totals include all species recorded (including ANHI, DCCO, and GRHE which are not in totals reported above).") %>%
   flextable::set_table_properties(layout = "autofit")
 
+```
+
+```{r, results='asis', echo=FALSE} 
+block_section(
+  prop_section(
+    page_size = officer::page_size(orient = "landscape")
+  )
+)
 ```
