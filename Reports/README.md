@@ -24,7 +24,10 @@ install.packages("remotes")
 remotes::install_github("weecology/wader")
 remotes::install_github("weecology/edenR")
 ```
-  * Make sure that all `wader` and `edenr` dependencies have installed successfully.
+  * Make sure that all `wader` and `edenr` dependencies have installed successfully. 
+  * Select 1. All to update all dependencies
+  
+* Check RStudio for outdated packages and update all.
 
 #### Update wader data
 
@@ -61,6 +64,12 @@ you have a GGMAP_GOOGLE_API_KEY saved in your .Renviron.
 * Register it in your R session using `register_google(key = "YOUR_API_KEY")`
 
 ### Editing the .Rmd
+
+#### Checkout report-year branch in EvergladesWadingbird
+* Update your local copy of EvergladesWadingbird.
+  * `git pull` or if you don't have a copy yet,
+  * `git clone` or Create Project in RStudio
+* Checkout branch `report-[year]`
 
 #### Tables and Figures
 * Table and Figure numbers are determined automatically by knitr. The number doesn't get assigned 
@@ -150,3 +159,6 @@ headers or page numbers
   * Select update everything.
 * Be sure to always update the Table of Contents at the final step before submitting report.
 
+#### Commit changes
+* Commit back to the `report-[year]` branch
+* remember to add versioning instructions to commit message. [patch] is usually the correct versioning message for reports.
