@@ -1,6 +1,8 @@
 ---
 title: "Wading bird colony location, size, timing and Wood Stork and Roseate Spoonbill reproductive success"
-subtitle: "`r params$report_year` Annual Report to the U.S. Army Corps of Engineers Jacksonville, Florida W9126G-25-2-0031"
+
+subtitle: "`r params$report_year` Annual Report to the U.S. Army Corps of Engineers Jacksonville, Florida W9126G-25-2-0031/W9126G-25-2-0038"
+
 author: "Dr. Morgan Ernest and Michael Rickershauser"
 date: "Dept. Wildlife Ecology and Conservation, University of Florida, Gainesville"
 params:
