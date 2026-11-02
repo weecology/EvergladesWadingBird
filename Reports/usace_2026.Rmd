@@ -171,30 +171,21 @@ BCNH-Black Crowned Night Heron
 The numbers of breeding pairs of wading birds in the Everglades and their reproductive success measures reflect hydrological and biotic conditions in the Everglades.
 These relationships are strong enough that wading birds have been chosen as important indicator species for the progress of Everglades restoration, and explicit predictions about specific species and their reproductive responses have been expressed as a series of trophic hypotheses.
 Here, we report on reproduction by wading birds along with the environmental conditions present during the `r params$report_year` breeding season.
-The `r params$report_year` season began with considerably low water levels throughout the system.
-High water levels at the end of the prior dry season combined with average rainfall in the winter months resulted in what appeared to be another wet breeding season.
-However, an exceptionally rapid draw down, combined with a lack of reversals, resulted in well below average water levels by the time nesting began.
-This slightly delayed nesting for some wading birds and resulted in high abandonment among WOST, but otherwise overall nest success was up across all species.
-In `r params$report_year`, a total of `r total_nests` wading bird nests (not including Anhingas) were initiated at colonies within WCA 1, WCA 2, and WCA 3.
-Wood Stork nests were slightly below average but experienced a large increase from last year (`r stork_max` nests in `r stork_colony`, `r stork_2` in `r stork_colony2`, 158 in Jetport).
-More than half of Wood Storks nested in southwest WCA 3.
-This was a notable change from previous years, with the majority WOST typically nesting further south in ENP.
-Although Wood Storks did initiate nesting, there was upwards of 50% nest abandonment in late March/early April, most likely due to very low water levels.
-Because Wood Storks only nested in tall trees this year, ground-based nest monitoring was not feasible.
-Using weekly drone surveys (funded by a different project) to monitor Wood Stork nests, we estimated that 33% of the nests remaining after the large abandonment event fledged at least one chick.
-Roseate Spoonbills continued nesting in many colonies throughout the WCAs, but with fewer nests overall (`r totals$rosp` nests).
-The largest number of nests occurred at 6th Bridge (`r rosp_6b`) and Alley North (`r rosp_an`).
-Roseate Spoonbill nest success was above average, with 64.92% of nests observed fledging at least one chick.
-While White Ibis nesting effort (`r as.integer(totals$whib)` nests) and overall success (`r whib_success`%) continue to be below the 10-year average, they are up in relation to recent years.
-Great Egret nesting effort (`r totals$greg` nests) and overall success (`r greg_success`%) increased greatly in comparison to both the long-term averages and more recent years.
-Little Blue Heron and Tri-colored Heron colonies were monitored from standardized ground surveys in WCA 3.
-While there has been a recent increasing trend of Tri-colored and Little Blue Herons in small colonies, both heron species followed the overall trend of decreased nesting in `r params$report_year` (`r ground_totals$trhe` and `r ground_totals$lbhe` nesting pairs, respectively).
-Black Crowned Night Herons (`r ground_totals$bcnh` pairs) were also observed in 2025, a tremendous increase from last year and continues a recent cyclical trend of high and low years.
-We monitored reproductive success of all species present at `r colony_count` colonies in WCA 3 (`r colony_list`) and for Wood Storks (using drone flights) at Jetport and Jetport New.
-While both nest numbers and overall success varied across most species in `r params$report_year`, it is well above what was anticipated given early-season conditions.
-Additionally, access to some colonies was lost since navigation became prohibitively challenging as water levels continued to drop.
-As a result, overall nest success for some species was indeterminable at 6th Bridge, with post-fledgling fate uncertain at others.
-Nesting activity continued however, as observed via aerial surveys, and so it is believed nest success was roughly equal to that observed at other colonies.
+
+Very low Water levels at the end of the prior dry season combined with a lack of rain events in the winter months resulted in the `r params$report_year` season experiencing near-record low water levels in WCA 3 and nesting effort throughout the system.
+
+CHECK SPECIES COUNT NUMBERS, Either the numbers are not pulling as intended or totals table 3 is incorrect?? Currently, WHIB match but GREG & ROSP are not. Is there a way to pull ENP's WOST number automatically?
+
+In `r params$report_year`, a total of `r total_nests` wading bird nests (not including Anhingas) were initiated at colonies within WCA 1, WCA 2, and WCA 3, the lowest number of nest starts observed since 2008.
+Great Egrets exhibited a delayed nest initiation, followed shortly by almost complete abandonment (`r totals$greg` nests) . All colonies in WCA 3 were abandoned by March.
+Roseate Spoonbills nested in many of this season's colonies with a higher than average year (`r totals$rosp` nests), including 6th Bridge and Nanse/Andytown, two large colonies in WCA 3ase. ROSP are believed to be the only species to nest successfully in WCA 3 this year, possibly due in large part to their earlier nest starts. 
+White Ibis (`r totals$whib` nests) and small herons (`r totals$smhe` nests) nested in the colonies that persisted in WCA 1 and 2, which are managed for higher water levels. 
+No Wood Storks were observed nesting in the WCAs. `r totals$wost` nests were observed in ENP but all were abandoned by April.
+
+
+Ground surveys and in-colony nest checks could not be performed this year. Instead, an alternative method using UAV imagery collected at colonies in WCA 1 and 2 was used. Nest duration was used as a proxy for nesting success due to the limitations on what data was available and traditional nest success calculations' sensitivity to small differences in timing estimates (i.e. exposure days).
+
+NOTE SOME STATS ONCE TABLE 7 IS REPAIRED
 
 ## Introduction and Background
 
@@ -258,7 +249,6 @@ However, as colony size grows beyond that, the bias is generally to underestimat
 Bias can be greatly reduced (by approximately half) by counting aerial photographs taken at the time of survey (Williams et al. 2008).
 For this reason, we take digital photographs of all active colonies from multiple angles for later counting.
 For many of the larger colonies, we also compare to information collected by helicopter via staff at the South Florida Water Management District, which estimated numbers of wading birds, and took photographs for later counting.
-Normally, SFWMD flights occur during the first week of every month, January through Jun, though helicopter issues restricted SFWMD flights this year.
 
 ### Ground surveys
 
@@ -271,11 +261,12 @@ In 2005, 100% coverage ground surveys throughout the WCAs were discontinued due 
 However, since that time we have annually performed systematic ground surveys in WCA 3 that allow for a direct comparison of densities of colonies in certain areas.
 This was designed to give an index of abundance for small colonies and dark-colored species in a fashion that might be sustainable for the current monitoring effort.
 
-We conducted ground surveys in April `r params$report_year`.
 The ground survey belt transects in WCA 3A extended from Tamiami Trail to I-75 (Alligator Alley).
 East/West boundaries for these north/south oriented belts are found in Table \@ref(tab:transecttable).
 It should be clear that this flushing technique works only for smaller colonies because birds in the interior will not flush when approached with an airboat.
 Large colonies occurring within these belts are generally few in number and are counted as part of the aerial surveys, but dark herons will be undercounted for those colonies.
+
+We were unable conduct ground surveys in `r params$report_year`. Airboat access to WCA 3 was lost in early February due to the historically low water levels. Aerial surveys throughout the area by this project and SFWMD confirm there were no active colonies in the region after early March.
 
 \newpage
 
@@ -358,16 +349,31 @@ $$
 Stage-specific survival was calculated separately for incubation and nestling stages to account for differences in failure rates between the two.
 Nest success was expressed over all nests of each species from all colonies within any breeding year, as a probability of the nest surviving to produce at least one young of the predetermined age of fledging (Mayfield 1961, 1975, Hensler 1985).
 
-In 2025, we attempted a novel approach to conducting Wood Stork nest checks.
-Nesting habits of Wood Storks in Cypress and other taller vegetation in WCA 3 make ground-based nest checks infeasible.
-Instead, nests were checked by analyzing UAV imagery.
-UAV flights (funded by a separate agency) were conducted over each colony every 5 - 7 days at a height of 250 ft Areas of each colony were then selected for analysis based on general WOST nest density.
-Frames from each of the weekly flights that covered the selected areas were assessed to determine nest contents, attempting to be as comparable to ground-based methods as possible.
-While this method has provided a viable alternative to ground-based nest checks, there are some limitations.
-It is not possible to determine clutch size, as adults remain incubating during UAV flights a vast majority of the time.
-There is also more uncertainty in determining accurate hatch dates as it is difficult to discern early brooding from incubation when the chicks are still very small.
-Nest success methods, like the Mayfield Method, can be very sensitive to small differences in timing estimates (i.e. exposure days).
+
+
+### drone nest check methodology
+
+Given the record low water levels during the `r params$report_year` breeding season, our usual in-colony nest checks could not be performed. Instead, we expanded on an alternative approach first used in 2025 to assess Wood Stork nest success, given their habit of nesting in cypress trees and other taller vegetation in WCA 3 that make ground-based nest checks unfeasible.
+
+Systematic UAV flights were performed over wading bird colonies in order to perform nest checks via drone imagery. These flights were conducted on a near-weekly basis throughout the breeding season. Survey transects were automatically generated based on flight parameters and image settings. Transects were orientated as necessary to minimize flight time while achieving complete coverage of the colony.  
+
+The UAV was operated at an altitude of 250ft, unless otherwise required by airspace regulations, and flown at a speed of 10meters/sec. The camera was set to a fixed f2.8 aperture, with shutter and exposure compensation adjusted as needed, typically between 1/1000 and 1/1600 sec. Individual images were taken with 80% side-to-side and 65% front-to-back overlap. Using a Post-Processed Kinematic (PPK) system, initial GPS data recorded in-flight is later corrected with data from Florida Permanent Reference Network (FPRN) base stations using the UAV manufacturer’s cloud software to achieve a higher level of accuracy.
+
+The UAV imagery and associated GPS data is then uploaded to the lab for further processing and analysis. Images from each colony’s weekly survey flight are stitched into a large mosaic and then aligned with those from subsequent weeks. Nests are then selected manually and marked to be tracked over the course of the season. Nests are selected with the aim of getting a balanced representation for early and late nesting birds, as well as an adequate sample size for each species present. Once the mosaics are aligned and nests selected, weekly checks can be performed by recording what can be observed in the imagery. Given the limitations on what can be reliably and consistently observed, duration of nest occupancy by a breeding adult was used as a proxy for nest success. The duration used to determine this was the combined number of incubation and chick-rearing days normally used in the Mayfield method. While inferior to the Mayfield method, it allowed for a ratio of nest starts vs successes that provides insight into the how each species fared during the `r params$report_year` breeding season. 
+
+While the workflow has been made more efficient, allowing us to perform image-based nest checks across multiple colonies, some key limitations remain. Since the birds are not disturbed, adults remain incubating during UAV flights a vast majority of the time, so nest contents are rarely visible. Additionally, there is more uncertainty in determining accurate hatch dates as it is difficult to discern early brooding from incubation when the chicks are still very small. Nest failure stage also less certain to judge (incubation vs chick rearing), though nest duration can be a strong indicator in cases of early or late-stage failures.
+
+Given the limitations of what can be observed in the images, the Mayfield method could not be used in most cases. Nest success methods, like the Mayfield Method, can be very sensitive to small differences in timing estimates (i.e. exposure days). Simple nest occupancy was used instead, with adult breeding behavior being the the primary metric. Additional information, such as visible eggs and chick size, was used to supplement and increase accuracy whenever possible but due to it's limited occurrence supplemental data that is usually gleaned from nest checks, such as clutch and brood sizes, is not possible.
+
+
+Include in Discussions?
+known bais towards species/individuals that nest in open canopy/ clearings
+some species chicks have low nest retention (?) and/or fledge quick so length of time difficult to determine with confidence. 
+
+
+
 Current estimates based on drone surveys should be treated carefully until additional work can be conducted to compare drone-based and ground-based estimates of nest success.
+
 
 ## Results
 
