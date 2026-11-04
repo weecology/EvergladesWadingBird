@@ -732,15 +732,14 @@ uav_success <- load_datafile("Nesting/UAV/uav_nest_success_summary.csv") %>%
          species = replace(species, species == "gbhe", "Great Blue Heron"),
          species = replace(species, species == "rosp", "Roseate Spoonbill"),
          species = replace(species, species == "smhe", "Small Herons")) %>%
-  select(species,year,incubation_k,incubation_e,incubation_p,
+  select(species,colony,incubation_k,incubation_e,incubation_p,
          nestling_k,nestling_e,nestling_p,overall_p) %>%
   arrange(species) 
 
-colnames(uav_success) <- c("Species", "Year", "N", "Length", "p", "N ", "Length ",                              "p ", "p  ")
+colnames(uav_success) <- c("Species", "Colony", "N", "Length", "p", "N ", "Length ",                              "p ", "p  ")
 
 uav_success %>%
   flextable::flextable() %>%
-  flextable::surround(i = ~ Year == params$report_year, border.bottom = fp_border(), border.top = fp_border()) %>%
   flextable::colformat_double(j = c("p", "p ", "p  "), digits = 3, na_str = "NA") %>%
   flextable::add_header_row(values = c("", "Incubation", "Nestling", "Overall"), colwidths = c(2,3,3,1)) %>%
   flextable::set_caption("Reproductive statistics collected via UAV surveys for wading bird species in the Water Conservation Areas of the Everglades.",
