@@ -183,9 +183,11 @@ Here, we report on reproduction by wading birds along with the environmental con
 
 Very low water levels at the end of the prior dry season combined with a lack of rain events in the winter months resulted in the `r params$report_year` season experiencing near-record low water levels in WCA 3 and nesting effort throughout the system.
 In `r params$report_year`, a total of `r total_nests` wading bird nests (not including Anhingas) were initiated at colonies within WCA 1, WCA 2, and WCA 3, the lowest number of nest starts observed since 2008.
+
 Great Egrets exhibited a delayed nest initiation, followed shortly by almost complete abandonment (`r totals$greg` nests). All colonies in WCA 3 were abandoned by March.
 Roseate Spoonbills nested in many of this season's colonies (`r rosp_colonies` out of `r total_colonies` colonies) with a higher-than-average year (`r totals$rosp` nests), including 6th Bridge and Nanse/Andytown, two large colonies in WCA 3ase. ROSP are believed to be the only species to nest successfully in WCA 3 this year, likely due in large part to their earlier nest starts. 
 White Ibis (`r totals$whib` nests) and small herons (`r total_smhe` nests) nested in the colonies that persisted in WCA 1 and 2, which are managed for higher water levels. WHIB exhibited a particularly strong and protracted B-wave starting in May. While precise numbers were not possible, observations in the field show WHIB and small heron species at least a moderate level of success in `r params$report_year`.
+
 No Wood Storks were observed nesting in the WCAs. `r enp_totals$wost` WOST nests were observed in ENP but all were abandoned by April.
 
 Ground surveys and in-colony nest checks could not be performed this year. Instead, an alternative method using UAV imagery collected at colonies in WCA 1 and 2 was used. Nest duration was used as a proxy for nesting success due to the limitations on what data was available and traditional nest success calculations' sensitivity to small differences in timing estimates (i.e. exposure days). There is a high level of uncertainty regarding the numbers due to these limitations and various technical issues with equipment throughout the season, but as a whole appear representative of what was observed in the field. 
@@ -461,6 +463,7 @@ Low temperatures during the winter months can significantly affect the availabil
 
 Overall rainfall was at or below average during most of the season, continuing the drought conditions that first began in 2025. While there was a slight increase in rainfall at the start of the rainy season in May, it was short lived. June continued to experience low rainfall, during what is typically the second month of the rainy season. Combined with record low water levels, there will likely be negative impacts on prey availability for next year’s breeding season (Figure \@ref(fig:precipitation)).
 
+
 ```{r temperature, fig.cap="Monthly temperature deviations averaged across all regional NOAA weather stations. Zero represents average long-term monthly deviation from normal temperature. Red bars display monthly deviations from long-term mean monthly temperatures. Dashed lines indicate average standard deviation above and below the mean monthly deviation.", fig.height=3, fig.width=3}
 weather_report("temperature", plot_year=params$report_year)
 ```
@@ -483,10 +486,8 @@ This increase in observed nests may simply be closer to the actual number presen
 
 Greg Egrets exhibited very low nesting effort this year, with only `r totals$greg` nests. Nest initiation was delayed, with almost no nesting observed during January's aerial survey. Most nest starts likely occurred late January or early February, and by March nearly all were abandoned. Given the timing, the vast majority were likely abandoned during the incubation period.
 
-
 Though WHIB nesting effort was far below normal like most species this year (`r totals$whib` nests), they made up 63.4% of active nests, which is on par with the 3-year average (60.6%). WHIB nested in a much larger proportion of active colonies this year, but this is primarily due to the absence of the numerous small colonies that WHIB seldom nest in. WHIB nested exclusively in WCAs 1 and 2, as conditions in WCA 3 were nonviable by the time WHIB nest initiation began.
 WHIB exhibited a particularly strong and protracted B-wave starting in May. A second wave of nesting effort late in the breeding season is a common occurrence, typically low in comparison to the main nest initiation period and short-lived, abandoned en masse during early incubation. This year however, the B-wave was comparable to the initial wave of nests and persisted into early July with some level of success. A good portion of these B-wave nests were at colonies in WCA 2 where few if any WHIB initially nested in May.
-
 
 Small herons were present in most of the larger colonies this year, with a total of `r total_smhe` nests identified. SMHE is a combined group of Snowy Egrets, Little Blue Herons, and Tricolored Herons. SMWH consists of SNEG and LBHE, as TRHE chicks can be differentiated whereas the other two species cannot be reliably.
 While Snowy Egrets (`r totals$sneg` nests) are generally present in a higher abundance in larger colonies compared to Little Blue Herons (`r totals$lbhe` nests), SNEG likely made up a smaller majority of the unidentified SMWH nests (`r totals$smwh` nests) than the two species' numbers would make indicate this year. Adult SNEG have much higher detectability than LBHE given their plumage. This naturally allows for more small heron nests to be identified as SNEG. But at least in some colonies like Shamash, Rhea, and Lox Ramp, LBHE have been confirmed in abundance through other means, such as visual observations and UAV imagery. We were unable to perform ground surveys this year, which is our primary source of determining small dark heron abundance. 
@@ -617,6 +618,7 @@ load_datafile("Counts/groundcounts_table.csv", path = get_default_data_path()) %
 #### Reproductive Success
 
 Ground-based nest monitoring was not possible this year due to extremely low water levels and early dry down rates that left all colonies with active nests in the WCAs inaccessible by early February. Attempts to use the little nest check data we were able to collect before the dry-down would result in an extremely biased picture of nest success. Thus, all species receive an NA for 2026.
+
 NAs and zeros in the nest success table (Table \@ref(tab:nestsuccesstable)) are used to indicate different levels of uncertainty.
 NAs indicate a lack of observations from which to make calculations, while zeros (where indicated) denote direct observation of no nests or fledglings, from which a nest success of 0 can be inferred.
 
@@ -780,7 +782,6 @@ This increase in observed nests may simply be closer to the actual number presen
 
 Though WHIB nesting effort was far below normal like most species this year (`r totals$whib` nests), they made up 63.4% of active nests, which is on par with the 3-year average (60.6%). WHIB nested in a much larger proportion of active colonies this year, but this is primarily due to the absence of the numerous small colonies that WHIB seldom nest in. WHIB nested exclusively in WCAs 1 and 2, as conditions in WCA 3 were nonviable by the time WHIB nest initiation began.
 WHIB exhibited a particularly strong and protracted B-wave starting in May. A second wave of nesting effort late in the breeding season is a common occurrence, typically low in comparison to the main nest initiation period and short-lived, abandoned en masse during early incubation. This year however, the B-wave was comparable to the initial wave of nests and persisted into early July with some level of success. A good portion of these B-wave nests were at colonies in WCA 2 where few if any WHIB initially nested in May.
-
 
 Most of the colonies we have historically monitored for nest success did not form in `r params$report_year`. While there was some nesting at 6th Bridge and Alley North, conditions made airboat access impossible. This year, we attempted to utilize UAV imagery to glean nest success at colonies in WCA 1 and 2, where it was not possible to perform our traditional on-ground nest checks. While the results of this analysis can be considered representative of the `r params$report_year` breeding season, the limitations of what data can be collected and differences in success calculations mean the values should not be included in any long-term averages. 
 
