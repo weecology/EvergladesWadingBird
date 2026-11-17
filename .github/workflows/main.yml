@@ -30,7 +30,7 @@ jobs:
             fetch-depth: 3
 
       - name: Setup R (Ubuntu)
-        uses: eddelbuettel/github-actions/r2u-setup@master
+        uses: eddelbuettel/github-actions/r-ci@master
 
       - name: Install packages
         run: Rscript install-packages.R
