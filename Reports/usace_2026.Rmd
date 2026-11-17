@@ -724,7 +724,10 @@ uav_success <- load_datafile("Nesting/UAV/uav_nest_success_summary.csv") %>%
          species = replace(species, species == "whib", "White Ibis"),
          species = replace(species, species == "gbhe", "Great Blue Heron"),
          species = replace(species, species == "rosp", "Roseate Spoonbill"),
-         species = replace(species, species == "smhe", "Small Herons")) %>%
+         species = replace(species, species == "smhe", "Small Herons"),
+         incubation_p = incubation_sumy/incubation_k,
+         nestling_p = nestling_sumy/nestling_k,
+         overall_p = nestling_sumy/incubation_k) %>%
   select(species,colony,incubation_k,incubation_e,incubation_p,
          nestling_k,nestling_e,nestling_p,overall_p) %>%
   arrange(species) 
@@ -735,23 +738,29 @@ uav_success %>%
   flextable::flextable() %>%
   flextable::colformat_double(j = c("p", "p ", "p  "), digits = 3, na_str = "NA") %>%
   flextable::add_header_row(values = c("", "Incubation", "Nestling", "Overall"), colwidths = c(2,3,3,1)) %>%
-  flextable::set_caption("Reproductive statistics collected via UAV surveys for wading bird species in the Water Conservation Areas of the Everglades.",
+  flextable::set_caption("Reproductive descriptive statistics collected via UAV surveys for wading bird species in the Water Conservation Areas of the Everglades.",
   autonum = officer::run_autonum(
     seq_id = "tab",
     bkm = "uavnestsuccess"
   ))   %>%
   flextable::footnote(
     i = 1, j = 3, 
-    value = flextable::as_paragraph("Incubation rates: Number of nests tracked, total days of active nests, and proportion of nests with at least 1 hatched egg."),
+    value = flextable::as_paragraph("Incubation rates: Number of nests tracked, total days of active nests observed, and proportion of nests with at least 1 hatched egg."),
     ref_symbols = c("a"),
     part = "header", inline = TRUE
   )  %>%
   flextable::footnote(
     i = 1, j = 6, 
-    value = flextable::as_paragraph("Nestling rates: Number of nests tracked, total days of active nests, and proportion of nests with at least 1 fledged offspring."),
+    value = flextable::as_paragraph("Nestling rates: Number of nests tracked, total days of active nests observed, and proportion of nests with at least 1 fledged offspring."),
     ref_symbols = c("b"),
     part = "header", inline = TRUE
-  ) %>%
+  )  %>%
+  flextable::footnote(
+    i = 1, j = 9, 
+    value = flextable::as_paragraph("Overall rate: Proportion of nests observed from the start of incubation to the end of fledging."),
+    ref_symbols = c("c"),
+    part = "header", inline = TRUE
+  )  %>%
   flextable::add_footer_lines(value=flextable::as_paragraph(c("Zeros are from observation. NA = unable to calculate nestling activity due to limitations in drone imagery or lack of imagery."))) %>%
   flextable::align(i = 1:2, j = NULL, align = "center", part = "header") %>%
   flextable::theme_booktabs(bold_header = TRUE) %>%
