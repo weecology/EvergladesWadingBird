@@ -187,7 +187,6 @@ In `r params$report_year`, a total of `r total_nests` wading bird nests (not inc
 Great Egrets exhibited a delayed nest initiation, followed shortly by almost complete abandonment (`r totals$greg` nests). All colonies in WCA 3 were abandoned by March.
 Roseate Spoonbills nested in many of this season's colonies (`r rosp_colonies` out of `r total_colonies` colonies) with a higher-than-average year (`r totals$rosp` nests), including 6th Bridge and Nanse/Andytown, two large colonies in WCA 3ase. ROSP are believed to be the only species to nest successfully in WCA 3 this year, likely due in large part to their earlier nest starts. 
 White Ibis (`r totals$whib` nests) and small herons (`r total_smhe` nests) nested in the colonies that persisted in WCA 1 and 2, which are managed for higher water levels. WHIB exhibited a particularly strong and protracted B-wave starting in May. While precise numbers were not possible, observations in the field show WHIB and small heron species at least a moderate level of success in `r params$report_year`.
-
 No Wood Storks were observed nesting in the WCAs. `r enp_totals$wost` WOST nests were observed in ENP but all were abandoned by April.
 
 Ground surveys and in-colony nest checks could not be performed this year. Instead, an alternative method using UAV imagery collected at colonies in WCA 1 and 2 was used. Nest duration was used as a proxy for nesting success due to the limitations on what data was available and traditional nest success calculations' sensitivity to small differences in timing estimates (i.e. exposure days). There is a high level of uncertainty regarding the numbers due to these limitations and various technical issues with equipment throughout the season, but as a whole appear representative of what was observed in the field. 
@@ -243,7 +242,7 @@ Aerial and ground surveys are complementary, and in the Everglades, neither does
 The primary objective of both kinds of surveys is to systematically encounter and document nesting colonies.
 Ground-based monitoring of individuals marked nests at several colonies was conducted to document the success of nests initiated during the breeding season.
 
-### Aerial Surveys
+### Aerial surveys
 
 On or about the 15th of each month between January and June, we performed systematic aerial surveys for colonies, with observers seated on both sides of a Cessna 185, flight altitude at 800 feet AGL, and east-west oriented flight transects spaced 1.6 nautical miles apart.
 These conditions result in overlapping coverage on successive transects under a variety of weather and visibility conditions and have been used continuously since 1986, except for 2020-2021 due to the coronavirus pandemic.
@@ -270,7 +269,7 @@ This was designed to give an index of abundance for small colonies and dark-colo
 The ground survey belt transects in WCA 3A extended from Tamiami Trail to I-75 (Alligator Alley).
 East/West boundaries for these north/south oriented belts are found in Table \@ref(tab:transecttable).
 It should be clear that this flushing technique works only for smaller colonies because birds in the interior will not flush when approached with an airboat.
-Large colonies occurring within these belts are generally few in number and are counted as part of the aerial surveys, but dark herons will be undercounted for those colonies.
+There are generally few large colonies occurring within these belts and are counted as part of the aerial surveys, but dark herons will be undercounted for those colonies.
 
 We were unable to conduct ground surveys in `r params$report_year`. Airboat access to WCA 3as was lost in early February due to the historically low water levels. Aerial surveys throughout the area by this project and SFWMD confirm there were no active colonies in the region after early March.
 
@@ -357,7 +356,7 @@ Nest success was expressed over all nests of each species from all colonies with
 
 
 
-### drone nest check methodology
+#### Nest success via UAV imagery
 
 Given the record low water levels during the `r params$report_year` breeding season, our usual in-colony nest checks could not be performed. Instead, we expanded on an alternative approach first used in 2025 to assess Wood Stork nest success, given their habit of nesting in cypress trees and other taller vegetation in WCA 3 that make ground-based nest checks unfeasible.
 
