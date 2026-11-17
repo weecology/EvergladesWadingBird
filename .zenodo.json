@@ -2,15 +2,20 @@
     "creators": [
       {
         "affiliation": "University of Florida",
+        "name": "S. K. Morgan Ernest",
+        "orcid": "0000-0002-6026-8530"
+        },
+      {
+        "affiliation": "University of Florida",
         "name": "Peter Frederick"
         },
       {
         "affiliation": "University of Florida",
-        "name": "Michael Rickershauser"
-        },        
+        "name": "Lindsey Garner"
+        },
       {
         "affiliation": "University of Florida",
-        "name": "Lindsey Garner"
+        "name": "Michael Rickershauser"
         },
       {
         "affiliation": "University of Florida",
@@ -21,12 +26,15 @@
         "affiliation": "University of Florida",
         "name": "Ethan P. White",
         "orcid": "0000-0001-6728-7745"
-      },
+        },
       {
-        "affiliation": "University of Florida",
-        "name": "S. K. Morgan Ernest",
-        "orcid": "0000-0002-6026-8530"
-      }
+        "affiliation": "Florida Fish and Wildlife Commission",
+        "name": "Nicholas Vitale"
+        },
+      {
+        "affiliation": "Applied Science Bureau, South Florida Water Management District",
+        "name": "Mark I. Cook"
+        }
     ],
     "keywords": [
       "ecology",
