@@ -29,7 +29,7 @@ notes
 
 We cannot use the Mayfield method to calculate nest success from aerial surveys alone. Many of the 
 Mayfield assumptions are not met (eg unbiased detection probability).
-However, analogous nest-level metrics are stored in this table and can be used as a roxy for nest 
+However, analogous nest-level metrics are stored in this table and can be used as a proxy for nest 
 success (eg nest duration).
 
 ### Nest Success Summary
