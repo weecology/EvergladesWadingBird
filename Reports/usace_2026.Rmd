@@ -32,7 +32,8 @@ library(ggplot2)
 library(cowplot)
 library(scales)
 
-#download_observations()
+if(check_for_newer_data()) {
+  download_observations()}
 # Get summary numbers for text
 species_list <- c("greg","whib","wost","rosp","sneg","gbhe","lbhe",
                   "trhe","glib", "bcnh","caeg","ycnh","smwh","anhi")
@@ -723,8 +724,30 @@ block_section(
 
 ```{r uavnestsuccess}
 
+uav_nests <- load_datafile("Nesting/UAV/uav_nest_success.csv") %>%
+  mutate(
+    species = replace(species, species %in% c("lbhe", "sneg", "trhe", "glib"),        "smhe"),
+    ji = case_when(
+      species %in% c("gbhe","greg") ~ 28,
+      species %in% c("smhe","rosp") ~ 22,
+      species == "whib" ~ 21,
+      .default = 21),
+    jn = case_when(
+      species %in% c("rosp","greg") ~ 21,
+      species %in% c("whib","smhe") ~ 14,
+      species == "gbhe" ~ 60,
+      .default = 21),
+  ) %>%
+  filter(!is.na(species)) %>%
+  mutate(incubation_done = n_days_incubation>=ji,
+         nestling_done = n_days_nestling>=jn) %>%
+  group_by(colony,species) %>%
+  summarise(incubation_done=sum(incubation_done, na.rm=TRUE),
+            nestling_done=sum(nestling_done, na.rm=TRUE))
+  
 uav_success <- load_datafile("Nesting/UAV/uav_nest_success_summary.csv") %>% 
-
+  mutate(colony = replace(colony, colony == "lox_99", "lox99")) %>%
+  left_join(uav_nests) %>%
   mutate(species = replace(species, species == "greg", "Great Egret"),
          species = replace(species, species == "whib", "White Ibis"),
          species = replace(species, species == "gbhe", "Great Blue Heron"),
@@ -732,17 +755,25 @@ uav_success <- load_datafile("Nesting/UAV/uav_nest_success_summary.csv") %>%
          species = replace(species, species == "smhe", "Small Herons"),
          incubation_p = incubation_sumy/incubation_k,
          nestling_p = nestling_sumy/nestling_k,
-         overall_p = nestling_sumy/incubation_k) %>%
-  select(species,colony,incubation_k,incubation_e,incubation_p,
-         nestling_k,nestling_e,nestling_p,overall_p) %>%
+         overall_p = nestling_sumy/incubation_k,
+         incubation_done = incubation_done/incubation_k,
+         nestling_done = nestling_done/nestling_k,
+         incubation_e = incubation_e/incubation_k,
+         nestling_e = nestling_e/nestling_k) %>%
+  select(species,colony,incubation_k,incubation_e,incubation_done,incubation_p,
+         nestling_k,nestling_e,nestling_done,nestling_p,overall_p) %>%
+  mutate(across(where(is.numeric), ~ ifelse(is.nan(.), NA, .))) %>%
   arrange(species) 
 
-colnames(uav_success) <- c("Species", "Colony", "N", "Length", "p", "N ", "Length ",                              "p ", "p  ")
+colnames(uav_success) <- c("Species", "Colony", "N", "Mean Length", "Complete","p", 
+                           "N ", "Mean Length ","Complete ", "p ", "p  ")
 
 uav_success %>%
   flextable::flextable() %>%
-  flextable::colformat_double(j = c("p", "p ", "p  "), digits = 3, na_str = "NA") %>%
-  flextable::add_header_row(values = c("", "Incubation", "Nestling", "Overall"), colwidths = c(2,3,3,1)) %>%
+  flextable::colformat_double(j = c("Mean Length","Complete","p","Mean Length",
+                                    "Complete ","p ", "p  "), 
+                              digits = 3, na_str = "NA") %>%
+  flextable::add_header_row(values = c("", "Incubation", "Nestling", "Overall"), colwidths = c(2,4,4,1)) %>%
   flextable::set_caption("Reproductive descriptive statistics collected via UAV surveys for wading bird species in the Water Conservation Areas of the Everglades.",
   autonum = officer::run_autonum(
     seq_id = "tab",
@@ -750,18 +781,18 @@ uav_success %>%
   ))   %>%
   flextable::footnote(
     i = 1, j = 3, 
-    value = flextable::as_paragraph("Incubation rates: Number of nests tracked, total days of active nests observed, and proportion of nests with at least 1 hatched egg."),
+    value = flextable::as_paragraph("Incubation rates: Number of nests tracked, average days of active nests observed, proportion of nests that were observed active at least as long as the incubation period, and proportion of nests with at least 1 hatched egg."),
     ref_symbols = c("a"),
     part = "header", inline = TRUE
   )  %>%
   flextable::footnote(
-    i = 1, j = 6, 
-    value = flextable::as_paragraph("Nestling rates: Number of nests tracked, total days of active nests observed, and proportion of nests with at least 1 fledged offspring."),
+    i = 1, j = 7, 
+    value = flextable::as_paragraph("Nestling rates: Number of nests tracked, average days of active nests observed, proportion of nests that were observed active at least as long as the nestling period, and proportion of nests with at least 1 fledged offspring."),
     ref_symbols = c("b"),
     part = "header", inline = TRUE
   )  %>%
   flextable::footnote(
-    i = 1, j = 9, 
+    i = 1, j = 11, 
     value = flextable::as_paragraph("Overall rate: Proportion of nests observed from the start of incubation to the end of fledging."),
     ref_symbols = c("c"),
     part = "header", inline = TRUE
