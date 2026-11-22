@@ -1,5 +1,5 @@
 # SFWMD Report Table
-report_year <- 2024
+report_year <- 2026
 
 library(tidyr)
 library(dplyr)
