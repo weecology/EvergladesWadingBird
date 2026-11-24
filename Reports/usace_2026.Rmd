@@ -279,13 +279,21 @@ We were unable to conduct ground surveys in `r params$report_year`. Airboat acce
 ```{r regions, echo=FALSE, fig.cap="Survey regions in WCAs and ENP. ENP monitoring is conducted by park personnel", message=FALSE, warning=FALSE}
 sp <- sf::read_sf(file.path(get_default_data_path(),                      "EvergladesWadingBird/SiteandMethods/regions/subregions.shp"))
 sp <- sf::st_transform(sp, sf::st_crs("+proj=longlat +datum=WGS84"))
-location <- ggmap::geocode(c("25.883878, -80.794257"), override_limit = TRUE) + c(-.1,.35)
-ggmap::ggmap(ggmap::get_map(location = location, 
-               zoom = 9, maptype = "terrain", source = "google")) +
-  geom_sf(data = sp, aes(color=Name), inherit.aes = FALSE, linewidth = 1.1, alpha=0) +
-  labs(color='Subregion') +
-  theme_bw() +
-  theme_void()
+map_extent <- sf::st_bbox(c(xmin = -81.77, xmax = -80.02, ymin = 25.05, ymax = 26.75),
+                          crs = sf::st_crs(4326))
+basemap <- maptiles::get_tiles(map_extent, provider = "OpenStreetMap", zoom = 9,
+                               crop = TRUE, project = FALSE)
+osm_credit <- maptiles::get_credit("OpenStreetMap")
+# Map extent in Web Mercator for coord_sf
+map_lims <- sf::st_bbox(sf::st_transform(sf::st_as_sfc(map_extent), 3857))
+ggplot() +
+  tidyterra::geom_spatraster_rgb(data = basemap, maxcell = Inf) +
+  geom_sf(data = sp, aes(color = Name), linewidth = 1.1, fill = NA) +
+  coord_sf(crs = 3857, xlim = map_lims[c("xmin", "xmax")],
+           ylim = map_lims[c("ymin", "ymax")], expand = FALSE) +
+  labs(color = 'Subregion', caption = osm_credit) +
+  theme_void() +
+  theme(plot.caption = element_text(size = 6))
 ```
 
 \newpage
@@ -559,15 +567,17 @@ colonies <- load_datafile("Counts/maxcounts.csv", path = get_default_data_path()
                                  path = get_default_data_path()),
                    by = join_by(group_id, colony)) %>%
   filter(!(region %in% c("enp","other"))) %>%
-  select(colony,subregion,latitude,longitude)
-ggmap::ggmap(ggmap::get_map(location = location, 
-               zoom = 9, maptype = "terrain", source = "google")) +
- geom_point(data = colonies, 
-                     aes(x = longitude, y = latitude, colour = subregion), size=.9) +
- geom_text(data = colonies, aes(x = longitude, y = latitude, label =  colony), size=1.2, hjust=0, vjust=0) +
- theme_bw() +
+  select(colony,subregion,latitude,longitude) %>%
+  sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+ggplot() +
+ tidyterra::geom_spatraster_rgb(data = basemap, maxcell = Inf) +
+ geom_sf(data = colonies, aes(colour = subregion), size=.9) +
+ geom_sf_text(data = colonies, aes(label = colony), size=1.2, hjust=0, vjust=0) +
+ coord_sf(crs = 3857, xlim = map_lims[c("xmin", "xmax")],
+          ylim = map_lims[c("ymin", "ymax")], expand = FALSE) +
+ labs(caption = osm_credit) +
  theme_void() +
- theme(legend.position="none")
+ theme(legend.position="none", plot.caption = element_text(size = 6))
 ```
 
 \newpage
