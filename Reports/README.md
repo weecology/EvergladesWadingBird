@@ -56,13 +56,6 @@ write.csv(eden_depths,"~/water/eden_depth.csv")
   you will not need to download all the data every time
   * Alternatively, you can just get the updated `eden_depth.csv` from Glenda so you don't have to wait 
 
-#### GGMAP
-We use `ggmap` for creating fast maps of the colonies throughout the study site. This requires
-you have a GGMAP_GOOGLE_API_KEY saved in your .Renviron. 
-
-* We have a Google Cloud Platform account. Get the key from Glenda.
-* Register it in your R session using `register_google(key = "YOUR_API_KEY")`
-
 ### Editing the .Rmd
 
 #### Checkout report-year branch in EvergladesWadingbird
